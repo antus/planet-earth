@@ -1,208 +1,208 @@
  
-<p align="center">
-<img src="//mars3d.cn/logo.png" width="300px" />
-</p>
+<p align="center"> 
+<img src="//mars3d.cn/logo.png" width="300px" /> 
+</p> 
 
-<p align="center">基于传统JS技术栈的 Mars3D🌎功能示例</p>
+<p align="center">Mars3D🌎 based on traditional JS technology stack Functional example</p> 
 
-<p align="center">
-  <a target="_black" href="https://www.npmjs.com/package/mars3d">
-    <img alt="Npm version" src="https://img.shields.io/npm/v/mars3d.svg?style=flat&logo=npm&label=版本号" />
-  </a>
-  <a target="_black" href="https://www.npmjs.com/package/mars3d">
-    <img alt="Npm downloads" src="https://img.shields.io/npm/dt/mars3d?style=flat&logo=npm&label=下载量" />
-  </a>
-  <a target="_black" href="https://github.com/marsgis/mars3d">
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/marsgis/mars3d?style=flat&logo=github" />
-  </a>
-  <a target="_black" href="https://gitee.com/marsgis/mars3d">
-    <img src="https://gitee.com/marsgis/mars3d/badge/star.svg?theme=dark" alt="star" />
-  </a>
-</p>
-
-
-功能示例项目，是基于[Mars3D 平台](http://mars3d.cn)做的一个按每个单独功能进行单页面展示、并且支持修改编辑代码实时运行的一个演示功能的系统。
-主要用于开发人员学习了解 Mars3D 每个功能的使用、用于业务人员了解体验 Mars3D 具备的功能点。
-
-首先建议您学习浏览一遍我们功能示例的源码（源码中会有大量注释），阅读源码时可以结合查阅API文档来理解类及方法的作用和参数说明等。
+<p align="center"> 
+  <a target="_black" href="https://www.npmjs.com/package/mars3d"> 
+    <img alt="Npm version" src=" https://img.shields.io/npm/v/mars3d.svg?style=flat&logo=npm&label=version number" /> 
+  </a> 
+  <a target="_black" href="https://www.npmjs .com/package/mars3d"> 
+    <img alt="Npm downloads" src="https://img.shields.io/npm/dt/mars3d?style=flat&logo=npm&label=Downloads" /> 
+  </a> 
+  <a target="_black" href="https://github.com/marsgis/mars3d"> 
+    <img alt="GitHub stars" src="https://img.shields.io/github/stars/marsgis/ mars3d?style=flat&logo=github" /> 
+  </a> 
+  <a target="_black" href="https://gitee.com/marsgis/mars3d"> 
+    <img src="https://gitee.com/ marsgis/mars3d/badge/star.svg?theme=dark" alt="star" /> 
+  </a> 
+</p> 
 
 
-## 项目介绍
+Functional sample project is based on [Mars3D platform](http://mars3d.cn) A system that displays a single page for each individual function and supports the modification and editing of code for real-time operation. 
+It is mainly used for developers to learn and understand the use of each function of Mars3D, and for business personnel to understand and experience the function points of Mars3D. 
+
+First of all, it is recommended that you study and browse the source code of our functional examples (there will be a lot of comments in the source code). When reading the source code, you can combine it with the API documentation to understand the functions and parameter descriptions of classes and methods. 
+
+
+## Project Introduction 
  
- 这是一个基于`原生JS`开发的 Mars3D 功能示例 演示项目。
+ This is a Mars3D function sample demonstration project developed based on `native JS`. 
 
- > 如果您不熟悉原生JS，也可以阅读：[功能示例Vue版](http://mars3d.cn/dev/guide/project/example-vue.html)、[功能示例React版](http://mars3d.cn/dev/guide/project/example-react.html)
-
-
-## 项目特性 
-- **独立页面**：每一个页面是一个单独的示例，依赖少，独立运行。
-- **适合不同技术栈**: 原生JS开发, 适合不同技术栈用户理解
+ > If you are not familiar with native JS, you can also read: [Functional Example Vue Version](http://mars3d.cn/dev/guide/project/example-vue.html), [Functional Example React Version](http:/ /mars3d.cn/dev/guide/project/example-react.html) 
 
 
-## 视频讲解
-建议先看一遍视频讲解，再实际操作，您可以[新页面查看高清视频](https://www.bilibili.com/video/BV1Hg411o7Js/)
+## Project features 
+- **Independent page**: Each page is a separate example with few dependencies and runs independently. 
+- **Suitable for different technology stacks**: Native JS development, suitable for users of different technology stacks to understand 
+
+
+## 
+It is recommended to watch the video explanation first and then practice it. You can [view the high-definition video on the new page](https://www .bilibili.com/video/BV1Hg411o7Js/) 
 
 
 
-## 下载运行项目
+## Download and run the project 
  
-### 下载代码
-- [Github](https://github.com/marsgis/mars3d-es5-example)
+### Download code- 
+[Github](https://github.com/marsgis/mars3d-es5-example) 
 
-```
-git clone git@github.com:marsgis/mars3d-es5-example.git
-```
-
-- [Gitee](https://gitee.com/marsgis/mars3d-es5-example)：国内码云，下载速度快些。
-
-```
-git clone git@gitee.com:marsgis/mars3d-es5-example.git
+``` 
+git clone git@github. com:marsgis/mars3d-es5-example.git 
 ``` 
 
-- 如果本地没有git软件，可以浏览器输入[https://github.com/marsgis/mars3d-es5-example](https://github.com/marsgis/mars3d-es5-example)地址后，按下图下载zip包。
+- [Gitee](https://gitee.com/marsgis/mars3d-es5-example): Domestic code cloud, faster download speed. 
 
- ![image](http://mars3d.cn/dev/img/guide/start-example-down.jpg)
+``` 
+git clone git@gitee.com:marsgis/mars3d-es5-example.git 
+``` 
 
-  
-### 运行环境
-运行前建议从[http://mars3d.cn/download.html](http://mars3d.cn/download.html)下载最新mars3d类库后覆盖至`lib/`目录下，更新mars3d为最新版本。
+- If there is no git software locally, you can enter [https://github.com/marsgis/mars3d-es5-example] in the browser ](https://github.com/marsgis/mars3d-es5-example) address and download the zip package as shown below. 
 
-### 运行方式1：使用vscode及其插件
- 
-在任意开发编辑器（如vscode等）或http服务器(如node、nginx、tomcat、IIS等)下直接运行浏览`index.html`或example目录下各对应示例页面即可。
-
-建议使用VScode工具打开代码目录（请参考[开发环境搭建教程](/guide/start/env.html)安装好VScode 及 Live Server插件），运行index.html页面即可。
- 
-如果只想浏览单个示例，也可以参考下图通过Live Server访问对应示例的页面 
- ![image](http://mars3d.cn/dev/img/guide/start-example-run.jpg) 
+ ![image](http://mars3d.cn/dev/img/guide/start-example-down.jpg) 
 
   
-### 运行方式2：运行npm命令
+### 
+Before running the operating environment, it is recommended to start from [http://mars3d.cn/download.html]( http://mars3d.cn/download.html) Download the latest mars3d class library and cover it to the `lib/` directory, and update mars3d to the latest version. 
 
-#### 首次运行前安装依赖
-```
-npm install
-
-//或使用代理
-npm i --registry=http://registry.taobao.org
-```
-
-#### 启动开发环境
-```
-npm run serve
-```
-
-#### 编译构建
-```
-npm run build //编译后生成在dist目录，拷贝出去发布即可
-npm run serve:dist  //测试dist运行状态
-
-// 或者将dist文件夹发布在自己的服务数据上
-```
-
+### Running method 1: Use vscode and its plug-ins to 
  
-### 运行效果  
- [在线体验](http://mars3d.cn/example.html?type=es5)
+directly run and browse `index under any development editor (such as vscode, etc.) or http server (such as node, nginx, tomcat, IIS, etc.).html` or corresponding example pages in the example directory. 
 
- ![image](http://mars3d.cn/dev/img/guide/start-example-es5.jpg) 
+It is recommended to use the VScode tool to open the code directory (please refer to the [Development Environment Setup Tutorial] (/guide/start/env.html) to install the VScode and Live Server plug-ins) and run the index.html page. 
+ 
+If you only want to browse a single example, you can also refer to the figure below to access the page of the corresponding example through Live Server 
+ ! [image](http://mars3d.cn/dev/img/guide/start-example-run.jpg) 
+
+  
+### Running mode 2: Run npm command 
+
+#### Install dependencies before running for the first time
+``` 
+npm install 
+
+//or use proxy 
+npm i --registry=http://registry.taobao.org 
+``` 
+
+#### Start the development environment 
+``` 
+npm run serve 
+``` 
+
+#### Compile and build 
+``` npm run build //After compilation, 
+it 
+is generated in the dist directory, copy it and publish it 
+npm run serve:dist //Test the dist running status 
+
+// Or publish the dist folder on your own service data``` 
+## 
+
+ # Running effect   
+ [online experience](http://mars3d.cn/example.html?type=es5) 
+
+ ![image](http://mars3d.cn/dev/img/guide/start-example-es5.jpg ) 
  
 
 
-## 如何反馈问题？
-- 发现您发现项目中存在的问题或者需要优化的地方；
-- 如果您有一些自己全新编写的示例，希望也开源与大家分享。
+## How to report a problem? 
+- Discover the problems you find in the project or areas that need optimization; 
+- If you have some newly written examples, you hope to open source them and share them with everyone. 
 
-提交方式：
-- 欢迎在github或gitee上[提交PR](https://www.baidu.com/s?wd=在GitHub上提交PR) 
-- 如果对git不熟悉，也可以整理示例代码发送邮件到 wh@marsgis.cn 由我们来整理集成。
-
-
-## 项目架构
+Submission method: 
+- Welcome to [Submit PR] on github or gitee (https://www.baidu.com/s?wd= Submit PR on GitHub) 
+- If you are not familiar with git, you can also organize the sample code and send it to wh@marsgis.cn We will organize and integrate it. 
 
 
-### 主要目录说明
-```
-mars3d-es5-example
-│───config              列表配置信息及截图
-│───example             示例代码，每个示例页面可以单独运行【重要】
-│───css                 公共CSS样式文件
-│───img                 公共图片文件
-│───js                  公共JS文件
-│───lib                 示例依赖的类库
-│   └─include-lib.js    lib类库统一配置文件
-│───widgets             基础项目模块资源，便于演示部分示例
-└───index.html          列表页（访问入口）
-```
-
-与示例相关的2个主要目录是：`example`、`lib`。
+## Project structure 
 
 
-#### include-lib.js文件说明 
+### Main directory description 
+``` 
+mars3d-es5-example 
+│───config list configuration information and screenshots 
+│───example sample code, each example page can be run independently [Important] 
+│─── css Public CSS style file 
+│───img Public image file 
+│───js Public JS file 
+│───lib Class library that the example depends on 
+│ └─include-lib.js lib class library unified configuration file 
+│───widgets Basic project module resources to facilitate demonstration of some examples└───index.html 
+list page (access entrance) 
+`` 
 
-我们当前原生JS版本`功能示例`页面，第三方类库及我们的sdk类库都存放在lib目录下，每个目录均有`README.md`文件说明该类库的github地址、官网和用途等信息。
+The two main directories related to examples are: `example` and `lib`. 
+
+
+#### The include-lib.js file describes 
+
+our current native JS version `Function Example` page, third-party libraries and our sdk class libraries are stored in the lib directory, and each directory has a `README.md` file Describe the github address, official website and purpose of the library. 
 
  ![image](http://mars3d.cn/dev/img/guide/start-includeLib-ml.jpg) 
 
-为了方便切换和引入第3方lib，我们编写了一个独立的js文件[include-lib.js](https://gitee.com/marsgis/mars3d-es5-example/blob/master/lib/include-lib.js)来统一调用使用第3方lib,在需要的页面按下面方式引入lib：
-```html
-<!--第三方lib-->
-<script type="text/javascript" src="/lib/include-lib.js" libpath="/lib/"
-    include="font-awesome,mars3d"></script>
-```
-该方式等价于（如不习惯include-lib.js，也可以改为下面演示的直接引入方式）： 
+In order to facilitate switching and introducing third-party lib, we wrote an independent js file [include-lib. js](https://gitee.com/marsgis/mars3d-es5-example/blob/master/lib/include-lib.js) to uniformly call and use the third-party lib, and introduce the lib on the required page as follows: 
+```html 
+<!--Third-party lib--> 
+<script type="text/javascript" src="/lib/include-lib.js" libpath="/lib/" 
+    include="font-awesome,mars3d "></script> 
+``` 
+This method is equivalent to (if you are not used to include-lib.js, you can also change to the direct introduction method demonstrated below): 
 
-```html
-<!--对应font-awesome-->
-<link rel="stylesheet" href="/lib/fonts/font-awesome/css/font-awesome.min.css">
+```html 
+<!--corresponds to font-awesome-- > 
+<link rel="stylesheet" href="/lib/fonts/font-awesome/css/font-awesome.min.css"> 
 
-<!--对应turf-->
-<script type="text/javascript" src="/lib/turf/turf.min.js"></script>
+<!--corresponds to turf--> 
+<script type="text/javascript" src ="/lib/turf/turf.min.js"></script> 
 
-<!--对应mars3d-->
-<link rel="stylesheet" href="/lib/Cesium/Widgets/widgets.css">
-<script type="text/javascript" src="/lib/Cesium/Cesium.js"></script>
-<link rel="stylesheet" href="/lib/mars3d/mars3d.css">
-<script type="text/javascript" src="/lib/mars3d/mars3d.js"></script>
-```
+<!--corresponds to mars3d--> 
+<link rel="stylesheet" href="/lib/Cesium/Widgets/widgets.css"> 
+< script type="text/javascript" src="/lib/Cesium/Cesium.js"></script> 
+<link rel="stylesheet" href="/lib/mars3d/mars3d.css"> 
+<script type=" text/javascript" src="/lib/mars3d/mars3d.js"></script> ` 
+`` 
  
  
-## 添加新的示例
-复制`example\00_model.html`文件后改名，并修改代码即可。
+## Add new example 
+Copy `example\00_model.html` file and then rename it and modify the code. 
 
 
 
-## 阅读示例源码和调试学习
- 示例的目的是演示平台的每个功能点，可以按需求或兴趣去学习每一个示例，
-- （1）学习中可以查询相关类的API文档
-- （2）尝试修改源码中参数、方法等，来体验不同的呈现效果。
+## Read the sample source code and debug and learn. 
+ The purpose of the sample is to demonstrate each function point of the platform. You can study each sample according to your needs or interests. 
+- (1) You can query the API documents of related classes during learning 
+- (2) Try to modify Parameters, methods, etc. in the source code to experience different rendering effects. 
 
 
-## 开发中常见问题
+## Frequently asked questions during development 
 
 
-### 1. 局域网离线使用时注意事项
- 平台所有代码层面来说支持离线运行和使用的，但需要注意的是离线时的地图服务的相关处理。
+### 1. Things to note when using LAN offline
+ All code levels of the platform support offline operation and use, but you need to pay attention to the related processing of map services when offline. 
  
- 如果局域网内有相关地形、卫星底图服务可以按内网服务类型和URL地址替换下`config.json`或`构造Map的代码中`的默认地形和底图。
+ If there are relevant terrain and satellite base map services in the local area network, you can replace the default terrain and base map in `config.json` or `code for constructing Map` according to the intranet service type and URL address. 
 
- 如果局域网内没有相关服务，可以按下面处理：
-- 修改config.json中`terrain`配置中，将已有的`"show": true`配置，改为`"show": false` 
-- 修改config.json中`basemaps`数组配置中，将已有的`"show": true`的图层，将该值改为`"show": false` ，并将单张图片或离线地图加上`"show": true`，并修改相关URL地址。
-- 您也可以参考教程[发布三维数据服务](/guide/data/server.html)进行部署离线地图服务，里面也有一些示例离线数据。
-
-
-
-## Mars3D 是什么 
->  `Mars3D平台` 是[火星科技](http://marsgis.cn/)研发的一款基于 WebGL 技术实现的三维客户端开发平台，基于[Cesium](https://cesium.com/cesiumjs/)优化提升与B/S架构设计，支持多行业扩展的轻量级高效能GIS开发平台，能够免安装、无插件地在浏览器中高效运行，并可快速接入与使用多种GIS数据和三维模型，呈现三维空间的可视化，完成平台在不同行业的灵活应用。
-
- > Mars3D平台可用于构建无插件、跨操作系统、 跨浏览器的三维 GIS 应用程序。平台使用 WebGL 来进行硬件加速图形化，跨平台、跨浏览器来实现真正的动态大数据三维可视化。通过 Mars3D产品可快速实现浏览器和移动端上美观、流畅的三维地图呈现与空间分析。
-
-### 相关网站 
-- Mars3D官网：[http://mars3d.cn](http://mars3d.cn)  
-
-- Mars3D开源项目列表：[https://github.com/marsgis/mars3d](https://github.com/marsgis/mars3d)
+ If there are no related services in the LAN, you can proceed as follows: 
+- Modify the `terrain` configuration in config.json and change the existing `"show": true` configuration to `"show": false` 
+- Modify the config. In the `basemaps` array configuration in json, change the existing `"show": true` layer to `"show": false`, and add `"show to the single picture or offline map ": true`, and modify the relevant URL address. 
+- You can also refer to the tutorial [Publish 3D Data Service] (/guide/data/server.html) to deploy offline map services, which also contains some sample offline data. 
 
 
-## 版权说明
-1. Mars3D平台由[火星科技](http://marsgis.cn/)自主研发，拥有所有权利。
-2. 任何个人或组织可以在遵守相关要求下可以免费无限制使用。
+
+## What is Mars3D 
+> `Mars3D Platform` is a 3D client development platform based on WebGL technology developed by [Mars Technology](http://marsgis.cn/), based on [Cesium](https://cesium .com/cesiumjs/) optimization and B/S architecture design, a lightweight and high-performance GIS development platform that supports multi-industry expansion, can run efficiently in the browser without installation and plug-ins, and can be quickly accessed and used. A variety of GIS data and three-dimensional models present the visualization of three-dimensional space, completing the flexible application of the platform in different industries. 
+
+ > The Mars3D platform can be used to build plug-in-free, cross-operating system, and cross-browser 3D GIS applications. The platform uses WebGL for hardware-accelerated graphics, cross-platform and cross-browser to achieve truly dynamic big data three-dimensional visualization. Mars3D products can quickly realize beautiful and smooth 3D map presentation and spatial analysis on browsers and mobile terminals. 
+
+### Related websites 
+- Mars3D official website: [http://mars3d.cn](http://mars3d.cn)   
+
+- Mars3D open source project list: [https://github.com/marsgis/mars3d](https:/ /github.com/marsgis/mars3d) 
+
+
+## Copyright statement 
+1. The Mars3D platform is independently developed by [Mars Technology] (http://marsgis.cn/) and owns all rights. 
+2. Any individual or organization can use it for free and without restriction, subject to complying with relevant requirements.
