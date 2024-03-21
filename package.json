@@ -1,7 +1,7 @@
 {
   "name": "mars3d-es5-example",
   "version": "3.7.0",
-  "description": "Mars3D平台,原生JS版本功能示例",
+  "description": "Mars3D platform, native JS version function example",
   "main": "index.js",
   "scripts": {
     "serve": "http-server",
@@ -57,7 +57,7 @@
     "3dgis",
     "webgis"
   ],
-  "author": "火星科技",
+  "author": "Mars Technology",
   "license": "Apache-2.0",
   "homepage": "http://mars3d.cn"
 }

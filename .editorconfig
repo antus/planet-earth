@@ -1,21 +1,21 @@
-root = true #表示是最顶层的配置文件，发现设为true时，才会停止查找.editorconfig文件
+root = true #Indicates that it is the top-level configuration file. When it is set to true, it will stop searching for the .editorconfig file.
 
-# 匹配全部文件
+# Match all files
 [*]
-# 缩进风格，可选"space"、"tab"
+# Indentation style, optional "space", "tab"
 indent_style = space
-# 缩进的空格数
+#Number of spaces for indentation
 indent_size = 2
-# 结尾换行符
+# trailing newline character
 end_of_line = lf
-# 设置字符集
-charset = utf-8
-# 删除一行中的前后空格
+# Set character set
+charset=utf-8
+# Remove leading and trailing spaces in a line
 trim_trailing_whitespace = true
-# 在文件结尾插入新行
+# Insert new line at end of file
 insert_final_newline = true
 max_line_length = 150
 
 [*.md]
-# 删除一行中的前后空格
+# Remove leading and trailing spaces in a line
 trim_trailing_whitespace = false

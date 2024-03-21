@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
-//当前代码来源：https://github.com/muyao1987/web-dist
+//Current code source: https://github.com/muyao1987/web-dist
 
-//在gulpfile中先载入gulp包，因为这个包提供了一些API
+//Load the gulp package first in gulpfile, because this package provides some APIs
 const gulp = require("gulp")
 const babel = require("gulp-babel")
 const plumber = require("gulp-plumber")
@@ -16,16 +16,16 @@ const cssmin = require("gulp-clean-css")
 const fs = require("fs")
 const path = require("path")
 
-//////////////////////////以下参数可以根据实际情况调整/////////////////////
-const copyright = "版权所有 火星科技 http://marsgis.cn"
+////////////////////////////The following parameters can be adjusted according to the actual situation////////////////// ////
+const copyright = "Copyright Mars Technology http://marsgis.cn"
 
-//这个时间后修改的文件不处理（增量更新时使用）
+//Files modified after this time will not be processed (used during incremental updates)
 let lastTime
 
-//排除不拷贝的文件类型后缀
+//Exclude file type suffixes that are not copied
 const noCopyFileType = [".psd", ".doc", ".docx", ".txt", ".md", ".zip", ".rar"]
 
-//排除不拷贝的目录
+//Exclude directories that are not copied
 const noCopyPathDef = [
   ".svn",
   ".git",
@@ -43,14 +43,14 @@ const noCopyPathDef = [
   "-src."
 ]
 
-//定义不做压缩混淆直接拷贝的目录
+//Define the directory to be copied directly without compression and obfuscation
 const noPipePathDef = ["lib"]
-////////////////////自定义设置////////////////////
+/////////////////////Custom settings//////////////////////
 
-//需要压缩混淆的根目录
+//Need to compress the obfuscated root directory
 let srcPath = "./"
 
-//生成到的目标目录
+//generated target directory
 let distPath = "dist"
 
 let noPipePath = []
@@ -58,21 +58,21 @@ let noCopyPath = ["example-dev", "example-test"]
 
 // lastTime = new Date("2022-08-01 08:00:00")
 
-////////////////////压缩混淆////////////////////
+/////////////////////Compression confusion//////////////////////
 
 const fileList = []
 gulp.task("build", (done) => {
-  // console.log('--------代码编译开始--------');
+  // console.log('--------Code compilation starts--------');
 
-  console.log("开始处理目录：" + srcPath)
-  console.log("生成至目录：" + distPath)
+  console.log("Start processing directory: " + srcPath)
+  console.log("Generate to directory: " + distPath)
 
   travel(srcPath)
 
   fileList.forEach((t) => {
     let srcFile = t.pathname
     const outFilePath = distPath
-    // console.log('读取：' + srcFile + '\n输出：' + outFilePath + '\n');
+    // console.log('Read: ' + srcFile + '\nOutput: ' + outFilePath + '\n');
 
     let stat = fs.statSync(srcFile)
     if (lastTime != null && stat.mtime < lastTime) {
@@ -98,7 +98,7 @@ gulp.task("build", (done) => {
           .pipe(
             utf8Convert({
               encNotMatchHandle: function (file) {
-                throwOnlyCopy(srcPath, srcFile, outFilePath, " 编码可能不是utf-8，避免乱码请检查！")
+                throwOnlyCopy(srcPath, srcFile, outFilePath, "The encoding may not be utf-8, please check to avoid garbled characters!")
               }
             })
           )
@@ -133,7 +133,7 @@ gulp.task("build", (done) => {
           .pipe(
             utf8Convert({
               encNotMatchHandle: function (file) {
-                throwOnlyCopy(srcPath, srcFile, outFilePath, " 编码可能不是utf-8，避免乱码请检查！")
+                throwOnlyCopy(srcPath, srcFile, outFilePath, "The encoding may not be utf-8, please check to avoid garbled characters!")
               }
             })
           )
@@ -141,7 +141,7 @@ gulp.task("build", (done) => {
             cheerio({
               run: function ($, file) {
                 $("script").each(function () {
-                  // html内联js编译
+                  // html inline js compilation
                   const script = $(this)
                   try {
                     if (!script.attr("src")) {
@@ -154,8 +154,8 @@ gulp.task("build", (done) => {
                       script.text(result.code)
                     }
                   } catch (err) {
-                    console.log("转换html出错了", err)
-                    throwOnlyCopy(srcPath, srcFile, outFilePath, "html内联js编译错误！")
+                    console.log("Error converting html", err)
+                    throwOnlyCopy(srcPath, srcFile, outFilePath, "html inline js compilation error!")
                   }
                 })
               }
@@ -163,14 +163,14 @@ gulp.task("build", (done) => {
           )
           .pipe(
             htmlmin({
-              collapseWhitespace: true, //清除空格，压缩html，作用比较大，引起的改变压缩量也特别大
-              collapseBooleanAttributes: true, //省略布尔属性的值，比如：<input checked="checked"/>,那么设置这个属性后，就会变成 <input checked/>
-              removeComments: true, //清除html中注释
-              removeEmptyAttributes: true, //清除所有的空属性
-              removeScriptTypeAttributes: true, //清除所有script标签中的type="text/javascript"属性
-              removeStyleLinkTypeAttributes: true, //清楚所有Link标签上的type属性
-              minifyJS: true, //压缩html中的javascript代码
-              minifyCSS: true //压缩html中的css代码
+              collapseWhitespace: true, //Clear spaces and compress html, which has a relatively large effect and causes a large amount of compression changes.
+              collapseBooleanAttributes: true, //Omit the value of the Boolean attribute, such as: <input checked="checked"/>, then after setting this attribute, it will become <input checked/>
+              removeComments: true, //Clear comments in html
+              removeEmptyAttributes: true, //Clear all empty attributes
+              removeScriptTypeAttributes: true, //Clear the type="text/javascript" attribute in all script tags
+              removeStyleLinkTypeAttributes: true, //Clear the type attribute on all Link tags
+              minifyJS: true, //Compress javascript code in html
+              minifyCSS: true //Compress the css code in html
             })
           )
           .pipe(header(bannerHtml, bannerData))
@@ -191,15 +191,15 @@ gulp.task("build", (done) => {
           .pipe(
             utf8Convert({
               encNotMatchHandle: function (file) {
-                throwOnlyCopy(srcPath, srcFile, outFilePath, " 编码可能不是utf-8，避免乱码请检查！")
+                throwOnlyCopy(srcPath, srcFile, outFilePath, "The encoding may not be utf-8, please check to avoid garbled characters!")
               }
             })
           )
           .pipe(
             cssmin({
-              advanced: false, //类型：Boolean 默认：true [是否开启高级优化（合并选择器等）]
-              compatibility: "ie8", //保留ie7及以下兼容写法 类型：String 默认：''or'*' [启用兼容模式； 'ie7'：IE7兼容模式，'ie8'：IE8兼容模式，'*'：IE9+兼容模式]
-              keepSpecialComments: "*" //保留所有特殊前缀 当你用autoprefixer生成的浏览器前缀，如果不加这个参数，有可能将会删除你的部分前缀
+              advanced: false, //Type: Boolean Default: true [Whether to enable advanced optimization (merging selectors, etc.)]
+              compatibility: "ie8", //Reserve ie7 and below compatibility writing type: String Default: ''or'*' [Enable compatibility mode; 'ie7': IE7 compatibility mode, 'ie8': IE8 compatibility mode, '*': IE9+ compatibility mode]
+              keepSpecialComments: "*" //Keep all special prefixes when you use the browser prefix generated by autoprefixer. If you do not add this parameter, some of your prefixes may be deleted.
             })
           )
           .pipe(header(banner, bannerData))
@@ -216,15 +216,15 @@ gulp.task("build", (done) => {
   })
   done()
 
-  // console.log('--------代码编译完成--------');
+  // console.log('--------Code compilation completed--------');
 })
 
-//遍历目录获取文件列表
+//Traverse the directory to get the file list
 function travel(dir) {
   fs.readdirSync(dir).forEach(function (file) {
     let pathname = path.join(dir, file)
     if (fs.statSync(pathname).isDirectory()) {
-      //排除不拷贝的目录，文件不会生成到目标目录中
+      //Exclude directories that are not copied, and the files will not be generated in the target directory.
       if (noCopyPathDef.some((t) => pathname.indexOf(t) !== -1)) {
         return
       }
@@ -237,7 +237,7 @@ function travel(dir) {
       let fileType = path.parse(pathname).ext
       // console.log(pathname);
 
-      //排除不拷贝的文件，文件不会生成到目标目录中
+      //Exclude files that are not copied and the files will not be generated in the target directory.
       if (noCopyPathDef.some((t) => pathname.indexOf(t) !== -1)) {
         return
       }
@@ -248,9 +248,9 @@ function travel(dir) {
         return
       }
 
-      //不做压缩处理,直接原样拷贝过去
+      //No compression, just copy it as it is
       if (
-        noPipePath.some((t) => pathname.indexOf("\\Cesium\\") !== -1) || //不对Cesium目录压缩
+        noPipePath.some((t) => pathname.indexOf("\\Cesium\\") !== -1) || //Do not compress the Cesium directory
         noPipePathDef.some((t) => pathname.indexOf(t) !== -1) ||
         noPipePath.some((t) => pathname.indexOf(t) !== -1)
       ) {
@@ -265,9 +265,9 @@ function travel(dir) {
   })
 }
 
-// 抛出错误信息，直接copy文件
+// Throw an error message and copy the file directly
 function throwOnlyCopy(srcPath, pathname, outFilePath, message) {
-  console.log(`[转换出错了] ${pathname}`, message)
+  console.log(`[Conversion error] ${pathname}`, message)
   if (pathname && outFilePath) {
     gulp
       .src(pathname, {
@@ -280,14 +280,14 @@ function throwOnlyCopy(srcPath, pathname, outFilePath, message) {
 // eslint-disable-next-line no-extend-native
 Date.prototype.format = function (fmt) {
   let o = {
-    "M+": this.getMonth() + 1, //月份
+    "M+": this.getMonth() + 1, //month
     "d+": this.getDate(), //日
     "h+": this.getHours() % 12 == 0 ? 12 : this.getHours() % 12, //小时
-    "H+": this.getHours(), //小时
+    "H+": this.getHours(), //hours
     "m+": this.getMinutes(), //分
     "s+": this.getSeconds(), //秒
-    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-    S: this.getMilliseconds() //毫秒
+    "q+": Math.floor((this.getMonth() + 3) / 3), //Quarter
+    S: this.getMilliseconds() //Milliseconds
   }
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length))
