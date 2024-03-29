@@ -2164,7 +2164,7 @@
   },
   {
     "name": "3DTiles三维模型",
-    "icon": "fa-building-o",
+    "icon": "fa-building",
     "children": [
       {
         "name": "各类模型的支持",

@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-function initMap() {
-  // 创建三维地球场景
-  const map = new mars3d.Map("mars3dContainer", {
+function initMap(mapOptions) {
+
+  var options = mars3d.Util.merge(mapOptions, {
     scene: {
       center: { lat: 30.054604, lng: 108.885436, alt: 17036414, heading: 0, pitch: -90 },
       showSun: true,
@@ -24,7 +24,7 @@ function initMap() {
         enableZoom: true
       },
       mapProjection: mars3d.CRS.EPSG3857, // 2D下展示墨卡托投影
-      mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL // 2D下左右一直可以滚动重复世界地图
+      mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL// 2D下左右一直可以滚动重复世界地图
     },
     control: {
       baseLayerPicker: true, // basemaps底图切换按钮
@@ -49,9 +49,13 @@ function initMap() {
     ]
   })
 
+  // 创建三维地球场景
+  const map = new mars3d.Map("mars3dContainer", options)
+
   // 打印测试信息
   console.log("mars3d的Map主对象构造完成", map)
   console.log("其中Cesium原生的Cesium.Viewer为", map.viewer)
+
 
   console.log("当前电脑是否支持webgl2", Cesium.FeatureDetection.supportsWebgl2(map.scene))
 

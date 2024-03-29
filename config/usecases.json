@@ -1,0 +1,2872 @@
+[
+	{
+		"name": "example.agriculture",
+		"download": false,
+		"icon": "fa-tractor",
+		"open": false,
+		"children": [
+			{
+				"name": "example.precision-farming",
+				"details": "example.precision-farming.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "precision-farming/1.png",
+				"main": "map/create/options",
+				"pdf": "/config/pdf/precision-farming/1.pdf",
+				"link": "https://gisgeography.com/farming-agriculture-technology/"
+			},
+			{
+				"name": "example.crop-mapping-and-monitoring",
+				"details": "example.crop-mapping-and-monitoring.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "crop-mapping-and-monitoring/1.png",
+				"link": "https://eo4society.esa.int/training_uploads/LTC2022/2_Tuesday/13_LTC22_ppt_CropType_DianeH.pdf"
+			},
+			{
+				"name": "example.irrigation-management",
+				"details": "example.irrigation-management.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "irrigation-management/1.png",
+				"link": "https://www.fao.org/support-to-investment/news/detail/en/c/1634668/"
+			},
+			{
+				"name": "example.pest-and-disease-detection",
+				"details": "example.pest-and-disease-detection.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "pest-and-disease-detection/1.png",
+				"link": "https://biblio.iita.org/documents/S10ArtBouwmeesterPotentialNothomNodev.pdf-d8da7fe073fa447239659b41dd71ed7d.pdf"
+			},
+			{
+				"name": "example.crop-productivity",
+				"details": "example.crop-productivity.description",
+				"icon": "fas fa-building",
+				"thumbnail": "crop-productivity/1.png",
+				"main": "",
+				"link": "http://www.satimagingcorp.com/applications/natural-resources/agriculture/agriculture-agrowatch-green-vegetation-index-es/"
+			},
+			{
+				"name": "example.soil-health-monitoring",
+				"details": "example.soil-health-monitoring.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "soil-health-monitoring/1.png",
+				"link": "https://www.sciencedirect.com/science/article/abs/pii/S0341816212002202"
+			},
+			{
+				"name": "example.land-suitability-mapping",
+				"details": "example.land-suitability-mapping.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "land-suitability-mapping/1.png",
+				"link": "https://www.sciencedirect.com/science/article/abs/pii/S0341816212002202"
+			},
+			{
+				"name": "example.climate-change-impact-analysis",
+				"details": "example.climate-change-impact-analysis.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "climate-change-impact-analysis/1.png",
+				"link": "https://www.sciencedirect.com/science/article/abs/pii/S0341816212002202"
+			},
+			{
+				"name": "example.3d-scanners-for-biomass",
+				"details": "example.3d-scanners-for-biomass.description",
+				"icon": "fas fa-building",
+				"thumbnail": "3d-scanners-for-biomass/10.png",
+				"main": ""
+			},
+			{
+				"name": "example.real-time-crop-yields",
+				"details": "example.real-time-crop-yields.description",
+				"icon": "fas fa-building",
+				"thumbnail": "real-time-crop-yields/3.png",
+				"main": ""
+			},
+			{
+				"name": "example.current-food-security",
+				"details": "example.current-food-security.description",
+				"icon": "fas fa-building",
+				"thumbnail": "current-food-security/11.jpeg",
+				"main": ""
+			},
+			{
+				"name": "example.crop-assimilation-model",
+				"details": "example.crop-assimilation-model.description",
+				"icon": "fas fa-building",
+				"thumbnail": "crop-assimilation-model/3.png",
+				"main": ""
+			},
+			{
+				"name": "example.water-stress",
+				"details": "example.water-stress.description",
+				"icon": "fas fa-building",
+				"thumbnail": "water-stress/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.erosion-productivity-impact-calculator-(epic)",
+				"details": "example.erosion-productivity-impact-calculator-(epic).description",
+				"icon": "fas fa-building",
+				"thumbnail": "erosion-productivity-impact-calculator-(epic)/0.png",
+				"main": ""
+			},
+			{
+				"name": "example.farm-preservation",
+				"details": "example.farm-preservation.description",
+				"icon": "fas fa-building",
+				"thumbnail": "farm-preservation/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.drought",
+				"details": "example.drought.description",
+				"icon": "fas fa-building",
+				"thumbnail": "drought/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.crop-forecasting",
+				"details": "example.crop-forecasting.description",
+				"icon": "fas fa-building",
+				"thumbnail": "crop-forecasting/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.drainage-ditches",
+				"details": "example.drainage-ditches.description",
+				"icon": "fas fa-building",
+				"thumbnail": "drainage-ditches/1.png",
+				"main": "",
+				"link": "http://www.microimages.com/documentation/TechGuides/78StereoDrawTools.pdf"
+			}
+		],
+		"thumbnail": "agriculture/1.png"
+	},
+	{
+		"name": "example.defense-and-security",
+		"download": false,
+		"icon": "fa-satellite-dish",
+		"open": false,
+		"children": [
+			{
+				"name": "example.border-surveillance",
+				"details": "example.border-surveillance.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "border-surveillance/1.png",
+				"link": "https://zoz.cbk.waw.pl/wp-content/uploads/2017/03/Land-Border-Monitoring-with-remote-sensing-technologies.pdf"
+			},
+			{
+				"name": "example.disaster-response-and-management",
+				"details": "example.disaster-response-and-management.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "disaster-response-and-management/1.png",
+				"link": "https://geographicbook.com/the-role-of-gis-and-remote-sensing-in-disaster-response-and-management/"
+			},
+			{
+				"name": "example.urban-security-monitoring",
+				"details": "example.urban-security-monitoring.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "urban-security-monitoring/1.png",
+				"link": "https://www.researchgate.net/publication/340123989_Security_Assessment_of_Urban_Areas_through_a_GIS-Based_Analysis_of_Lighting_Data_Generated_by_IoT_Sensors"
+			},
+			{
+				"name": "example.maritime-domain-awareness",
+				"details": "example.maritime-domain-awareness.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "maritime-domain-awareness/1.png",
+				"link": "https://meetingorganizer.copernicus.org/ISRSE36/ISRSE36-433-2.pdf"
+			},
+			{
+				"name": "example.infrastructure-protection-and-monitoring",
+				"details": "example.infrastructure-protection-and-monitoring.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "infrastructure-protection-and-monitoring/1.png",
+				"link": "https://www.sciencedirect.com/science/article/pii/S1877705816301035"
+			},
+			{
+				"name": "example.military-operations-planning",
+				"details": "example.military-operations-planning.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "military-operations-planning/1.png",
+				"link": "https://proceedings.esri.com/library/userconf/proc15/papers/933_737.pdf"
+			},
+			{
+				"name": "example.wildfire-rescue",
+				"details": "example.wildfire-rescue.description",
+				"icon": "fas fa-building",
+				"thumbnail": "wildfire-rescue/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.emergency-evacuation-planning",
+				"details": "example.emergency-evacuation-planning.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "emergency-evacuation-planning/1.png",
+				"link": "https://www.researchgate.net/publication/259867895_A_GIS-based_DSS_for_evacuation_planning"
+			},
+			{
+				"name": "example.illegal-activity-monitoring",
+				"details": "example.illegal-activity-monitoring.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "illegal-activity-monitoring/1.png",
+				"link": "https://www.researchgate.net/publication/287111015_AUTOMATIC_URBAN_ILLEGAL_BUILDING_DETECTION_USING_MULTI-TEMPORAL_SATELLITE_IMAGES_AND_GEOSPATIAL_INFORMATION_SYSTEMS"
+			},
+			{
+				"name": "example.asset-and-resource-tracking",
+				"details": "example.asset-and-resource-tracking.description",
+				"icon": "fas fa-fill-drip",
+				"thumbnail": "asset-and-resource-tracking/1.png",
+				"link": "https://experience.arcgis.com/experience/5273ea55a9f14d8f851f5c3695268c8e/page/Asset-and-Resource-Inventory/"
+			},
+			{
+				"name": "example.crime-patterns",
+				"details": "example.crime-patterns.description",
+				"icon": "fas fa-building",
+				"thumbnail": "crime-patterns/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.incident-map",
+				"details": "example.incident-map.description",
+				"icon": "fas fa-building",
+				"thumbnail": "incident-map/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.predictive-policing",
+				"details": "example.predictive-policing.description",
+				"icon": "fas fa-building",
+				"thumbnail": "predictive-policing/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.forensic-gis",
+				"details": "example.forensic-gis.description",
+				"icon": "fas fa-building",
+				"thumbnail": "forensic-gis/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.geographic-profiling",
+				"details": "example.geographic-profiling.description",
+				"icon": "fas fa-building",
+				"thumbnail": "geographic-profiling/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.traffic-violations",
+				"details": "example.traffic-violations.description",
+				"icon": "fas fa-building",
+				"thumbnail": "traffic-violations/1.png",
+				"main": ""
+			}
+		],
+		"thumbnail": "crime/1.png"
+	},
+	{
+		"name": "example.environment",
+		"download": false,
+		"icon": "fa-leaf",
+		"open": false,
+		"children": [
+			{
+				"name": "example.environment",
+				"download": false,
+				"icon": "fa-leaf",
+				"open": false,
+				"children": [
+					{
+						"name": "example.environmental-impact-assessment",
+						"details": "example.environmental-impact-assessment.description",
+						"icon": "fas fa-building",
+						"thumbnail": "environmental-impact-assessment/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.site-remediation",
+						"details": "example.site-remediation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "site-remediation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.fire-growth-simulation",
+						"details": "example.fire-growth-simulation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "fire-growth-simulation/1.png",
+						"main": "",
+						"link": "https://www.firelab.org/project/behaveplus"
+					},
+					{
+						"name": "example.surface-water-flow",
+						"details": "example.surface-water-flow.description",
+						"icon": "fas fa-building",
+						"thumbnail": "surface-water-flow/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.non-point-source-pollution",
+						"details": "example.non-point-source-pollution.description",
+						"icon": "fas fa-building",
+						"thumbnail": "non-point-source-pollution/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.wetland-inventory",
+						"details": "example.wetland-inventory.description",
+						"icon": "fas fa-building",
+						"thumbnail": "wetland-inventory/1.png",
+						"main": "",
+						"link": "http://www.fws.gov/wetlands/"
+					},
+					{
+						"name": "example.invasive-species-modular-dispersal",
+						"details": "example.invasive-species-modular-dispersal.description",
+						"icon": "fas fa-building",
+						"thumbnail": "invasive-species-modular-dispersal/1.png",
+						"main": "",
+						"link": "https://github.com/ferrouswheel/mdig/"
+					},
+					{
+						"name": "example.storm-water-runoff",
+						"details": "example.storm-water-runoff.description",
+						"icon": "fas fa-building",
+						"thumbnail": "storm-water-runoff/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.permafrost",
+						"details": "example.permafrost.description",
+						"icon": "fas fa-building",
+						"thumbnail": "permafrost/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "environment/1.png"
+			},
+			{
+				"name": "example.forestry",
+				"download": false,
+				"icon": "fa-tree",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Forestry-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.forest-inventory",
+						"details": "example.forest-inventory.description",
+						"icon": "fas fa-building",
+						"thumbnail": "forest-inventory/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.deforestation",
+						"details": "example.deforestation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "deforestation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.reforestation",
+						"details": "example.reforestation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "reforestation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.vertical-point-profile",
+						"details": "example.vertical-point-profile.description",
+						"icon": "fas fa-building",
+						"thumbnail": "vertical-point-profile/1.png",
+						"main": "",
+						"link": "http://www.microimages.com/documentation/html/useTNTfor/UseLidar.htm"
+					},
+					{
+						"name": "example.cut-lines",
+						"details": "example.cut-lines.description",
+						"icon": "fas fa-building",
+						"thumbnail": "cut-lines/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.illegal-logging",
+						"details": "example.illegal-logging.description",
+						"icon": "fas fa-building",
+						"thumbnail": "illegal-logging/1.png",
+						"main": "",
+						"link": "http://www.globalforestwatch.org/"
+					},
+					{
+						"name": "example.forest-carbon-reserves",
+						"details": "example.forest-carbon-reserves.description",
+						"icon": "fas fa-building",
+						"thumbnail": "forest-carbon-reserves/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.global-forest-watch",
+						"details": "example.global-forest-watch.description",
+						"icon": "fas fa-building",
+						"thumbnail": "global-forest-watch/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.vegetation-potential",
+						"details": "example.vegetation-potential.description",
+						"icon": "fas fa-building",
+						"thumbnail": "vegetation-potential/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.leaf-area-index",
+						"details": "example.leaf-area-index.description",
+						"icon": "fas fa-building",
+						"thumbnail": "leaf-area-index/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.4d-gis",
+						"details": "example.4d-gis.description",
+						"icon": "fas fa-building",
+						"thumbnail": "4d-gis/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.forest-disease",
+						"details": "example.forest-disease.description",
+						"icon": "fas fa-building",
+						"thumbnail": "forest-disease/1.png",
+						"main": "",
+						"link": "https://sites.google.com/site/fusiontablestalks/stories"
+					}
+				],
+				"thumbnail": "forestry/1.png"
+			},
+			{
+				"name": "example.climate-change",
+				"download": false,
+				"icon": "fa-wind",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Climate-Change-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.nasa-earth-observatory",
+						"details": "example.nasa-earth-observatory.description",
+						"icon": "fas fa-building",
+						"thumbnail": "nasa-earth-observatory/1.png",
+						"main": "",
+						"link": "http://earthobservatory.nasa.gov"
+					},
+					{
+						"name": "example.earth-interactions",
+						"details": "example.earth-interactions.description",
+						"icon": "fas fa-building",
+						"thumbnail": "earth-interactions/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.sea-level-rise",
+						"details": "example.sea-level-rise.description",
+						"icon": "fas fa-building",
+						"thumbnail": "sea-level-rise/1.png",
+						"main": "",
+						"link": "http://choices.climatecentral.org"
+					},
+					{
+						"name": "example.desertification",
+						"details": "example.desertification.description",
+						"icon": "fas fa-building",
+						"thumbnail": "desertification/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.land-surface-temperature-change",
+						"details": "example.land-surface-temperature-change.description",
+						"icon": "fas fa-building",
+						"thumbnail": "land-surface-temperature-change/1.png",
+						"main": "",
+						"link": "https://gisgeography.com/map-algebra-global-zonal-focal-local"
+					},
+					{
+						"name": "example.piecing-together-the-climate-change-puzzle",
+						"details": "example.piecing-together-the-climate-change-puzzle.description",
+						"icon": "fas fa-building",
+						"thumbnail": "piecing-together-the-climate-change-puzzle/1.png",
+						"main": "",
+						"link": "http://www.esri.com/software/arcgis/arcgisonline"
+					},
+					{
+						"name": "example.pollution-modelling",
+						"details": "example.pollution-modelling.description",
+						"icon": "fas fa-building",
+						"thumbnail": "pollution-modelling/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.bird-risk-and-richness",
+						"details": "example.bird-risk-and-richness.description",
+						"icon": "fas fa-building",
+						"thumbnail": "bird-risk-and-richness/1.png",
+						"main": "",
+						"link": "http://climate.audubon.org"
+					},
+					{
+						"name": "example.carbon-sequestration",
+						"details": "example.carbon-sequestration.description",
+						"icon": "fas fa-building",
+						"thumbnail": "carbon-sequestration/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.smog",
+						"details": "example.smog.description",
+						"icon": "fas fa-building",
+						"thumbnail": "smog/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.temperature-change",
+						"details": "example.temperature-change.description",
+						"icon": "fas fa-building",
+						"thumbnail": "temperature-change/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.land-change-modeller",
+						"details": "example.land-change-modeller.description",
+						"icon": "fas fa-building",
+						"thumbnail": "land-change-modeller/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.vegetation-indices",
+						"details": "example.vegetation-indices.description",
+						"icon": "fas fa-building",
+						"thumbnail": "vegetation-indices/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "climate-change/1.png"
+			},
+			{
+				"name": "example.ecology",
+				"download": false,
+				"icon": "fa-leaf",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Ecology-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.telemetry",
+						"details": "example.telemetry.description",
+						"icon": "fas fa-building",
+						"thumbnail": "telemetry/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.habitat-suitability",
+						"details": "example.habitat-suitability.description",
+						"icon": "fas fa-building",
+						"thumbnail": "habitat-suitability/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.land-facet-corridor-analysis",
+						"details": "example.land-facet-corridor-analysis.description",
+						"icon": "fas fa-building",
+						"thumbnail": "land-facet-corridor-analysis/1.png",
+						"main": "",
+						"link": "http://www.jennessent.com/arcgis/land_facets.htm"
+					},
+					{
+						"name": "example.landscape-fragmentation-tools-(lft)",
+						"details": "example.landscape-fragmentation-tools-(lft).description",
+						"icon": "fas fa-building",
+						"thumbnail": "landscape-fragmentation-tools-(lft)/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.migration-patterns",
+						"details": "example.migration-patterns.description",
+						"icon": "fas fa-building",
+						"thumbnail": "migration-patterns/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.dna-traits",
+						"details": "example.dna-traits.description",
+						"icon": "fas fa-building",
+						"thumbnail": "dna-traits/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.species-biodiversity",
+						"details": "example.species-biodiversity.description",
+						"icon": "fas fa-building",
+						"thumbnail": "species-biodiversity/1.png",
+						"main": "",
+						"link": "http://www.refractions.net/expertise/casestudies/2007-11-hectares-bc/"
+					},
+					{
+						"name": "example.honey-bees",
+						"details": "example.honey-bees.description",
+						"icon": "fas fa-building",
+						"thumbnail": "honey-bees/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.anthropogenic-disturbances",
+						"details": "example.anthropogenic-disturbances.description",
+						"icon": "fas fa-building",
+						"thumbnail": "anthropogenic-disturbances/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.migratory-birds",
+						"details": "example.migratory-birds.description",
+						"icon": "fas fa-building",
+						"thumbnail": "migratory-birds/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.shannons-h-diversity-index",
+						"details": "example.shannons-h-diversity-index.description",
+						"icon": "fas fa-building",
+						"thumbnail": "shannons-h-diversity-index/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.microclimates",
+						"details": "example.microclimates.description",
+						"icon": "fas fa-building",
+						"thumbnail": "microclimates/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.topographic-ruggedness-index",
+						"details": "example.topographic-ruggedness-index.description",
+						"icon": "fas fa-building",
+						"thumbnail": "topographic-ruggedness-index/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.fragstats",
+						"details": "example.fragstats.description",
+						"icon": "fas fa-building",
+						"thumbnail": "fragstats/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.biogeography",
+						"details": "example.biogeography.description",
+						"icon": "fas fa-building",
+						"thumbnail": "biogeography/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.species-modelling",
+						"details": "example.species-modelling.description",
+						"icon": "fas fa-building",
+						"thumbnail": "species-modelling/1.png",
+						"main": "",
+						"link": "https://plugins.qgis.org/plugins/QSDM/"
+					},
+					{
+						"name": "example.risk-of-extinction",
+						"details": "example.risk-of-extinction.description",
+						"icon": "fas fa-building",
+						"thumbnail": "risk-of-extinction/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.habitat-priority-planner",
+						"details": "example.habitat-priority-planner.description",
+						"icon": "fas fa-building",
+						"thumbnail": "habitat-priority-planner/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.sanctuary-ecologically-significant-areas",
+						"details": "example.sanctuary-ecologically-significant-areas.description",
+						"icon": "fas fa-building",
+						"thumbnail": "sanctuary-ecologically-significant-areas/1.png",
+						"main": "",
+						"link": "http://montereybay.noaa.gov/resourcepro/ebmi/sesa.html"
+					},
+					{
+						"name": "example.wa-tor-predator-prey-simulation",
+						"details": "example.wa-tor-predator-prey-simulation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "wa-tor-predator-prey-simulation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.earth-trends-modeler",
+						"details": "example.earth-trends-modeler.description",
+						"icon": "fas fa-building",
+						"thumbnail": "earth-trends-modeler/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.ecological-barrier",
+						"details": "example.ecological-barrier.description",
+						"icon": "fas fa-building",
+						"thumbnail": "ecological-barrier/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.geotagging-photos",
+						"details": "example.geotagging-photos.description",
+						"icon": "fas fa-building",
+						"thumbnail": "geotagging-photos/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "ecology/1.png"
+			},
+			{
+				"name": "example.soils",
+				"download": false,
+				"icon": "fa-sun",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Soils-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.soil-types",
+						"details": "example.soil-types.description",
+						"icon": "fas fa-building",
+						"thumbnail": "soil-types/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.soil-grid",
+						"details": "example.soil-grid.description",
+						"icon": "fas fa-building",
+						"thumbnail": "soil-grid/1.png",
+						"main": "",
+						"link": "http://soilgrids.org/"
+					},
+					{
+						"name": "example.texture-classification",
+						"details": "example.texture-classification.description",
+						"icon": "fas fa-building",
+						"thumbnail": "texture-classification/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.soil-moisture",
+						"details": "example.soil-moisture.description",
+						"icon": "fas fa-building",
+						"thumbnail": "soil-moisture/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.soil-survey-geographic-database-(ssurgo)",
+						"details": "example.soil-survey-geographic-database-(ssurgo).description",
+						"icon": "fas fa-building",
+						"thumbnail": "soil-survey-geographic-database-(ssurgo)/1.png",
+						"main": "",
+						"link": "http://websoilsurvey.nrcs.usda.gov"
+					},
+					{
+						"name": "example.water-retention-capacity",
+						"details": "example.water-retention-capacity.description",
+						"icon": "fas fa-building",
+						"thumbnail": "water-retention-capacity/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.erosion-reduction-strategy",
+						"details": "example.erosion-reduction-strategy.description",
+						"icon": "fas fa-building",
+						"thumbnail": "erosion-reduction-strategy/1.png",
+						"main": "",
+						"link": "http://www4.ncsu.edu/~hmitaso/erhome.html"
+					},
+					{
+						"name": "example.slope-parameters",
+						"details": "example.slope-parameters.description",
+						"icon": "fas fa-building",
+						"thumbnail": "slope-parameters/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.soil-loss-equation",
+						"details": "example.soil-loss-equation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "soil-loss-equation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.lead-concentration-in-soils",
+						"details": "example.lead-concentration-in-soils.description",
+						"icon": "fas fa-building",
+						"thumbnail": "lead-concentration-in-soils/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.ls-factor",
+						"details": "example.ls-factor.description",
+						"icon": "fas fa-building",
+						"thumbnail": "ls-factor/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.angle-of-repose",
+						"details": "example.angle-of-repose.description",
+						"icon": "fas fa-building",
+						"thumbnail": "angle-of-repose/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.salinity",
+						"details": "example.salinity.description",
+						"icon": "fas fa-building",
+						"thumbnail": "salinity/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.vegetation-erosion",
+						"details": "example.vegetation-erosion.description",
+						"icon": "fas fa-building",
+						"thumbnail": "vegetation-erosion/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "soils/1.png"
+			}
+		]
+	},
+	{
+		"name": "example.business-and-banking",
+		"download": false,
+		"icon": "fa-hotel",
+		"open": false,
+		"img": "https://gisgeography.com/wp-content/uploads/2016/04/Banking-GIS-Applications-678x213.png",
+		"children": [
+			{
+				"name": "example.augmented-reality",
+				"details": "example.augmented-reality.description",
+				"icon": "fas fa-building",
+				"thumbnail": "augmented-reality/1.png",
+				"main": "",
+				"link": "http://www.esri.com/news/arcuser/0311/augmented-reality-and-gis.html"
+			},
+			{
+				"name": "example.drive-time-analysis",
+				"details": "example.drive-time-analysis.description",
+				"icon": "fas fa-building",
+				"thumbnail": "drive-time-analysis/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.internet-of-things",
+				"details": "example.internet-of-things.description",
+				"icon": "fas fa-building",
+				"thumbnail": "internet-of-things/1.png",
+				"main": "",
+				"link": "https://gisgeography.com/internet-of-things-iot/"
+			},
+			{
+				"name": "example.nearest-location",
+				"details": "example.nearest-location.description",
+				"icon": "fas fa-building",
+				"thumbnail": "nearest-location/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.property-appraisal",
+				"details": "example.property-appraisal.description",
+				"icon": "fas fa-building",
+				"thumbnail": "property-appraisal/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.internet-geocoding",
+				"details": "example.internet-geocoding.description",
+				"icon": "fas fa-building",
+				"thumbnail": "internet-geocoding/1.png",
+				"main": "",
+				"link": "https://gisgeography.com/geocoding/"
+			},
+			{
+				"name": "example.geocoding-businesses",
+				"details": "example.geocoding-businesses.description",
+				"icon": "fas fa-building",
+				"thumbnail": "geocoding-businesses/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.reverse-geocoding",
+				"details": "example.reverse-geocoding.description",
+				"icon": "fas fa-building",
+				"thumbnail": "reverse-geocoding/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.integrated-freight-network-model",
+				"details": "example.integrated-freight-network-model.description",
+				"icon": "fas fa-building",
+				"thumbnail": "integrated-freight-network-model/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.gravity-models",
+				"details": "example.gravity-models.description",
+				"icon": "fas fa-building",
+				"thumbnail": "gravity-models/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.market-share",
+				"details": "example.market-share.description",
+				"icon": "fas fa-building",
+				"thumbnail": "market-share/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.atm-machine",
+				"details": "example.atm-machine.description",
+				"icon": "fas fa-building",
+				"thumbnail": "atm-machine/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.merger-and-acquisitions",
+				"details": "example.merger-and-acquisitions.description",
+				"icon": "fas fa-building",
+				"thumbnail": "merger-and-acquisitions/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.supply-and-demand",
+				"details": "example.supply-and-demand.description",
+				"icon": "fas fa-building",
+				"thumbnail": "supply-and-demand/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.community-reinvestment-act-(cra)",
+				"details": "example.community-reinvestment-act-(cra).description",
+				"icon": "fas fa-building",
+				"thumbnail": "community-reinvestment-act-(cra)/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.data-analytics",
+				"details": "example.data-analytics.description",
+				"icon": "fas fa-building",
+				"thumbnail": "data-analytics/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.huff-model",
+				"details": "example.huff-model.description",
+				"icon": "fas fa-building",
+				"thumbnail": "huff-model/1.png",
+				"main": "",
+				"link": "https://gisgeography.com/huff-gravity-model/"
+			},
+			{
+				"name": "example.consumer-profiling",
+				"details": "example.consumer-profiling.description",
+				"icon": "fas fa-building",
+				"thumbnail": "consumer-profiling/1.png",
+				"main": "",
+				"link": "https://gisgeography.com/geoenrichment/"
+			}
+		],
+		"thumbnail": "real-estate/1.png"
+	},
+	{
+		"name": "example.insurance",
+		"download": false,
+		"icon": "fa-car-crash",
+		"open": false,
+		"img": "https://gisgeography.com/wp-content/uploads/2016/04/Insurance-GIS-Applications-678x213.png",
+		"children": [
+			{
+				"name": "example.insurance-fraud",
+				"details": "example.insurance-fraud.description",
+				"icon": "fas fa-building",
+				"thumbnail": "insurance-fraud/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.floodplain",
+				"details": "example.floodplain.description",
+				"icon": "fas fa-building",
+				"thumbnail": "floodplain/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.real-time-hazard",
+				"details": "example.real-time-hazard.description",
+				"icon": "fas fa-building",
+				"thumbnail": "real-time-hazard/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.climate-change-risk",
+				"details": "example.climate-change-risk.description",
+				"icon": "fas fa-building",
+				"thumbnail": "climate-change-risk/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.sinkholes",
+				"details": "example.sinkholes.description",
+				"icon": "fas fa-building",
+				"thumbnail": "sinkholes/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.underwriting",
+				"details": "example.underwriting.description",
+				"icon": "fas fa-building",
+				"thumbnail": "underwriting/1.png",
+				"main": ""
+			}
+		],
+		"thumbnail": "insurance/1.png"
+	},
+	{
+		"name": "example.real-estate",
+		"download": false,
+		"icon": "fa-building",
+		"open": false,
+		"img": "https://gisgeography.com/wp-content/uploads/2016/04/Real-Estate-GIS-Applications-678x213.png",
+		"children": [
+			{
+				"name": "example.home-evaluation",
+				"details": "example.home-evaluation.description",
+				"icon": "fas fa-building",
+				"thumbnail": "home-evaluation/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.viewshed",
+				"details": "example.viewshed.description",
+				"icon": "fas fa-building",
+				"thumbnail": "viewshed/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.foreclosures",
+				"details": "example.foreclosures.description",
+				"icon": "fas fa-building",
+				"thumbnail": "foreclosures/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.housing-with-mortgages",
+				"details": "example.housing-with-mortgages.description",
+				"icon": "fas fa-building",
+				"thumbnail": "housing-with-mortgages/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.comparative-real-estate-analysis",
+				"details": "example.comparative-real-estate-analysis.description",
+				"icon": "fas fa-building",
+				"thumbnail": "comparative-real-estate-analysis/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.wind-farm-noise",
+				"details": "example.wind-farm-noise.description",
+				"icon": "fas fa-building",
+				"thumbnail": "wind-farm-noise/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.high-rise-valuation",
+				"details": "example.high-rise-valuation.description",
+				"icon": "fas fa-building",
+				"thumbnail": "high-rise-valuation/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.construction",
+				"details": "example.construction.description",
+				"icon": "fas fa-building",
+				"thumbnail": "construction/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.real-estate-metrics",
+				"details": "example.real-estate-metrics.description",
+				"icon": "fas fa-building",
+				"thumbnail": "real-estate-metrics/1.png",
+				"main": ""
+			}
+		],
+		"thumbnail": "real-estate/1.png"
+	},
+	{
+		"name": "example.tourism",
+		"download": false,
+		"icon": "fa-map-marker",
+		"open": false,
+		"img": "https://gisgeography.com/wp-content/uploads/2016/04/Tourism-GIS-Applications-678x213.png",
+		"children": [
+			{
+				"name": "example.tourist-map",
+				"details": "example.tourist-map.description",
+				"icon": "fas fa-building",
+				"thumbnail": "tourist-map/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.subway-map",
+				"details": "example.subway-map.description",
+				"icon": "fas fa-building",
+				"thumbnail": "subway-map/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.safe-travel",
+				"details": "example.safe-travel.description",
+				"icon": "fas fa-building",
+				"thumbnail": "safe-travel/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.sustainable-tourism-planning",
+				"details": "example.sustainable-tourism-planning.description",
+				"icon": "fas fa-building",
+				"thumbnail": "sustainable-tourism-planning/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.geo-tagging",
+				"details": "example.geo-tagging.description",
+				"icon": "fas fa-building",
+				"thumbnail": "geo-tagging/1.png",
+				"main": "",
+				"link": "https://www.mapillary.com/map"
+			},
+			{
+				"name": "example.observer-points",
+				"details": "example.observer-points.description",
+				"icon": "fas fa-building",
+				"thumbnail": "observer-points/1.png",
+				"main": ""
+			}
+		],
+		"thumbnail": "tourism/1.png"
+	},
+	{
+		"name": "example.science",
+		"download": false,
+		"icon": "fa-school",
+		"open": false,
+		"children": [
+			{
+				"name": "example.architecture",
+				"download": false,
+				"icon": "fa-archway",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Architecture-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.line-of-sight",
+						"details": "example.line-of-sight.description",
+						"icon": "fas fa-building",
+						"thumbnail": "line-of-sight/1.png",
+						"main": "",
+						"link": "https://gisgeography.com/3d-analysis/"
+					},
+					{
+						"name": "example.exposure-to-noise",
+						"details": "example.exposure-to-noise.description",
+						"icon": "fas fa-building",
+						"thumbnail": "exposure-to-noise/1.png",
+						"main": "",
+						"link": "http://noise-planet.org/"
+					},
+					{
+						"name": "example.solar-exposure",
+						"details": "example.solar-exposure.description",
+						"icon": "fas fa-building",
+						"thumbnail": "solar-exposure/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.shadow-analysis",
+						"details": "example.shadow-analysis.description",
+						"icon": "fas fa-building",
+						"thumbnail": "shadow-analysis/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.parking-availability",
+						"details": "example.parking-availability.description",
+						"icon": "fas fa-building",
+						"thumbnail": "parking-availability/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.integration-of-gis-and-bim",
+						"details": "example.integration-of-gis-and-bim.description",
+						"icon": "fas fa-building",
+						"thumbnail": "integration-of-gis-and-bim/1.png",
+						"main": "",
+						"link": "https://gisgeography.com/indoor-mapping/"
+					},
+					{
+						"name": "example.propagation-of-noise-in-urban-environments",
+						"details": "example.propagation-of-noise-in-urban-environments.description",
+						"icon": "fas fa-building",
+						"thumbnail": "propagation-of-noise-in-urban-environments/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "architecture/1.png"
+			},
+			{
+				"name": "example.education",
+				"download": false,
+				"icon": "fa-school",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Education-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.campus-navigation",
+						"details": "example.campus-navigation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "campus-navigation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.bus-services",
+						"details": "example.bus-services.description",
+						"icon": "fas fa-building",
+						"thumbnail": "bus-services/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.safe-routes-to-school-mapping-toolkit",
+						"details": "example.safe-routes-to-school-mapping-toolkit.description",
+						"icon": "fas fa-building",
+						"thumbnail": "safe-routes-to-school-mapping-toolkit/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "education/1.png"
+			},
+			{
+				"name": "example.engineering",
+				"download": false,
+				"icon": "fa-cogs",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Engineering-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.asset-management",
+						"details": "example.asset-management.description",
+						"icon": "fas fa-building",
+						"thumbnail": "asset-management/1.png",
+						"main": "",
+						"link": "https://www.portlandoregon.gov/transportation/article/405043"
+					},
+					{
+						"name": "example.building-permits",
+						"details": "example.building-permits.description",
+						"icon": "fas fa-building",
+						"thumbnail": "building-permits/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.cad-interoperability",
+						"details": "example.cad-interoperability.description",
+						"icon": "fas fa-building",
+						"thumbnail": "cad-interoperability/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.construction-environmental-management-plan",
+						"details": "example.construction-environmental-management-plan.description",
+						"icon": "fas fa-building",
+						"thumbnail": "construction-environmental-management-plan/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.real-time-sensors",
+						"details": "example.real-time-sensors.description",
+						"icon": "fas fa-building",
+						"thumbnail": "real-time-sensors/1.png",
+						"main": "",
+						"link": "http://www.valarm.net"
+					},
+					{
+						"name": "example.augmented-reality",
+						"details": "example.augmented-reality.description",
+						"icon": "fas fa-building",
+						"thumbnail": "augmented-reality/1.png",
+						"main": "",
+						"link": "http://www.esri.com/news/arcuser/0311/augmented-reality-and-gis.html"
+					}
+				],
+				"thumbnail": "engineering/1.png"
+			},
+			{
+				"name": "example.astronomy",
+				"download": false,
+				"icon": "fa-star",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Astronomy-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.satellite-orbits",
+						"details": "example.satellite-orbits.description",
+						"icon": "fas fa-building",
+						"thumbnail": "satellite-orbits/1.png",
+						"main": "",
+						"link": "http://richiecarmichael.github.io/sat/index.html#"
+					},
+					{
+						"name": "example.light-pollution",
+						"details": "example.light-pollution.description",
+						"icon": "fas fa-building",
+						"thumbnail": "light-pollution/1.png",
+						"main": "",
+						"link": "http://ngdc.noaa.gov/eog/viirs.html"
+					},
+					{
+						"name": "example.gravity-anomaly",
+						"details": "example.gravity-anomaly.description",
+						"icon": "fas fa-building",
+						"thumbnail": "gravity-anomaly/1.png",
+						"main": "",
+						"link": "https://gisgeography.com/geoid/"
+					},
+					{
+						"name": "example.nasa-visible-earth",
+						"details": "example.nasa-visible-earth.description",
+						"icon": "fas fa-building",
+						"thumbnail": "nasa-visible-earth/1.png",
+						"main": "",
+						"link": "http://visibleearth.nasa.gov/"
+					}
+				],
+				"thumbnail": "astronomy/1.png"
+			},
+			{
+				"name": "example.archaeology",
+				"download": false,
+				"icon": "fa-search-location",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Archaeology-GIS-Applications-2-678x213.png",
+				"children": [
+					{
+						"name": "example.lost-cities",
+						"details": "example.lost-cities.description",
+						"icon": "fas fa-building",
+						"thumbnail": "lost-cities/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.archaeological-survey",
+						"details": "example.archaeological-survey.description",
+						"icon": "fas fa-building",
+						"thumbnail": "archaeological-survey/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.qgis-archaeology-tools",
+						"details": "example.qgis-archaeology-tools.description",
+						"icon": "fas fa-building",
+						"thumbnail": "qgis-archaeology-tools/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.mediterranean-landscape-dynamics",
+						"details": "example.mediterranean-landscape-dynamics.description",
+						"icon": "fas fa-building",
+						"thumbnail": "mediterranean-landscape-dynamics/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.archaeological-site-prediction",
+						"details": "example.archaeological-site-prediction.description",
+						"icon": "fas fa-building",
+						"thumbnail": "archaeological-site-prediction/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.3d-archaeology",
+						"details": "example.3d-archaeology.description",
+						"icon": "fas fa-building",
+						"thumbnail": "3d-archaeology/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "archaeology/1.png"
+			},
+			{
+				"name": "example.geology",
+				"download": false,
+				"icon": "fa-globe-europe",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Geology-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.well-and-volumetric-data-visualization",
+						"details": "example.well-and-volumetric-data-visualization.description",
+						"icon": "fas fa-building",
+						"thumbnail": "well-and-volumetric-data-visualization/1.jpeg",
+						"main": "",
+						"link": "http://www.goldensoftware.com/products/voxler"
+					},
+					{
+						"name": "example.geological-interpretation",
+						"details": "example.geological-interpretation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "geological-interpretation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.qgsurf",
+						"details": "example.qgsurf.description",
+						"icon": "fas fa-building",
+						"thumbnail": "qgsurf/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.marine-geology",
+						"details": "example.marine-geology.description",
+						"icon": "fas fa-building",
+						"thumbnail": "marine-geology/1.png",
+						"main": "",
+						"link": "http://maps.ngdc.noaa.gov/viewers/marine_geology/"
+					},
+					{
+						"name": "example.geomorphology-features",
+						"details": "example.geomorphology-features.description",
+						"icon": "fas fa-building",
+						"thumbnail": "geomorphology-features/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.aeromagnetic-anomalies",
+						"details": "example.aeromagnetic-anomalies.description",
+						"icon": "fas fa-building",
+						"thumbnail": "aeromagnetic-anomalies/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.entervol-geology",
+						"details": "example.entervol-geology.description",
+						"icon": "fas fa-building",
+						"thumbnail": "entervol-geology/1.png",
+						"main": "",
+						"link": "http://www.ctech.com/products/entervol-product/entervol-geology/"
+					},
+					{
+						"name": "example.subsurface-mapping",
+						"details": "example.subsurface-mapping.description",
+						"icon": "fas fa-building",
+						"thumbnail": "subsurface-mapping/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.landform-classification",
+						"details": "example.landform-classification.description",
+						"icon": "fas fa-building",
+						"thumbnail": "landform-classification/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.geologic-structure",
+						"details": "example.geologic-structure.description",
+						"icon": "fas fa-building",
+						"thumbnail": "geologic-structure/1.png",
+						"main": "",
+						"link": "https://www.youtube.com/watch?v=iBcGjdtpljI"
+					}
+				],
+				"thumbnail": "geology/1.png"
+			},
+			{
+				"name": "example.history",
+				"download": false,
+				"icon": "fa-landmark",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/History-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.topoview-slider",
+						"details": "example.topoview-slider.description",
+						"icon": "fas fa-building",
+						"thumbnail": "topoview-slider/1.png",
+						"main": "",
+						"link": "http://ngmdb.usgs.gov/maps/topoview"
+					},
+					{
+						"name": "example.georeferencing-historical-imagery",
+						"details": "example.georeferencing-historical-imagery.description",
+						"icon": "fas fa-building",
+						"thumbnail": "georeferencing-historical-imagery/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "history/1.png"
+			},
+			{
+				"name": "example.surveying/geodesy",
+				"download": false,
+				"icon": "fa-dungeon",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Surveying-Geodesy-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.coordinate-calculator",
+						"details": "example.coordinate-calculator.description",
+						"icon": "fas fa-building",
+						"thumbnail": "coordinate-calculator/1.png",
+						"main": "",
+						"link": "http://www.bluemarblegeo.com/products/geographic-calculator.php"
+					},
+					{
+						"name": "example.fibre-optic-cable-design",
+						"details": "example.fibre-optic-cable-design.description",
+						"icon": "fas fa-building",
+						"thumbnail": "fibre-optic-cable-design/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "surveying/geodesy/1.png"
+			}
+		]
+	},
+	{
+		"name": "example.health",
+		"download": false,
+		"icon": "fa-hospital",
+		"open": false,
+		"children": [
+			{
+				"name": "example.healthmap",
+				"details": "example.healthmap.description",
+				"icon": "fas fa-building",
+				"thumbnail": "healthmap/1.png",
+				"main": "",
+				"link": "http://HealthMap.org"
+			},
+			{
+				"name": "example.centre-for-disease-control-(cdc)",
+				"details": "example.centre-for-disease-control-(cdc).description",
+				"icon": "fas fa-building",
+				"thumbnail": "centre-for-disease-control-(cdc)/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.distance-to-health-care",
+				"details": "example.distance-to-health-care.description",
+				"icon": "fas fa-building",
+				"thumbnail": "distance-to-health-care/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.cluster-analysis",
+				"details": "example.cluster-analysis.description",
+				"icon": "fas fa-building",
+				"thumbnail": "cluster-analysis/1.png",
+				"main": "",
+				"link": "http://www.ncbi.nlm.nih.gov/pubmed/22620266"
+			},
+			{
+				"name": "example.asthma",
+				"details": "example.asthma.description",
+				"icon": "fas fa-building",
+				"thumbnail": "asthma/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.epidemiology",
+				"details": "example.epidemiology.description",
+				"icon": "fas fa-building",
+				"thumbnail": "epidemiology/1.png",
+				"main": "",
+				"link": "http://www.cdc.gov/epiinfo"
+			},
+			{
+				"name": "example.uv-exposure",
+				"details": "example.uv-exposure.description",
+				"icon": "fas fa-building",
+				"thumbnail": "uv-exposure/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.mobile-flu-shots",
+				"details": "example.mobile-flu-shots.description",
+				"icon": "fas fa-building",
+				"thumbnail": "mobile-flu-shots/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.geomedicine",
+				"details": "example.geomedicine.description",
+				"icon": "fas fa-building",
+				"thumbnail": "geomedicine/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.infant-mortality",
+				"details": "example.infant-mortality.description",
+				"icon": "fas fa-building",
+				"thumbnail": "infant-mortality/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.food-trust",
+				"details": "example.food-trust.description",
+				"icon": "fas fa-building",
+				"thumbnail": "food-trust/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.disease-spread-patterns",
+				"details": "example.disease-spread-patterns.description",
+				"icon": "fas fa-building",
+				"thumbnail": "disease-spread-patterns/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.anti-smoking-campaigns",
+				"details": "example.anti-smoking-campaigns.description",
+				"icon": "fas fa-building",
+				"thumbnail": "anti-smoking-campaigns/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.mosquitoes-borne-illness",
+				"details": "example.mosquitoes-borne-illness.description",
+				"icon": "fas fa-building",
+				"thumbnail": "mosquitoes-borne-illness/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.tele-medicine",
+				"details": "example.tele-medicine.description",
+				"icon": "fas fa-building",
+				"thumbnail": "tele-medicine/1.png",
+				"main": ""
+			}
+		],
+		"thumbnail": "health/1.png"
+	},
+	{
+		"name": "example.municipality/urban",
+		"download": false,
+		"icon": "fa-city",
+		"open": false,
+		"children": [
+			
+			{
+				"name": "example.potholes",
+				"details": "example.potholes.description",
+				"icon": "fas fa-building",
+				"thumbnail": "potholes/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.asset-management",
+				"details": "example.asset-management.description",
+				"icon": "fas fa-building",
+				"thumbnail": "asset-management/1.png",
+				"main": "",
+				"link": "https://www.portlandoregon.gov/transportation/article/405043"
+			},
+			{
+				"name": "example.smart-cities",
+				"details": "example.smart-cities.description",
+				"icon": "fas fa-building",
+				"thumbnail": "smart-cities/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.water-main-breaks",
+				"details": "example.water-main-breaks.description",
+				"icon": "fas fa-building",
+				"thumbnail": "water-main-breaks/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.curb-cuts",
+				"details": "example.curb-cuts.description",
+				"icon": "fas fa-building",
+				"thumbnail": "curb-cuts/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.utility-poles",
+				"details": "example.utility-poles.description",
+				"icon": "fas fa-building",
+				"thumbnail": "utility-poles/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.waste-collection",
+				"details": "example.waste-collection.description",
+				"icon": "fas fa-building",
+				"thumbnail": "waste-collection/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.fire-hydrants",
+				"details": "example.fire-hydrants.description",
+				"icon": "fas fa-building",
+				"thumbnail": "fire-hydrants/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.spatial-data-infrastructure",
+				"details": "example.spatial-data-infrastructure.description",
+				"icon": "fas fa-building",
+				"thumbnail": "spatial-data-infrastructure/2.png",
+				"main": ""
+			},
+			{
+				"name": "example.insect-control",
+				"details": "example.insect-control.description",
+				"icon": "fas fa-building",
+				"thumbnail": "insect-control/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.homeless-shelters",
+				"details": "example.homeless-shelters.description",
+				"icon": "fas fa-building",
+				"thumbnail": "homeless-shelters/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.cityscan",
+				"details": "example.cityscan.description",
+				"icon": "fas fa-building",
+				"thumbnail": "cityscan/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.sewer-network",
+				"details": "example.sewer-network.description",
+				"icon": "fas fa-building",
+				"thumbnail": "sewer-network/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.street-cleaning",
+				"details": "example.street-cleaning.description",
+				"icon": "fas fa-building",
+				"thumbnail": "street-cleaning/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.road-closures",
+				"details": "example.road-closures.description",
+				"icon": "fas fa-building",
+				"thumbnail": "road-closures/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.land-for-development",
+				"details": "example.land-for-development.description",
+				"icon": "fas fa-building",
+				"thumbnail": "land-for-development/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.stormwater-pollution",
+				"details": "example.stormwater-pollution.description",
+				"icon": "fas fa-building",
+				"thumbnail": "stormwater-pollution/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.water-wells",
+				"details": "example.water-wells.description",
+				"icon": "fas fa-building",
+				"thumbnail": "water-wells/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.real-time-snow-plows",
+				"details": "example.real-time-snow-plows.description",
+				"icon": "fas fa-building",
+				"thumbnail": "real-time-snow-plows/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.gardening-microclimates",
+				"details": "example.gardening-microclimates.description",
+				"icon": "fas fa-building",
+				"thumbnail": "gardening-microclimates/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.weeds",
+				"details": "example.weeds.description",
+				"icon": "fas fa-building",
+				"thumbnail": "weeds/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.roof-gardening",
+				"details": "example.roof-gardening.description",
+				"icon": "fas fa-building",
+				"thumbnail": "roof-gardening/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.noise-map",
+				"details": "example.noise-map.description",
+				"icon": "fas fa-building",
+				"thumbnail": "noise-map/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.building-footprints",
+				"details": "example.building-footprints.description",
+				"icon": "fas fa-building",
+				"thumbnail": "building-footprints/4.png",
+				"main": ""
+			},
+			{
+				"name": "example.landfill-site-selection",
+				"details": "example.landfill-site-selection.description",
+				"icon": "fas fa-building",
+				"thumbnail": "landfill-site-selection/7.png",
+				"main": ""
+			},
+			{
+				"name": "example.green-roofs",
+				"details": "example.green-roofs.description",
+				"icon": "fas fa-building",
+				"thumbnail": "green-roofs/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.water-distribution",
+				"details": "example.water-distribution.description",
+				"icon": "fas fa-building",
+				"thumbnail": "water-distribution/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.city-heating",
+				"details": "example.city-heating.description",
+				"icon": "fas fa-building",
+				"thumbnail": "city-heating/1.jpeg",
+				"main": ""
+			},
+			{
+				"name": "example.3d-viewshed",
+				"details": "example.3d-viewshed.description",
+				"icon": "fas fa-building",
+				"thumbnail": "3d-viewshed/1.png",
+				"main": "",
+				"link": "http://www.hexagongeospatial.com/products/producer-suite/geomedia-3d"
+			},
+			{
+				"name": "example.land-use-change",
+				"details": "example.land-use-change.description",
+				"icon": "fas fa-building",
+				"thumbnail": "land-use-change/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.philadelphia-redevelopment",
+				"details": "example.philadelphia-redevelopment.description",
+				"icon": "fas fa-building",
+				"thumbnail": "philadelphia-redevelopment/1.png",
+				"main": "",
+				"link": "http://www.arcgis.com/apps/CEWebViewer/viewer.html?3dWebScene=86f88285788a4c53bd3d5dde6b315dfe"
+			},
+			{
+				"name": "example.future-development-patterns",
+				"details": "example.future-development-patterns.description",
+				"icon": "fas fa-building",
+				"thumbnail": "future-development-patterns/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.land-use",
+				"details": "example.land-use.description",
+				"icon": "fas fa-building",
+				"thumbnail": "land-use/1.png",
+				"main": "",
+				"link": "http://www.ecognition.com"
+			},
+			{
+				"name": "example.building-virtual-environments",
+				"details": "example.building-virtual-environments.description",
+				"icon": "fas fa-building",
+				"thumbnail": "building-virtual-environments/1.png",
+				"main": "",
+				"link": "https://blogs.esri.com/esri/esri-insider/2011/10/07/the-intersection-of-gis-and-gaming"
+			}
+		]
+	},
+	{
+		"name": "example.society",
+		"download": false,
+		"icon": "fa-users",
+		"open": false,
+		"children": [
+			{
+				"name": "example.poverty",
+				"details": "example.poverty.description",
+				"icon": "fas fa-building",
+				"thumbnail": "poverty/1.png",
+				"main": "",
+				"link": "http://www.fao.org/geonetwork/"
+			},
+			{
+				"name": "example.hunting-zones",
+				"details": "example.hunting-zones.description",
+				"icon": "fas fa-building",
+				"thumbnail": "hunting-zones/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.center-of-population",
+				"details": "example.center-of-population.description",
+				"icon": "fas fa-building",
+				"thumbnail": "center-of-population/1.png",
+				"main": "",
+				"link": "http://www.esri.com/news/arcuser/0311/population-drift.html"
+			},
+			{
+				"name": "example.demography",
+				"details": "example.demography.description",
+				"icon": "fas fa-building",
+				"thumbnail": "demography/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.refugee-camps",
+				"details": "example.refugee-camps.description",
+				"icon": "fas fa-building",
+				"thumbnail": "refugee-camps/1.png",
+				"main": "",
+				"link": "http://stanford.maps.arcgis.com/apps/MapTour/index.html?appid=2d8c5c28af6446c29754d2b13d50503d&amp;webmap=b8305e7474054987b33659a4e211ee0d"
+			},
+			{
+				"name": "example.humanitarian-openstreetmap",
+				"details": "example.humanitarian-openstreetmap.description",
+				"icon": "fas fa-building",
+				"thumbnail": "humanitarian-openstreetmap/9.png",
+				"main": "",
+				"link": "https://hotosm.org/"
+			},
+			{
+				"name": "example.humanitarian-assistance",
+				"details": "example.humanitarian-assistance.description",
+				"icon": "fas fa-building",
+				"thumbnail": "humanitarian-assistance/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.food-insecurity-drivers",
+				"details": "example.food-insecurity-drivers.description",
+				"icon": "fas fa-building",
+				"thumbnail": "food-insecurity-drivers/1.png",
+				"main": ""
+			}
+		],
+		"thumbnail": "society/1.png"
+	},
+	{
+		"name": "example.transportation",
+		"download": false,
+		"icon": "fa-subway",
+		"open": false,
+		"children": [
+			{
+				"name": "example.aviation",
+				"download": false,
+				"icon": "fa-plane",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Aviation-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.live-air-traffic",
+						"details": "example.live-air-traffic.description",
+						"icon": "fas fa-building",
+						"thumbnail": "live-air-traffic/1.png",
+						"main": "",
+						"link": "http://flightradar24.com"
+					},
+					{
+						"name": "example.airplane-identification",
+						"details": "example.airplane-identification.description",
+						"icon": "fas fa-building",
+						"thumbnail": "airplane-identification/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.worlds-busiest-airports",
+						"details": "example.worlds-busiest-airports.description",
+						"icon": "fas fa-building",
+						"thumbnail": "worlds-busiest-airports/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.obstruction-evaluation",
+						"details": "example.obstruction-evaluation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "obstruction-evaluation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.airspace-builder",
+						"details": "example.airspace-builder.description",
+						"icon": "fas fa-building",
+						"thumbnail": "airspace-builder/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.air-traffic-control",
+						"details": "example.air-traffic-control.description",
+						"icon": "fas fa-building",
+						"thumbnail": "air-traffic-control/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.drone-no-fly-zones",
+						"details": "example.drone-no-fly-zones.description",
+						"icon": "fas fa-building",
+						"thumbnail": "drone-no-fly-zones/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.aeronautical-charts",
+						"details": "example.aeronautical-charts.description",
+						"icon": "fas fa-building",
+						"thumbnail": "aeronautical-charts/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.runway-approach-zone-encroachment",
+						"details": "example.runway-approach-zone-encroachment.description",
+						"icon": "fas fa-building",
+						"thumbnail": "runway-approach-zone-encroachment/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.airport-sound-exposure",
+						"details": "example.airport-sound-exposure.description",
+						"icon": "fas fa-building",
+						"thumbnail": "airport-sound-exposure/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.air-space-review",
+						"details": "example.air-space-review.description",
+						"icon": "fas fa-building",
+						"thumbnail": "air-space-review/1.png",
+						"main": "",
+						"link": "https://www.youtube.com/watch?v=omwSBSBP0wc"
+					}
+				],
+				"thumbnail": "aviation/1.png"
+			},
+			{
+				"name": "example.nautical",
+				"download": false,
+				"icon": "fa-ship",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Nautical-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.open-sea-map",
+						"details": "example.open-sea-map.description",
+						"icon": "fas fa-building",
+						"thumbnail": "open-sea-map/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.international-waters",
+						"details": "example.international-waters.description",
+						"icon": "fas fa-building",
+						"thumbnail": "international-waters/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.live-marine-traffic",
+						"details": "example.live-marine-traffic.description",
+						"icon": "fas fa-building",
+						"thumbnail": "live-marine-traffic/1.png",
+						"main": "",
+						"link": "http://www.marinetraffic.com"
+					},
+					{
+						"name": "example.nautical-charts",
+						"details": "example.nautical-charts.description",
+						"icon": "fas fa-building",
+						"thumbnail": "nautical-charts/1.png",
+						"main": "",
+						"link": "http://www.charts.noaa.gov/InteractiveCatalog/nrnc.shtml"
+					}
+				],
+				"thumbnail": "nautical/1.png"
+			},
+			{
+				"name": "example.general",
+				"download": false,
+				"icon": "fa-bus",
+				"open": false,
+				"children": [
+					{
+						"name": "example.deadliest-roads",
+						"details": "example.deadliest-roads.description",
+						"icon": "fas fa-building",
+						"thumbnail": "deadliest-roads/1.png",
+						"main": "",
+						"link": "http://roadskillmap.com"
+					},
+					{
+						"name": "example.multimodal",
+						"details": "example.multimodal.description",
+						"icon": "fas fa-building",
+						"thumbnail": "multimodal/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.parking-demand",
+						"details": "example.parking-demand.description",
+						"icon": "fas fa-building",
+						"thumbnail": "parking-demand/1.png",
+						"main": "",
+						"link": "https://www.researchgate.net/publication/274835167_ArcGIS-based_Python_Tool_for_Assessing_City_Parking_Patterns"
+					},
+					{
+						"name": "example.motor-vehicle-collisions",
+						"details": "example.motor-vehicle-collisions.description",
+						"icon": "fas fa-building",
+						"thumbnail": "motor-vehicle-collisions/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.vessel-tracking",
+						"details": "example.vessel-tracking.description",
+						"icon": "fas fa-building",
+						"thumbnail": "vessel-tracking/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.street-repair",
+						"details": "example.street-repair.description",
+						"icon": "fas fa-building",
+						"thumbnail": "street-repair/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.road-assessment",
+						"details": "example.road-assessment.description",
+						"icon": "fas fa-building",
+						"thumbnail": "road-assessment/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.railways",
+						"details": "example.railways.description",
+						"icon": "fas fa-building",
+						"thumbnail": "railways/1.png",
+						"main": "",
+						"link": "https://team.cartodb.com/u/santiagoa/viz/d1ac8b98-6f5d-11e4-b990-0e018d66dc29/embed_map"
+					},
+					{
+						"name": "example.service-areas",
+						"details": "example.service-areas.description",
+						"icon": "fas fa-building",
+						"thumbnail": "service-areas/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.transportation-master-plan",
+						"details": "example.transportation-master-plan.description",
+						"icon": "fas fa-building",
+						"thumbnail": "transportation-master-plan/1.png",
+						"main": ""
+					},
+					
+					{
+						"name": "example.urban-traffic-air-pollution",
+						"details": "example.urban-traffic-air-pollution.description",
+						"icon": "fas fa-building",
+						"thumbnail": "urban-traffic-air-pollution/1.png",
+						"main": ""
+					}
+				]
+			}
+		],
+		"thumbnail": "transportation/1.png"
+	},
+	{
+		"name": "example.utilities",
+		"download": false,
+		"icon": "fa-network-wired",
+		"open": false,
+		"children": [
+			{
+				"name": "example.energy",
+				"download": false,
+				"icon": "fa-solar-panel",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Energy-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.network-management",
+						"details": "example.network-management.description",
+						"icon": "fas fa-building",
+						"thumbnail": "network-management/1.png",
+						"main": "",
+						"link": "http://www.gegridsolutions.com/GIS.htm"
+					},
+					{
+						"name": "example.emergency-repairs",
+						"details": "example.emergency-repairs.description",
+						"icon": "fas fa-building",
+						"thumbnail": "emergency-repairs/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.underground-utilities",
+						"details": "example.underground-utilities.description",
+						"icon": "fas fa-building",
+						"thumbnail": "underground-utilities/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.power-distribution",
+						"details": "example.power-distribution.description",
+						"icon": "fas fa-building",
+						"thumbnail": "power-distribution/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.vegetation-encroachment",
+						"details": "example.vegetation-encroachment.description",
+						"icon": "fas fa-building",
+						"thumbnail": "vegetation-encroachment/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.subsurface-3d-utility-model",
+						"details": "example.subsurface-3d-utility-model.description",
+						"icon": "fas fa-building",
+						"thumbnail": "subsurface-3d-utility-model/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.permafrost",
+						"details": "example.permafrost.description",
+						"icon": "fas fa-building",
+						"thumbnail": "permafrost/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.energy-usage",
+						"details": "example.energy-usage.description",
+						"icon": "fas fa-building",
+						"thumbnail": "energy-usage/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.energy-demand-estimation",
+						"details": "example.energy-demand-estimation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "energy-demand-estimation/1.png",
+						"main": "",
+						"link": "http://www.mdpi.com/2220-9964/4/4/2842/htm"
+					},
+					{
+						"name": "example.marine-renewable-energy",
+						"details": "example.marine-renewable-energy.description",
+						"icon": "fas fa-building",
+						"thumbnail": "marine-renewable-energy/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.concession",
+						"details": "example.concession.description",
+						"icon": "fas fa-building",
+						"thumbnail": "concession/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.world-power-types",
+						"details": "example.world-power-types.description",
+						"icon": "fas fa-building",
+						"thumbnail": "world-power-types/1.png",
+						"main": "",
+						"link": "http://www.gocompare.com/energy/what-powers-the-world/"
+					},
+					{
+						"name": "example.water-yields-and-scarcity",
+						"details": "example.water-yields-and-scarcity.description",
+						"icon": "fas fa-building",
+						"thumbnail": "water-yields-and-scarcity/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.coal-stockpiles",
+						"details": "example.coal-stockpiles.description",
+						"icon": "fas fa-building",
+						"thumbnail": "coal-stockpiles/1.png",
+						"main": "",
+						"link": "https://astrodigital.com"
+					},
+					{
+						"name": "example.wind-farm-site-selection",
+						"details": "example.wind-farm-site-selection.description",
+						"icon": "fas fa-building",
+						"thumbnail": "wind-farm-site-selection/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.radar-interference",
+						"details": "example.radar-interference.description",
+						"icon": "fas fa-building",
+						"thumbnail": "radar-interference/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "energy/1.png"
+			},
+			{
+				"name": "example.mining",
+				"download": false,
+				"icon": "fa-utensil-spoon",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Mining-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.subsurface-volume-calculation",
+						"details": "example.subsurface-volume-calculation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "subsurface-volume-calculation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.quarries",
+						"details": "example.quarries.description",
+						"icon": "fas fa-building",
+						"thumbnail": "quarries/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.natural-resources",
+						"details": "example.natural-resources.description",
+						"icon": "fas fa-building",
+						"thumbnail": "natural-resources/1.png",
+						"main": "",
+						"link": "http://webapps.esri.com.s3.amazonaws.com/mwl-maps/us_natural_industrial_resources.html"
+					},
+					{
+						"name": "example.coal-exploration",
+						"details": "example.coal-exploration.description",
+						"icon": "fas fa-building",
+						"thumbnail": "coal-exploration/1.png",
+						"main": "",
+						"link": "http://www.na.srk.com/en/newsletter/focus-coal/exploration-and-gis"
+					},
+					{
+						"name": "example.mine-rehabilitation",
+						"details": "example.mine-rehabilitation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "mine-rehabilitation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.acid-runoff",
+						"details": "example.acid-runoff.description",
+						"icon": "fas fa-building",
+						"thumbnail": "acid-runoff/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "mining/1.png"
+			},
+			{
+				"name": "example.oil/gas",
+				"download": false,
+				"icon": "fa-gas-pump",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Oil-Gas-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.directional-drilling",
+						"details": "example.directional-drilling.description",
+						"icon": "fas fa-building",
+						"thumbnail": "directional-drilling/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.active-licenses",
+						"details": "example.active-licenses.description",
+						"icon": "fas fa-building",
+						"thumbnail": "active-licenses/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.oil-exploration",
+						"details": "example.oil-exploration.description",
+						"icon": "fas fa-building",
+						"thumbnail": "oil-exploration/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.offshore-production",
+						"details": "example.offshore-production.description",
+						"icon": "fas fa-building",
+						"thumbnail": "offshore-production/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.pipeline-rupture",
+						"details": "example.pipeline-rupture.description",
+						"icon": "fas fa-building",
+						"thumbnail": "pipeline-rupture/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.oil-reserves",
+						"details": "example.oil-reserves.description",
+						"icon": "fas fa-building",
+						"thumbnail": "oil-reserves/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.undersea-environmental-impacts",
+						"details": "example.undersea-environmental-impacts.description",
+						"icon": "fas fa-building",
+						"thumbnail": "undersea-environmental-impacts/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.environmental-impact-assessment",
+						"details": "example.environmental-impact-assessment.description",
+						"icon": "fas fa-building",
+						"thumbnail": "environmental-impact-assessment/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.pipeline-infrastructure",
+						"details": "example.pipeline-infrastructure.description",
+						"icon": "fas fa-building",
+						"thumbnail": "pipeline-infrastructure/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "oil/gas/1.png"
+			},
+			{
+				"name": "example.telecommunications",
+				"download": false,
+				"icon": "fa-bolt",
+				"open": false,
+				"img": "https://gisgeography.com/wp-content/uploads/2016/04/Telecommunications-GIS-Applications-678x213.png",
+				"children": [
+					{
+						"name": "example.radio-wave-propagation",
+						"details": "example.radio-wave-propagation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "radio-wave-propagation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.locating-cell-towers",
+						"details": "example.locating-cell-towers.description",
+						"icon": "fas fa-building",
+						"thumbnail": "locating-cell-towers/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.network-signal-interpolation",
+						"details": "example.network-signal-interpolation.description",
+						"icon": "fas fa-building",
+						"thumbnail": "network-signal-interpolation/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.cellular-coverage-analysis",
+						"details": "example.cellular-coverage-analysis.description",
+						"icon": "fas fa-building",
+						"thumbnail": "cellular-coverage-analysis/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.frequency-management",
+						"details": "example.frequency-management.description",
+						"icon": "fas fa-building",
+						"thumbnail": "frequency-management/1.png",
+						"main": "",
+						"link": "http://www.esri.com/news/arcuser/1001/gnet.html"
+					},
+					{
+						"name": "example.fibre-optic-cable",
+						"details": "example.fibre-optic-cable.description",
+						"icon": "fas fa-building",
+						"thumbnail": "fibre-optic-cable/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.transmission-line-design",
+						"details": "example.transmission-line-design.description",
+						"icon": "fas fa-building",
+						"thumbnail": "transmission-line-design/1.png",
+						"main": ""
+					},
+					{
+						"name": "example.tree-encroachment",
+						"details": "example.tree-encroachment.description",
+						"icon": "fas fa-building",
+						"thumbnail": "tree-encroachment/1.png",
+						"main": ""
+					}
+				],
+				"thumbnail": "telecommunications/1.png"
+			}
+		]
+	},
+	{
+		"name": "example.water",
+		"download": false,
+		"icon": "fa-water",
+		"open": false,
+		"children": [
+			{
+				"name": "example.shipping-route-shortcuts",
+				"details": "example.shipping-route-shortcuts.description",
+				"icon": "fas fa-building",
+				"thumbnail": "shipping-route-shortcuts/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.sea-ice-motion",
+				"details": "example.sea-ice-motion.description",
+				"icon": "fas fa-building",
+				"thumbnail": "sea-ice-motion/1.png",
+				"main": "",
+				"link": "http://www.arctic.noaa.gov"
+			},
+			{
+				"name": "example.subglacial-lakes",
+				"details": "example.subglacial-lakes.description",
+				"icon": "fas fa-building",
+				"thumbnail": "subglacial-lakes/1.png",
+				"main": "",
+				"link": "http://www.antarcticglaciers.org/modern-glaciers/subglacial-lakes/"
+			},
+			{
+				"name": "example.antarctic-digital-magnetic-anomaly-project-(admap)",
+				"details": "example.antarctic-digital-magnetic-anomaly-project-(admap).description",
+				"icon": "fas fa-building",
+				"thumbnail": "antarctic-digital-magnetic-anomaly-project-(admap)/1.png",
+				"main": "",
+				"link": "http://www.scar.org/ssg/geosciences/admap"
+			},
+			{
+				"name": "example.wildlife-tracking",
+				"details": "example.wildlife-tracking.description",
+				"icon": "fas fa-building",
+				"thumbnail": "wildlife-tracking/1.jpeg",
+				"main": ""
+			},
+			{
+				"name": "example.sea-ice-index",
+				"details": "example.sea-ice-index.description",
+				"icon": "fas fa-building",
+				"thumbnail": "sea-ice-index/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.polar-ice-melt",
+				"details": "example.polar-ice-melt.description",
+				"icon": "fas fa-building",
+				"thumbnail": "polar-ice-melt/1.png",
+				"main": "",
+				"link": "https://gisgeography.com/geoid/"
+			},
+			{
+				"name": "example.global-shark-tracker",
+				"details": "example.global-shark-tracker.description",
+				"icon": "fas fa-building",
+				"thumbnail": "global-shark-tracker/1.png",
+				"main": "",
+				"link": "http://ocearch.org"
+			},
+			{
+				"name": "example.fish-eradication",
+				"details": "example.fish-eradication.description",
+				"icon": "fas fa-building",
+				"thumbnail": "fish-eradication/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.spawning-sites",
+				"details": "example.spawning-sites.description",
+				"icon": "fas fa-building",
+				"thumbnail": "spawning-sites/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.hydro-acoustics",
+				"details": "example.hydro-acoustics.description",
+				"icon": "fas fa-building",
+				"thumbnail": "hydro-acoustics/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.fish-habitat-conservation-areas",
+				"details": "example.fish-habitat-conservation-areas.description",
+				"icon": "fas fa-building",
+				"thumbnail": "fish-habitat-conservation-areas/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.aquifer-recharge",
+				"details": "example.aquifer-recharge.description",
+				"icon": "fas fa-building",
+				"thumbnail": "aquifer-recharge/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.groundwater-plume",
+				"details": "example.groundwater-plume.description",
+				"icon": "fas fa-building",
+				"thumbnail": "groundwater-plume/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.contamination",
+				"details": "example.contamination.description",
+				"icon": "fas fa-building",
+				"thumbnail": "contamination/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.catchment-areas",
+				"details": "example.catchment-areas.description",
+				"icon": "fas fa-building",
+				"thumbnail": "catchment-areas/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.topographic-wetness-index",
+				"details": "example.topographic-wetness-index.description",
+				"icon": "fas fa-building",
+				"thumbnail": "topographic-wetness-index/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.flow-accumulation",
+				"details": "example.flow-accumulation.description",
+				"icon": "fas fa-building",
+				"thumbnail": "flow-accumulation/1.png",
+				"main": "",
+				"link": "http://hydrology.usu.edu/taudem/taudem5/index.html"
+			},
+			{
+				"name": "example.scalgo",
+				"details": "example.scalgo.description",
+				"icon": "fas fa-building",
+				"thumbnail": "scalgo/1.jpeg",
+				"main": "",
+				"link": "http://scalgo.com/live/global"
+			},
+			{
+				"name": "example.contour-lines",
+				"details": "example.contour-lines.description",
+				"icon": "fas fa-building",
+				"thumbnail": "contour-lines/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.basins-(better-assessment-science-integrating-point-and-non-point-source)",
+				"details": "example.basins-(better-assessment-science-integrating-point-and-non-point-source).description",
+				"icon": "fas fa-building",
+				"thumbnail": "basins-(better-assessment-science-integrating-point-and-non-point-source)/1.jpeg",
+				"main": ""
+			},
+			{
+				"name": "example.hec-ras-flow-model",
+				"details": "example.hec-ras-flow-model.description",
+				"icon": "fas fa-building",
+				"thumbnail": "hec-ras-flow-model/1.png",
+				"main": "",
+				"link": "https://plugins.qgis.org/plugins/rivergis/"
+			},
+			{
+				"name": "example.underwater-grasses",
+				"details": "example.underwater-grasses.description",
+				"icon": "fas fa-building",
+				"thumbnail": "underwater-grasses/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.ocean-use-planning",
+				"details": "example.ocean-use-planning.description",
+				"icon": "fas fa-building",
+				"thumbnail": "ocean-use-planning/1.png",
+				"main": "",
+				"link": "http://oceanservice.noaa.gov/podcast/jan14/dd55-ocean-uses.html"
+			},
+			{
+				"name": "example.algae-blooms",
+				"details": "example.algae-blooms.description",
+				"icon": "fas fa-building",
+				"thumbnail": "algae-blooms/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.whale-tracker",
+				"details": "example.whale-tracker.description",
+				"icon": "fas fa-building",
+				"thumbnail": "whale-tracker/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.bathymetry",
+				"details": "example.bathymetry.description",
+				"icon": "fas fa-building",
+				"thumbnail": "bathymetry/1.png",
+				"main": "",
+				"link": "http://alteredqualia.com/xg/examples/earth_bathymetry.html"
+			},
+			{
+				"name": "example.rising-sea-levels",
+				"details": "example.rising-sea-levels.description",
+				"icon": "fas fa-building",
+				"thumbnail": "rising-sea-levels/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.aquaculture",
+				"details": "example.aquaculture.description",
+				"icon": "fas fa-building",
+				"thumbnail": "aquaculture/1.png",
+				"main": "",
+				"link": "http://www.fao.org/fishery/collection/gisfish"
+			},
+			{
+				"name": "example.coastal-management",
+				"details": "example.coastal-management.description",
+				"icon": "fas fa-building",
+				"thumbnail": "coastal-management/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.coral-reef-conservation",
+				"details": "example.coral-reef-conservation.description",
+				"icon": "fas fa-building",
+				"thumbnail": "coral-reef-conservation/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.sea-the-animals",
+				"details": "example.sea-the-animals.description",
+				"icon": "fas fa-building",
+				"thumbnail": "sea-the-animals/1.png",
+				"main": "",
+				"link": "http://robbykraft.github.io/AnimalTrack"
+			},
+			{
+				"name": "example.ocean-tourism",
+				"details": "example.ocean-tourism.description",
+				"icon": "fas fa-building",
+				"thumbnail": "ocean-tourism/1.png",
+				"main": ""
+			}
+		]
+	},
+	{
+		"name": "example.weather",
+		"download": false,
+		"icon": "fa-cloud-sun",
+		"open": false,
+		"children": [
+			{
+				"name": "example.real-time-lightning",
+				"details": "example.real-time-lightning.description",
+				"icon": "fas fa-building",
+				"thumbnail": "real-time-lightning/1.png",
+				"main": "",
+				"link": "http://www.lightningmaps.org/realtime"
+			},
+			{
+				"name": "example.global-wind-vectors",
+				"details": "example.global-wind-vectors.description",
+				"icon": "fas fa-building",
+				"thumbnail": "global-wind-vectors/1.png",
+				"main": "",
+				"link": "http://earth.nullschool.net"
+			},
+			{
+				"name": "example.solar-irradiance",
+				"details": "example.solar-irradiance.description",
+				"icon": "fas fa-building",
+				"thumbnail": "solar-irradiance/1.png",
+				"main": "",
+				"link": "http://www.3tier.com/en/support/solar-prospecting-tools/what-global-horizontal-irradiance-solar-prospecting"
+			},
+			{
+				"name": "example.rainfall",
+				"details": "example.rainfall.description",
+				"icon": "fas fa-building",
+				"thumbnail": "rainfall/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.nasa-ocean-color",
+				"details": "example.nasa-ocean-color.description",
+				"icon": "fas fa-building",
+				"thumbnail": "nasa-ocean-color/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.historical-weather",
+				"details": "example.historical-weather.description",
+				"icon": "fas fa-building",
+				"thumbnail": "historical-weather/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.temperature",
+				"details": "example.temperature.description",
+				"icon": "fas fa-building",
+				"thumbnail": "temperature/1.png",
+				"main": "",
+				"link": "http://data.giss.nasa.gov/gistemp"
+			},
+			{
+				"name": "example.3d-atmospheric-data",
+				"details": "example.3d-atmospheric-data.description",
+				"icon": "fas fa-building",
+				"thumbnail": "3d-atmospheric-data/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.weather-warnings",
+				"details": "example.weather-warnings.description",
+				"icon": "fas fa-building",
+				"thumbnail": "weather-warnings/1.png",
+				"main": "",
+				"link": "http://www.weather.gov"
+			},
+			{
+				"name": "example.historical-precipitation",
+				"details": "example.historical-precipitation.description",
+				"icon": "fas fa-building",
+				"thumbnail": "historical-precipitation/1.png",
+				"main": ""
+			},
+			{
+				"name": "example.weather-stations",
+				"details": "example.weather-stations.description",
+				"icon": "fas fa-building",
+				"thumbnail": "weather-stations/1.png",
+				"main": ""
+			}
+		],
+		"thumbnail": "weather/1.png"
+	}
+]

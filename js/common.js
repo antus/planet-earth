@@ -12,30 +12,57 @@ function init() {
   // 读取 config.json 配置文件
   mars3d.Util.fetchJson({ url: "/config/config.json" })
     .then(function (json) {
-      console.log("读取 config.json 配置文件完成", json) // 打印测试信息
+      console.log("Reading the config.json configuration file", json) // 打印测试信息
+      // Get language from url params
+      const urlParams = new URLSearchParams(window.location.search);
+      var lang = urlParams.get('lang') || "en";
 
-      //创建三维地球场景
-      const initMapFun = window.initMap ? window.initMap : globalInitMap
-      var map = initMapFun(json.map3d)
+      mars3d.Util.fetchJson({ url: "/config/i18n/map/" + lang + ".json" })
+        .then(function (lang) {
+          console.log("Reading the en.json configuration file", json) 
+          //Set initial language
+          setLang(json, lang);
 
-      if (window.onMounted) {
-        window.onMounted(map)
-      }
+          //Create a 3D Earth scene
+          const initMapFun = window.initMap ? window.initMap : globalInitMap
+          var map = initMapFun(json.map3d)
 
-      if (window.initUI) {
-        window.initUI()
-      }
+          if (window.onMounted) {
+            window.onMounted(map)
+          }
 
-      if (window.es5widget) {
-        initWidget(map)
-      }
+          if (window.initUI) {
+            window.initUI()
+          }
+
+          if (window.es5widget) {
+            initWidget(map)
+          }
+
+        })      
+        .catch(function (error) {
+          console.log("Reading the en.json configuration file error", error)
+          globalAlert(error ? error.message : "Error loading JSON")
+        })
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
-      globalAlert(error ? error.message : "加载JSON出错")
+      console.log("Reading the config.json configuration file error", error)
+      globalAlert(error ? error.message : "Error loading JSON")
     })
 }
 init()
+
+
+function setLang(json, lang) {
+  json.map3d.lang = lang 
+  json.map3d.basemaps.forEach((item) => {
+    item.name = lang[item.name] || item.name
+  })
+  if (json.map3d.control.locationBar) {
+    json.map3d.control.locationBar.template =
+      "<div>lon:{lng}</div> <div>lat:{lat}</div> <div>alt：{alt} m</div> <div>level：{level}</div><div>heading：{heading}°</div> <div>pitch：{pitch}°</div><div>cameraHeight：{cameraHeight}m</div><div class='hide700'> {fps} FPS</div>"
+  }
+}
 
 // 构造地图主方法【必须】
 function globalInitMap(options) {

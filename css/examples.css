@@ -63,7 +63,7 @@ Navbar
     padding-top: 8px !important;
 }
 .nav-link {
-    padding-left: 8px !important;
+    padding-left: 9px !important;
     padding-right: 8px !important;
 }
 .flag-icon-selected {
@@ -102,6 +102,10 @@ Searchbar
 /************************************************************
 Sidebar
 *************************************************************/
+.layout-navbar-fixed.layout-fixed.text-sm .wrapper .sidebar {
+    margin-top: calc(2.93725rem + 1px + 30px);
+}
+
 .badge-info {
     padding: 6px;
     height: 20px;
@@ -116,12 +120,30 @@ Sidebar
     vertical-align: text-bottom;
 }
 
+.sidebar-icon {
+    margin-left: 5px !important;
+    border-radius: 0px !important;
+}
+
 .layout-fixed.text-sm .wrapper .sidebar {
-    height: calc(100vh - (2.93725rem + 1px));
+    height: calc(100vh - (2.93725rem + 1px + 30px));
 }
 
 .active-category {
-    background-color: #454d55 !important;
+    background-color: #5089a9 !important;
+}
+
+.all-categories {
+    position:fixed;top:42px; margin-left: 3px; margin-top: 3px;
+}
+.all-categories-badge {
+    width:30px; 
+    margin-top: -4px;
+    margin-right: 9px
+}
+
+.all-categories-a {
+    padding-left: 13px !important;
 }
 
 /************************************************************
@@ -132,8 +154,8 @@ Content
     background-color:#343a40!important;
     scrollbar-color: #555555 #343a40;
     scrollbar-width: thin;
-    position: static !important;
-    height: calc(100vh - 84px) !important;
+    //position: static !important;
+    //height: calc(100vh - 84px) !important;
     padding: 0px !important;
 }
 
@@ -146,16 +168,16 @@ Footer
 }
 
 .use-cases-count {
-    color: black;
-    padding: 6px 8px;
-    margin-right: -5px;
-    background-color: gold;
-    border-radius: 3px;
+    display: flex;
+    align-items: center;
   }
   
 .count {
-    padding: 4px;
+    margin-left: 8px;
+    padding: 5px 5px !important;
     font-size: 11px;
+    width: unset;
+    background-color: rgb(63, 103, 145);
 }
 
 .gis-rs-practice {
@@ -247,7 +269,7 @@ Cards
 
 .card__description {
     margin-top: 20px;
-    //height: 150px;
+    max-height: 150px;
     width:100%;
     overflow: auto;
     scrollbar-color: #555555 #343a40;

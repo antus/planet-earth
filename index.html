@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="css/examples.css?time=20220120" />
   </head>
 
-  <body class="hold-transition sidebar-mini sidebar-collapse layout-fixed layout-navbar-fixed control-sidebar-slide-open layout-footer-fixed text-sm dark-mode">
+  <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed control-sidebar-slide-open layout-footer-fixed text-sm dark-mode">
     <!-- wrapper -->
     <div class="wrapper">
       <!-- Navbar -->
@@ -47,7 +47,15 @@
             <a class="nav-link sidebar-button" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a id="selection" class="nav-link" data-i18n="all-categories"></a>
+            <span class="use-cases-count">
+              <a id="selection" class="nav-link" data-i18n="all-categories"></a>
+              <span id="total-showcase" class="badge badge-info count">0</span>
+            </span>
+            
+            <!--span class="use-cases-count">
+              <b id="selection" data-i18n="app.usecases">usecases</b>
+              <span id="total-showcase" class="badge badge-info count">0</span>
+            </span-->
           </li>
         </ul>
         <!-- searchbar -->
@@ -72,7 +80,7 @@
           <!-- Language Menu -->
           <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-              <i class="flag-icon flag-icon-selected flag-icon-gb " id="locale-flag" ></i>
+              <i class="flag-icon flag-icon-selected " id="locale-flag" ></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right p-0">
               <a href="#" data-locale="en" class="dropdown-item">
@@ -83,9 +91,15 @@
               </a>
             </div>
           </li>
+          <!-- Autors -->
+          <li class="nav-item">
+            <a class="nav-link" href="#" role="button" onClick="showAuthors()" title="GIS & RS practice">
+              <i class="fas fa-users full-screen"></i>
+            </a>
+          </li>
           <!-- Full screen -->
           <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button" >
               <i class="fas fa-expand-arrows-alt full-screen"></i>
             </a>
           </li>
@@ -100,8 +114,17 @@
           <img src="img/users/mp-logo.png" alt="Planet Earth Logo" class="brand-image img-circle logo" >
           <span class="brand-text font-weight-light">Planet Earth</span>
         </a>
+        <!-- All categories-->
+        <ul class="nav nav-pills nav-sidebar flex-column all-categories" >
+          <li class="nav-item">
+            <a id="all-categories" href="#" class="nav-link sidebar-icon all-categories-a" onclick="setCategory('all-categories');event.preventDefault();">
+              <i class="nav-icon fa fa-th"></i>
+              <p class="sidebar-text text-truncate" style="width: 130px" data-i18n="[title]all-categories;[prepend]all-categories" >all-categories<!--span class="badge badge-danger right all-categories-badge" id="total"></span--></p></a>
+          </li>
+        </ul>
         <!-- Sidebar -->
         <div class="sidebar">
+          
           <!-- Sidebar Menu -->
           <nav class="mt-2" style="overflow-x: hidden;">
             <ul  id="sidebar-menu" class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu" data-accordion="false">
@@ -118,23 +141,22 @@
       <!-- /Content -->
 
       <!-- Footer -->
-      <footer class="main-footer">
+      <!--footer class="main-footer">
         <button type="button" onClick="showAuthors()" class="btn btn-primary gis-rs-practice">
-          GIS & RS practice
+          GIS & RS team
         </button>
         <div class="float-right">
           <span class="use-cases-count">
-            <span id="tolal-showcase" class="badge badge-danger count">0</span>
+            <span id="total-showcase" class="badge badge-danger count">0</span>
             <b data-i18n="app.usecases">usecases</b>
           </span>
         </div>
-      </footer>
+      </footer-->
       <!-- /Footer -->
     </div>
     
     <!-- Planet Earth code-->
   	<script src="js/examples.js"></script>
     <script src="lib/admin-lte-31/js/adminlte.js"></script>
-
   </body>
 </html>

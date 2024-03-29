@@ -5,25 +5,37 @@
 */
 var i18n = {};
 var examples= [];
-var categories =[]
-var currentCategory = "";
-var firstCategories = {};
+var categories = {}
+var currentCategory = [];
 
 mars3d.Util.fetchJson({ url: "/config/example.json" }).then(function (data) {
-  examples = setSamplesFlat(data,);
+  examples = setSamplesFlat(data);
+  console.log(examples);
+  console.log(Object.keys(categories).length);
+  for (var i=0; i< Object.keys(categories).length;i++){
+    const key = Object.keys(categories)[i];
+    //console.log(key);
+  }
   console.log("Total examples: " + examples.length);
   console.log("Total example localization keys: " + Object.keys(i18n).length);
 
-  for (var i=0; i< Object.keys(firstCategories).length;i++){
-    const e = Object.keys(firstCategories)[i];
-    i18n[e] = e;
+  for (var i=0; i< Object.keys(categories).length;i++){
+    const e = Object.keys(categories)[i];
+    i18n[categories[e].name] = categories[e].name;
   }
-  console.log("Total tag localization keys: " + Object.keys(firstCategories).length);
+  console.log("Total category localization keys: " + Object.keys(categories).length);
+  console.log("Total category + example localization keys: " + Object.keys(i18n).length);
+  
+  var usecases = {
+    categories: categories,
+    examples: examples
+  }
 
-  mars3d.Util.downloadFile("examples.json", JSON.stringify(examples))
+  mars3d.Util.downloadFile("examples.json", JSON.stringify(usecases))
   mars3d.Util.downloadFile("cn.json", JSON.stringify(i18n))
   localizeInEnglish();
   localizeInItalian();
+
   
 });
 
@@ -34,45 +46,34 @@ function setSamplesFlat(arr) {
 		var item = arr[i];
 		const name = item.name || "";
 		if (item.children) {
-		  addCategory(categories,name);
+      currentCategory.push(name);
+		  addCategory(categories,currentCategory.join(), item);
       setSamplesFlat(item.children).forEach(function(e) {
           elements.push(e);
       });
-      removeCategory();
+      currentCategory.pop();
 		} else {
-      item.categories = [categories[0]]; 
+      item.category = currentCategory.join(); 
       i18n[item.name] = item.name;
-      firstCategories[item.categories] = item.categories;
       elements.push(item);
 		}
 	}
 	return elements;
 }
 
-function addCategory(categories, name) {
-  var found = false;
-  if (name=="")
-    return false;
-  categories.forEach(function(e) {
-    if (e==name) {
-      found = true;
-      return;
-    }
-  });
-  if (!found)
-    categories.push(name);
-}
-
-function removeCategory() {
-  categories.pop();
+function addCategory(categories, categoryKey, item) {
+  categories[categoryKey] = {
+    name: item.name,
+    icon: item.icon
+  };
 }
 
 function localizeInEnglish() {
-  mars3d.Util.fetchJson({ url: "/config/i18n/en.json" }).then(function (en) {
+  mars3d.Util.fetchJson({ url: "/config/i18n/examples/en.json" }).then(function (en) {
     t = {};
     for (var i=0; i< Object.keys(i18n).length;i++){
       const key = Object.keys(i18n)[i];
-      var str = en[key];
+      var str = Object.keys(en)[i];
       t[key] = str.charAt(0).toUpperCase() + str.slice(1);
     }
     console.log(t);
@@ -81,11 +82,11 @@ function localizeInEnglish() {
 }
 
 function localizeInItalian() {
-  mars3d.Util.fetchJson({ url: "/config/i18n/it.json" }).then(function (it) {
+  mars3d.Util.fetchJson({ url: "/config/i18n/examples/it.json" }).then(function (it) {
     t = {};
     for (var i=0; i< Object.keys(i18n).length;i++){
       const key = Object.keys(i18n)[i];
-      var str = it[key];
+      var str = Object.keys(it)[i];
       t[key] = str.charAt(0).toUpperCase() + str.slice(1);
     }
     console.log(t);
