@@ -1,20 +1,20 @@
-"use script" //开发环境建议开启严格模式
+"use script" //It is recommended to turn on strict mode in the development environment
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup2() {
   graphicLayer.bindPopup(
     function (event) {
       const attr = getAttrForEvent(event)
-      attr["类型"] = event.graphic?.type
-      attr["来源"] = "我是layer上绑定的Popup"
-      attr["备注"] = "我支持鼠标交互"
+      attr["type"] = event.graphic?.type
+      attr["source"] = "I am the Popup bound to the layer"
+      attr["Remarks"] = "I support mouse interaction"
 
-      return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr: attr })
+      return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr: attr })
 
       // return new Promise((resolve) => {
-      //   //这里可以进行后端接口请求数据，setTimeout测试异步
+      // //Here you can request data from the backend interface, and setTimeout tests asynchronously
       //   setTimeout(() => {
-      //     resolve('Promise异步回调显示的弹窗内容信息')
+      // resolve('Pop-up window content information displayed by Promise asynchronous callback')
       //   }, 2000)
       // })
     },
@@ -22,11 +22,11 @@ function bindLayerPopup2() {
   )
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu2() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -46,7 +46,7 @@ function bindLayerContextMenu2() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -66,7 +66,7 @@ function bindLayerContextMenu2() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -81,7 +81,7 @@ function bindLayerContextMenu2() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -89,7 +89,7 @@ function bindLayerContextMenu2() {
       }
     },
     {
-      text: "计算长度",
+      text: "Calculate length",
       icon: "fa fa-medium",
       show: function (e) {
         const graphic = e.graphic
@@ -112,11 +112,11 @@ function bindLayerContextMenu2() {
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
-        haoutil.alert("该对象的长度为:" + strDis)
+        haoutil.alert("The length of this object is:" + strDis)
       }
     },
     {
-      text: "计算周长",
+      text: "Calculate perimeter",
       icon: "fa fa-medium",
       show: function (e) {
         const graphic = e.graphic
@@ -135,11 +135,11 @@ function bindLayerContextMenu2() {
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
-        haoutil.alert("该对象的周长为:" + strDis)
+        haoutil.alert("The perimeter of this object is:" + strDis)
       }
     },
     {
-      text: "计算面积",
+      text: "Calculate area",
       icon: "fa fa-reorder",
       show: function (e) {
         const graphic = e.graphic
@@ -160,7 +160,7 @@ function bindLayerContextMenu2() {
       callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
-        haoutil.alert("该对象的面积为:" + strArea)
+        haoutil.alert("The area of ​​this object is:" + strArea)
       }
     }
   ])
@@ -176,13 +176,13 @@ function getAttrForEvent(event) {
 
   let attr = event.czmObject._attr || event.czmObject.properties || event.czmObject.attribute
   if (attr && attr.type && attr.attr) {
-    attr = attr.attr // 兼容历史数据,V2内部标绘生产的geojson
+    attr = attr.attr // Compatible with historical data, geojson produced by V2 internal plotting
   }
   return attr ?? {}
 }
 
-//  ***************************** 数据测试 ***********************  //
-// 生成大数据
+//****************************** Data test****************** ****** //
+// Generate big data
 function onClickAddRandomGraohic(count) {
   haoutil.loading.show()
   const startTime = new Date().getTime()
@@ -191,13 +191,13 @@ function onClickAddRandomGraohic(count) {
 
   haoutil.loading.close()
   const endTime = new Date().getTime()
-  const usedTime = (endTime - startTime) / 1000 // 两个时间戳相差的毫秒数
-  window.layer.msg(`生成${result || count}条数据，共耗时${usedTime.toFixed(2)}秒`)
+  const usedTime = (endTime - startTime) / 1000 // The number of milliseconds between the two timestamps
+  window.layer.msg(`Generating ${result || count} pieces of data, taking a total of ${usedTime.toFixed(2)} seconds`)
 
   graphicLayer.flyTo({ duration: 0, heading: 0, pitch: -40, scale: 1.2 })
 }
-//  ***************************** 数据导出 ***********************  //
-// 打开geojson
+// ***************************** Data output***************** ****** //
+//Open geojson
 function onClickImpFile(file) {
   let fileName = file.name
   let fileType = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length).toLowerCase()
@@ -212,7 +212,7 @@ function onClickImpFile(file) {
         graphicLayer.addGraphic(geojson.data)
         graphicLayer.flyTo()
       } else {
-        geojson = simplifyGeoJSON(geojson) //简化geojson的点
+        geojson = simplifyGeoJSON(geojson) //Simplify geojson points
         graphicLayer.loadGeoJSON(geojson, { flyTo: true })
       }
       clearSelectFile()
@@ -224,7 +224,7 @@ function onClickImpFile(file) {
     reader.onloadend = function (e) {
       let strkml = this.result
       kgUtil.toGeoJSON(strkml).then((geojson) => {
-        geojson = simplifyGeoJSON(geojson) //简化geojson的点
+        geojson = simplifyGeoJSON(geojson) //Simplify geojson points
         console.log("kml2geojson", geojson)
 
         graphicLayer.loadGeoJSON(geojson, {
@@ -235,9 +235,9 @@ function onClickImpFile(file) {
       clearSelectFile()
     }
   } else if (fileType == "kmz") {
-    //加载input文件控件的二进制流
+    //Load the binary stream of the input file control
     kgUtil.toGeoJSON(file).then((geojson) => {
-      geojson = simplifyGeoJSON(geojson) //简化geojson的点
+      geojson = simplifyGeoJSON(geojson) //Simplify geojson points
       console.log("kmz2geojson", geojson)
 
       graphicLayer.loadGeoJSON(geojson, {
@@ -246,7 +246,7 @@ function onClickImpFile(file) {
       clearSelectFile()
     })
   } else {
-    window.layer.msg("暂不支持 " + fileType + " 文件类型的数据！")
+    window.layer.msg("Not supported yet" + fileType + "data of file type!")
     clearSelectFile()
   }
 }
@@ -259,7 +259,7 @@ function clearSelectFile() {
   }
 }
 
-//简化geojson的坐标
+//Simplify the coordinates of geojson
 function simplifyGeoJSON(geojson) {
   try {
     geojson = turf.simplify(geojson, { tolerance: 0.000001, highQuality: true, mutate: true })
@@ -269,31 +269,31 @@ function simplifyGeoJSON(geojson) {
   return geojson
 }
 
-// 保存geojson
+// save geojson
 function expGeoJSONFile() {
   if (graphicLayer.length === 0) {
-    window.layer.msg("当前没有标注任何数据，无需保存！")
+    window.layer.msg("No data is currently marked, no need to save!")
     return
   }
 
   let geojson = graphicLayer.toGeoJSON()
-  haoutil.file.downloadFile("矢量数据GeoJSON.json", JSON.stringify(geojson))
+  haoutil.file.downloadFile("Vector data GeoJSON.json", JSON.stringify(geojson))
 }
 
-// 保存json
+// save json
 function expJSONFile() {
   if (graphicLayer.length === 0) {
-    window.layer.msg("当前没有标注任何数据，无需保存！")
+    window.layer.msg("No data is currently marked, no need to save!")
     return
   }
   const geojson = graphicLayer.toJSON()
-  mars3d.Util.downloadFile("矢量数据构造参数.json", JSON.stringify(geojson))
+  mars3d.Util.downloadFile("Vector data construction parameters.json", JSON.stringify(geojson))
 }
 
-//  ***************************** 属性面板 ***********************  //
-// 绑定事件，激活属性面板
+//******************************Properties panel****************** ****** //
+// Bind event and activate the property panel
 function bindAttributePannel() {
-  // 初始化表格数据
+  //Initialize table data
   if ($("#graphicTable")) {
     graphicLayer.readyPromise.then(function (layer) {
       getTableData(graphicLayer)
@@ -305,7 +305,7 @@ function bindAttributePannel() {
       showEditor(e)
     }
   })
-  // 修改了矢量数据
+  //Modified vector data
   graphicLayer.on(
     [
       mars3d.EventType.editStart,
@@ -319,7 +319,7 @@ function bindAttributePannel() {
     }
   )
 
-  // 停止编辑
+  // Stop editing
   graphicLayer.on([mars3d.EventType.editStop, mars3d.EventType.removeGraphic], function (e) {
     setTimeout(() => {
       if (!graphicLayer.isEditing) {
@@ -329,7 +329,7 @@ function bindAttributePannel() {
   })
 }
 
-//附加：激活属性编辑widget【非必需，可以注释该方法内部代码】
+//Additional: activate attribute editing widget [not required, you can comment the internal code of this method]
 let timeTik
 
 function showEditor(e) {
@@ -337,20 +337,20 @@ function showEditor(e) {
   clearTimeout(timeTik)
 
   if (!graphic._conventStyleJson) {
-    graphic.options.style = graphic.toJSON().style //因为示例中的样式可能有复杂对象，需要转为单个json简单对象
-    graphic._conventStyleJson = true //只处理一次
+    graphic.options.style = graphic.toJSON().style //Because the style in the example may have complex objects, it needs to be converted into a single json simple object
+    graphic._conventStyleJson = true //Only process once
   }
 
   let plotAttr = es5widget.getClass("widgets/plotAttr/widget.js")
   if (plotAttr && plotAttr.isActivate) {
     plotAttr.startEditing(graphic, graphic.coordinates)
   } else {
-    // 左侧没有弹出的修改面板时，弹出widget
+    // When there is no pop-up modification panel on the left, pop up the widget
     $("#infoview-left").length === 0 &&
       es5widget.activate({
         map: map,
         uri: "widgets/plotAttr/widget.js",
-        name: "属性编辑",
+        name: "Property Edit",
         graphic: graphic,
         lonlats: graphic.coordinates
       })
@@ -364,9 +364,9 @@ function stopEditing() {
     }
   }, 200)
 }
-//附加：激活属性编辑widget【非必需，可以注释该方法内部代码】
+//Additional: activate attribute editing widget [not required, you can comment the internal code of this method]
 
-//  ***************************** 数据列表 ***********************  //
+// ***************************** Datasheets***************** ****** //
 
 let tableEventTarget = new mars3d.BaseClass()
 
@@ -379,7 +379,7 @@ function tableInit(data) {
     checkboxHeader: false,
     columns: [
       {
-        title: "是否显示",
+        title: "Whether to display",
         field: "show",
         align: "center",
         checkbox: true,
@@ -392,10 +392,10 @@ function tableInit(data) {
       },
       {
         field: "name",
-        title: "名称"
+        title: "name"
       },
       {
-        title: "操作",
+        title: "Operation",
         align: "center",
         width: 80,
         events: {
@@ -409,7 +409,7 @@ function tableInit(data) {
           "click .edit": function (e, value, row, index) {
             const graphic = graphicLayer.getGraphicById(row.id)
             // const graphic = getGraphic(row.id)
-            // 矢量数据不能处于编辑状态，否则点光源示例点击编辑时会失去光
+            // Vector data cannot be in editing state, otherwise the point light source example will lose light when you click to edit.
             // graphic.hasEdit && graphic.startEditing()
             if ($("#infoview-left").length > 0) {
               $("#infoview-left").show()
@@ -426,34 +426,34 @@ function tableInit(data) {
         }
       }
     ],
-    //定位区域
+    //Locate area
     onClickRow: function (row) {
       flyToTableItem(row.id)
     },
-    //勾选显示
+    //Check display
     onCheck: function (row) {
       onSelectTableItem(row.id, true)
     },
-    //取消勾选显示
+    //Uncheck display
     onUncheck: function (row) {
       onSelectTableItem(row.id, false)
     }
   })
 }
 
-// 更新表格数据
+//Update table data
 function refreshTabel(layer) {
   const newData = getDataByLayer(layer)
   $("#graphicTable").bootstrapTable("load", newData)
 }
 
-// 删除表格中的指定项
+//Delete the specified item in the table
 function removeTableItem(id) {
   $("#graphicTable").bootstrapTable("remove", { field: "id", values: id })
 }
 
 // tableEventTarget.on("graphicList", function (event) {
-//   tableInit(event.graphicList)
+// tableInit(event.graphicList)
 // })
 // tableEventTarget.on("removeGraphic", function (event) {
 //   removeTableItem(event.graphicId)
@@ -479,14 +479,14 @@ function onSelectTableItem(id, selected) {
   }
 }
 
-// 获取图层数据，填充表格数据，同时监听图层操作
+// Get layer data, fill in table data, and monitor layer operations at the same time
 function getTableData(graphicLayer) {
   graphicLayer.on(mars3d.EventType.removeGraphic, function (event) {
     const graphicId = event.graphic.id
     removeTableItem(graphicId)
   })
 
-  // 图上标绘触发事件
+  //Plot trigger events on the graph
   graphicLayer.on(mars3d.EventType.drawCreated, function (event) {
     refreshTabel(graphicLayer)
   })
@@ -509,10 +509,10 @@ function getItemName(graphic) {
     return `${graphic.type} - ${graphic.style.label.text}`
   }
 
-  return `${graphic.type} - ${graphic.name || "未命名"}`
+  return `${graphic.type} - ${graphic.name || "Unnamed"}`
 }
 
-// 将layer中的数据转为表格中的数据
+//Convert the data in the layer to the data in the table
 function getDataByLayer(graphicLayer) {
   const graphics = graphicLayer.getGraphics()
 

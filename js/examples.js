@@ -263,7 +263,7 @@ function searchAction() {
   
 // Show a url in local window
 function showInLocalWindow(application, descriptionLink) {
-    descriptionLink += "&lang=" + i18next.resolvedLanguage
+    //descriptionLink += "&lang=" + i18next.resolvedLanguage
 	window.layer.open({
 	  type: 2,
 	  title: i18next.t(application),

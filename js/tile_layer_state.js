@@ -5,7 +5,7 @@ function initTable() {
     thisLayer.show = val
   })
 
-  // 亮度
+  // brightness
   $("#brightness")
     .slider({
       min: 0,
@@ -14,12 +14,12 @@ function initTable() {
       value: 1
     })
     .on("change", (e) => {
-      //修改步长
+      //modify step size
       if (e && e.value) {
         setLayerOptions("brightness", e.value.newValue)
       }
     })
-  // 对比度
+  // contrast
   $("#contrast")
     .slider({
       min: 0,
@@ -28,12 +28,12 @@ function initTable() {
       value: 1
     })
     .on("change", (e) => {
-      //修改步长
+      //modify step size
       if (e && e.value) {
         setLayerOptions("contrast", e.value.newValue)
       }
     })
-  // 色彩
+  // color
   $("#hue")
     .slider({
       min: 0,
@@ -42,12 +42,12 @@ function initTable() {
       value: 0.1
     })
     .on("change", (e) => {
-      //修改步长
+      //modify step size
       if (e && e.value) {
         setLayerOptions("hue", e.value.newValue)
       }
     })
-  // 饱和度
+  // saturation
   $("#saturation")
     .slider({
       min: 0,
@@ -56,12 +56,12 @@ function initTable() {
       value: 1
     })
     .on("change", (e) => {
-      //修改步长
+      //modify step size
       if (e && e.value) {
         setLayerOptions("saturation", e.value.newValue)
       }
     })
-  // 饱和度
+  // saturation
   $("#gamma")
     .slider({
       min: 0,
@@ -70,12 +70,12 @@ function initTable() {
       value: 0.2
     })
     .on("change", (e) => {
-      //修改步长
+      //modify step size
       if (e && e.value) {
         setLayerOptions("gamma", e.value.newValue)
       }
     })
-  // 透明度
+  // transparency
   $("#opacity")
     .slider({
       min: 0,
@@ -84,7 +84,7 @@ function initTable() {
       value: 1
     })
     .on("change", (e) => {
-      //修改步长
+      //modify step size
       if (e && e.value) {
         setLayerOptions("opacity", e.value.newValue)
       }
@@ -99,7 +99,7 @@ function initTable() {
 
     tileLayerList.push({
       key: layer,
-      name: `${layer.type} - ${layer.name || "未命名"}`,
+      name: `${layer.type} - ${layer.name || "Unnamed"}`,
       isTile: layer.isTile
     })
   }
@@ -107,21 +107,21 @@ function initTable() {
   selectedFirst()
   addTable()
 
-  if (tileLayerList.lenght) {
+  if ( tileLayerList . length ) {
     $("#showEditor").show()
   }
 
-  // 添加新的图层，数组中也添加数据
+  //Add a new layer and add data to the array
   map.on(mars3d.EventType.addLayer, function (event) {
     const layer = event.layer
     thisLayer = event.layer
-    if (layer.isPrivate || layer.name === "POI查询") {
+    if (layer.isPrivate || layer.name === "POI Query") {
       return
     }
 
     tileLayerList.push({
       key: layer,
-      name: `${layer.type} - ${layer.name || "未命名"}`,
+      name: `${layer.type} - ${layer.name || "Unnamed"}`,
       isTile: layer.isTile
     })
 
@@ -129,26 +129,26 @@ function initTable() {
     addTable()
   })
 
-  // 删除图层
+  // Delete layer
   map.on(mars3d.EventType.removeLayer, function (event) {
     const layerId = event.layer
 
     const idx = tileLayerList.findIndex((item) => item.key === layerId)
-    tileLayerList.splice(idx, 1)
+    tileLayerList . splice ( idx , 1 ) ;
 
     addTable()
 
     if (thisLayer === layerId) {
       thisLayer = null
     }
-    $("#layerName").html("") // 隐藏编辑面板
+    $("#layerName").html("") // Hide the editing panel
     $("#showEditor").hide()
   })
 }
 
 function selectedFirst() {
   setTimeout(() => {
-    // 选中第一个
+    //Select the first one
     if (tileLayerList.length === 1) {
       const layer = tileLayerList[0]
 
@@ -156,7 +156,7 @@ function selectedFirst() {
         return
       }
 
-      $("#layerName").html(layer.name) // 获取到的对应图层的信息
+      $("#layerName").html(layer.name) // Obtained information about the corresponding layer
       $("#showEditor").show()
       thisLayer = map.getLayerById(layer.key.id)
       $("#show").attr("checked", thisLayer)
@@ -170,9 +170,9 @@ function setLayerOptions(attribute, val) {
   }
 }
 
-// 表格添加一行记录 item - 数据
+//Add a row to the table to record item - data
 function addTable() {
-  // 增加tr和td表格
+  //Add tr and td tables
   let tbody = document.getElementById("tbPoly")
   tbody.innerHTML = ``
 
@@ -188,7 +188,7 @@ function addTable() {
             </tr>`
     tbody.appendChild(tr)
 
-    //绑定单击事件 定位
+    //Bind click event positioning
     tr.querySelector(".flyTo").addEventListener("click", function (e) {
       const layer = map.getLayerById(item.key.uuid)
       if (layer) {
@@ -196,12 +196,12 @@ function addTable() {
       }
     })
 
-    // 删除压平数据和压平线
+    //Delete flattening data and flattening lines
     tr.querySelector(".remove").addEventListener("click", function (e) {
       const layer = map.getLayerById(item.key.uuid)
       if (layer) {
         layer.remove(true)
-        // formState.layerName = "" // 隐藏编辑面板
+        // formState.layerName = "" // Hide the editing panel
       }
     })
   })

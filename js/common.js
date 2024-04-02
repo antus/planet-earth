@@ -2,17 +2,17 @@
 
 const parentGlobal = window.parent || window
 
-parentGlobal.mars3d = mars3d // widget中使用
+parentGlobal.mars3d = mars3d // used in widget
 
 function init() {
-  // 判断webgl支持
+  // Determine webgl support
   if (!mars3d.Util.webglreport()) {
     mars3d.Util.webglerror()
   }
-  // 读取 config.json 配置文件
+  //Read the config.json configuration file
   mars3d.Util.fetchJson({ url: "/config/config.json" })
     .then(function (json) {
-      console.log("Reading the config.json configuration file", json) // 打印测试信息
+      console.log("Reading the config.json configuration file", json) // Print test information
       // Get language from url params
       const urlParams = new URLSearchParams(window.location.search);
       var lang = urlParams.get('lang') || "en";
@@ -64,7 +64,7 @@ function setLang(json, lang) {
   }
 }
 
-// 构造地图主方法【必须】
+// Construct the map main method [required]
 function globalInitMap(options) {
   if (window.mapOptions) {
     if (typeof window.mapOptions === "function") {
@@ -74,13 +74,13 @@ function globalInitMap(options) {
     }
   }
 
-  // 创建三维地球场景
+  //Create a 3D earth scene
   return new mars3d.Map("mars3dContainer", options)
 }
 
-//初始化widget相关
+//Initialize widget related
 function initWidget(map) {
-  //初始化widget管理器
+  //Initialize widget manager
   es5widget.init(
     map,
     {
@@ -90,13 +90,13 @@ function initWidget(map) {
       },
       openAtStart: [
         {
-          name: "右上角工具栏",
+          name: "Upper right corner toolbar",
           uri: "widgets/toolButton/menuBtn.js"
         }
       ],
       widgets: [
         {
-          name: "图层管理",
+          name: "Layer Management",
           uri: "widgets/manageLayers/widget.js",
           group: "forlayer",
           autoCenter: true,
@@ -112,42 +112,42 @@ function initWidget(map) {
   )
 }
 
-// 调用项目的消息提示（自动消失）
+// Call the message prompt of the project (disappear automatically)
 function globalMsg(content) {
   if (window.layer) {
-    window.layer.msg(content) // 此方法需要引用layer.js
+    window.layer.msg(content) // This method needs to reference layer.js
   } else if (window.toastr) {
-    window.toastr.info(content) // 此方法需要引用toastr
+    window.toastr.info(content) // This method needs to reference toastr
   } else {
     window.alert(content)
   }
 }
 
-// 调用项目的弹窗提示（手动单击确定关闭窗口）
+// Call the pop-up window prompt of the project (manually click OK to close the window)
 function globalAlert(content, title) {
   if (window.layer) {
-    // 此方法需要引用layer.js
+    // This method needs to reference layer.js
     window.layer.alert(content, {
-      title: title || "提示",
+      title: title || "Tip",
       skin: "layui-layer-lan layer-mars-dialog",
       closeBtn: 0,
       anim: 0
     })
   } else if (window.toastr) {
-    window.toastr.info(content, title) // 此方法需要引用toastr
+    window.toastr.info(content, title) // This method needs to reference toastr
   } else {
     window.alert(content)
   }
 }
 
-// 调用项目的右上角信息提示（可关闭）
+// Call the information prompt in the upper right corner of the project (can be turned off)
 function globalNotify(title, content) {
   if (window.toastr) {
-    window.toastr.warning(content, title) // 此方法需要引用toastr
+    window.toastr.warning(content, title) // This method needs to reference toastr
   } else if (window.layer) {
-    // 此方法需要引用layer.js
+    // This method needs to reference layer.js
     window.layer.alert(content, {
-      title: title || "提示",
+      title: title || "Tip",
       skin: "layui-layer-lan layer-mars-dialog",
       closeBtn: 0,
       anim: 0

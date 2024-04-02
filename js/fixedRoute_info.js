@@ -1,37 +1,37 @@
 /* eslint-disable no-undef */
-"use script" //开发环境建议开启严格模式
+"use script" //It is recommended to turn on strict mode in the development environment
 
 $(document).ready(function () {
   let inhtml = `
       <div class="infoview rightbottom" style="min-width: 200px">
       <table class="mp_table">
         <tr>
-          <td class="nametd">总长度</td>
+          <td class="nametd">Total length</td>
           <td id="td_alllength"></td>
         </tr>
         <tr>
-          <td class="nametd">已漫游长度</td>
+          <td class="nametd">Roamed length</td>
           <td id="td_length"></td>
         </tr>
         <tr>
-          <td class="nametd">总时长</td>
+          <td class="nametd">Total duration</td>
           <td id="td_alltimes"></td>
         </tr>
         <tr>
-          <td class="nametd">已漫游时间</td>
+          <td class="nametd">Roaming time</td>
           <td id="td_times"></td>
         </tr>
 
         <tr>
-          <td class="nametd">经度</td>
+          <td class="nametd">Longitude</td>
           <td id="td_jd"></td>
         </tr>
         <tr>
-          <td class="nametd">经度</td>
+          <td class="nametd">Longitude</td>
           <td id="td_wd"></td>
         </tr>
         <tr>
-          <td class="nametd">漫游高程</td>
+          <td class="nametd">Roaming elevation</td>
           <td id="td_gd"></td>
         </tr>
 
@@ -47,9 +47,9 @@ $(document).ready(function () {
   $("body").append(inhtml)
 })
 
-//面板显示相关信息
+//Panel displays relevant information
 eventTarget.on("roamLineChange", (roamLineData) => {
-  //显示基本信息，名称、总长、总时间
+  //Display basic information, name, total length, total time
   let val = Math.ceil((roamLineData.second * 100) / roamLineData.second_all)
   if (val < 1) {
     val = 1
