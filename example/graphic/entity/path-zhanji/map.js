@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let linePositions
 let graphicPath
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 20.803452, lng: 116.629014, alt: 1734203, heading: 3, pitch: -57 }
@@ -12,31 +12,31 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   addDemoGraphics()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addDemoGraphics() {
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 半球
+  // hemisphere
   const graphicQiu = new mars3d.graphic.EllipsoidEntity({
     position: new mars3d.LngLatPoint(117.276726, 31.864175, -10000.0),
     style: {
@@ -52,16 +52,16 @@ function addDemoGraphics() {
   })
   graphicLayer.addGraphic(graphicQiu)
 
-  // 计算圆圈线
+  // Calculate circle line
   linePositions = mars3d.PolyUtil.getEllipseOuterPositions({
     position: Cesium.Cartesian3.fromDegrees(117.276726, 31.864175),
     radius: 500000,
-    count: 60 // 共返回count*4个点
+    count: 60 // Return count*4 points in total
   })
   linePositions = mars3d.PointUtil.setPositionsHeight(linePositions, 20000)
-  linePositions.push(linePositions[0]) // 闭合圆
+  linePositions.push(linePositions[0]) // Closed circle
 
-  // 圆圈线
+  //circle line
   // const graphicLine = new mars3d.graphic.PolylineEntity({
   //   positions: linePositions,
   //   style: {
@@ -75,7 +75,7 @@ function addDemoGraphics() {
   // })
   // graphicLayer.addGraphic(graphicLine)
 
-  // 飞机path路径
+  //Aircraft path path
   const property = new Cesium.SampledPositionProperty()
   property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
 
@@ -103,7 +103,7 @@ function addDemoGraphics() {
       opacity: 0.9
     },
     label: {
-      text: "火星1号",
+      text: "Mars 1",
       font_size: 19,
       font_family: "楷体",
       color: Cesium.Color.AZURE,
@@ -112,7 +112,7 @@ function addDemoGraphics() {
       outlineWidth: 2,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-      pixelOffset: new Cesium.Cartesian2(10, -25) // 偏移量
+      pixelOffset: new Cesium.Cartesian2(10, -25) // offset
     },
     model: {
       url: "//data.mars3d.cn/gltf/mars/zhanji.glb",
@@ -126,18 +126,18 @@ function addDemoGraphics() {
   map.clock.startTime = start.clone()
   map.clock.stopTime = stop.clone()
   map.clock.currentTime = start.clone()
-  map.clock.clockRange = Cesium.ClockRange.LOOP_STOP // 到达终止时间后循环
+  map.clock.clockRange = Cesium.ClockRange.LOOP_STOP // Loop after reaching the end time
   map.clock.multiplier = 1
   map.clock.shouldAnimate = true
 }
 
-// 顶视图
+// top view
 function viewSeeTop() {
   map.trackedEntity = undefined
 
   map.flyToPositions(linePositions, { pitch: -90 })
 }
-// 侧视图
+// side view
 function viewSeeCe() {
   map.trackedEntity = graphicPath
 
@@ -147,7 +147,7 @@ function viewSeeCe() {
     duration: 0
   })
 }
-// 主视图
+// Main view
 function viewSeeHome() {
   map.trackedEntity = graphicPath
 

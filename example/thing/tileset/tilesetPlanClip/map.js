@@ -1,25 +1,25 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tilesetLayer
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 模型
+  // Model
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "教学楼",
+    name: "Teaching Building",
     url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
     position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
     maximumScreenSpaceError: 16,
 
-    // 可传入TilesetPlanClip构造参数，下面是演示裁剪区域
+    //TilesetPlanClip construction parameters can be passed in. The following is the demonstration cropping area.
     planClip: {
       positions: [
         [117.251193, 31.843689, 47.7],
@@ -37,14 +37,14 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 绘制线
+// draw line
 function drawLine() {
   tilesetLayer.planClip.clear()
 
@@ -57,17 +57,17 @@ function drawLine() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       tilesetLayer.planClip.positions = positions
     }
   })
 }
 
-// 绘制矩形
+// draw rectangle
 function drawExtent() {
   tilesetLayer.planClip.clear()
 
@@ -79,17 +79,17 @@ function drawExtent() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       tilesetLayer.planClip.positions = positions
     }
   })
 }
 
-// 绘制面
+// Draw the surface
 function drawPoly() {
   tilesetLayer.planClip.clear()
 
@@ -101,16 +101,16 @@ function drawPoly() {
       clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       tilesetLayer.planClip.positions = positions
     }
   })
 }
-// 绘制面(外切)
+// Draw the surface (circumscribed)
 function drawPoly2() {
   tilesetLayer.planClip.clear()
   map.graphicLayer.startDraw({
@@ -121,10 +121,10 @@ function drawPoly2() {
       clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       tilesetLayer.planClip.clipOutSide = true
       tilesetLayer.planClip.positions = positions
@@ -132,12 +132,12 @@ function drawPoly2() {
   })
 }
 
-// 更改切换方向
+//Change switching direction
 function clippingType(type) {
   tilesetLayer.planClip.clipType = mars3d.ClipType[type]
 }
 
-// 距离
+// distance
 function rangeDistance(value) {
   tilesetLayer.planClip.distance = value
 }

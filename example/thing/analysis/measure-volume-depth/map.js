@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let measure
 var measureVolume
 
@@ -11,27 +11,27 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 基于深度图的方量分析 需要注意：
-  // 1. 需要地形和模型等需要分析区域对应的数据加载完成后才能分析。
-  // 2. 如果有遮挡了分析区域的任何矢量对象，都需要分析前隐藏下，分析结束后再改回显示。
+  // Square quantity analysis based on depth map. Note:
+  // 1. Analysis can only be done after the data corresponding to the area to be analyzed, such as terrain and models, is loaded.
+  // 2. If there are any vector objects blocking the analysis area, they need to be hidden before analysis and then changed back to display after analysis.
 
   addMeasure()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -47,7 +47,7 @@ function addMeasure() {
   })
   map.addThing(measure)
 
-  // 直接传入坐标分析
+  // Directly pass in coordinate analysis
   setTimeout(() => {
     measure
       .volume({
@@ -62,8 +62,8 @@ function addMeasure() {
           [116.201795, 30.865941, 443.06]
         ]),
         height: 450,
-        depth: true, // 使用离屏渲染深度图的方式
-        offsetHeight: 500 // 偏移高度来展示
+        depth: true, // Use off-screen rendering of depth map
+        offsetHeight: 500 //Offset height to display
       })
       .then((e) => {
         measureVolume = e
@@ -71,39 +71,39 @@ function addMeasure() {
       })
   }, 3000)
 
-  // 有模型时
+  //When there is a model
   // tiles3dLayer.readyPromise.then((layer) => {
-  //   // 关键代码,等模型readyPromise加载后执行volume
+  // // Key code, execute volume after the model readyPromise is loaded.
   //   measureVolume = measure.volume({
   //     positions: mars3d.PointTrans.lonlats2cartesians([
   //       [119.033856, 33.591473, 14.5],
   //       [119.033098, 33.591836, 13.2],
   //       [119.033936, 33.592146, 16.9]
   //     ]),
-  //     depth: true, // 使用离屏渲染深度图的方式
+  // depth: true, // Use off-screen rendering of depth map
   //     height: 150
   //   })
   // })
 
   measure.on(mars3d.EventType.start, function (event) {
-    console.log("开始分析", event)
+    console.log("Start analysis", event)
     showLoading()
-    console.log("坐标为", JSON.stringify(mars3d.LngLatArray.toArray(event.positions))) // 方便测试拷贝坐标
+    console.log("The coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(event.positions))) // Convenient for testing copy coordinates
   })
 
   measure.on(mars3d.EventType.end, function (event) {
-    console.log("分析完成", event)
+    console.log("Analysis completed", event)
     hideLoading()
   })
 }
 
-// 点选高度
+//Click height
 function showHeightVal() {
   const baseHeight = measureVolume.height.toFixed(1)
   const minHeight = measureVolume.minHeight.toFixed(1)
   const maxHeight = getFixedNum(measureVolume.maxHeight)
 
-  // 触发自定义事件 heightVal ，改变组件面板中的值
+  // Trigger the custom event heightVal and change the value in the component panel
   eventTarget.fire("heightVal", { baseHeight, minHeight, maxHeight })
 }
 
@@ -111,13 +111,13 @@ function getFixedNum(val) {
   return Math.ceil(val * 10) / 10
 }
 
-// 方量分析
+// Square quantity analysis
 function analysisMeasure() {
-  // 手动绘制的方式分析
+  // Analysis of manual drawing methods
   measure
     .volume({
-      depth: true // 使用离屏渲染深度图的方式
-      // minHeight: 50 , //可以设置一个固定的最低高度
+      depth: true // Use off-screen rendering of depth map
+      // minHeight: 50, //You can set a fixed minimum height
     })
     .then((e) => {
       measureVolume = e
@@ -125,37 +125,37 @@ function analysisMeasure() {
     })
 }
 
-// 清除
+// clear
 function clear() {
   measure.clear()
   measureVolume = null
 }
 
-// 修改基础高度
+//Modify base height
 function baseHeight(num) {
   measureVolume.height = num
   showHeightVal()
 }
 
-// 修改底高
+//Modify bottom height
 function txtMinHeight(num) {
   if (num > measureVolume.height) {
-    globalMsg("墙底部高度不能高于基准面高")
+    globalMsg("The bottom height of the wall cannot be higher than the height of the base plane")
     return
   }
   measureVolume.minHeight = num
 }
 
-// 修改顶高
+//Modify top height
 function txtMaxHeight(num) {
   const maxHeight = getFixedNum(measureVolume.polygonMaxHeight)
   if (num < maxHeight) {
-    globalMsg("墙顶部高度不能低于区域内的地表高" + maxHeight)
+    globalMsg("The height of the top of the wall cannot be lower than the surface height in the area" + maxHeight)
     measureVolume.maxHeight = Number(maxHeight)
     return
   }
   if (num < measureVolume.height) {
-    globalMsg("墙顶部高度不能低于基准面高")
+    globalMsg("The height of the top of the wall cannot be lower than the height of the base plane")
     return
   }
   measureVolume.maxHeight = num
@@ -163,11 +163,11 @@ function txtMaxHeight(num) {
 
 function selHeight() {
   if (!measureVolume || !measure) {
-    globalMsg("请先开始方量分析")
+    globalMsg("Please start the square analysis first")
     return
   }
 
-  // 拾取高度
+  // Pick up height
   map.graphicLayer.startDraw({
     type: "point",
     style: {

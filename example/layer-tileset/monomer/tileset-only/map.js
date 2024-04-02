@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.654916, lng: 117.08278, alt: 279, heading: 316, pitch: -29 }
@@ -10,19 +10,19 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     type: "3dtiles",
-    name: "石化工厂",
+    name: "Petrochemical Plant",
     url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
@@ -31,15 +31,15 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 单击事件
+  // click event
   tiles3dLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了3dtiles图层", event)
+    console.log("3dtiles layer clicked", event)
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

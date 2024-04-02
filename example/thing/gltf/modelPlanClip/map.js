@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let modelPlanClip
 
 var mapOptions = {
@@ -11,20 +11,20 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map = mapInstance // record map
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 加模型
+  //Add model
   const graphic = new mars3d.graphic.ModelPrimitive({
     position: [117.150365, 31.841954, 50.26],
     style: {
@@ -36,7 +36,7 @@ function onMounted(mapInstance) {
 
   modelPlanClip = new mars3d.thing.ModelPlanClip({
     graphic,
-    height: 1, // 开挖的深度
+    height: 1, // depth of excavation
     clipOutSide: false,
     edgeColor: Cesium.Color.GREY,
     edgeWidth: 2.0
@@ -45,8 +45,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -60,12 +60,12 @@ function rangeNormalZ(value) {
   modelPlanClip.normalZ = value
 }
 
-// 更改切换方向
+//Change switching direction
 function clippingType(clipType) {
   modelPlanClip.clipType = mars3d.ClipType[clipType]
 }
 
-// 绘制线
+// draw line
 function drawLine() {
   modelPlanClip.clear()
 
@@ -78,7 +78,7 @@ function drawLine() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
@@ -86,7 +86,7 @@ function drawLine() {
     }
   })
 }
-// 绘制矩形
+// draw rectangle
 function drawExtent() {
   modelPlanClip.clear()
   map.graphicLayer.startDraw({
@@ -99,7 +99,7 @@ function drawExtent() {
       addHeight: 0.5
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 
@@ -108,7 +108,7 @@ function drawExtent() {
   })
 }
 
-// 绘制面
+// Draw the surface
 function drawPoly() {
   modelPlanClip.clear()
 
@@ -122,7 +122,7 @@ function drawPoly() {
       addHeight: 0.5
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
@@ -130,7 +130,7 @@ function drawPoly() {
     }
   })
 }
-// 绘制面(外切)
+// Draw the surface (circumscribed)
 function drawPoly2() {
   modelPlanClip.clear()
   map.graphicLayer.startDraw({
@@ -143,7 +143,7 @@ function drawPoly2() {
       addHeight: 0.5
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 

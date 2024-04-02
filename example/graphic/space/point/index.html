@@ -3,24 +3,24 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="author" content="Mars Technology http://mars3d.cn " />
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="x5-fullscreen" content="true" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-    <!-- 标题及搜索关键字 -->
-    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <!-- Title and search keywords -->
+    <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
     <meta
       name="description"
-      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+      content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework three-dimensional earth model gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming Geographic Information System Cloud GIS 3D GIS GIS Platform WebGIS"
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
-    <title>外太空物 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>Outer space objects | Mars3D | 3D map | Mars technology | Hefei Mars Technology Co., Ltd.</title>
 
-    <!--第三方lib-->
+    <!--Third-party lib-->
     <script
       type="text/javascript"
       src="/lib/include-lib.js"
@@ -30,7 +30,7 @@
 
     <link href="/css/style.css" rel="stylesheet" />
     <style>
-      /* 滑动轨的样式设置 */
+      /* Style settings for sliding rails */
       .slider .tooltip.top {
         margin-top: -45px;
       }
@@ -89,105 +89,105 @@
 
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <!--查询条件面板-->
+    <!--Query condition panel-->
     <div id="viewContorUi" class="infoview">
       <table class="mars-table">
         <tr>
-          <td>名称</td>
+          <td>Name</td>
           <td>
             <input id="txtName" class="form-control" type="text" />
           </td>
         </tr>
 
         <tr>
-          <td>系列卫星</td>
+          <td>satellite series</td>
           <td>
             <select id="selXilie" class="selectpicker form-control">
-              <option value="" selected="selected">无</option>
-              <option value="gps">美国 GPS系统</option>
-              <option value="bd">中国 北斗卫星系统</option>
-              <option value="glonass">俄罗斯 格洛纳斯系统</option>
-              <option value="inmarsat">国际海事卫星(Inmarsat)</option>
-              <option value="landsat">地球资源卫星(Landsat)</option>
-              <option value="digitalglobe">数位全球(DigitalGlobe)</option>
+              <option value="" selected="selected">None</option>
+              <option value="gps">US GPS system</option>
+              <option value="bd">China Beidou Satellite System</option>
+              <option value="glonass">Russia GLONASS</option>
+              <option value="inmarsat">Inmarsat</option>
+              <option value="landsat">Landsat</option>
+              <option value="digitalglobe">DigitalGlobe</option>
             </select>
           </td>
         </tr>
 
         <tr>
-          <td>所属国家</td>
+          <td>Country</td>
           <td>
             <select id="selCountry" class="selectpicker form-control">
-              <option value="" selected="selected">全部</option>
-              <option value="US">美国</option>
-              <option value="CIS">俄罗斯</option>
-              <option value="PRC">中国</option>
-              <option value="UK">英国</option>
-              <option value="FR">法国</option>
-              <option value="CA">加拿大</option>
-              <option value="AUS">澳大利亚</option>
-              <option value="JPN">小日本</option>
-              <option value="IND">印度</option>
+              <option value="" selected="selected">All</option>
+              <option value="US">United States</option>
+              <option value="CIS">Russia</option>
+              <option value="PRC">China</option>
+              <option value="UK">United Kingdom</option>
+              <option value="FR">France</option>
+              <option value="CA">Canada</option>
+              <option value="AUS">Australia</option>
+              <option value="JPN">Little Japan</option>
+              <option value="IND">India</option>
             </select>
           </td>
         </tr>
         <tr>
-          <td>对象类型</td>
+          <td>Object type</td>
           <td>
             <select id="selType" class="selectpicker form-control">
-              <option value="" selected="selected">全部</option>
-              <option value="satellite">普通卫星</option>
-              <option value="junk">垃圾(卫星碎片、火箭和助推器)</option>
+              <option value="" selected="selected">All</option>
+              <option value="satellite">Ordinary satellite</option>
+              <option value="junk">Junk (satellite debris, rockets and boosters)</option>
             </select>
           </td>
         </tr>
-        <tr title="雷达截面">
-          <td>雷达截面</td>
+        <tr title="Radar Cross Section">
+          <td>Radar Cross Section</td>
           <td>
             <input id="slider-rcs" type="text" />
           </td>
         </tr>
         <tr>
-          <td>发射日期</td>
+          <td>Launch Date</td>
           <td>
             <input id="slider-launchdate" type="text" />
           </td>
         </tr>
         <tr>
-          <td>轨道周期</td>
+          <td>Orbital Period</td>
           <td>
             <input id="slider-period" type="text" />
           </td>
         </tr>
 
         <tr>
-          <td>轨道类型</td>
+          <td>Track Type</td>
           <td>
             <select id="selGuidao" class="selectpicker form-control">
-              <option value="" selected="selected">全部</option>
-              <option value="low">低地球轨道</option>
-              <option value="medium">中地球轨道</option>
-              <option value="geosynchronous">地球同步轨道</option>
-              <option value="geostationary">地球静止轨道</option>
-              <option value="high">高地球轨道</option>
+              <option value="" selected="selected">All</option>
+              <option value="low">Low Earth Orbit</option>
+              <option value="medium">Medium Earth Orbit</option>
+              <option value="geosynchronous">Geosynchronous orbit</option>
+              <option value="geostationary">Geostationary orbit</option>
+              <option value="high">High Earth Orbit</option>
             </select>
           </td>
         </tr>
 
         <tr>
-          <td>倾斜角度</td>
+          <td>Tilt angle</td>
           <td>
             <input id="slider-inclination" type="text" />
           </td>
         </tr>
         <tr>
-          <td>远地点高度</td>
+          <td>Apogee height</td>
           <td>
             <input id="slider-apogee" type="text" />
           </td>
         </tr>
         <tr>
-          <td>近地点高度</td>
+          <td>Perigee height</td>
           <td>
             <input id="slider-perigee" type="text" />
           </td>
@@ -195,84 +195,84 @@
         <tr>
           <td></td>
           <td>
-            <input id="btnClearQuery" type="button" class="btn btn-primary" value="重置" onclick="resetUI()" />
+            <input id="btnClearQuery" type="button" class="btn btn-primary" value="Reset" onclick="resetUI()" />
           </td>
         </tr>
       </table>
     </div>
 
-    <!--卫星详情面板-->
+    <!--Satellite details panel-->
     <div id="pointInfo" class="infoview" style="display: none">
-      <input id="btnBack" type="button" class="btn btn-primary" value="返回" onclick="highlight()" />
+      <input id="btnBack" type="button" class="btn btn-primary" value="Back" onclick="highlight()" />
 
       <table class="mars-table tb-border">
         <tr>
-          <td class="nametd">名称</td>
+          <td class="nametd">name</td>
           <td id="td_name"></td>
         </tr>
-        <tr title="北美空防司令部目录号">
-          <td class="nametd">目录号</td>
+        <tr title="NORAD catalog number">
+          <td class="nametd">Catalog number</td>
           <td id="td_norad"></td>
         </tr>
-        <tr title="空间研委会编号">
-          <td class="nametd">国际代号</td>
+        <tr title="Space Research Committee Number">
+          <td class="nametd">International code</td>
           <td id="td_cospar"></td>
         </tr>
         <tr>
-          <td class="nametd">对象类型</td>
+          <td class="nametd">Object type</td>
           <td id="td_type"></td>
         </tr>
         <tr>
-          <td class="nametd">操作状态</td>
+          <td class="nametd">Operation status</td>
           <td id="td_status"></td>
         </tr>
         <tr>
-          <td class="nametd">所有者/国家</td>
+          <td class="nametd">Owner/Country</td>
           <td id="td_country"></td>
         </tr>
         <tr>
-          <td class="nametd">发射日期</td>
+          <td class="nametd">Launch Date</td>
           <td id="td_launchDate"></td>
         </tr>
         <tr>
-          <td class="nametd">发射地点</td>
+          <td class="nametd">Launch location</td>
           <td id="td_launchSite"></td>
         </tr>
         <tr id="viewDecay">
-          <td class="nametd">衰减日期</td>
+          <td class="nametd">Decay date</td>
           <td id="td_decayDate"></td>
         </tr>
         <tr>
-          <td class="nametd">轨道周期[分钟]</td>
+          <td class="nametd">Orbital period [minutes]</td>
           <td id="td_period"></td>
         </tr>
         <tr>
-          <td class="nametd">倾角[度]</td>
+          <td class="nametd">Inclination angle [degree]</td>
           <td id="td_inclination"></td>
         </tr>
         <tr>
-          <td class="nametd">远地点高度[公里]</td>
+          <td class="nametd">Apogee height [km]</td>
           <td id="td_apogee"></td>
         </tr>
         <tr>
-          <td class="nametd">近地点高度[公里]</td>
+          <td class="nametd">Perigee height [km]</td>
           <td id="td_perigee"></td>
         </tr>
         <tr>
-          <td class="nametd">雷达截面</td>
+          <td class="nametd">Radar Cross Section</td>
           <td id="td_rcs"></td>
         </tr>
         <tr>
-          <td class="nametd">轨道中心</td>
+          <td class="nametd">Track Center</td>
           <td id="td_orbitCenter"></td>
         </tr>
         <tr>
-          <td class="nametd">轨道类型</td>
+          <td class="nametd">Track type</td>
           <td id="td_orbitType"></td>
         </tr>
 
         <tr>
-          <td class="nametd">更多资料</td>
+          <td class="nametd">More information</td>
           <td>
             <a id="link_n2yo" href="" class="rc-vertical" target="_blank">N2YO...</a>
           </td>
@@ -280,12 +280,12 @@
       </table>
     </div>
 
-    <!-- echarts面板 -->
+    <!-- echarts panel -->
     <div id="echartsPannel" class="infoview echarts_WX">
-      <input type="button" id="echarts_WX-button" class="btn btn-primary echarts_WX-button" onclick="showPannel()" value="隐藏面板">
+      <input type="button" id="echarts_WX-button" class="btn btn-primary echarts_WX-button" onclick="showPannel()" value="Hide panel">
       <div id="echarts_WX-container" class="echarts_WX-container">
         <div id="echartViewLeft_top" class="viewLeft_top"></div>
-        <p id="echartViewLeft_title" class="echarts-title">卫星数统计</p>
+        <p id="echartViewLeft_title" class="echarts-title">Satellite number statistics</p>
         <div id="echartViewLeft_bottom" class="viewLeft_bottom"></div>
       </div>
     </div>
@@ -293,7 +293,7 @@
     <script src="/js/common.js"></script>
     <script src="./map.js"></script>
     <script type="text/javascript">
-      "use script" //开发环境建议开启严格模式
+      "use script" //It is recommended to turn on strict mode in the development environment
 
       function highlight() {
         highlightSatellite()
@@ -410,7 +410,7 @@
             dataToselectSatellites()
           })
 
-        //远地点高度
+        //Apogee height
         $("#slider-apogee")
           .slider({
             id: "slider-apogee-internal",
@@ -424,7 +424,7 @@
             dataToselectSatellites()
           })
 
-        //近地点高度
+        //Perigee height
         $("#slider-perigee")
           .slider({
             id: "slider-perigee-internal",
@@ -438,15 +438,15 @@
             dataToselectSatellites()
           })
 
-        // 监听echarts数据加载完毕
+        // Monitor that echarts data is loaded
         eventTarget.on("loadEchartsData", (item) => {
           allCount = item.allCount
 
-          // 饼状图
+          // pie chart
           const topDom = document.getElementById("echartViewLeft_top")
           firstChart(item.countryNumber, topDom)
 
-          // 柱状图
+          // histogram
           const bottomDom = document.getElementById("echartViewLeft_bottom")
           secondChart(item.yearNumber, bottomDom)
         })
@@ -459,24 +459,24 @@
           $("#echartViewLeft_title").hide()
           $(".echarts_WX").width("85px")
           $("#echartViewLeft_bottom").hide()
-          $("#echarts_WX-button").val("显示面板")
+          $("#echarts_WX-button").val("Display panel")
           showFlag = true
         } else if (showFlag) {
           $("#echartViewLeft_top").show()
           $("#echartViewLeft_title").show()
           $(".echarts_WX").width("345px")
           $("#echartViewLeft_bottom").show()
-          $("#echarts_WX-button").val("隐藏面板")
+          $("#echarts_WX-button").val("Hide panel")
           showFlag = false
         }
       }
 
       const colorList = ["#6648FE", "#18AF92", "#0A7CE5", "#22CEEA", "#F35267", "#F68048"]
-      // 配置第一个图表的数据(圆环)
+      // Configure the data of the first chart (ring)
       function firstChart(data, dom) {
   console.log("1")
         const arrData = []
-        // ts中遍历对象，将对象中的数据，拆分成name和value对，放入数组中
+        // Traverse the object in ts, split the data in the object into name and value pairs, and put them into an array
         for (const [key, val] of Object.entries(data)) {
           const itemObj = {}
           itemObj.name = key
@@ -486,21 +486,21 @@
 
         console.log("2")
 
-        // 初始化echarts
+        //Initialize echarts
         console.log(dom)
         firstEcharts = echarts.init(dom)
 
         console.log("3")
 
-        // 进行相关的配置
+        //Perform relevant configurations
         const option = {
           tooltip: {
             trigger: "item",
-            formatter: "{b}<br/>共{c}个&nbsp;({d}%)"
+            formatter: "{b}<br/>{c} in total ({d}%)"
           },
           title: [
             {
-              text: "总数",
+              text: "total number",
               left: "49%",
               top: "44%",
               textAlign: "center",
@@ -530,7 +530,7 @@
               type: "pie",
               radius: ["40%", "50%"],
               selectedMode: "single",
-              selectedOffset: 16, // 选中是扇区偏移量
+              selectedOffset: 16, // The selected sector offset is
               clockwise: true,
               startAngle: 90,
               color: colorList,
@@ -539,7 +539,7 @@
                 shadowBlur: 5,
                 shadowOffsetX: 0,
                 shadowColor: "rgba(0, 0, 0, 0.2)",
-                scale: false, // 设置饼图默认的展开样式
+                scale: false, // Set the default expansion style of the pie chart
                 itemStyle: {
                   borderWidth: 3,
                   borderColor: "#ffffff"
@@ -561,34 +561,34 @@
         console.log("4")
       }
 
-      // 配置第二个图表的数据(柱状图)
+      //Configure the data of the second chart (bar chart)
       function secondChart(data, dom) {
         const yearData = []
-        // 对应的卫星数组
+        //Corresponding satellite array
         const weiXinData = []
-        // ts中遍历对象，将对象中的数据，拆分成name和value对，放入数组中
+        // Traverse the object in ts, split the data in the object into name and value pairs, and put them into an array
         for (const [key, val] of Object.entries(data)) {
           yearData.push(key)
           weiXinData.push(val)
         }
 
-        // 过滤数据，将数据中年份为NaN的数据去除
+        // Filter the data and remove the data with NaN year in the data.
         const indexArr = yearData.filter((item) => !isNaN(item))
-        // 初始化echarts
+        //Initialize echarts
         secondEcharts = echarts.init(dom)
 
         const option = {
           tooltip: {
             trigger: "axis",
             axisPointer: {
-              // 坐标轴指示器，坐标轴触发有效
-              type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+              // Axis indicator, axis trigger is valid
+              type: "shadow" // Default is straight line, optional: 'line' | 'shadow'
             },
             formatter: function (params) {
               let inhtml = ""
               for (const i in params) {
                 const item = params[i]
-                inhtml += "<label>" + "卫星" + item.value + "</label>&nbsp;个"
+                inhtml += "<label>" + "Satellite" + item.value + "</label> items"
               }
               return inhtml
             },
@@ -612,15 +612,15 @@
             type: "category",
             data: indexArr,
             axisLabel: {
-              color: "#FFFFFF" // 字体颜色
+              color: "#FFFFFF" // font color
             }
           },
           dataZoom: [
             {
               type: "inside",
-              start: Math.ceil(((yearData.length - 12) * 100) / yearData.length), // 数据窗口范围的起始百分比。范围是：0 ~ 100。表示 0% ~ 100%。
+              start: Math.ceil(((yearData.length - 12) * 100) / yearData.length), // The starting percentage of the data window range. The range is: 0 ~ 100. Indicates 0% ~ 100%.
               // start: 80,
-              end: 100, // 数据窗口范围的结束百分比。范围是：0 ~ 100。
+              end: 100, // The end percentage of the data window range. The range is: 0 ~ 100.
               yAxisIndex: 0
             },
             {
@@ -641,18 +641,18 @@
               itemStyle: {
                 color: {
                   type: "linear",
-                  x: 1, // 右
-                  y: 0, // 下
-                  x2: 0, // 左
-                  y2: 0, // 上
+                  x: 1, // right
+                  y: 0, // down
+                  x2: 0, // left
+                  y2: 0, // up
                   colorStops: [
                     {
                       offset: 0,
-                      color: "#18AF92" // 0% 处的颜色
+                      color: "#18AF92" // Color at 0%
                     },
                     {
                       offset: 0.9,
-                      color: "#7ceef9" // 90% 处的颜色
+                      color: "#7ceef9" // Color at 90%
                     }
                   ]
                 }
@@ -683,13 +683,13 @@
         $(name).slider("setValue", [$(name).slider("getAttribute", "min"), $(name).slider("getAttribute", "max")])
       }
 
-      // 判断卫星数据
+      //Judge satellite data
       function dataToselectSatellites() {
         const data = {
           name: $("#txtName").val(),
-          selXiLie: $("#selXilie").val(), //系列卫星
-          selCountry: $("#selCountry").val(), //所属国家
-          selType: $("#selType").val(), //对象类型
+          selXiLie: $("#selXilie").val(), //satellite series
+          selCountry: $("#selCountry").val(), //Country
+          selType: $("#selType").val(), //Object type
           sliLaunchdate: $("#slider-launchdate").slider("getValue"),
           sliPeriod: $("#slider-period").slider("getValue"),
           sliInclination: $("#slider-inclination").slider("getValue"),

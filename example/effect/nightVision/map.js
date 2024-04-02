@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let nightVisionEffect
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 33.591015, lng: 119.032698, alt: 73, heading: 343, pitch: -21 }
@@ -11,15 +11,15 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 添加参考三维模型
+  //Add reference 3D model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 38.8 },
@@ -28,14 +28,14 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 构造效果
+  //Construction effect
   nightVisionEffect = new mars3d.effect.NightVisionEffect()
   map.addEffect(nightVisionEffect)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 28.059099, lng: 120.440855, alt: 5467418, heading: 343, pitch: -75 }
@@ -10,22 +10,22 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  map.basemap = "黑色底图"
+  map.basemap = "Black basemap"
 
   addDemoGraphics()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -71,22 +71,22 @@ function addDemoGraphics() {
 }
 
 function initPath(routePaths) {
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
 
-  // 在layer上绑定Popup弹窗
+  // Bind the Popup window to the layer
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr
     if (!attr) {
       return false
     }
-    return mars3d.Util.getTemplateHtml({ title: "航线", template: "{startName} - {endName}", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Route", template: "{startName} - {endName}", attr })
   })
 
   const arrData = []
@@ -110,7 +110,7 @@ function initPath(routePaths) {
     })
   })
 
-  // 多个线对象的合并渲染。
+  // Combined rendering of multiple line objects.
   const graphic = new mars3d.graphic.PolylineCombine({
     instances: arrData
   })
@@ -118,70 +118,70 @@ function initPath(routePaths) {
 }
 
 function getAirData() {
-  // 每年度航班统计
+  // Annual flight statistics
   const AirNum = [
     {
-      year: "2000年", // 年份
-      domestic: 1032, // 国内航班
-      international: 133 // 国际航班
+      year: "2000", // year
+      domestic: 1032, // domestic flights
+      international: 133 // international flights
     },
     {
-      year: "2010年",
+      year: "2010",
       domestic: 1078,
       international: 302
     },
     {
-      year: "2017年",
+      year: "2017",
       domestic: 3615,
       international: 803
     },
     {
-      year: "2018年",
+      year: "2018",
       domestic: 4096,
       international: 849
     },
     {
-      year: "2019年",
+      year: "2019",
       domestic: 4568,
       international: 953
     }
   ]
 
-  // 国内机场航线数字
+  // Domestic airport route numbers
   const routeNum = [
     {
-      airport: "合肥新桥机场",
+      airport: "Hefei Xinqiao Airport",
       routeNum: 116
     },
     {
-      airport: "北京大兴机场",
+      airport: "Beijing Daxing Airport",
       routeNum: 126
     },
     {
-      airport: "湖北机场",
+      airport: "Hubei Airport",
       routeNum: 106
     },
     {
-      airport: "上海虹桥机场",
+      airport: "Shanghai Hongqiao Airport",
       routeNum: 102
     },
     {
-      airport: "深圳宝安国际机场",
+      airport: "Shenzhen Bao'an International Airport",
       routeNum: 120
     }
   ]
 
   return {
-    guoji: 895, // 国际航线条数
-    guonei: 4686, // 国内航线条数
+    guoji: 895, // Number of international routes
+    guonei: 4686, // Number of domestic routes
     flight: AirNum,
     route: routeNum
   }
 }
 
-// 按单个线渲染，效率差些
+// Rendering according to a single line is less efficient
 /* function initPath(routePaths) {
-  // 创建矢量数据图层
+  //Create vector data layer
   let graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 

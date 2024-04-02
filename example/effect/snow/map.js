@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let snowEffect
 let snowCover
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 33.591015, lng: 119.032697, alt: 73, heading: 343, pitch: -21 },
@@ -15,19 +15,19 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 雾化效果
+  //Atomization effect
   map.scene.fog.density = 0.001
   map.scene.fog.minimumBrightness = 0.8
 
-  // 添加参考三维模型
+  //Add reference 3D model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 38.8 },
@@ -38,32 +38,32 @@ function onMounted(mapInstance) {
 
   snowEffect = new mars3d.effect.SnowEffect({
     speed: 20,
-    maxHeight: 8000 // 大于此高度后不显示
+    maxHeight: 8000 // Do not display if the height is greater than this
   })
   map.addEffect(snowEffect)
 
   snowCover = new mars3d.effect.SnowCoverEffect({
-    layer: tiles3dLayer, // 如果传值3dtiles图层，只对该模型生效
+    layer: tiles3dLayer, // If the 3dtiles layer is passed, it will only take effect on this model.
     alpha: 0.6,
-    maxHeight: 8000 // 大于此高度后不显示
+    maxHeight: 8000 // Do not display if the height is greater than this
   })
   map.addEffect(snowCover)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 是否开启下雪效果
+// Whether to enable the snow effect
 function setSnow(val) {
   snowEffect.enabled = val
 }
 
-// 速度
+// speed
 function setSpeed(value) {
   snowEffect.speed = value
 }
@@ -72,12 +72,12 @@ function setScale(value) {
   snowEffect.scale = value
 }
 
-// 是否开启积雪效果
+// Whether to enable the snow effect
 function setCover(val) {
   snowCover.enabled = val
 }
 
-// 积雪厚度
+//Snow thickness
 function setAlpha(value) {
   snowCover.alpha = value
 }

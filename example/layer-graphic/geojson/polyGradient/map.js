@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 26.339073, lng: 118.495643, alt: 937783, heading: 355, pitch: -58 }
@@ -10,21 +10,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.basemap = 2017 // 蓝色底图
+  map = mapInstance // record map
+  map.basemap = 2017 // blue basemap
 
   addDemoGraphics()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -32,20 +32,20 @@ function onUnmounted() {
 
 function addDemoGraphics() {
   const geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-    name: "安徽各市",
+    name: "Cities in Anhui",
     url: "//data.mars3d.cn/file/geojson/areas/340000_full.json",
     symbol: {
       type: "polygon",
       styleOptions: {
-        materialType: mars3d.MaterialType.PolyGradient, // 重要参数，指定材质
+        materialType: mars3d.MaterialType.PolyGradient, // Important parameters, specify the material
         materialOptions: {
           color: "#3388cc",
           opacity: 0.7,
           alphaPower: 1.3
         },
-        // 面中心点，显示文字的配置
+        // Center point of the surface, display text configuration
         label: {
-          text: "{name}", // 对应的属性名称
+          text: "{name}", // Corresponding attribute name
           opacity: 1,
           font_size: 25,
           color: "#fff",
@@ -59,7 +59,7 @@ function addDemoGraphics() {
         }
       },
       callback: function (attr, styleOpt) {
-        const randomHeight = (attr.childrenNum || 1) * 500 // 测试的高度
+        const randomHeight = (attr.childrenNum || 1) * 500 // Test height
         return {
           materialOptions: {
             color: getColor()
@@ -73,12 +73,12 @@ function addDemoGraphics() {
   })
   map.addLayer(geoJsonLayer)
 
-  // 绑定事件
+  //Bind event
   geoJsonLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
   geoJsonLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 

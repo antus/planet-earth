@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.307787, lng: 117.559842, alt: 312871, heading: 0, pitch: -64 },
@@ -15,17 +15,17 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
-  // geojson 合肥边界线
+  map = mapInstance //Record the first created map
+  // geojson Hefei boundary line
   const geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     url: "//data.mars3d.cn/file/geojson/areas/340100.json",
-    mask: true, // 标识为遮罩层【重点参数】
+    mask: true, // Marked as a mask layer [Key parameters]
     symbol: {
       styleOptions: {
         fill: true,
@@ -47,8 +47,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

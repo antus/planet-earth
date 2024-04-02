@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 39.800803, lng: 116.34344, alt: 6521, heading: 0, pitch: -45 }
@@ -10,17 +10,17 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  map.basemap = "黑色底图"
+  map.basemap = "Black basemap"
 
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -28,20 +28,20 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addDemoGraphics(graphicLayer) {
-  // 颜色
+  // color
   const colors = ["#f7fcf5", "#e5f5e0", "#c7e9c0", "#a1d99b", "#74c476", "#41ab5d", "#238b45", "#006d2c", "#00441b"].reverse()
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/bj-bus.json" })
     .then(function (res) {
-      const arr = mars3d.Util.geoJsonToGraphics(res) // 解析geojson
+      const arr = mars3d.Util.geoJsonToGraphics(res) // Parse geojson
       arr.forEach((item, index) => {
         const i = index % colors.length
 
@@ -62,6 +62,6 @@ function addDemoGraphics(graphicLayer) {
       })
     })
     .catch(function (error) {
-      console.log("获取单个卡车详情失败", error)
+      console.log("Failed to obtain single truck details", error)
     })
 }

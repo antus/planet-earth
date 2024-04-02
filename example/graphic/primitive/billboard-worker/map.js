@@ -1,9 +1,9 @@
-// AQI来源：https://aqicn.org
+//AQI source: https://aqicn.org
 
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
 let lastExtent = null
 let bWorking = false
@@ -13,7 +13,7 @@ let startTimestamp, endTimestamp
 let timeout = 1000
 let worker
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 25.251743, lng: 107.045599, alt: 553192, heading: 0, pitch: -51 }
@@ -21,21 +21,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", `(1) AQI来源于第三方服务，目前已无法访问`)
+  globalNotify("Known Problem Tips", `(1) AQI comes from a third-party service and is currently inaccessible`)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定Popup单击弹窗
+  // Bind the Popup click popup window to the layer
   graphicLayer.bindPopup(function (event, callback) {
     const item = event.graphic.attr
     if (!item) {
@@ -44,12 +44,12 @@ function onMounted(mapInstance) {
     return mars3d.Util.getTemplateHtml({
       title: "AQI",
       template: [
-        { field: "city", name: "城市" },
-        { field: "utime", name: "时间" },
+        { field: "city", name: "city" },
+        { field: "utime", name: "time" },
         { field: "aqi", name: "AQI" },
-        { field: "level", name: "质量" },
-        { field: "influence", name: "影响" },
-        { field: "suggestion", name: "建议" }
+        { field: "level", name: "quality" },
+        { field: "influence", name: "influence" },
+        { field: "suggestion", name: "suggestion" }
       ],
       attr: item
     })
@@ -60,8 +60,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -79,22 +79,22 @@ function onMap_cameraChanged() {
   } else if (endTimestamp - startTimestamp > timeout) {
     bWorking = false
     timeout += 1000
-    worker.terminate() // 终止 web worker
+    worker.terminate() // Terminate web worker
   }
 }
 
 function startWorker(strBounds) {
   startTimestamp = endTimestamp = new Date().getTime()
-  worker = new Worker(window.currentPath + `aqiWorker.js`) // currentPath为当前目录，内置在示例框架中
+  worker = new Worker(window.currentPath + `aqiWorker.js`) // currentPath is the current directory, built into the sample framework
 
-  // 主线程调用worker.postMessage()方法，向 Worker 发消息。
+  //The main thread calls the worker.postMessage() method to send a message to the Worker.
   worker.postMessage({
     bounds: strBounds
   })
   bWorking = true
 
   worker.onmessage = function (event) {
-    // Worker返回的结果。
+    //The result returned by the Worker.
     currentData = event.data.entityTable
     const currTime = event.data.currTime
     if (currentData.length !== 0 && currTime > startTimestamp) {
@@ -102,7 +102,7 @@ function startWorker(strBounds) {
     }
 
     bWorking = false
-    worker.terminate() // 终止 web worker
+    worker.terminate() // Terminate web worker
   }
 }
 
@@ -113,7 +113,7 @@ const colorRamp = new mars3d.ColorRamp({
 
 function createGraphics(currentData) {
   graphicLayer.clear()
-  console.log("加载数据", currentData)
+  console.log("Loading data", currentData)
 
   for (let i = currentData.length - 1; i >= 0; i--) {
     const item = currentData[i]

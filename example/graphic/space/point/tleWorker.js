@@ -13,7 +13,7 @@ self.onmessage = function (e) {
     const item = arr[i]
 
     try {
-      const position = mars3d.Tle.getEcfPosition(item.tle1, item.tle2, time) // 计算卫星位置
+      const position = mars3d.Tle.getEcfPosition(item.tle1, item.tle2, time) // Calculate satellite position
       if (position) {
         positionObj[item.id] = position
       }
@@ -22,7 +22,7 @@ self.onmessage = function (e) {
     }
   }
 
-  // self代表子线程自身
+  // self represents the sub-thread itself
   self.postMessage({ time, positionObj })
   // self.close()
 }

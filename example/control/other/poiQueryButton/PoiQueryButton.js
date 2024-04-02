@@ -1,27 +1,27 @@
-// poi查询按钮 控件
+// poi query button control
 class PoiQueryButton extends mars3d.control.BaseControl {
   get parentContainer() {
     return this._map.toolbar
   }
 
   /**
-   * 创建_container控件容器对象的方法，
-   * 只会调用一次
-   * @return {Promise<object>}  无
+   * Method to create _container control container object,
+   * Will only be called once
+   * @return {Promise<object>} None
    * @private
    */
   _mountedHook() {
-    // 初始化页面
+    //Initialize page
     this._initQueryUI()
 
-    // 查询控制器
+    //Query controller
     this._gaodePOI = new mars3d.query.GaodePOI()
 
-    // 创建矢量数据图层
+    //Create vector data layer
     this.graphicLayer = new mars3d.layer.GraphicLayer()
     this._map.addLayer(this.graphicLayer)
 
-    // 鼠标单击后的信息面板弹窗
+    // Information panel pop-up window after mouse click
     this.graphicLayer.bindPopup(function (event) {
       const item = event.graphic.attr
       if (!item) {
@@ -31,18 +31,18 @@ class PoiQueryButton extends mars3d.control.BaseControl {
 
       const phone = String(item.tel).trim()
       if (phone) {
-        inHtml += "<div><label>电话</label>" + phone + "</div>"
+        inHtml += "<div><label>Phone</label>" + phone + "</div>"
       }
 
       const dz = String(item.address).trim()
       if (item.address) {
-        inHtml += "<div><label>地址</label>" + dz + "</div>"
+        inHtml += "<div><label>Address</label>" + dz + "</div>"
       }
 
       const fl = String(item.type).trim()
       if (item.type) {
         if (fl !== "") {
-          inHtml += "<div><label>类别</label>" + fl + "</div>"
+          inHtml += "<div><label>Category</label>" + fl + "</div>"
         }
       }
       inHtml += "</div>"
@@ -68,12 +68,12 @@ class PoiQueryButton extends mars3d.control.BaseControl {
     }
   }
 
-  // 初始化所有相关UI
+  //Initialize all related UI
   _initQueryUI() {
-    // 高度值获取
+    // Get height value
     this._container = mars3d.DomUtil.create("div", "cesium-button cesium-toolbar-button")
     this._container.style.display = "inline-block"
-    this._container.setAttribute("title", this.options.title || "POI查询")
+    this._container.setAttribute("title", this.options.title || "POI Query")
 
     mars3d.DomUtil.createSvg(
       33,
@@ -82,10 +82,10 @@ class PoiQueryButton extends mars3d.control.BaseControl {
       this._container
     )
 
-    // 鼠标移入移出
+    //mouse move in and out
     let numTime = null
     let cacheTarget
-    // 搜索框移入
+    //Move the search box
     this._container.addEventListener("mouseover", (e) => {
       if (numTime) {
         clearTimeout(numTime)
@@ -98,10 +98,10 @@ class PoiQueryButton extends mars3d.control.BaseControl {
         this.toolActive()
       }
     })
-    // 搜索框移出
+    //Move the search box out
     this._container.addEventListener("mouseout", (e) => {
       numTime = setTimeout(() => {
-        console.log("触发 mouseout ？ _container")
+        console.log("Mouseout triggered? _container")
         cacheTarget = null
 
         const queryVal = this._queryInputContainer.querySelector(".searchInput").value
@@ -112,11 +112,11 @@ class PoiQueryButton extends mars3d.control.BaseControl {
       }, 500)
     })
 
-    // input面板，在queryPoiButton下面
+    // input panel, below queryPoiButton
     this._queryInputContainer = mars3d.DomUtil.create("div", "toolSearch")
     this.parentContainer.appendChild(this._queryInputContainer)
 
-    // 搜索框移除
+    //Search box removed
     this._queryInputContainer.addEventListener("mouseover", (e) => {
       if (numTime) {
         clearTimeout(numTime)
@@ -129,7 +129,7 @@ class PoiQueryButton extends mars3d.control.BaseControl {
         clearTimeout(numTime)
         numTime = null
       }
-      // 缓存，提高效率
+      //Cache to improve efficiency
       if (cacheTarget === this.id) {
         return
       }
@@ -148,18 +148,18 @@ class PoiQueryButton extends mars3d.control.BaseControl {
       }, 500)
     })
 
-    // 搜寻结果，在mars3dContainer面板下面
+    // Search results, under the mars3dContainer panel
     this._queryResultContainer = mars3d.DomUtil.create("div", "poiButtonResult")
     this.parentContainer.appendChild(this._queryResultContainer)
     this.toolSearchNoShow("none")
 
-    // 创建input输入框
+    //Create input input box
     const textInput = mars3d.DomUtil.create("input", "searchInput")
     textInput.type = "search"
-    textInput.setAttribute("placeholder", "请输入地址...")
+    textInput.setAttribute("placeholder", "Please enter the address...")
     this._queryInputContainer.appendChild(textInput)
 
-    // input的单击事件
+    //Input click event
     const deleteInput = mars3d.DomUtil.create("div", "deleteInput", this._queryInputContainer)
 
     this._addPElement(deleteInput, "×", () => {
@@ -171,7 +171,7 @@ class PoiQueryButton extends mars3d.control.BaseControl {
       cacheTarget = null
     })
 
-    // 绑定change事件
+    //Bind change event
     let timetik
     textInput.addEventListener("input", () => {
       this.clear()
@@ -185,11 +185,11 @@ class PoiQueryButton extends mars3d.control.BaseControl {
       }, 250)
     })
 
-    // 绑定回车键
+    // Bind the Enter key
     textInput.addEventListener("keydown", (event) => {
       if (event.keyCode === 13) {
         clearTimeout(timetik)
-        // 让change事件执行完成之后，在执行以下操作
+        // After the change event is completed, perform the following operations
         timetik = setTimeout(() => {
           this.clear()
           this.showPages = 1
@@ -211,14 +211,14 @@ class PoiQueryButton extends mars3d.control.BaseControl {
     this.strartQueryPOI()
   }
 
-  // 根据输入框内容，查询显示列表
+  // Query the display list based on the content of the input box
   strartQueryPOI() {
     const text = this._queryInputContainer.querySelector(".searchInput").value
     if (text.trim().length === 0) {
-      globalMsg("请输入搜索关键字！")
+      globalMsg("Please enter the search keyword!")
       return
     }
-    // 输入经纬度数字时
+    //When entering latitude and longitude numbers
     if (this.isLonLat(text)) {
       this.centerAtLonLat(text)
       return
@@ -245,7 +245,7 @@ class PoiQueryButton extends mars3d.control.BaseControl {
             if (!point) {
               return
             }
-            // 在地图上将搜寻的结果展现为矢量数据
+            // Display the search results as vector data on the map
             const graphic = new mars3d.graphic.PointEntity({
               id: item.id,
               position: point,
@@ -257,8 +257,8 @@ class PoiQueryButton extends mars3d.control.BaseControl {
                 outlineColor: "#ffffff",
                 outlineWidth: 2,
                 scaleByDistance: new Cesium.NearFarScalar(1000, 1, 1000000, 0.1),
-                clampToGround: true, // 贴地
-                visibleDepth: false, // 是否被遮挡
+                clampToGround: true, // close to the ground
+                visibleDepth: false, // Whether it is blocked
 
                 highlight: {
                   type: mars3d.EventType.click,
@@ -274,10 +274,10 @@ class PoiQueryButton extends mars3d.control.BaseControl {
                   outlineColor: Cesium.Color.BLACK,
                   horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
                   verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                  pixelOffsetY: -10, // 偏移量
+                  pixelOffsetY: -10, // offset
                   distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 200000),
-                  clampToGround: true, // 贴地
-                  visibleDepth: false // 是否被遮挡
+                  clampToGround: true, // close to the ground
+                  visibleDepth: false // Whether it is blocked
                 }
               },
               attr: item
@@ -296,7 +296,7 @@ class PoiQueryButton extends mars3d.control.BaseControl {
   flyTo(item) {
     const graphic = this.graphicLayer.getGraphicById(item.id)
     if (graphic === null) {
-      globalMsg(item.name + " 无经纬度坐标信息！")
+      globalMsg(item.name + "No latitude and longitude coordinate information!")
       return
     }
 
@@ -310,11 +310,11 @@ class PoiQueryButton extends mars3d.control.BaseControl {
     })
   }
 
-  // 构造查询结果的面板Html
+  //Construct the panel Html of the query results
   showDifferentPagesResult(result) {
     this._queryResultContainer.innerHTML = ""
 
-    // 页面上显示结果li列表
+    // Display the result li list on the page
     const resultDiv = document.createElement("div")
     resultDiv.className = "searchResults"
 
@@ -352,56 +352,56 @@ class PoiQueryButton extends mars3d.control.BaseControl {
         this.flyTo(item)
       })
     })
-    const allPages = Math.ceil(result.allcount / 10) // 全部的页数 10 = result.count
+    const allPages = Math.ceil(result.allcount / 10) //The total number of pages 10 = result.count
     this.resultNextPages = document.createElement("div")
     this.resultNextPages.className = "resultNextPages"
     this._queryResultContainer.appendChild(this.resultNextPages)
 
-    // 共加载条数
-    this._addPElement(this.resultNextPages, "共加载了" + result.allcount + "条", null)
+    //Total number of items loaded
+    this._addPElement(this.resultNextPages, "Total loaded" + result.allcount + "bar", null)
 
-    // 展示的页数
-    this._addPElement(this.resultNextPages, this.showPages + "/" + allPages + "页", null)
+    //Number of pages displayed
+    this._addPElement(this.resultNextPages, this.showPages + "/" + allPages + "pages", null)
 
-    // 首页
-    this._addPElement(this.resultNextPages, "首页", () => {
+    // front page
+    this._addPElement(this.resultNextPages, "Homepage", () => {
       this.showPages = 1
       this.pagesClickToPages()
     })
 
-    // 上一页
+    // Previous page
     this._addPElement(this.resultNextPages, "<", () => {
       if (this.showPages === 1) {
-        globalMsg("当前已是第一页！")
+        globalMsg("This is the first page!")
         return
       }
       this.showPages--
       this.pagesClickToPages()
     })
 
-    // 下一页
+    // next page
     this._addPElement(this.resultNextPages, ">", () => {
       if (this.showPages >= allPages) {
-        globalMsg("当前已是最后一页！")
+        globalMsg("This is the last page!")
         return
       }
       this.showPages++
-      this.pagesClickToPages() // 查询结果
+      this.pagesClickToPages() // Query results
     })
   }
 
-  // 添加p元素
+  //Add p element
   _addPElement(parentElement, chilidWord, callback) {
     const allResult = document.createElement("p")
     const allResultWord = document.createTextNode(chilidWord)
-    parentElement.appendChild(allResult) // 添加p元素
+    parentElement.appendChild(allResult) //Add p element
 
-    allResult.appendChild(allResultWord) // 给p元素添加内容
+    allResult.appendChild(allResultWord) // Add content to the p element
 
     allResult.addEventListener("click", callback)
   }
 
-  // 点击上、下一页，清空当前页
+  // Click on the previous or next page to clear the current page
   pagesClickToPages() {
     if (this.graphicLayer) {
       this.graphicLayer.clear()
@@ -457,10 +457,10 @@ class PoiQueryButton extends mars3d.control.BaseControl {
     this._queryResultContainer.style.display = val
   }
 
-  //= ===========================坐标定位处理====================================
+  //= =========================== Coordinate positioning processing ================= ===================
   isLonLat(text) {
-    const reg = /^-?((0|1?[0-7]?[0-9]?)(([.][0-9]*)?)|180(([.][0]*)?)),-?((0|[1-8]?[0-9]?)(([.][0-9]*)?)|90(([.][0]*)?))$/ /* 定义验证表达式 */
-    return reg.test(text) /* 进行验证 */
+    const reg = /^-?((0|1?[0-7]?[0-9]?)(([.][0-9]*)?)|180(([.][0] *)?)),-?((0|[1-8]?[0-9]?)(([.][0-9]*)?)|90(([.][0]* )?))$/ /* Define validation expression*/
+    return reg.test(text) /* Verify */
   }
 
   centerAtLonLat(text) {
@@ -478,7 +478,7 @@ class PoiQueryButton extends mars3d.control.BaseControl {
 
     this._map.setCameraView({ lng: jd, lat: wd, minz: 2500 })
 
-    // 添加实体
+    //Add entity
     const graphic = new mars3d.graphic.PointEntity({
       position: Cesium.Cartesian3.fromDegrees(jd, wd),
       style: {
@@ -488,16 +488,16 @@ class PoiQueryButton extends mars3d.control.BaseControl {
         outlineColor: "#ffffff",
         outlineWidth: 2,
         scaleByDistance: new Cesium.NearFarScalar(1000, 1, 1000000, 0.1),
-        clampToGround: true, // 贴地
-        visibleDepth: false // 是否被遮挡
+        clampToGround: true, // close to the ground
+        visibleDepth: false // Whether it is blocked
       }
     })
     this.graphicLayer.addGraphic(graphic)
 
-    graphic.bindPopup(`<div class="mars3d-template-titile">坐标定位</div>
+    graphic.bindPopup(`<div class="mars3d-template-titile">Coordinate positioning</div>
               <div class="mars3d-template-content" >
-                <div><label>经度</label> ${jd}</div>
-                <div><label>纬度</label>${wd}</div>
+                <div><label>Longitude</label> ${jd}</div>
+                <div><label>Latitude</label>${wd}</div>
               </div>`)
 
     setTimeout(() => {

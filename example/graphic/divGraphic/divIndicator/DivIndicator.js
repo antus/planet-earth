@@ -7,18 +7,18 @@ const DEF_STYLE = {
 }
 
 /**
- * 可拖拽 div
- * @param {object} options 参数对象，包括以下：
- * @param {LngLatPoint|Cesium.Cartesian3|number[]} options.position 坐标位置
- * @param {DivGraphic.StyleOptions} options.style 样式信息
- * @param {string} [options.style.moveDomTop=-100]  拖动面板的top值，单位：px
- * @param {string} [options.style.moveDomLeft=50] 拖动面板的left值，单位：px
- * @param {string} [options.style.autoPoistion=true]  是否自动判断连接最近的角
- * @param {string} [options.style.horizontalPoistion] 横向方向的连线位置，可以取值：left、right
- * @param {string} [options.style.verticalPoistion] 垂直方向的连线位置，可以取值：top、bottom
+ * Draggable div
+ * @param {object} options parameter object, including the following:
+ * @param {LngLatPoint|Cesium.Cartesian3|number[]} options.position coordinate position
+ * @param {DivGraphic.StyleOptions} options.style style information
+ * @param {string} [options.style.moveDomTop=-100] Top value of dragging panel, unit: px
+ * @param {string} [options.style.moveDomLeft=50] Drag the left value of the panel, unit: px
+ * @param {string} [options.style.autoPoistion=true] Whether to automatically determine the closest angle to the connection
+ * @param {string} [options.style.horizontalPoistion] Horizontal connection position, possible values: left, right
+ * @param {string} [options.style.verticalPoistion] Vertical position of the connection, possible values: top, bottom
  *
  *
- * @param {object} [options.attr] 附件的属性信息，可以任意附加属性，导出geojson或json时会自动处理导出。
+ * @param {object} [options.attr] The attribute information of the attachment. You can attach any attributes. The export will be automatically processed when exporting geojson or json.
  * @class DivIndicator
  * @extends {mars3d.graphic.DivGraphic}
  */
@@ -45,7 +45,7 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
 
   _removedHook() {
     if (this._container_drag) {
-      this._container_drag.removeEventListener("mousedown", this._dragDom_mousedown) // 开始拖动事件
+      this._container_drag.removeEventListener("mousedown", this._dragDom_mousedown) // Start drag event
       delete this._container_drag
     }
     delete this._container_fixed
@@ -54,7 +54,7 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
     super._removedHook()
   }
 
-  // 激活绘制
+  //Activate drawing
   _dragDom_mousedown(event) {
     event.preventDefault()
     event.stopPropagation()
@@ -88,7 +88,7 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
     }
   }
 
-  // 更新 两个 div 连线
+  //Update the connection between the two divs
   _updateLineStyle() {
     this._container_drag.style.left = this.style.moveDomLeft + "px"
     this._container_drag.style.top = this.style.moveDomTop + "px"
@@ -99,7 +99,7 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
     let verticalPoistion
     let horizontalPoistion
     if (this.style.autoPoistion) {
-      // 内部自动计算最近的角进行连接
+      // Automatically calculate the nearest corner internally for connection
       if (dragRect.left < fixedRect.left) {
         horizontalPoistion = "right"
       } else {
@@ -120,10 +120,10 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
     const top2 = dragRect[verticalPoistion]
     const left2 = dragRect[horizontalPoistion]
 
-    const distance = usePointsDistance({ x: top1, y: left1 }, { x: top2, y: left2 }) // 线的长度
-    const topValue = (left2 - left1) / 2 - 1 // 线的坐标
+    const distance = usePointsDistance({ x: top1, y: left1 }, { x: top2, y: left2 }) // The length of the line
+    const topValue = (left2 - left1) / 2 - 1 // Coordinates of the line
     const letValue = (top2 - top1) / 2 - distance / 2
-    const angle = -Math.atan2(left1 - left2, top1 - top2) * (180 / Math.PI) // 线的角度
+    const angle = -Math.atan2(left1 - left2, top1 - top2) * (180 / Math.PI) // Angle of line
 
     Object.assign(this._container_line.style, {
       height: `${distance}px`,
@@ -131,17 +131,17 @@ class DivIndicator extends mars3d.graphic.DivGraphic {
     })
   }
 
-  // 编辑样式时，重新刷新，将之前加载的样式赋上
+  // When editing the style, refresh again and assign the previously loaded style to
   _updateStyleBaseHook(newStyle) {
     super._updateStyleBaseHook(newStyle)
     this._updateLineStyle()
   }
 }
 
-// 注册下
+//Register
 mars3d.GraphicUtil.register("divIndicator", DivIndicator)
 
-// 计算两点之间的距离
+// Calculate the distance between two points
 function usePointsDistance(point, point2) {
   const horizontalLength = Math.abs(point.x - point2.x)
   const verticalLength = Math.abs(point.y - point2.y)
@@ -149,7 +149,7 @@ function usePointsDistance(point, point2) {
   return Number(Math.sqrt(Math.pow(horizontalLength, 2) + Math.pow(verticalLength, 2)).toFixed(2))
 }
 
-// 兼容不同浏览器，绑定事件
+// Compatible with different browsers, bind events
 function addEvent(el, event, handler) {
   if (!el) {
     return
@@ -163,7 +163,7 @@ function addEvent(el, event, handler) {
   }
 }
 
-// 兼容不同浏览器，移除事件
+// Compatible with different browsers, remove events
 function removeEvent(el, event, handler) {
   if (!el) {
     return

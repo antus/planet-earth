@@ -1,16 +1,16 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.931953, lng: 117.352307, alt: 207201, heading: 0, pitch: -64 }
   },
-  // 方式1：在创建地球前的参数中配置
+  // Method 1: Configure in the parameters before creating the earth
   basemaps: [
     {
-      name: "ArcGIS影像",
+      name: "ArcGIS Imagery",
       icon: "img/basemaps/esriWorldImagery.png",
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
@@ -18,7 +18,7 @@ var mapOptions = {
       show: true
     },
     {
-      name: "ArcGIS电子街道",
+      name: "ArcGIS Electronic Street",
       icon: "img/basemaps/google_vec.png",
       type: "arcgis",
       url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
@@ -32,7 +32,7 @@ var mapOptions = {
       enablePickFeatures: false
     },
     {
-      name: "蓝色底图",
+      name: "Blue Basemap",
       icon: "img/basemaps/bd-c-midnight.png",
       type: "arcgis",
       url: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer",
@@ -40,7 +40,7 @@ var mapOptions = {
       chinaCRS: mars3d.ChinaCRS.GCJ02
     },
     {
-      name: "灰色底图",
+      name: "Gray basemap",
       icon: "img/basemaps/bd-c-grayscale.png",
       type: "arcgis",
       url: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineStreetGray/MapServer",
@@ -51,25 +51,25 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 /**
- * 叠加的图层
+ * Overlay layers
  *
  * @export
  * @returns {void}
@@ -78,17 +78,17 @@ let arcGisLayer
 function addLayer() {
   removeLayer()
 
-  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  // Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
   arcGisLayer = new mars3d.layer.ArcGisLayer({
-    name: "合肥建筑物",
+    name: "Hefei Building",
     url: "//server.mars3d.cn/arcgis/rest/services/mars/guihua/MapServer",
-    // usePreCachedTilesIfAvailable: false, // 非标准瓦片 或 大地2000高斯投影坐标系时，请打开此参数
-    // layerDefs: `{ 0: "用地编号 = 'R2'" }`,
+    // usePreCachedTilesIfAvailable: false, // Please turn on this parameter when using non-standard tiles or the Earth 2000 Gaussian projection coordinate system
+    // layerDefs: `{ 0: "Land number = 'R2'" }`,
 
     // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4326/MapServer',
-    // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4490/MapServer', //大地2000地理坐标系
-    // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4548/MapServer', //大地2000高斯投影坐标系
-    // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw2000/MapServer',  //大地2000高斯投影坐标系
+    // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4490/MapServer', //Earth 2000 geographical coordinate system
+    // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4548/MapServer', //Earth 2000 Gaussian projection coordinate system
+    // url: '//server.mars3d.cn/arcgis/rest/services/crs/ssjzw2000/MapServer', //Earth 2000 Gaussian projection coordinate system
     // queryParameters: { returnGeometry: false },
     highlight: {
       clampToGround: true,
@@ -105,17 +105,17 @@ function addLayer() {
   })
   map.addLayer(arcGisLayer)
 
-  // 绑定事件
+  //Bind event
   arcGisLayer.on(mars3d.EventType.loadConfig, function (event) {
-    console.log("加载完成服务信息", event)
+    console.log("Loading completed service information", event)
   })
 
   arcGisLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了矢量数据，共" + event.features.length + "条", event)
+    console.log("Clicked vector data, total" + event.features.length + "bar", event)
   })
 }
 
-// 移除图层
+//Remove layer
 function removeLayer() {
   if (arcGisLayer) {
     map.removeLayer(arcGisLayer, true)

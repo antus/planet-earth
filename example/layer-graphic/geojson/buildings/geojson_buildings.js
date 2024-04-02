@@ -4,7 +4,7 @@ function fontSize(res) {
 }
 
 function initEcharts() {
-  //饼形图
+  //pie chart
   let myChart = echarts.init(document.getElementById("ring"))
   let option = {
     backgroundColor: "transparent",
@@ -59,7 +59,7 @@ function initEcharts() {
               fontSize: fontSize(1),
               lineHeight: fontSize(1),
               fontWeight: "bold"
-              //   backgroundColor: "rgba(15, 21, 70, 1)", // 覆盖index=0时的数据
+              // backgroundColor: "rgba(15, 21, 70, 1)", // Overwrite the data when index=0
             },
             nm: {
               width: 130,
@@ -68,7 +68,7 @@ function initEcharts() {
               fontSize: fontSize(1.5),
               lineHeight: fontSize(1.625),
               fontWeight: "bold"
-              //   backgroundColor: "rgba(15, 21, 70, 1)", // 覆盖index=0时的数据
+              // backgroundColor: "rgba(15, 21, 70, 1)", // Overwrite the data when index=0
             }
           }
         },
@@ -78,42 +78,42 @@ function initEcharts() {
         data: [
           {
             value: 64,
-            name: "办公建筑",
+            name: "Office Building",
             itemStyle: {
               color: "rgba(14,227,247, 0.58)"
             }
           },
           {
             value: 1,
-            name: "综合建筑",
+            name: "complex building",
             itemStyle: {
               color: "rgba(255,113,94, 0.58)"
             }
           },
           {
             value: 4,
-            name: "商场建筑",
+            name: "Shopping Mall Building",
             itemStyle: {
               color: "rgba(254,  217,  118, 0.64)"
             }
           },
           {
             value: 10,
-            name: "宾馆饭店",
+            name: "hotel restaurant",
             itemStyle: {
               color: "rgba(234,94,230, 0.64)"
             }
           },
           {
             value: 1,
-            name: "医疗卫生",
+            name: "Medical and Health",
             itemStyle: {
               color: "rgba(94, 225, 186, 0.58)"
             }
           },
           {
             value: 1,
-            name: "文化教育",
+            name: "Cultural Education",
             itemStyle: {
               color: "rgba(113, 204, 78, 0.58)"
             }
@@ -124,7 +124,7 @@ function initEcharts() {
   }
   myChart.setOption(option)
 
-  //柱状图
+  //Histogram
   let myChart2 = echarts.init(document.getElementById("bar"), "dark")
   let option2 = {
     backgroundColor: "transparent",
@@ -146,8 +146,8 @@ function initEcharts() {
         return html
       },
       axisPointer: {
-        // 坐标轴指示器，坐标轴触发有效
-        type: "none" // cross 默认为直线，可选为：'line' | 'shadow'
+        // Axis indicator, axis trigger is valid
+        type: "none" // cross defaults to a straight line, optional: 'line' | 'shadow'
       }
     },
     legend: {
@@ -169,7 +169,7 @@ function initEcharts() {
     },
     xAxis: {
       type: "category",
-      data: ["办公建筑", "综合建筑", "商场建筑", "宾馆饭店", "医疗卫生", "文化教育"],
+      data: ["office building", "complex building", "shopping mall building", "hotel and restaurant", "medical and health care", "culture and education"],
       axisTick: {
         alignWithLabel: false,
         show: true,
@@ -195,7 +195,7 @@ function initEcharts() {
 
     yAxis: {
       max: 70,
-      name: "栋",
+      name: "building",
       nameTextStyle: {
         // color: "rgba(217, 35, 35, 1)",
         align: "right",
@@ -257,7 +257,7 @@ function initEcharts() {
   }
   myChart2.setOption(option2)
 
-  // 折线图
+  // line chart
   let myChart3 = echarts.init(document.getElementById("line"), "dark")
   let option3 = {
     backgroundColor: "transparent",
@@ -270,7 +270,7 @@ function initEcharts() {
         align: "left"
       },
       formatter: function (item) {
-        let html = item[0].axisValue * 1 + "月"
+        let html = item[0].axisValue * 1 + "month"
         item.slice(0).forEach((s) => {
           if (s.seriesName.indexOf("series") == -1) {
             html += `<br/> ${s.seriesName}:${s.data}%`
@@ -281,8 +281,8 @@ function initEcharts() {
       },
       // formatter: '{b0}<br/>{a1}: {c1}<br/>{a2}: {c2}',
       axisPointer: {
-        // 坐标轴指示器，坐标轴触发有效
-        type: "none" // 默认为直线，可选为：'line' | 'shadow'
+        // Axis indicator, axis trigger is valid
+        type: "none" // Default is straight line, optional: 'line' | 'shadow'
       }
     },
     legend: {
@@ -321,7 +321,7 @@ function initEcharts() {
         }
       },
       axisLabel: {
-        //X轴文字样式
+        //X-axis text style
         fontSize: fontSize(0.6875),
         interval: 0,
         padding: [10, 0, 0, 0]
@@ -363,7 +363,7 @@ function initEcharts() {
     },
     series: [
       {
-        name: "办公建筑",
+        name: "Office Building",
         type: "line",
         symbol: "circle",
         symbolSize: 5,
@@ -376,7 +376,7 @@ function initEcharts() {
         data: [4, 3, 5, 4, 0]
       },
       {
-        name: "综合建筑",
+        name: "complex building",
         type: "line",
         symbol: "circle",
         symbolSize: 5,
@@ -389,7 +389,7 @@ function initEcharts() {
         data: [0.8, 0.6, 1, 0.6, 0]
       },
       {
-        name: "商场建筑",
+        name: "Shopping Mall Building",
         type: "line",
         symbol: "circle",
         symbolSize: 5,
@@ -402,7 +402,7 @@ function initEcharts() {
         data: [0.6, 0.5, 0.8, 0.4, 0]
       },
       {
-        name: "宾馆饭店",
+        name: "hotel restaurant",
         type: "line",
         symbol: "circle",
         symbolSize: 5,
@@ -415,7 +415,7 @@ function initEcharts() {
         data: []
       },
       {
-        name: "医疗卫生",
+        name: "Medical and Health",
         type: "line",
         symbol: "circle",
         symbolSize: 5,
@@ -428,7 +428,7 @@ function initEcharts() {
         data: [1, 1, 1]
       },
       {
-        name: "文化教育",
+        name: "Cultural Education",
         type: "line",
         symbol: "circle",
         symbolSize: 5,

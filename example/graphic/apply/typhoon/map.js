@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 // import { Typhoon, PlayTyphoon } from "./Typhoon"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 8.560501, lng: 111.849127, alt: 10725692, heading: 358, pitch: -87 }
@@ -13,33 +13,33 @@ var mapOptions = {
 var eventTarget = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 绘制24/48小时警戒线
+  //Draw 24/48 hour warning line
   drawWarningLine()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 所有已构造的台风集合
+// Collection of all constructed typhoons
 const typhoonListObj = {}
 
-// 当前选择的台风
+//The currently selected typhoon
 let selectTyphoon
 
-// 勾选台风
+// Check Typhoon
 function selectOneTyphoon(row) {
   stopPlay()
 
@@ -55,7 +55,7 @@ function selectOneTyphoon(row) {
   selectTyphoon = typhoon
 }
 
-// 取消勾选台风
+// Uncheck Typhoon
 function unSelectOneTyphoon(id) {
   const typhoon = typhoonListObj[id]
   if (!typhoon) {
@@ -70,7 +70,7 @@ function unSelectOneTyphoon(id) {
   selectTyphoon = null
 }
 
-// 定位到台风
+// Locate the typhoon
 function clickTyRow(row) {
   const typhoon = typhoonListObj[row.id]
   if (typhoon) {
@@ -78,7 +78,7 @@ function clickTyRow(row) {
   }
 }
 
-// 定位到轨迹点
+// Locate the track point
 function clickPathRow(row) {
   selectTyphoon.showPointFQ(row)
   const graphic = selectTyphoon.getPointById(row.id)
@@ -92,7 +92,7 @@ function clickPathRow(row) {
   }
 }
 
-// 开始播放
+// Start playing
 function startPlay() {
   if (!selectTyphoon) {
     return
@@ -106,7 +106,7 @@ function startPlay() {
   selectTyphoon.show = false
 }
 
-// 停止播放
+// Stop play
 function stopPlay() {
   if (selectTyphoon?.playTyphoon) {
     selectTyphoon.playTyphoon.stop()
@@ -114,9 +114,9 @@ function stopPlay() {
   }
 }
 
-// 绘制警戒线
+//Draw a warning line
 function drawWarningLine() {
-  // 绘制24小时警戒线
+  //Draw a 24-hour warning line
   const lineWarning24 = new mars3d.graphic.PolylineEntity({
     positions: [
       [127, 34],
@@ -134,7 +134,7 @@ function drawWarningLine() {
   })
   map.graphicLayer.addGraphic(lineWarning24)
 
-  // 注记文本
+  // Annotation text
   const textWarning24 = new mars3d.graphic.RectangleEntity({
     positions: [
       [128.129019, 29.104287],
@@ -143,8 +143,8 @@ function drawWarningLine() {
     style: {
       materialType: mars3d.MaterialType.Text,
       materialOptions: {
-        text: "24小时警戒线",
-        font: "80px 楷体",
+        text: "24-hour cordon",
+        font: "80px regular script",
         color: "#828314",
         backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0)
       },
@@ -153,7 +153,7 @@ function drawWarningLine() {
   })
   map.graphicLayer.addGraphic(textWarning24)
 
-  // 绘制48小时警戒线
+  //Draw a 48-hour warning line
   const lineWarning48 = new mars3d.graphic.PolylineEntity({
     positions: [
       [132, 34],
@@ -172,7 +172,7 @@ function drawWarningLine() {
   })
   map.graphicLayer.addGraphic(lineWarning48)
 
-  // 注记文本
+  // Annotation text
   const textWarning48 = new mars3d.graphic.RectangleEntity({
     positions: [
       [130.502492, 25.959716],
@@ -181,8 +181,8 @@ function drawWarningLine() {
     style: {
       materialType: mars3d.MaterialType.Text,
       materialOptions: {
-        text: "48小时警戒线",
-        font: "80px 楷体",
+        text: "48-hour cordon",
+        font: "80px regular script",
         color: "#4dba3d",
         backgroundColor: new Cesium.Color(0.0, 0.0, 0.0, 0)
       },

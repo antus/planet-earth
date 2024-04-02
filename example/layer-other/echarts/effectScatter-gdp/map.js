@@ -1,29 +1,29 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 13.474941, lng: 117.364073, alt: 2774097, heading: 6, pitch: -62 }
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -32,7 +32,7 @@ function onUnmounted() {
 let echartsLayer
 function createEchartsLayer(val) {
   const options = getEchartsOption()
-  options.clampToGround = true // 计算贴地高度
+  options.clampToGround = true // Calculate the ground height
 
   options.pointerEvents = val
 
@@ -44,204 +44,204 @@ function createEchartsLayer(val) {
   })
 }
 
-// 启用echars交互
+// Use echarts to interact
 function chkPointerEvents(val) {
   echartsLayer.pointerEvents = val
 }
 
 /**
- *echart图层
+ *echart layer
  *
- * @return {option} echart图表的数据
+ * @return {option} echart chart data
  */
 function getEchartsOption() {
   const data = [
     {
-      name: "上海",
+      name: "Shanghai",
       value: 19780
     },
     {
-      name: "珠海",
+      name: "Zhuhai",
       value: 2186
     },
     {
-      name: "三亚",
+      name: "Sanya",
       value: 1135
     },
     {
-      name: "惠州",
+      name: "Huizhou",
       value: 1973
     },
     {
-      name: "海口",
+      name: "Haikou",
       value: 2568
     },
     {
-      name: "合肥",
+      name: "Hefei",
       value: 4039
     },
     {
-      name: "南京",
+      name: "Nanjing",
       value: 6959
     },
     {
-      name: "杭州",
+      name: "Hangzhou",
       value: 5632
     },
     {
-      name: "苏州",
+      name: "Suzhou",
       value: 6707
     },
     {
-      name: "无锡",
+      name: "Wuxi",
       value: 3393
     },
     {
-      name: "昆山",
+      name: "Kunshan",
       value: 1894
     },
     {
-      name: "广州",
+      name: "Guangzhou",
       value: 15769
     },
     {
-      name: "深圳",
+      name: "Shenzhen",
       value: 8259
     },
     {
-      name: "佛山",
+      name: "Foshan",
       value: 5741
     },
     {
-      name: "东莞",
+      name: "Dongguan",
       value: 3030
     },
     {
-      name: "福州",
+      name: "Fuzhou",
       value: 4542
     },
     {
-      name: "厦门",
+      name: "Xiamen",
       value: 3329
     },
     {
-      name: "南宁",
+      name: "Nanning",
       value: 3157
     },
     {
-      name: "郑州",
+      name: "Zhengzhou",
       value: 6690
     },
     {
-      name: "武汉",
+      name: "Wuhan",
       value: 8678
     },
     {
-      name: "长沙",
+      name: "Changsha",
       value: 5303
     },
     {
-      name: "南昌",
+      name: "Nanchang",
       value: 3025
     },
     {
-      name: "北京",
+      name: "Beijing",
       value: 20259
     },
     {
-      name: "长春",
+      name: "Changchun",
       value: 3016
     },
     {
-      name: "大连",
+      name: "Dalian",
       value: 3202
     },
     {
-      name: "沈阳",
+      name: "Shenyang",
       value: 4540
     },
     {
-      name: "哈尔滨",
+      name: "Harbin",
       value: 3141
     },
     {
-      name: "天津",
+      name: "Tianjin",
       value: 8626
     },
     {
-      name: "济南",
+      name: "Jinan",
       value: 4361
     },
     {
-      name: "青岛",
+      name: "Qingdao",
       value: 6667
     },
     {
-      name: "太原",
+      name: "Taiyuan",
       value: 4080
     },
     {
-      name: "石家庄",
+      name: "Shijiazhuang",
       value: 6137
     },
     {
-      name: "西安",
+      name: "Xi'an",
       value: 6991
     },
     {
-      name: "成都",
+      name: "Chengdu",
       value: 13873
     },
     {
-      name: "重庆",
+      name: "Chongqing",
       value: 13283
     },
     {
-      name: "昆明",
+      name: "Kunming",
       value: 4633
     }
   ]
 
   const geoCoordMap = {
-    上海: [121.48, 31.22],
-    珠海: [113.52, 22.3],
-    三亚: [109.31, 18.14],
-    惠州: [114.4, 23.09],
-    海口: [110.35, 20.02],
-    合肥: [117.27, 31.86],
-    南京: [118.78, 32.04],
-    杭州: [120.19, 30.26],
-    苏州: [120.62, 31.32],
-    无锡: [120.29, 31.59],
-    昆山: [120.95, 31.39],
-    广州: [113.23, 23.16],
-    深圳: [114.07, 22.62],
-    佛山: [113.11, 23.05],
-    东莞: [113.75, 23.04],
-    福州: [119.3, 26.08],
-    厦门: [118.1, 24.46],
-    南宁: [108.33, 22.84],
-    郑州: [113.65, 34.76],
-    武汉: [114.31, 30.52],
-    长沙: [113, 28.21],
-    南昌: [115.89, 28.68],
-    北京: [116.46, 39.92],
-    长春: [125.35, 43.88],
-    大连: [121.62, 38.92],
-    沈阳: [123.38, 41.8],
-    哈尔滨: [126.63, 45.75],
-    天津: [117.2, 39.13],
-    济南: [117, 36.65],
-    青岛: [120.33, 36.07],
-    太原: [112.53, 37.87],
-    石家庄: [114.48, 38.03],
-    西安: [108.95, 34.27],
-    成都: [104.06, 30.67],
-    重庆: [106.54, 29.59],
-    昆明: [102.73, 25.04]
+    Shanghai: [121.48, 31.22],
+    Zhuhai: [113.52, 22.3],
+    Sanya: [109.31, 18.14],
+    Huizhou: [114.4, 23.09],
+    Haikou: [110.35, 20.02],
+    Hefei: [117.27, 31.86],
+    Nanjing: [118.78, 32.04],
+    Hangzhou: [120.19, 30.26],
+    Suzhou: [120.62, 31.32],
+    Wuxi: [120.29, 31.59],
+    Kunshan: [120.95, 31.39],
+    Guangzhou: [113.23, 23.16],
+    Shenzhen: [114.07, 22.62],
+    Foshan: [113.11, 23.05],
+    Dongguan: [113.75, 23.04],
+    Fuzhou: [119.3, 26.08],
+    Xiamen: [118.1, 24.46],
+    Nanning: [108.33, 22.84],
+    Zhengzhou: [113.65, 34.76],
+    Wuhan: [114.31, 30.52],
+    Changsha: [113, 28.21],
+    Nanchang: [115.89, 28.68],
+    Beijing: [116.46, 39.92],
+    Changchun: [125.35, 43.88],
+    Dalian: [121.62, 38.92],
+    Shenyang: [123.38, 41.8],
+    Harbin: [126.63, 45.75],
+    Tianjin: [117.2, 39.13],
+    Jinan: [117, 36.65],
+    Qingdao: [120.33, 36.07],
+    Taiyuan: [112.53, 37.87],
+    Shijiazhuang: [114.48, 38.03],
+    Xi'an: [108.95, 34.27],
+    Chengdu: [104.06, 30.67],
+    Chongqing: [106.54, 29.59],
+    Kunming: [102.73, 25.04]
   }
 
-  // 在echart图表中展示图点
+  // Display graph points in echart chart
   const convertData = function (data) {
     const res = []
     for (let i = 0; i < data.length; i++) {
@@ -256,7 +256,7 @@ function getEchartsOption() {
     return res
   }
 
-  // 图表的数字从大到小向下排序
+  // Sort the numbers in the chart from large to small downwards
   data.sort(function (a, b) {
     return a.value - b.value
   })
@@ -277,7 +277,7 @@ function getEchartsOption() {
     backgroundColor: "rgba(17, 19, 42, 0.3)",
     title: [
       {
-        text: "散点图态势",
+        text: "Scatter chart situation",
         subtext: "san dian tu taishi",
         left: "center",
         textStyle: {
@@ -290,7 +290,7 @@ function getEchartsOption() {
       },
       {
         id: "statistic",
-        text: count ? "平均: " + parseInt((sum / count).toFixed(4)) : "",
+        text: count ? "Average: " + parseInt((sum / count).toFixed(4)) : "",
         right: 120,
         top: 40,
         width: 100,
@@ -352,7 +352,7 @@ function getEchartsOption() {
     },
     series: [
       {
-        // 散点图
+        // Scatter plot
         type: "scatter",
         coordinateSystem: "mars3dMap",
         data: convertData(data),
@@ -372,7 +372,7 @@ function getEchartsOption() {
         }
       },
       {
-        // 特效散点图
+        //Special effects scatter plot
         type: "effectScatter",
         coordinateSystem: "mars3dMap",
         data: convertData(data),

@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let lineLayer
 let pointLayer
 
@@ -11,21 +11,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 添加线 矢量数据图层
+  //Add line vector data layer
   lineLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(lineLayer)
 
   lineLayer.bindContextMenu([
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       callback: (e) => {
         const graphic = e.graphic
@@ -37,21 +37,21 @@ function onMounted(mapInstance) {
     }
   ])
 
-  // 添加相交点 矢量数据图层
+  //Add intersection point vector data layer
   pointLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(pointLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function drawLine() {
-  // 开始绘制
+  // Start drawing
   lineLayer.startDraw({
     type: "polyline",
     style: {
@@ -67,7 +67,7 @@ function crossPoint() {
   pointLayer.clear()
 
   if (lineLayer.length <= 1) {
-    globalMsg("请至少绘制两条线")
+    globalMsg("Please draw at least two lines")
     return
   }
 
@@ -80,7 +80,7 @@ function crossPoint() {
     for (let j = i + 1; j < allCount; j++) {
       const line2 = geojson.features[j]
 
-      // 计算相交点
+      // Calculate intersection point
       const intersects = turf.lineIntersect(line1, line2)
 
       if (intersects.features.length > 0) {
@@ -104,7 +104,7 @@ function clearAll() {
   lineLayer.clear()
 }
 
-// 颜色
+// color
 let index = 0
 const colors = ["#99CCCC", "#66FF66", "#FF6666", "#00CCFF", "#00FF33", "#CC0000", "#CC00CC", "#CCFF00", "#00FF"]
 function getColor() {

@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 39.564004, lng: 116.394499, alt: 55751, heading: 0, pitch: -56 }
@@ -11,33 +11,33 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  map.basemap = "黑色底图"
+  map.basemap = "Black basemap"
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
 
-  // 在layer上绑定Popup弹窗
+  // Bind the Popup window to the layer
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/bjgj.json" }).then(function (data) {
@@ -69,8 +69,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -94,7 +94,7 @@ function createLines(arr) {
     })
   })
 
-  // 多个线对象的合并渲染。
+  // Combined rendering of multiple line objects.
   const graphic = new mars3d.graphic.PolylineCombine({
     instances: arrData
   })

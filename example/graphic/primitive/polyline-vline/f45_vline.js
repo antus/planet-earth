@@ -4,7 +4,7 @@ function initEcharts() {
   initAging()
 }
 
-//实有人口
+//actual population
 function initRealPopulation() {
   let realEcharts = echarts.init(document.getElementById("population"))
 
@@ -29,11 +29,11 @@ function initRealPopulation() {
     },
     yAxis: {
       type: "category",
-      data: ["常住人口", "流动人口"],
+      data: ["Permanent population", "Floating population"],
       axisLabel: {
         show: true,
         textStyle: {
-          color: "#fff" //坐标轴文字颜色
+          color: "#fff" //Axis text color
         }
       },
       axisLine: {
@@ -57,15 +57,15 @@ function initRealPopulation() {
             color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
               {
                 offset: 0,
-                color: "#4d68ee" //0%处的颜色
+                color: "#4d68ee" //Color at 0%
               },
               {
                 offset: 0.6,
-                color: "#25b1f5" //50%处的颜色
+                color: "#25b1f5" //Color at 50%
               },
               {
                 offset: 1,
-                color: "#01f5ff" //100%处的颜色
+                color: "#01f5ff" //Color at 100%
               }
             ])
           }
@@ -80,7 +80,7 @@ function initRealPopulation() {
   })
 }
 
-//人口结构
+//population structure
 function initPopulationStructure() {
   let structureEcharts = echarts.init(document.getElementById("structure"))
   let structureOption = {
@@ -100,7 +100,7 @@ function initPopulationStructure() {
     color: ["#a20bd1", "#b2ba00", "#49ad00", "#03dfa7", "#8185b3", "#4c67eb", "#ab7900"],
     series: [
       {
-        name: "男性",
+        name: "male",
         type: "pie",
         radius: ["60%", "40%"],
         center: ["25%", "70%"],
@@ -131,11 +131,11 @@ function initPopulationStructure() {
           { value: 484, name: "7-14" },
           { value: 300, name: "15-35" },
           { value: 300, name: "36-60" },
-          { value: 300, name: "61以上" }
+          { value: 300, name: "61 and above" }
         ]
       },
       {
-        name: "女性",
+        name: "female",
         type: "pie",
         radius: ["60%", "40%"],
         center: ["75%", "70%"],
@@ -155,7 +155,7 @@ function initPopulationStructure() {
           { value: 484, name: "7-14" },
           { value: 300, name: "15-35" },
           { value: 300, name: "36-60" },
-          { value: 300, name: "61以上" }
+          { value: 300, name: "61 and above" }
         ]
       }
     ]
@@ -167,23 +167,23 @@ function initPopulationStructure() {
   })
 }
 
-//人口老龄化分析
+//Population aging analysis
 function initAging() {
   let agingEcharts = echarts.init(document.getElementById("agingAnalysis"))
   let agingOption = {
     tooltip: {
       trigger: "axis",
       axisPointer: {
-        // 坐标轴指示器，坐标轴触发有效
-        type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+        // Axis indicator, axis trigger is valid
+        type: "shadow" // Default is straight line, optional: 'line' | 'shadow'
       },
       formatter: function (params, ticket) {
-        return "女性：" + params[0].value + "<br/>男性：" + Math.abs(params[1].value)
+        return "Female:" + params[0].value + "<br/>Male:" + Math.abs(params[1].value)
       }
     },
     color: ["#c145c5", "#21b8f6"],
     legend: {
-      data: ["女性", "男性"]
+      data: ["female", "male"]
     },
     grid: {
       x: 0,
@@ -206,10 +206,10 @@ function initAging() {
     yAxis: [
       {
         type: "category",
-        data: ["60-65岁", "65-70岁", "70-75岁", "75-80岁", "80岁以上"],
+        data: ["60-65 years old", "65-70 years old", "70-75 years old", "75-80 years old", "80 years old and above"],
         axisLabel: {
           textStyle: {
-            color: "#fff" //坐标轴文字颜色
+            color: "#fff" //Axis text color
           }
         }
       }
@@ -218,7 +218,7 @@ function initAging() {
     series: [
       {
         type: "bar",
-        stack: "总量",
+        stack: "total amount",
         label: {
           show: false
         },
@@ -236,7 +236,7 @@ function initAging() {
       },
       {
         type: "bar",
-        stack: "总量",
+        stack: "total amount",
         label: {
           show: false,
           position: "left"

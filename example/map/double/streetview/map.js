@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tileLayer
 let graphicLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.676218, lng: 117.251248, alt: 27740, heading: 1, pitch: -63 }
@@ -12,24 +12,24 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", "(1) 百度街景目前限制使用，需要自行申请全景地图服务使用权限Key替换 ")
+  globalNotify("Known Issue Tips", "(1) Baidu Street View is currently restricted for use, you need to apply for panoramic map service usage permission Key replacement")
 
   creatDom()
-  map.basemap = "腾讯电子"
+  map.basemap = "Tencent Electronics"
 
-  // 矢量图层数据
+  //Vector layer data
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 叠加的图层
+  // overlaid layers
   tileLayer = new mars3d.layer.BaiduLayer({
     layer: "streetview",
     show: false
@@ -40,8 +40,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -90,11 +90,11 @@ function creatDom() {
 
   const iframDom = mars3d.DomUtil.create("iframe", "stree", divDom)
   iframDom.setAttribute("id", "streeScape")
-  iframDom.setAttribute("src", window.currentPath + "baidu.html?lng=117.215219&lat=31.861592") // currentPath为当前目录，内置在示例框架中
+  iframDom.setAttribute("src", window.currentPath + "baidu.html?lng=117.215219&lat=31.861592") // currentPath is the current directory, built into the example framework
 }
 let typeView = 0
 
-// 3d显示
+// 3d display
 function viewTo3d() {
   typeView = 0
   const dom2d = document.getElementById("centerDivJJ")
@@ -106,7 +106,7 @@ function viewTo3d() {
   dom2d.style.display = "none"
 }
 
-// // 街景显示
+// // Street view display
 function streetscape() {
   typeView = 1
   const dom2d = document.getElementById("centerDivJJ")
@@ -116,7 +116,7 @@ function streetscape() {
   dom2d.style.display = "block"
 }
 
-// 分屏显示
+// Split screen display
 function splitScreen() {
   typeView = 2
   const dom2d = document.getElementById("centerDivJJ")

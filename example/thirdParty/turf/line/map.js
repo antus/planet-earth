@@ -1,7 +1,7 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-let graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+let graphicLayer // vector layer object
 
 let lineLayer
 
@@ -12,26 +12,26 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 基础线矢量数据
+  //Basic line vector data
   lineLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(lineLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -50,13 +50,13 @@ function drawLine() {
   })
 }
 
-// 计算曲线
+// Calculate curve
 function calculationCurve() {
   graphicLayer.clear()
 
   let line = lineLayer.getGraphics()
   if (line.length === 0) {
-    globalMsg("请绘制线！")
+    globalMsg("Please draw a line!")
     return
   }
   line = line[0].toGeoJSON()
@@ -74,11 +74,11 @@ function calculationCurve() {
   graphicLayer.addGraphic(graphic)
 }
 
-// 计算平行线
+// Calculate parallel lines
 function parallelLines(distance) {
   let line = lineLayer.getGraphics()
   if (line.length === 0) {
-    globalMsg("请绘制线！")
+    globalMsg("Please draw a line!")
     return
   }
   line = line[0].toGeoJSON()

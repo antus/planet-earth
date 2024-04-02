@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 26.197302, lng: 112.783136, alt: 5933911, heading: 0, pitch: -80 }
@@ -10,21 +10,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  // 创建Echarts图层
+  // Create Echarts layer
   createEchartsLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -35,22 +35,22 @@ function createEchartsLayer() {
   const echartsLayer = new mars3d.layer.EchartsLayer(options)
   map.addLayer(echartsLayer)
 
-  // 图表自适应
+  //Chart adaptive
   window.addEventListener("resize", function () {
     echartsLayer.resize()
   })
 }
 
 /**
- *echart图层
+ *echart layer
  *
- * @return {option} echart图表的数据
+ * @return {option} echart chart data
  */
 function getEchartsOption() {
   const items = [
     {
       level: 1,
-      name: "北京",
+      name: "Beijing",
       label: "beijing",
       value: [116.407395, 39.904211],
       symbol: "",
@@ -59,115 +59,115 @@ function getEchartsOption() {
     {
       level: 1,
       symbol: "",
-      name: "沈阳",
+      name: "Shenyang",
       label: "langfang",
       category: 0,
       active: true,
       speed: 6,
       value: [122.904763, 41.689105],
-      belong: "北京"
+      belong: "Beijing"
     },
     {
       level: 1,
       symbol: "",
-      name: "西宁",
+      name: "Xining",
       category: 0,
       active: true,
       speed: 6,
       value: [101.4038, 36.8207],
-      belong: "北京"
+      belong: "Beijing"
     },
     {
       level: 1,
       symbol: "",
-      name: "兰州",
+      name: "Lanzhou",
       category: 0,
       active: true,
       speed: 6,
       value: [103.5901, 36.3043],
-      belong: "北京"
+      belong: "Beijing"
     },
     {
       level: 1,
       symbol: "",
-      name: "杭州",
+      name: "Hangzhou",
       category: 0,
       active: true,
       speed: 6,
       value: [119.5313, 29.8773],
-      belong: "北京"
+      belong: "Beijing"
     },
     {
       level: 1,
       symbol: "",
-      name: "四川",
+      name: "Sichuan",
       category: 0,
       active: true,
       speed: 6,
       value: [103.9526, 30.7617],
-      belong: "北京"
+      belong: "Beijing"
     },
     {
       level: 2,
       symbol: "",
-      name: "重庆",
+      name: "Chongqing",
       category: 0,
       active: true,
       speed: 6,
       value: [107.7539, 30.1904],
-      belong: "四川"
+      belong: "Sichuan"
     },
     {
       level: 1,
       symbol: "",
-      name: "乌鲁木齐",
+      name: "Urumqi",
       category: 0,
       active: true,
       speed: 6,
       value: [85.865421, 43.452051],
-      belong: "北京"
+      belong: "Beijing"
     },
     {
       level: 1,
       symbol: "",
-      name: "喀什",
+      name: "Kashi",
       category: 0,
       active: true,
       speed: 6,
       value: [84.693786, 36.353336],
-      belong: "北京"
+      belong: "Beijing"
     },
     {
       level: 1,
       symbol: "",
-      name: "温州",
+      name: "Wenzhou",
       category: 0,
       active: true,
       speed: 6,
       value: [120.647069, 28.01946],
-      belong: "杭州"
+      belong: "Hangzhou"
     },
     {
       level: 2,
       symbol: "",
-      name: "舟山",
+      name: "Zhoushan",
       category: 0,
       active: true,
       speed: 6,
       value: [122.2559, 30.2234],
-      belong: "杭州"
+      belong: "Hangzhou"
     }
   ]
 
   const lineColor = ["#fff", "#f6fb05", "#00fcff"]
 
-  // 城市点位图标
+  //City point icon
   const symbolList = ["image://img/icon/symbol1.png", "image://img/icon/symbol2.png"]
 
-  // 线上的动态运动点图标
+  // Dynamic motion point icon online
   const pointSymbol = ["image://img/icon/linePoint1.png", "image://img/icon/linePoint2.png"]
 
-  // level = 1的地点添加图标
+  //Add icon to location with level = 1
   items.forEach((el) => {
     el.symbol = symbolList[el.level - 1]
   })

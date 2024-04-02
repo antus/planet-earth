@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let graphicLayer
-const centerArr = [] // 视角数组
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+const centerArr = [] //View array
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.84646, lng: 117.223095, alt: 790, heading: 189, pitch: -13 },
@@ -13,7 +13,7 @@ var mapOptions = {
     }
   },
   control: {
-    // animation: true, //是否创建 动画小器件，左下角仪表
+    // animation: true, //Whether to create animation widget, instrument in the lower left corner
     timeline: true,
     clockAnimate: true,
     distanceLegend: { left: "100px", bottom: "27px" }
@@ -21,21 +21,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建DIV数据图层
+  //Create DIV data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 加模型
+  //Add model
   const tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥天鹅湖",
+    name: "Hefei Swan Lake",
     type: "3dtiles",
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
@@ -52,8 +52,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -61,32 +61,32 @@ function onUnmounted() {
 
 const arrData = [
   {
-    title: "中国安徽广播电视台",
-    description: "安徽广播电视台（AHTV）是集广播、电视、报纸、</br>网络、新媒体等多种业务为一体的省级广播电视综合传</br>媒机构。",
+    title: "China Anhui Radio and Television Station",
+    description: "Anhui Radio and Television Station (AHTV) is a provincial-level comprehensive radio and television media organization that integrates radio, television, newspapers, </br>Internet, new media and other businesses.",
     center: { lat: 31.817346, lng: 117.216403, alt: 342, heading: 168, pitch: -13, duration: 2 },
     position: [117.219971, 31.808482, 264.9],
     startTime: "2017/08/25 08:00:04",
     endTime: "2017/08/25 08:00:07"
   },
   {
-    title: "合肥市政务中心",
-    description: "合肥市人民政府政务服务中心为市委、市政府派出机构，</br>服务中心成立党工委和管委会，内设综合处、</br>督查处、审批项目协调处",
+    title: "Hefei Municipal Affairs Center",
+    description: "The Hefei Municipal People's Government Government Service Center is an agency dispatched by the Municipal Party Committee and the Municipal Government. </br>The service center has established a Party Working Committee and a Management Committee, including a General Office, an </br>Supervision Office, and an Approval Project Coordination Office. ",
     center: { lat: 31.818069, lng: 117.221763, alt: 173, heading: 355, pitch: -5, duration: 3 },
     position: [117.222139, 31.822782, 166.6],
     startTime: "2017/08/25 08:00:09",
     endTime: "2017/08/25 08:00:12"
   },
   {
-    title: "合肥市文化旅游局",
-    description: "合肥市文化和旅游局和市文化和旅游局是市政府工作部门，</br>为正处级，加挂市广播电视新闻出版局牌子",
+    title: "Hefei Culture and Tourism Bureau",
+    description: "Hefei Municipal Culture and Tourism Bureau and Municipal Culture and Tourism Bureau are working departments of the municipal government,</br>at the director level, and are branded with the Municipal Radio, Television, Press and Publication Bureau",
     center: { lat: 31.813929, lng: 117.217225, alt: 142, heading: 330, pitch: -14, duration: 3 },
     position: [117.215827, 31.818229, 84.6],
     startTime: "2017/08/25 08:00:14",
     endTime: "2017/08/25 08:00:17"
   },
   {
-    title: "合肥大剧院",
-    description: "合肥大剧院又名天鹅湖大剧院，主要由歌剧厅、</br>音乐厅、多功能厅等部分组成。",
+    title: "Hefei Grand Theater",
+    description: "Hefei Grand Theater, also known as Swan Lake Grand Theatre, is mainly composed of opera hall, concert hall, multi-functional hall and other parts.",
     center: { lat: 31.815301, lng: 117.218273, alt: 107, heading: 11, pitch: -13, duration: 3 },
     position: [117.218782, 31.8176, 64.9],
     startTime: "2017/08/25 08:00:19",
@@ -96,18 +96,18 @@ const arrData = [
 
 function showDitailInfo() {
   for (let i = 0; i < arrData.length; i++) {
-    // 动态坐标属性
+    //Dynamic coordinate properties
     const property = new Cesium.SampledPositionProperty()
     const startTime = Cesium.JulianDate.fromDate(new Date(arrData[i].startTime))
     const endTime = Cesium.JulianDate.fromDate(new Date(arrData[i].endTime))
 
-    property.addSample(startTime, Cesium.Cartesian3.fromDegrees(...arrData[i].position)) // 此刻显示
-    property.addSample(endTime, Cesium.Cartesian3.fromDegrees(...arrData[i].position)) // 此刻不显示
+    property.addSample(startTime, Cesium.Cartesian3.fromDegrees(...arrData[i].position)) // Display at this moment
+    property.addSample(endTime, Cesium.Cartesian3.fromDegrees(...arrData[i].position)) // Not displayed at this moment
 
     const stopTime = new Date(arrData[i].endTime).getSeconds() - new Date(arrData[i].startTime).getSeconds()
 
-    arrData[i].center.stop = stopTime // 停顿视角
-    centerArr.push(arrData[i].center) // center集合
+    arrData[i].center.stop = stopTime // Stop perspective
+    centerArr.push(arrData[i].center) // center collection
 
     const graphic = new mars3d.graphic.DivGraphic({
       position: property,
@@ -142,5 +142,5 @@ function showDitailInfo() {
     })
     graphicLayer.addGraphic(graphic)
   }
-  map.setCameraViewList(centerArr) // 视角
+  map.setCameraViewList(centerArr) // Perspective
 }

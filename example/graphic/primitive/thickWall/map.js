@@ -1,11 +1,11 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
 var eventTarget = new mars3d.BaseClass()
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.516143, lng: 117.282937, alt: 46242, heading: 2, pitch: -49 }
@@ -13,27 +13,27 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  // 创建矢量数据图层
+  map = mapInstance // record map
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 
-  globalNotify("已知问题提示", `1.图片材质目前不能均匀分布；2.闭合衔接处不紧密 `)
+  globalNotify("Known Problem Tips", `1. The picture material cannot be evenly distributed at present; 2. The closed connection is not tight `)
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
@@ -47,8 +47,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -69,7 +69,7 @@ function addDemoGraphic1() {
       diffHeight: 300,
       width: 30
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -88,17 +88,17 @@ function addDemoGraphic2() {
       width: 30,
       color: "rgba(255,0,0,0.6)"
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "Example 2" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
 function addDemoGraphic3() {
-  // 圆形时
+  // When round
   const positions = mars3d.PolyUtil.getEllipseOuterPositions({
     position: Cesium.Cartesian3.fromDegrees(117.276257, 31.866351, 19.57),
-    radius: 1200, // 半径
-    count: 50 // 共返回(count*4)个点
+    radius: 1200, // radius
+    count: 50 // Return a total of (count*4) points
   })
 
   const graphic = new mars3d.graphic.ThickWall({
@@ -112,11 +112,11 @@ function addDemoGraphic3() {
         image: "img/textures/fence.png",
         color: "#ffff00",
         mixt: true,
-        speed: 10, // 速度，建议取值范围1-100
+        speed: 10, // Speed, recommended value range 1-100
         axisY: true
       }
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "Example 3" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -143,14 +143,14 @@ function addDemoGraphic4() {
       width: 30,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        // 动画线材质
+        //Animation line material
         image: "img/textures/fence.png",
         axisY: true,
         color: "#ff0000",
-        speed: 10 // 速度，建议取值范围1-100
+        speed: 10 // Speed, the recommended value range is 1-100
       }
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "Example 4" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -166,17 +166,17 @@ function addDemoGraphic5() {
       width: 50,
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
-        // 动画线材质
+        //Animation line material
         image: "img/textures/fence.png",
         axisY: true,
         color: "#ff0000",
         hasImage2: true,
         image2: "img/textures/tanhao.png",
         color2: "#ffff00",
-        speed: 10 // 速度，建议取值范围1-100
+        speed: 10 // Speed, the recommended value range is 1-100
       },
       label: {
-        text: "我是墙",
+        text: "I am the wall",
         font_size: 18,
         color: "#ffffff",
         distanceDisplayCondition: true,
@@ -184,7 +184,7 @@ function addDemoGraphic5() {
         distanceDisplayCondition_near: 0
       }
     },
-    attr: { remark: "示例5" }
+    attr: { remark: "Example 5" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -200,7 +200,7 @@ function addDemoGraphic6() {
       width: 50,
       image: "img/textures/poly-rivers.png"
     },
-    attr: { remark: "示例6" }
+    attr: { remark: "Example 6" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -217,7 +217,7 @@ function addDemoGraphic7() {
       width: 50,
       color: "#00eba8"
     },
-    attr: { remark: "示例7" }
+    attr: { remark: "Example 7" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -244,7 +244,7 @@ function addDemoGraphic8() {
         bloom: false
       }
     },
-    attr: { remark: "示例8" }
+    attr: { remark: "Example 8" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -272,7 +272,7 @@ function addDemoGraphic9() {
         bloom: true
       }
     },
-    attr: { remark: "示例9" }
+    attr: { remark: "Example 9" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -301,19 +301,19 @@ function addDemoGraphic10() {
         bloom: true
       }
     },
-    attr: { remark: "示例9" }
+    attr: { remark: "Example 9" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -334,11 +334,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "thickWall",
@@ -351,7 +351,7 @@ function startDrawGraphic() {
   })
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic2() {
   graphicLayer.startDraw({
     type: "thickWall",
@@ -365,23 +365,23 @@ function startDrawGraphic2() {
   })
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -401,7 +401,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -421,7 +421,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -436,7 +436,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -444,16 +444,16 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "计算长度",
+      text: "Calculate length",
       icon: "fa fa-medium",
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
-        globalAlert("该对象的长度为:" + strDis)
+        globalAlert("The length of this object is:" + strDis)
       }
     },
     {
-      text: "计算围合面积",
+      text: "Calculate enclosed area",
       icon: "fa fa-reorder",
       show: (event) => {
         return event.graphic?.positionsShow?.length > 2
@@ -461,7 +461,7 @@ function bindLayerContextMenu() {
       callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
-        globalAlert("该对象的面积为:" + strArea)
+        globalAlert("The area of ​​this object is:" + strArea)
       }
     }
   ])

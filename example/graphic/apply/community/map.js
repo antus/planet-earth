@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.818816, lng: 117.221131, alt: 2553, heading: 0, pitch: -55 }
@@ -10,41 +10,41 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  map.basemap = 2017 // 切换到蓝色底图
+  map.basemap = 2017 // switch to blue basemap
 
   addTilesetLayer()
   addGraphics()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 合肥市建筑物模型
+//Hefei city building model
 function addTilesetLayer() {
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥市建筑物",
+    name: "Hefei City Building",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
-    marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
+    marsJzwStyle: true, // Turn on building special effects (built-in Shader code)
     style: {
       color: {
         conditions: [["true", "rgba(16, 119, 209, 1)"]]
       }
     },
-    // 裁剪区域
+    // crop area
     planClip: {
       positions: [
         [117.22648, 31.827441],
@@ -52,36 +52,36 @@ function addTilesetLayer() {
         [117.211311, 31.842438],
         [117.226091, 31.842885]
       ],
-      clipOutSide: true // 外裁剪
+      clipOutSide: true // outer clipping
     }
   })
   map.addLayer(tiles3dLayer)
 }
 
 function addGraphics() {
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/hefei-shequ.json" })
     .then(function (geojson) {
-      const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+      const arr = mars3d.Util.geoJsonToGraphics(geojson) // Parse geojson
 
       for (let i = 0; i < arr.length; i++) {
         const item = arr[i]
 
-        // polygon面
+        //polygon face
         const polygonEntity = new mars3d.graphic.PolygonEntity({
           positions: item.positions,
           style: {
             color: item.attr.color,
             opacity: 0.4
           },
-          attr: { remark: "polygon面" }
+          attr: { remark: "polygon face" }
         })
         graphicLayer.addGraphic(polygonEntity)
 
-        // PolylineEntity线
+        // PolylineEntity line
         const graphicLine = new mars3d.graphic.PolylineEntity({
           positions: item.positions,
           style: {
@@ -93,27 +93,27 @@ function addGraphics() {
               speed: 4
             }
           },
-          attr: { remark: "PolylineEntity线" }
+          attr: { remark: "PolylineEntity line" }
         })
         graphicLayer.addGraphic(graphicLine)
 
-        // 动态边框文本 DIV
+        //Dynamic border text DIV
         const graphic = new mars3d.graphic.DivBoderLabel({
           position: polygonEntity.center,
           style: {
             text: item.attr.name,
             font_size: 15,
-            font_family: "微软雅黑",
+            font_family: "Microsoft Yahei",
             color: "#ccc",
             boderColor: "#15d1f2",
             addHeight: 100
           },
-          attr: { remark: "DIV矢量数据" }
+          attr: { remark: "DIV vector data" }
         })
         graphicLayer.addGraphic(graphic)
       }
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }

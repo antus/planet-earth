@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tilesetLayer
 let tilesetBoxClip
 
@@ -11,20 +11,20 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 模型
+  // Model
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "教学楼",
+    name: "Teaching Building",
     url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
     position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
     maximumScreenSpaceError: 16,
@@ -34,8 +34,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -62,7 +62,7 @@ function drawExtent() {
   })
 }
 
-// 演示数据
+//Demo data
 function tilesetBoxClipDemo(point) {
   tilesetBoxClip = new mars3d.thing.TilesetBoxClip({
     layer: tilesetLayer,
@@ -76,35 +76,35 @@ function tilesetBoxClipDemo(point) {
   map.addThing(tilesetBoxClip)
 }
 
-// 是否显示盒子
+// Whether to display the box
 function showModelMatrix(val) {
   tilesetBoxClip.showBox = val
 }
 
-// X长度改变
+//X length changes
 function onChangeDimensionsX(newValue) {
   tilesetBoxClip.dimensions.x = newValue
   tilesetBoxClip.redraw()
 }
 
-// Y长度改变
+// Y length changes
 function onChangeDimensionsY(newValue) {
   tilesetBoxClip.dimensions.y = newValue
   tilesetBoxClip.redraw()
 }
 
-// Z长度改变
+// Z length changes
 function onChangeDimensionsZ(newValue) {
   tilesetBoxClip.dimensions.z = newValue
   tilesetBoxClip.redraw()
 }
 
-// 坐标发生改变
+//The coordinates change
 function onChangePosition(point) {
   tilesetBoxClip.position = point
 }
 
-// 清除
+// clear
 function clear() {
   tilesetBoxClip.clear()
 }

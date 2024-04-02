@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let graphicLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.178797, lng: 118.183551, alt: 210053, heading: 353, pitch: -49 },
@@ -13,41 +13,41 @@ var mapOptions = {
     }
   },
   control: {
-    animation: true, // 是否创建 动画小器件，左下角仪表
-    timeline: true // 是否显示 时间线控件
+    animation: true, // Whether to create animation widget, instrument in the lower left corner
+    timeline: true // Whether to display the timeline control
   }
 }
 
 var eventTarget = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   if (map.controls.timeline) {
     map.controls.timeline.zoomTo(map.clock.startTime, map.clock.stopTime)
   }
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 静态数据
+  // static data
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/exercise-fixed.json" }).then(function (json) {
     graphicLayer.loadGeoJSON(json)
   })
 
-  // 动态数据
+  // dynamic data
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/exercise-dynamic.json" }).then(function (arrData) {
     for (let i = 0; i < arrData.length; i++) {
       const data = arrData[i]
 
-      // 动态坐标属性
+      //Dynamic coordinate properties
       const property = new Cesium.SampledPositionProperty()
       data.path.forEach((item, index) => {
         const startTime = item.time
@@ -97,13 +97,13 @@ function onMounted(mapInstance) {
     map.setCameraView({ lat: 31.252058, lng: 117.988745, alt: 95026, heading: 340, pitch: -49 })
   })
   setMapView(55, () => {
-    globalMsg("红方获得胜利")
+    globalMsg("Red team wins")
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -119,7 +119,7 @@ function addWallPrimitive(positions, color) {
       materialOptions: {
         image: "img/textures/fence.png",
         color,
-        speed: 10, // 速度，建议取值范围1-100
+        speed: 10, // Speed, recommended value range 1-100
         axisY: true
       }
     }
@@ -127,13 +127,13 @@ function addWallPrimitive(positions, color) {
   graphicLayer.addGraphic(Square)
 }
 
-// 【动态】飞机飞行路线
+// [Dynamic] Aircraft flight route
 function addPlane(property, team) {
   const feijiPath = new mars3d.graphic.PathEntity({
     position: property,
     style: {
       width: 6,
-      leadTime: 0, // 前方的路线不显示
+      leadTime: 0, // The route ahead is not displayed
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: getTeamColor(team),
@@ -161,7 +161,7 @@ function addPlane(property, team) {
   graphicLayer.addGraphic(feijiPath)
 }
 
-// 【动态】进攻箭头标号
+// [Dynamic] Attack arrow label
 function addAttackArrow(property, team) {
   property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
 
@@ -189,7 +189,7 @@ function addAttackArrow(property, team) {
   graphicLayer.addGraphic(graphicTriangle)
 }
 
-// 【动态】导弹飞行路线
+// [Dynamic] Missile flight path
 function addMissile(property, team) {
   let missileImage
   if (team === "red") {
@@ -211,7 +211,7 @@ function addMissile(property, team) {
   graphicLayer.addGraphic(graphic)
 }
 
-// 【动态】导弹爆炸之后的滞留
+// [Dynamic] Detention after missile explosion
 function addFire(property) {
   const fireImage = new mars3d.graphic.BillboardEntity({
     position: property,

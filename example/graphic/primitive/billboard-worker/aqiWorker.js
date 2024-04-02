@@ -1,36 +1,36 @@
-"use script" // 开发环境建议开启严格模式
+"use script" // It is recommended to turn on strict mode in the development environment
 
 const url = "https://api.waqi.info/mapq/bounds/?bounds={RECTANGLE}&inc=placeholders&k={KEY}&_={DATA}"
 const table = [
   {
-    level: "一级（优）",
-    influence: "空气质量令人满意，基本无空气污染",
-    suggestion: "各类人群可正常活动"
+    level: "First level (excellent)",
+    influence: "The air quality is satisfactory and there is basically no air pollution",
+    suggestion: "All types of people can move around normally"
   },
   {
-    level: "二级（良）",
-    influence: "空气质量可接受，但某些污染物可能对极少数异常敏感人群健康有较弱影响",
-    suggestion: "心脏病和肺病患者症状显著加剧，运动耐受力降低，健康人群普遍出现症状"
+    level: "Level 2 (Good)",
+    influence: "Air quality is acceptable, but some pollutants may have a weak impact on the health of a very small number of extremely sensitive people",
+    suggestion: "Patients with heart disease and lung disease have significantly aggravated symptoms and reduced exercise tolerance, and symptoms are common in healthy people"
   },
   {
-    level: "三级（轻度污染）",
-    influence: "易感人群症状有轻度加剧，健康人群出现刺激症状",
-    suggestion: "儿童、老年人及心脏病、呼吸系统疾病患者应减少长时间、高强度的户外锻炼"
+    level: "Level 3 (mild pollution)",
+    influence: "Susceptible people have mildly aggravated symptoms, and healthy people have irritating symptoms",
+    suggestion: "Children, the elderly and patients with heart disease and respiratory diseases should reduce long-term, high-intensity outdoor exercise"
   },
   {
-    level: "四级（中度污染）",
-    influence: "易感人群症状有轻度加剧，健康人群出现刺激症状",
-    suggestion: "儿童、老年人及心脏病、呼吸系统疾病患者避免长时间、高强度的户外锻炼，一般人群适量减少户外运动"
+    level: "Level 4 (moderate pollution)",
+    influence: "Susceptible people have mildly aggravated symptoms, and healthy people have irritating symptoms",
+    suggestion: "Children, the elderly and patients with heart disease and respiratory diseases should avoid long-term, high-intensity outdoor exercise. The general population should reduce outdoor exercise appropriately."
   },
   {
-    level: "五级（重度污染）",
-    influence: "心脏病和肺病患者症状显著加剧，运动耐受力降低，健康人群普遍出现症状",
-    suggestion: "儿童、老年人及心脏病、肺病患者应停留在室内，停止户外运动，一般人群减少户外运动"
+    level: "Level 5 (severe pollution)",
+    influence: "Patients with heart disease and lung disease have significantly aggravated symptoms and reduced exercise tolerance, and symptoms are common in healthy people",
+    suggestion: "Children, the elderly and patients with heart disease and lung disease should stay indoors and stop outdoor exercise. The general population should reduce outdoor exercise."
   },
   {
-    level: "六级（严重污染）",
-    influence: "心脏病和肺病患者症状显著加剧，运动耐受力降低，健康人群普遍出现症状",
-    suggestion: "儿童、老年人和病人应停留在室内，避免体力消耗，一般人群避免户外活动"
+    level: "Level 6 (serious pollution)",
+    influence: "Patients with heart disease and lung disease have significantly aggravated symptoms and reduced exercise tolerance, and symptoms are common in healthy people",
+    suggestion: "Children, the elderly and the sick should stay indoors and avoid physical exertion, and the general population should avoid outdoor activities"
   }
 ]
 
@@ -47,13 +47,13 @@ onmessage = function (e) {
 
   xmlHttpRequest = new XMLHttpRequest()
 
-  // 2.设置回调函数
+  // 2. Set the callback function
   xmlHttpRequest.onreadystatechange = callback
 
-  // 3.初始化XMLHttpRequest组建
+  // 3. Initialize XMLHttpRequest construction
   xmlHttpRequest.open("POST", nowUrl, true)
 
-  // 4.发送请求
+  // 4.Send request
   xmlHttpRequest.send()
 }
 
@@ -97,7 +97,7 @@ function callback() {
       entityTable.push(newItem)
     }
     /// ///////////////////////////////////////////////////
-    // self代表子线程自身
+    // self represents the sub-thread itself
     self.postMessage({ currTime, entityTable })
     self.close()
   } else if (xmlHttpRequest.readyState === 4 && xmlHttpRequest.status === 0) {

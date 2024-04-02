@@ -6,7 +6,7 @@ function tabInit(data) {
     checkboxHeader: false,
     columns: [
       {
-        title: "是否显示",
+        title: "Whether to display",
         field: "show",
         align: "center",
         checkbox: true,
@@ -19,10 +19,10 @@ function tabInit(data) {
       },
       {
         field: "name",
-        title: "名称"
+        title: "name"
       },
       {
-        title: "操作",
+        title: "Operation",
         align: "center",
         width: 80,
         events: {
@@ -37,36 +37,36 @@ function tabInit(data) {
         },
         formatter: function (value, row, index) {
           return [
-            '<a class="edit" href="javascript:void(0)" title="编辑"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;',
-            '<a class="remove" href="javascript:void(0)" title="删除"><i class="fa fa-trash"></i></a>'
+            '<a class="edit" href="javascript:void(0)" title="Edit"><i class="fa fa-edit"></i></a> ',
+            '<a class="remove" href="javascript:void(0)" title="Delete"><i class="fa fa-trash"></i></a>'
           ].join("")
         }
       }
     ],
-    //定位区域
+    //Locate area
     onClickRow: function (row) {
       flyToModel(row.id)
     },
-    //勾选显示
+    //Check display
     onCheck: function (row) {
       onSelect(row.id, true)
     },
-    //取消勾选显示
+    //Uncheck display
     onUncheck: function (row) {
       onSelect(row.id, false)
     }
   })
 }
 
-// 删除表格中的指定项
+//Delete the specified item in the table
 function removeTableItem(id) {
   $("#graphicTable").bootstrapTable("remove", { field: "id", values: id })
 }
 
 function showEditor(graphic) {
   if (!graphic._conventStyleJson) {
-    graphic.options.style = graphic.toJSON().style //因为示例中的样式可能有复杂对象，需要转为单个json简单对象
-    graphic._conventStyleJson = true //只处理一次
+    graphic.options.style = graphic.toJSON().style //Because the style in the example may have complex objects, it needs to be converted into a single json simple object
+    graphic._conventStyleJson = true //Only process once
   }
 
   let plotAttr = es5widget.getClass("widgets/plotAttr/widget.js")
@@ -76,7 +76,7 @@ function showEditor(graphic) {
     es5widget.activate({
       map: map,
       uri: "widgets/plotAttr/widget.js",
-      name: "属性编辑",
+      name: "Property Edit",
       graphic: graphic,
       lonlats: graphic.coordinates
     })
@@ -110,7 +110,7 @@ function onSelect(id, selected) {
   }
 }
 
-// 获取图层数据，填充表格数据，同时监听图层操作
+// Get layer data, fill in table data, and monitor layer operations at the same time
 function getTableData(graphicLayer) {
   graphicLayer.on(mars3d.EventType.removeGraphic, function (event) {
     const graphicId = event.graphic.id
@@ -144,6 +144,6 @@ function getItemName(graphic) {
     return `${graphic.type} - ${graphic.attr.remark}`
   }
 
-  graphic.name = `未命名${++graphicIndex}`
+  graphic.name = `Unnamed${++graphicIndex}`
   return `${graphic.type} - ${graphic.name}`
 }

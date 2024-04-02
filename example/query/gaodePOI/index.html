@@ -3,24 +3,24 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="author" content="Mars Technology http://mars3d.cn " />
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="x5-fullscreen" content="true" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-    <!-- 标题及搜索关键字 -->
-    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <!-- Title and search keywords -->
+    <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
     <meta
       name="description"
-      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+      content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework three-dimensional earth model gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming Geographic Information System Cloud GIS 3D GIS GIS Platform WebGIS"
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
-    <title>高德POI点查询 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>Amap POI point query | Mars3D | 3D map | Mars Technology | Hefei Mars Technology Co., Ltd.</title>
 
-    <!--第三方lib-->
+    <!--Third-party lib-->
     <script
       type="text/javascript"
       src="/lib/include-lib.js"
@@ -53,47 +53,47 @@
     <div class="infoview">
       <div>
         <div>
-          <span>范围：</span>
+          <span>Range:</span>
           <div class="radio radio-info radio-inline">
             <input type="radio" id="queryContent1" name="queryContent" value="1" checked />
-            <label for="queryContent1">指定城市</label>
+            <label for="queryContent1">Specify city</label>
           </div>
           <div class="radio radio-info radio-inline">
             <input type="radio" id="queryContent2" name="queryContent" value="2" />
-            <label for="queryContent2">当前视域附近</label>
+            <label for="queryContent2">Near the current viewport</label>
           </div>
           <div class="radio radio-info radio-inline">
             <input type="radio" id="queryContent3" name="queryContent" value="3" />
-            <label for="queryContent3">指定范围</label>
+            <label for="queryContent3">Specify range</label>
           </div>
         </div>
         <div style="position: relative; margin-top: 10px" class="queryByCity">
-          <input id="txtCity" readonly type="text" placeholder="请选择城市" style="width: 100%" />
+          <input id="txtCity" readonly type="text" placeholder="Please select a city" style="width: 100%" />
         </div>
         <div class="queryByDraw" style="display: none; margin-top: 10px; text-align: center">
-          <input type="button" class="btn btn-primary" value="框选范围" id="drawRectangle" />
-          <input type="button" class="btn btn-primary" value="圆形范围" id="drawCircle" />
-          <input type="button" class="btn btn-primary" value="多边形范围" id="drawPolygon" />
+          <input type="button" class="btn btn-primary" value="frame selection range" id="drawRectangle" />
+          <input type="button" class="btn btn-primary" value="circular range" id="drawCircle" />
+          <input type="button" class="btn btn-primary" value="Polygon range" id="drawPolygon" />
         </div>
         <div style="margin-top: 10px">
-          <span>关键字：</span><input id="queryText" type="text" placeholder="查询名称或地址" value="" class="form-control" />
+          <span>Keywords:</span><input id="queryText" type="text" placeholder="Query name or address" value="" class="form-control" />
         </div>
       </div>
 
       <div style="margin-top: 10px; margin-bottom: 10px; text-align: center">
-        <input type="button" class="btn btn-primary" value="查询" id="query" />
-        <input type="button" class="btn btn-primary" value="清除" id="removeAll" />
+        <input type="button" class="btn btn-primary" value="query" id="query" />
+        <input type="button" class="btn btn-primary" value="clear" id="removeAll" />
       </div>
 
       <div id="resultView" style="max-width: 500px; display: none">
         <table id="table"></table>
 
         <div>
-          <!-- <input type="button" class="btn btn-primary" value="加载更多" id="loadMore" /> -->
+          <!-- <input type="button" class="btn btn-primary" value="Load More" id="loadMore" /> -->
           <div style="float: right">
-            大约&nbsp;&nbsp;<span style="color: red" id="allcount">0</span>&nbsp;&nbsp;条数据， 已加载&nbsp;&nbsp;<span style="color: red" id="count"
+            About <span style="color: red" id="allcount">0</span> data, loaded <span style="color: red" id="count"
               >0</span
-            >&nbsp;&nbsp;条数据，
+            > pieces of data,
           </div>
         </div>
       </div>
@@ -102,12 +102,12 @@
     <script src="/js/common.js"></script>
     <script src="./map.js"></script>
     <script type="text/javascript">
-      "use script" //开发环境建议开启严格模式
+      "use script" //It is recommended to turn on strict mode in the development environment
 
       let $table
-      let bootstrapList = [] //查询结果
+      let bootstrapList = [] //Query results
       let lastQueryOptions
-      //上一次请求参数，用于 下一页使用
+      //Last request parameters, used for next page
 
       function initUI(options) {
         bindViewEvent([])
@@ -117,21 +117,21 @@
         $("#txtCity").citypicker({
           simple: true,
           level: "city",
-          province: "安徽省",
-          city: "合肥市"
-          //district: '蜀山区',
+          province: "Anhui Province",
+          city: "Hefei City"
+          //district: 'Shushan District',
         })
 
         $("#table").bootstrapTable("destroy")
         $table = $("#table")
         $table.bootstrapTable({
           height: 300,
-          singleSelect: true, //单选
+          singleSelect: true, //Single selection
           pagination: false,
           iconsPrefix: "fa",
           columns: [
             {
-              title: "序号",
+              title: "serial number",
               sortable: true,
               editable: false,
               align: "left",
@@ -141,25 +141,25 @@
             },
             {
               field: "name",
-              title: "企业名称"
+              title: "Company name"
             },
             {
               field: "address",
-              title: "地址"
+              title: "Address"
             }
           ],
           onClickRow: function (item, $element, field) {
             let graphic = item.graphic
             if (graphic == null) {
-              toastr.warning(item.name + " 无经纬度坐标信息！")
+              toastr.warning(item.name + "No latitude and longitude coordinate information!")
               return
             }
 
             graphic.openHighlight()
 
             graphic.flyTo({
-              radius: 2000, //点数据：radius控制视距距离
-              scale: 1.5, //线面数据：scale控制边界的放大比例
+              radius: 2000, //Point data: radius controls the sight distance
+              scale: 1.5, //Line and surface data: scale controls the amplification ratio of the boundary
               complete: () => {
                 graphic.openPopup()
               }
@@ -173,15 +173,15 @@
 
           switch (selectType) {
             default:
-              //按城市
+              //By city
               $(".queryByCity").show()
               $(".queryByDraw").hide()
               break
-            case "2": //当前视角范围
+            case "2": //Current viewing angle range
               $(".queryByCity").hide()
               $(".queryByDraw").hide()
               break
-            case "3": //按范围
+            case "3": //By range
               $(".queryByCity").hide()
               $(".queryByDraw").show()
               break
@@ -195,17 +195,17 @@
           query(selectType, cityShi, serverName)
         })
 
-        //框选查询 矩形
+        //Frame selection query rectangle
         $("#drawRectangle").click(function () {
           drawRectangle()
         })
 
-        //框选查询   多边
+        //Frame selection query multi-edge
         $("#drawPolygon").click(function () {
           drawPolygon()
         })
 
-        //框选查询   圆
+        //Frame selection query circle
         $("#drawCircle").click(function () {
           drawCircle()
         })
@@ -214,7 +214,7 @@
           clear()
         })
 
-        //加载更多- 下一页
+        //Load more - next page
         $("#loadMore").click(function () {
           lastQueryOptions.page++
           let serverName = $.trim($("#queryText").val())

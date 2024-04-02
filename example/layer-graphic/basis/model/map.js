@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.799033, lng: 117.177563, alt: 4324.03, heading: 0, pitch: -45, roll: 0 },
@@ -13,22 +13,22 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
   showShanghaiDemo()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -41,7 +41,7 @@ function removeLayer() {
     graphicLayer = null
   }
 
-  // 重置状态
+  //Reset state
   eventTarget.fire("defuatData", {
     enabledShowHide: true,
     enabledPopup: true,
@@ -50,13 +50,13 @@ function removeLayer() {
   })
 }
 
-// 示例：上海
+// Example: Shanghai
 function showShanghaiDemo() {
   removeLayer()
 
-  // 创建gltf模型，
+  //Create gltf model,
   graphicLayer = new mars3d.layer.GraphicLayer({
-    name: "上海浦东",
+    name: "Shanghai Pudong",
     data: [
       {
         type: "modelP",
@@ -69,24 +69,24 @@ function showShanghaiDemo() {
       }
     ],
     center: { lat: 31.251138, lng: 121.463588, alt: 1729.97, heading: 110.7, pitch: -25, roll: 0.2 },
-    popup: "上海浦东模型",
+    popup: "Shanghai Pudong Model",
     flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 示例：骨骼动画
+// Example: skeletal animation
 function showDonghuaDemo() {
   removeLayer()
 
-  // 创建gltf模型
+  //Create gltf model
   graphicLayer = new mars3d.layer.GraphicLayer({
-    name: "骨骼动画",
+    name: "Skeleton Animation",
     data: [
       {
         type: "modelP",
@@ -111,16 +111,16 @@ function showDonghuaDemo() {
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 风力发电机
+// Wind Turbines
 function showFenliDemo() {
   removeLayer()
 
@@ -166,44 +166,44 @@ function showFenliDemo() {
     })
   })
 
-  // 创建gltf模型
+  //Create gltf model
   graphicLayer = new mars3d.layer.GraphicLayer({
-    name: "风力发电机",
+    name: "wind turbine",
     data: arr,
     center: { lat: 39.066518, lng: 112.245269, alt: 2913, heading: 226, pitch: -21, roll: 0 },
     flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 光伏电场
+// Photovoltaic electric field
 function showGuangfu() {
   removeLayer()
 
-  // 创建图层
+  //Create layer
   graphicLayer = new mars3d.layer.GraphicLayer({
-    name: "光伏电场",
+    name: "Photovoltaic Electric Field",
     center: { lat: 42.786315, lng: 93.105225, alt: 2095, heading: 57, pitch: -44 },
     flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 
-  // 构造数据
+  // Construct data
   const longitudeString = 93.1214
   const latitudeString = 42.7863
   const height = 678
   const heading = 0
-  // 光伏电厂位置太阳能电池板位置
+  // Photovoltaic power plant location Solar panel location
   for (let i = 0; i < 120; i++) {
     let point
     if (i < 20) {
@@ -221,7 +221,7 @@ function showGuangfu() {
     }
 
     const graphic = new mars3d.graphic.ModelPrimitive({
-      name: "风机",
+      name: "Fan",
       position: point,
       style: {
         url: "//data.mars3d.cn/gltf/mars/taiyang/taiyang.gltf",

@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tilesetLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.658282, lng: 117.070076, alt: 521, heading: 94, pitch: -33 }
@@ -11,19 +11,19 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "石化工厂",
+    name: "Petrochemical Plant",
     url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
@@ -32,40 +32,40 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tilesetLayer)
 
-  // 从数据库读取属性后，按下面格式组织好赋值即可[不适合大模型]
+  // After reading the attributes from the database, organize the assignment according to the following format [not suitable for large models]
   tilesetLayer.readyPromise.then(() => {
     bindSetPropertiesToTile(tilesetLayer.tileset)
 
     addProperties({
       id: "55a7cf9c71f1c9c495413f934dd1a158",
-      name: "大烟囱1 - 我是setProperties更新的", // 修改原有属性
-      column1: "我是setProperties更新的", // 新增的属性
-      testStyle: true // 新增的属性
+      name: "Chimney 1 - I updated it with setProperties", // Modify the original properties
+      column1: "I was updated by setProperties", // New properties
+      testStyle: true // New attributes
     })
     addProperties({
       id: "559cb990c9dffd8675f6bc2186971dc2",
-      name: "大烟囱2 - 我是setProperties更新的", // 修改原有属性
-      column1: "我是setProperties更新的", // 新增的属性
-      testStyle: true // 新增的属性
+      name: "Chimney 2 - I updated it with setProperties", // Modify the original properties
+      column1: "I was updated by setProperties", // New properties
+      testStyle: true // New attributes
     })
 
     setTimeout(() => {
-      // 还原或删除赋予的属性
+      //Restore or delete the assigned attributes
       removeProperties({
         id: "559cb990c9dffd8675f6bc2186971dc2",
-        name: "大烟囱2 - 我是还原的", // 修改原有属性
+        name: "Big Chimney 2 - I restored it", // Modify the original attributes
         column1: undefined,
         testStyle: undefined
       })
-      console.log("大烟囱2 还原了属性值")
+      console.log("Chimney 2 restored attribute values")
     }, 5000)
   })
 
-  // style回调方法
+  // style callback method
   tilesetLayer.style = function (feature) {
     const attr = mars3d.Util.get3DTileFeatureAttr(feature)
 
-    // 下面可以根据属性做各类判断后返回不同颜色，隐藏的可以透明度为0
+    // Below you can make various judgments based on the attributes and return different colors. The hidden ones can have a transparency of 0
     if (attr.testStyle) {
       return "rgba(255,0,0,1)"
     }
@@ -79,25 +79,25 @@ function onMounted(mapInstance) {
     return "rgba(255,255,255,0.7)"
   }
 
-  // 还原或删除赋予的样式
+  //Restore or delete the assigned style
   // setTimeout(() => {
   //   tilesetLayer.style = undefined
   // }, 5000)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-const idField = "id" // 唯一标识对应的属性字段名称
+const idField = "id" // Uniquely identifies the corresponding attribute field name
 const newProperties = {}
 const loadFeatureList = new mars3d.MarsArray()
 
-// 绑定处理的事件
+//Bind the event to be processed
 function bindSetPropertiesToTile(tileset) {
   tileset.tileLoad.addEventListener(function (tile) {
     processTileFeatures(tile, (feature) => {
@@ -120,13 +120,13 @@ function bindSetPropertiesToTile(tileset) {
   })
 }
 
-// 增加属性
+//Add attributes
 function addProperties(properties) {
   const id = properties[idField]
   newProperties[id] = properties
 }
 
-// 移除属性
+//remove attribute
 function removeProperties(properties) {
   const id = properties[idField]
   if (id) {
@@ -156,7 +156,7 @@ function processContentFeatures(content, callback) {
     callback(feature)
   }
 }
-// 更新feature属性
+//Update feature attributes
 function setFeatureProperties(feature, newAttr) {
   if (!feature || !newAttr) {
     return

@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: {
@@ -16,15 +16,15 @@ var mapOptions = {
     }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
     compass: { bottom: "380px", left: "5px" }
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
-// 时间控制参数
+// Time control parameters
 const args = {
   space: 100,
   time: 5,
@@ -33,32 +33,32 @@ const args = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map = mapInstance // record map
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
   addLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addLayer() {
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 合肥高铁
+  // Hefei High Speed ​​Rail
   const coors = [
     [117.277697, 31.800233, 45],
     [117.262022, 31.798983, 45],
@@ -74,24 +74,24 @@ function addLayer() {
 
   const positions = mars3d.PointTrans.lonlats2cartesians(coors)
 
-  // 插值求新路线（按固定间隔米数插值） positions输入的值需为笛卡尔空间xyz坐标数组
+  // Interpolation to find a new route (interpolation according to fixed intervals of meters) The value entered in positions needs to be a Cartesian space xyz coordinate array
   const positionsNew = mars3d.PolyUtil.interLine(positions, {
-    minDistance: 20 // 间隔20米
+    minDistance: 20 // 20 meters apart
   })
 
-  // 求对比的贴地地面高度（用于echarts展示）
+  // Find the comparative ground height (for echarts display)
   mars3d.PolyUtil.computeSurfacePoints({
     scene: map.scene,
-    positions: positionsNew // 需要计算的源路线坐标数组
+    positions: positionsNew // The source route coordinate array that needs to be calculated
   }).then((result) => {
-    // raisedPositions为含高程信息的新坐标数组，noHeight为标识是否存在无地形数据。
-    console.log("含高程信息的新坐标数组", result.positions)
+    // raisedPositions is a new coordinate array containing elevation information, and noHeight indicates whether there is no terrain data.
+    console.log("New coordinate array containing elevation information", result.positions)
 
     inintRoad(positionsNew, result.positions)
   })
 }
 
-// 构造动态高铁   positions:设计的路线    positionsTD地面的贴地路线（用于比较）
+//Construct dynamic high-speed rail positions: designed route positionsTD ground-to-ground route (for comparison)
 function inintRoad(positionsSJ, positionsTD) {
   const heightArray = []
   const heightTDArray = []
@@ -102,29 +102,29 @@ function inintRoad(positionsSJ, positionsTD) {
     const x = Cesium.Math.toDegrees(carto.longitude)
     const y = Cesium.Math.toDegrees(carto.latitude)
 
-    const height = mars3d.Util.formatNum(carto.height) // 设计高度  当小数点后面的数字一致时，会省略小数点，不显示
-    const tdHeight = mars3d.Util.formatNum(Cesium.Cartographic.fromCartesian(positionsTD[i]).height) // 地面高度
+    const height = mars3d.Util.formatNum(carto.height) // Design height When the numbers after the decimal point are consistent, the decimal point will be omitted and not displayed.
+    const tdHeight = mars3d.Util.formatNum(Cesium.Cartographic.fromCartesian(positionsTD[i]).height) // Ground height
 
     heightArray.push(height)
     heightTDArray.push(tdHeight)
     mpoints.push([x, y, height, tdHeight])
   }
 
-  //  距离数组
+  // distance array
   const positionsLineFirst = positionsTD[0]
   const distanceArray = positionsTD.map(function (data) {
-    return Math.round(Cesium.Cartesian3.distance(data, positionsLineFirst)) // 计算两点之间的距离,返回距离
+    return Math.round(Cesium.Cartesian3.distance(data, positionsLineFirst)) // Calculate the distance between two points and return the distance
   })
 
-  // 显示echarts
+  // display echarts
   eventTarget.fire("dataLoaded", { heightArray, heightTDArray, distanceArray })
-  //  画线
+  // draw lines
   const graphic = new mars3d.graphic.PolylinePrimitive({
-    id: "设计路线",
+    id: "Design Route",
     positions: positionsSJ,
     style: {
       width: 3,
-      materialType: mars3d.MaterialType.PolylineDash, // 虚线
+      materialType: mars3d.MaterialType.PolylineDash, // dashed line
       materialOptions: {
         color: Cesium.Color.RED,
         dashLength: 20
@@ -134,7 +134,7 @@ function inintRoad(positionsSJ, positionsTD) {
   graphicLayer.addGraphic(graphic)
 
   const primitiveTD = new mars3d.graphic.PolylinePrimitive({
-    id: "贴地路线",
+    id: "ground route",
     positions: positionsTD,
     style: {
       width: 3,
@@ -143,23 +143,23 @@ function inintRoad(positionsSJ, positionsTD) {
   })
   graphicLayer.addGraphic(primitiveTD)
 
-  // =================计算路线====================
+  // ================= Calculate route ====================
   const start = map.clock.currentTime.clone()
 
   const counts = mpoints.length
 
   const arrProperty = []
 
-  // 16组车身+头尾2个车头 共18组
+  // 16 sets of body + 2 heads and tail, 18 sets in total
   for (let j = 0; j < 18; j++) {
-    const stime = Cesium.JulianDate.addSeconds(start, j, new Cesium.JulianDate()) // 每隔j秒，添加一次时间
+    const stime = Cesium.JulianDate.addSeconds(start, j, new Cesium.JulianDate()) // Add time every j seconds
 
     const property = new Cesium.SampledPositionProperty()
 
     for (let i = 0; i < counts; i++) {
       const time = Cesium.JulianDate.addSeconds(stime, i + 1, new Cesium.JulianDate())
       const point = Cesium.Cartesian3.fromDegrees(mpoints[i][0], mpoints[i][1], mpoints[i][2] + 0.5)
-      property.addSample(time, point) // 添加新样本，时间、位置
+      property.addSample(time, point) //Add new sample, time, location
     }
 
     property.setInterpolationOptions({
@@ -170,15 +170,15 @@ function inintRoad(positionsSJ, positionsTD) {
     arrProperty.push(property)
   }
 
-  // =================时间相关====================
+  // =================Time related====================
 
   const stop = Cesium.JulianDate.addSeconds(start, counts + 60, new Cesium.JulianDate())
   map.clock.startTime = start.clone()
   map.clock.stopTime = stop.clone()
   map.clock.currentTime = start.clone()
-  map.clock.multiplier = 1 // 当前速度，默认为1
-  map.clock.shouldAnimate = true // 是否开启时钟动画，默认true
-  //  map.clock.clockRange = Cesium.ClockRange.LOOP_STOP; // 到达终止时间后循环
+  map.clock.multiplier = 1 // Current speed, default is 1
+  map.clock.shouldAnimate = true // Whether to enable clock animation, default true
+  // map.clock.clockRange = Cesium.ClockRange.LOOP_STOP; // Loop after reaching the end time
 
   if (map.controls.timeline) {
     map.controls.timeline.zoomTo(start, stop)
@@ -191,32 +191,32 @@ function inintRoad(positionsSJ, positionsTD) {
     })
   ])
 
-  // =================添加高铁车头================
+  // ================= Add high-speed rail head ================
   const graphicHead = addTrainHead(arrProperty[0], availability)
 
-  // =================添加车身====================
+  // =================Add body====================
   const len = arrProperty.length
   for (let j = 1; j < len - 1; j++) {
     addTrainBody(arrProperty[j], availability)
   }
 
-  // =================添加高铁车尾================
-  addTrainHead(arrProperty[len - 1], availability, true) // 车尾部的反向车头
+  // ================= Add high-speed rail tail ================
+  addTrainHead(arrProperty[len - 1], availability, true) // Reverse head of the rear of the car
 
-  // ==============添加铁路，定时更新================
+  // ============== Add railway, update regularly ================
   addRailway(graphicHead, mpoints)
 
-  // // 设置相机的视角跟随的Entity实例
+  // // Set the Entity instance that the camera's perspective follows
   // map.trackedEntity = graphicHead
 
-  // ==============更新echarts================
+  // ==============Update echarts================
   let lastDistance
 
   function locTrain() {
-    const t = parseInt(map.clock.currentTime.secondsOfDay - map.clock.startTime.secondsOfDay) // 时间差
+    const t = parseInt(map.clock.currentTime.secondsOfDay - map.clock.startTime.secondsOfDay) // Time difference
 
     if (t >= heightArray.length) {
-      // 高铁运行结束之后
+      // After the high-speed rail operation ends
       clearInterval(args.martTimeInter)
       clearInterval(args.cleanTimeInter)
       return
@@ -230,10 +230,10 @@ function inintRoad(positionsSJ, positionsTD) {
   args.martTimeInter = setInterval(locTrain, 100)
 }
 
-// 添加车头
+//Add head
 function addTrainHead(position, availability, rotatePI) {
   const graphicModel = new mars3d.graphic.ModelEntity({
-    name: "和谐号车头",
+    name: "Harmony Headquarters",
     position,
     orientation: new Cesium.VelocityOrientationProperty(position),
     availability,
@@ -242,17 +242,17 @@ function addTrainHead(position, availability, rotatePI) {
       scale: 0.001,
       minimumPixelSize: 16,
       heading: rotatePI ? 90 : -90,
-      mergeOrientation: true // 用于设置模型不是标准的方向时的纠偏处理,在orientation基础的方式值上加上设置是heading值
+      mergeOrientation: true // Used to set the correction process when the model is not in a standard orientation. Add the setting to the orientation-based mode value to be the heading value.
     }
   })
   graphicLayer.addGraphic(graphicModel)
   return graphicModel
 }
 
-// 添加车身
+//Add body
 function addTrainBody(position, availability) {
   const graphicModel = new mars3d.graphic.ModelEntity({
-    name: "和谐号车身",
+    name: "Harmony Body",
     position,
     orientation: new Cesium.VelocityOrientationProperty(position),
     availability,
@@ -261,14 +261,14 @@ function addTrainBody(position, availability) {
       scale: 0.001,
       minimumPixelSize: 16,
       heading: -90,
-      mergeOrientation: true // 用于设置模型不是标准的方向时的纠偏处理,在orientation基础的方式值上加上设置是heading值
+      mergeOrientation: true // Used to set the correction process when the model is not in a standard orientation. Add the setting to the orientation-based mode value to be the heading value.
     }
   })
   graphicLayer.addGraphic(graphicModel)
   return graphicModel
 }
 
-// 添加铁路，定时更新
+//Add railway and update regularly
 function addRailway(graphicHead, mpoints) {
   const positions = []
   const orientations = []
@@ -304,9 +304,9 @@ function addRailway(graphicHead, mpoints) {
         })
       ])
 
-      //  当高度在地下时，添加地下隧道
+      // When the height is underground, add an underground tunnel
       if (mpoints[i][2] - mpoints[i][3] < -20 || (i > 2 && mpoints[i - 3][2] - mpoints[i - 3][3] < -20)) {
-        //  mpoints[i][2] -- 设计高度；mpoints[i][3] -- 贴地高度
+        // mpoints[i][2] -- design height; mpoints[i][3] -- ground-mounted height
         const id = "s" + i
         const graphic = graphicLayer.getGraphicById(id)
         if (!graphic) {
@@ -326,7 +326,7 @@ function addRailway(graphicHead, mpoints) {
         }
       }
 
-      //  添加轨道地面
+      //Add track ground
       const id = "xl" + i
       const graphic = graphicLayer.getGraphicById(id)
       if (!graphic) {
@@ -345,7 +345,7 @@ function addRailway(graphicHead, mpoints) {
         graphic.entity.availability._intervals[0].stop.secondsOfDay = availability._intervals[0].stop.secondsOfDay
       }
 
-      // 添加轨道支架
+      //Add track bracket
       if (mpoints[i][2] - mpoints[i][3] > 20 && i % 5 === 0) {
         const id = "xq" + i
         const graphic = graphicLayer.getGraphicById(id)
@@ -366,7 +366,7 @@ function addRailway(graphicHead, mpoints) {
         }
       }
 
-      // 添加轨道边的柱子
+      //Add pillars along the track
       if (i % 12 === 0) {
         const id = "xd" + i
         const graphic = graphicLayer.getGraphicById(id)
@@ -388,7 +388,7 @@ function addRailway(graphicHead, mpoints) {
       }
     }
 
-    // 移除铁路
+    //remove rail
     for (let j = args.statate; j < args.statate - args.space; j++) {
       removeGraphic("s" + j)
       removeGraphic("xl" + j)

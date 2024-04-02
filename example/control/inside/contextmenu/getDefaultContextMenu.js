@@ -9,59 +9,59 @@ const { logInfo } = mars3d.Log
 const { RotatePoint, Measure } = mars3d.thing
 const { BloomEffect, BrightnessEffect, BlackAndWhiteEffect, NightVisionEffect, OutlineEffect, RainEffect, SnowEffect, FogEffect } = mars3d.effect
 
-// 获取平台内置的右键菜单
+// Get the platform's built-in right-click menu
 function getDefaultContextMenu(map) {
   const that = map.contextmenu
 
   return [
     {
       text: function () {
-        return map.getLangText("_查看此处坐标") + "-来自示例"
+        return map.getLangText("_View coordinates here") + "-from example"
       },
       icon: Icon.Coordinates,
       show: function (e) {
         return Cesium.defined(e.cartesian)
       },
       callback: function (e) {
-        // 经纬度
+        //Latitude and longitude
         const mpt = LngLatPoint.fromCartesian(e.cartesian)
 
         const ptNew = proj4Trans([mpt.lng, mpt.lat], "EPSG:4326", CRS.CGCS2000_GK_Zone_3)
 
         const inhtml = `
-         ${map.getLangText("_经度")}:${mpt.lng}, ${map.getLangText("_纬度")}:${mpt.lat}, ${map.getLangText("_海拔")}:${mpt.alt},
-         ${map.getLangText("_横坐标")}:${ptNew[0].toFixed(1)}, ${map.getLangText("_纵坐标")}:${ptNew[1].toFixed(1)} (CGCS2000)
+         ${map.getLangText("_Longitude")}:${mpt.lng}, ${map.getLangText("_latitude")}:${mpt.lat}, ${map.getLangText("_elevation" )}:${mpt.alt},
+         ${map.getLangText("_abscissa")}:${ptNew[0].toFixed(1)}, ${map.getLangText("_ordinate")}:${ptNew[1].toFixed( 1)} (CGCS2000)
         `
-        alert(inhtml, map.getLangText("_位置信息"))
+        alert(inhtml, map.getLangText("_location information"))
 
-        // 打印方便测试
-        const ptX = formatNum(e.cartesian.x, 1) // 笛卡尔
+        //Print for easy testing
+        const ptX = formatNum(e.cartesian.x, 1) // Descartes
         const ptY = formatNum(e.cartesian.y, 1)
         const ptZ = formatNum(e.cartesian.z, 1)
-        logInfo(`经纬度：${mpt.toString()} , 笛卡尔：${ptX},${ptY},${ptZ}`)
+        logInfo(`Longitude and latitude: ${mpt.toString()}, Descartes: ${ptX},${ptY},${ptZ}`)
       }
     },
 
     {
       text: function () {
-        return map.getLangText("_查看当前视角")
+        return map.getLangText("_View current perspective")
       },
       icon: Icon.CameraInfo,
       callback: function (e) {
         const mpt = JSON.stringify(map.getCameraView())
         logInfo(mpt)
-        alert(mpt, map.getLangText("_当前视角信息"))
+        alert(mpt, map.getLangText("_Current perspective information"))
       }
     },
     {
       text: function () {
-        return map.getLangText("_视角切换")
+        return map.getLangText("_View switching")
       },
       icon: Icon.Camera,
       children: [
         {
           text: function () {
-            return map.getLangText("_允许进入地下")
+            return map.getLangText("_allowed to enter underground")
           },
           icon: Icon.UndergroundYes,
           show: function (e) {
@@ -73,7 +73,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_禁止进入地下")
+            return map.getLangText("_No entry underground")
           },
           icon: Icon.UndergroundNo,
           show: function (e) {
@@ -85,7 +85,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_绕此处环绕飞行")
+            return map.getLangText("_Fly around here")
           },
           icon: Icon.RotatePointStart,
           show: function (e) {
@@ -101,7 +101,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭环绕飞行")
+            return map.getLangText("_Turn off orbiting")
           },
           icon: Icon.RotatePointStop,
           show: function (e) {
@@ -116,7 +116,7 @@ function getDefaultContextMenu(map) {
 
         {
           text: function () {
-            return map.getLangText("_移动到此处")
+            return map.getLangText("_Move here")
           },
           icon: Icon.FlyToPoint,
           show: function (e) {
@@ -126,14 +126,14 @@ function getDefaultContextMenu(map) {
             const cameraDistance = Cesium.Cartesian3.distance(e.cartesian, map.camera.positionWC) * 0.1
 
             map.flyToPoint(e.cartesian, {
-              radius: cameraDistance, // 距离目标点的距离
+              radius: cameraDistance, // distance from the target point
               maximumHeight: map.camera.positionCartographic.height
             })
           }
         },
         {
           text: function () {
-            return map.getLangText("_第一视角站到此处")
+            return map.getLangText("_The first point of view stands here")
           },
           icon: Icon.FirstPerspective,
           show: function (e) {
@@ -141,7 +141,7 @@ function getDefaultContextMenu(map) {
           },
           callback: function (e) {
             map.camera.flyTo({
-              destination: addPositionsHeight(e.cartesian, 10), // 升高10米
+              destination: addPositionsHeight(e.cartesian, 10), // Raise 10 meters
               orientation: {
                 heading: map.camera.heading,
                 pitch: 0.0,
@@ -153,7 +153,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_开启键盘漫游")
+            return map.getLangText("_Enable keyboard roaming")
           },
           icon: Icon.KeyboardRoamYes,
           show: function (e) {
@@ -165,7 +165,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭键盘漫游")
+            return map.getLangText("_Turn off keyboard roaming")
           },
           icon: Icon.KeyboardRoamNo,
           show: function (e) {
@@ -177,7 +177,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_跟踪锁定")
+            return map.getLangText("_Tracking Lock")
           },
           icon: Icon.TrackedEntityYes,
           show: function (e) {
@@ -200,7 +200,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_取消锁定")
+            return map.getLangText("_Unlock")
           },
           icon: Icon.TrackedEntityNo,
           show: function (e) {
@@ -214,67 +214,67 @@ function getDefaultContextMenu(map) {
     },
     {
       text: function () {
-        return map.getLangText("_三维模型")
+        return map.getLangText("_3D model")
       },
       icon: Icon.Tileset,
       show: function (e) {
-        const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+        const model = map.pick3DTileset(e.cartesian) // Pick the model returned by drawing
         return Cesium.defined(model)
       },
       children: [
         {
           text: function () {
-            return map.getLangText("_显示三角网")
+            return map.getLangText("_Display triangulation network")
           },
           icon: Icon.TilesetWireframeYes,
           show: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            const model = map.pick3DTileset(e.cartesian) // Pick the model returned by drawing
             return !model.debugWireframe && model._enableDebugWireframe
           },
           callback: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            const model = map.pick3DTileset(e.cartesian) // Pick the model returned by drawing
             model.debugWireframe = true
           }
         },
         {
           text: function () {
-            return map.getLangText("_关闭三角网")
+            return map.getLangText("_Close triangle network")
           },
           icon: Icon.TilesetWireframeNo,
           show: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            const model = map.pick3DTileset(e.cartesian) // Pick the model returned by drawing
             return model.debugWireframe && model._enableDebugWireframe
           },
           callback: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            const model = map.pick3DTileset(e.cartesian) // Pick the model returned by drawing
             model.debugWireframe = false
           }
         },
         {
           text: function () {
-            return map.getLangText("_显示包围盒")
+            return map.getLangText("_Display bounding box")
           },
           icon: Icon.TilesetBoundingVolumeYes,
           show: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            const model = map.pick3DTileset(e.cartesian) // Pick the model returned by drawing
             return !model.debugShowBoundingVolume
           },
           callback: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            const model = map.pick3DTileset(e.cartesian) // Pick the model returned by drawing
             model.debugShowBoundingVolume = true
           }
         },
         {
           text: function () {
-            return map.getLangText("_关闭包围盒")
+            return map.getLangText("_Close bounding box")
           },
           icon: Icon.TilesetBoundingVolumeNo,
           show: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            const model = map.pick3DTileset(e.cartesian) // Pick the model returned by drawing
             return model.debugShowBoundingVolume
           },
           callback: function (e) {
-            const model = map.pick3DTileset(e.cartesian) // 拾取绘制返回的模型
+            const model = map.pick3DTileset(e.cartesian) // Pick the model returned by drawing
             model.debugShowBoundingVolume = false
           }
         }
@@ -283,7 +283,7 @@ function getDefaultContextMenu(map) {
 
     {
       text: function () {
-        return map.getLangText("_地形服务")
+        return map.getLangText("_Terrain Service")
       },
       icon: Icon.Terrain,
       show: function (e) {
@@ -292,7 +292,7 @@ function getDefaultContextMenu(map) {
       children: [
         {
           text: function () {
-            return map.getLangText("_开启地形")
+            return map.getLangText("_Open terrain")
           },
           icon: Icon.TerrainYes,
           show: function (e) {
@@ -304,7 +304,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭地形")
+            return map.getLangText("_Close terrain")
           },
           icon: Icon.TerrainNo,
           show: function (e) {
@@ -316,7 +316,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_显示三角网")
+            return map.getLangText("_Display triangulation network")
           },
           icon: Icon.TerrainWireframeYes,
           show: function (e) {
@@ -328,7 +328,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭三角网")
+            return map.getLangText("_Close triangle network")
           },
           icon: Icon.TerrainWireframeNo,
           show: function (e) {
@@ -342,13 +342,13 @@ function getDefaultContextMenu(map) {
     },
     {
       text: function () {
-        return map.getLangText("_图上量算")
+        return map.getLangText("_Measurement on the map")
       },
       icon: Icon.Measure,
       children: [
         {
           text: function () {
-            return map.getLangText("_距离")
+            return map.getLangText("_distance")
           },
           icon: Icon.MeasureDistance,
           callback: function (e) {
@@ -361,7 +361,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_面积")
+            return map.getLangText("_area")
           },
           icon: Icon.MeasureArea,
           callback: function (e) {
@@ -374,7 +374,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_高度差")
+            return map.getLangText("_height difference")
           },
           icon: Icon.MeasureHeight,
           callback: function (e) {
@@ -387,7 +387,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_角度")
+            return map.getLangText("_angle")
           },
           icon: Icon.MeasureAngle,
           callback: function (e) {
@@ -400,7 +400,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_删除测量")
+            return map.getLangText("_Delete Measurement")
           },
           icon: Icon.Delete,
           show: function (e) {
@@ -417,13 +417,13 @@ function getDefaultContextMenu(map) {
 
     {
       text: function () {
-        return map.getLangText("_图上标记")
+        return map.getLangText("_Mark on the map")
       },
       icon: Icon.Draw,
       children: [
         {
           text: function () {
-            return map.getLangText("_标记点")
+            return map.getLangText("_marker point")
           },
           icon: Icon.DrawPoint,
           callback: function (e) {
@@ -442,7 +442,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_标记线")
+            return map.getLangText("_mark line")
           },
           icon: Icon.DrawPolyline,
           callback: function (e) {
@@ -461,7 +461,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_标记面")
+            return map.getLangText("_marked surface")
           },
           icon: Icon.DrawPolygon,
           callback: function (e) {
@@ -482,7 +482,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_标记圆")
+            return map.getLangText("_mark circle")
           },
           icon: Icon.DrawCircle,
           callback: function (e) {
@@ -501,7 +501,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_标记矩形")
+            return map.getLangText("_mark rectangle")
           },
           icon: Icon.DrawRectangle,
           callback: function (e) {
@@ -520,7 +520,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_允许编辑")
+            return map.getLangText("_Allow editing")
           },
           icon: Icon.DrawEditYes,
           show: function (e) {
@@ -532,7 +532,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_禁止编辑")
+            return map.getLangText("_editing prohibited")
           },
           icon: Icon.DrawEditNo,
           show: function (e) {
@@ -544,19 +544,19 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_导出GeoJSON")
+            return map.getLangText("_Export GeoJSON")
           },
           icon: Icon.DrawDownJson,
           show: function (e) {
             return map.graphicLayer.length > 0
           },
           callback: function (e) {
-            downloadFile("图上标记.json", JSON.stringify(map.graphicLayer.toGeoJSON()))
+            downloadFile("Mark on map.json", JSON.stringify(map.graphicLayer.toGeoJSON()))
           }
         },
         {
           text: function () {
-            return map.getLangText("_清除所有标记")
+            return map.getLangText("_clear all markers")
           },
           icon: Icon.Delete,
           show: function (e) {
@@ -570,13 +570,13 @@ function getDefaultContextMenu(map) {
     },
     {
       text: function () {
-        return map.getLangText("_特效效果")
+        return map.getLangText("_Special Effects")
       },
       icon: Icon.Effect,
       children: [
         {
           text: function () {
-            return map.getLangText("_开启下雨")
+            return map.getLangText("_Turn on rain")
           },
           icon: Icon.RainEffectYes,
           show: function (e) {
@@ -591,7 +591,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭下雨")
+            return map.getLangText("_Close rain")
           },
           icon: Icon.RainEffectNo,
           show: function (e) {
@@ -606,7 +606,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_开启下雪")
+            return map.getLangText("_Turn on snow")
           },
           icon: Icon.SnowEffectYes,
           show: function (e) {
@@ -621,7 +621,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭下雪")
+            return map.getLangText("_Close snowing")
           },
           icon: Icon.SnowEffectNo,
           show: function (e) {
@@ -637,7 +637,7 @@ function getDefaultContextMenu(map) {
 
         {
           text: function () {
-            return map.getLangText("_开启雾天气")
+            return map.getLangText("_Turn on fog weather")
           },
           icon: Icon.FogEffectYes,
           show: function (e) {
@@ -655,7 +655,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭雾天气")
+            return map.getLangText("_Turn off fog weather")
           },
           icon: Icon.FogEffectNo,
           show: function (e) {
@@ -671,7 +671,7 @@ function getDefaultContextMenu(map) {
 
         {
           text: function () {
-            return map.getLangText("_开启泛光")
+            return map.getLangText("_Turn on floodlight")
           },
           icon: Icon.BloomEffectYes,
           show: function (e) {
@@ -686,7 +686,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭泛光")
+            return map.getLangText("_Turn off floodlight")
           },
           icon: Icon.BloomEffectNo,
           show: function (e) {
@@ -702,7 +702,7 @@ function getDefaultContextMenu(map) {
 
         {
           text: function () {
-            return map.getLangText("_开启亮度")
+            return map.getLangText("_Turn on brightness")
           },
           icon: Icon.BrightnessEffectYes,
           show: function (e) {
@@ -717,7 +717,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭亮度")
+            return map.getLangText("_Turn off brightness")
           },
           icon: Icon.BrightnessEffectNo,
           show: function (e) {
@@ -733,7 +733,7 @@ function getDefaultContextMenu(map) {
 
         {
           text: function () {
-            return map.getLangText("_开启夜视")
+            return map.getLangText("_Turn on night vision")
           },
           icon: Icon.NightVisionEffectYes,
           show: function (e) {
@@ -748,7 +748,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭夜视")
+            return map.getLangText("_Turn off night vision")
           },
           icon: Icon.NightVisionEffectNo,
           show: function (e) {
@@ -764,7 +764,7 @@ function getDefaultContextMenu(map) {
 
         {
           text: function () {
-            return map.getLangText("_开启黑白")
+            return map.getLangText("_Turn on black and white")
           },
           icon: Icon.BlackAndWhiteEffectYes,
           show: function (e) {
@@ -779,7 +779,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭黑白")
+            return map.getLangText("_Turn off black and white")
           },
           icon: Icon.BlackAndWhiteEffectNo,
           show: function (e) {
@@ -795,7 +795,7 @@ function getDefaultContextMenu(map) {
 
         {
           text: function () {
-            return map.getLangText("_开启拾取高亮")
+            return map.getLangText("_Turn on picking highlighting")
           },
           icon: Icon.OutlineEffectYes,
           show: function (e) {
@@ -810,7 +810,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭拾取高亮")
+            return map.getLangText("_Turn off picking highlighting")
           },
           icon: Icon.OutlineEffectNo,
           show: function (e) {
@@ -827,13 +827,13 @@ function getDefaultContextMenu(map) {
     },
     {
       text: function () {
-        return map.getLangText("_场景设置")
+        return map.getLangText("_scene settings")
       },
       icon: Icon.Scene,
       children: [
         {
           text: function () {
-            return map.getLangText("_开启深度监测")
+            return map.getLangText("_Enable deep monitoring")
           },
           icon: Icon.DepthTestYes,
           show: function (e) {
@@ -845,7 +845,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭深度监测")
+            return map.getLangText("_Turn off depth monitoring")
           },
           icon: Icon.DepthTestNo,
           show: function (e) {
@@ -858,35 +858,35 @@ function getDefaultContextMenu(map) {
 
         {
           text: function () {
-            return map.getLangText("_显示星空背景")
+            return map.getLangText("_Display starry sky background")
           },
           icon: Icon.SkyBoxYes,
           show: function (e) {
             return !map.scene.skyBox?.show
           },
           callback: function (e) {
-            map.scene.skyBox.show = true // 天空盒
-            map.scene.moon.show = true // 太阳
-            map.scene.sun.show = true // 月亮
+            map.scene.skyBox.show = true // Skybox
+            map.scene.moon.show = true // sun
+            map.scene.sun.show = true // moon
           }
         },
         {
           text: function () {
-            return map.getLangText("_关闭星空背景")
+            return map.getLangText("_Turn off the starry sky background")
           },
           icon: Icon.SkyBoxNo,
           show: function (e) {
             return map.scene.skyBox.show
           },
           callback: function (e) {
-            map.scene.skyBox.show = false // 天空盒
-            map.scene.moon.show = false // 太阳
-            map.scene.sun.show = false // 月亮
+            map.scene.skyBox.show = false // Skybox
+            map.scene.moon.show = false // sun
+            map.scene.sun.show = false // Moon
           }
         },
         {
           text: function () {
-            return map.getLangText("_开启日照阴影")
+            return map.getLangText("_Turn on sun shadow")
           },
           icon: Icon.ShadowYes,
           show: function (e) {
@@ -900,7 +900,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭日照阴影")
+            return map.getLangText("_Turn off sun shadow")
           },
           icon: Icon.ShadowNo,
           show: function (e) {
@@ -914,7 +914,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_开启大气渲染")
+            return map.getLangText("_Turn on atmospheric rendering")
           },
           icon: Icon.SkyAtmosphereYes,
           show: function (e) {
@@ -927,7 +927,7 @@ function getDefaultContextMenu(map) {
         },
         {
           text: function () {
-            return map.getLangText("_关闭大气渲染")
+            return map.getLangText("_Turn off atmospheric rendering")
           },
           icon: Icon.SkyAtmosphereNo,
           show: function (e) {
@@ -941,7 +941,7 @@ function getDefaultContextMenu(map) {
 
         {
           text: function () {
-            return map.getLangText("_场景出图")
+            return map.getLangText("_Scene map")
           },
           icon: Icon.ExpImage,
           callback: function (e) {

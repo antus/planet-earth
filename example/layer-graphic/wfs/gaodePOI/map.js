@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.783013, lng: 117.221851, alt: 2307, heading: 1, pitch: -29 }
@@ -11,20 +11,20 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
   GeodePoiLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -33,13 +33,13 @@ function onUnmounted() {
 let geodePoiLayer
 
 function GeodePoiLayer() {
-  // 高德错误代码：https://lbs.amap.com/api/webservice/guide/tools/info/
+  // Gaode error code: https://lbs.amap.com/api/webservice/guide/tools/info/
 
-  // 高德POI图层，演示大数据的分块加载
+  // Amap POI layer, demonstrating block loading of big data
   geodePoiLayer = new mars3d.layer.GeodePoiLayer({
     minimumLevel: 13,
-    debuggerTileInfo: false, // 是否显示网格信息（测试用）
-    key: mars3d.Token.gaodeArr, // 请在实际项目中将下面高德KEY换为自己申请的，因为该key不保证长期有效。
+    debuggerTileInfo: false, // Whether to display grid information (for testing)
+    key: mars3d.Token.gaodeArr, // Please replace the Gaode KEY below with the one you applied for in the actual project, because this key is not guaranteed to be valid for a long time.
     filter: {
       types: "120000|130000|190000"
     },
@@ -65,7 +65,7 @@ function GeodePoiLayer() {
         }
       }
     }
-    // 当是entity类型时，点的聚合配置
+    // When it is an entity type, the aggregation configuration of the point
     // clustering: {
     //   enabled: true,
     //   pixelRange: 20,
@@ -74,7 +74,7 @@ function GeodePoiLayer() {
   map.addLayer(geodePoiLayer)
 }
 
-// 图层状态 在组件中进行管理的图层
+//Layer state The layer managed in the component
 function getManagerLayer() {
   return geodePoiLayer
 }

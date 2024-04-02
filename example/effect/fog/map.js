@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let fogEffect
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.251138, lng: 121.463588, alt: 1730, heading: 111, pitch: -25 }
@@ -11,17 +11,17 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建gltf模型，
+  //Create gltf model,
   const graphicLayer = new mars3d.layer.GraphicLayer({
-    name: "上海浦东",
+    name: "Shanghai Pudong",
     data: [
       {
         type: "model",
@@ -34,14 +34,14 @@ function onMounted(mapInstance) {
       }
     ],
     center: { lat: 31.251138, lng: 121.463588, alt: 1729.97, heading: 110.7, pitch: -25, roll: 0.2 },
-    popup: "上海浦东模型",
+    popup: "Shanghai Pudong Model",
     flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 雾效果
+  // fog effect
   fogEffect = new mars3d.effect.FogEffect({
-    maxHeight: 20000, // 大于此高度后不显示
+    maxHeight: 20000, // Do not display if the height is greater than this
     fogByDistance: new Cesium.Cartesian4(100, 0.0, 9000, 0.9),
     color: Cesium.Color.WHITE
   })
@@ -49,24 +49,24 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 是否开始雾效果
+// Whether to start the fog effect
 function setFogEffect(val) {
   fogEffect.enabled = val
 }
 
-// 改变雾的颜色
+//Change the color of the fog
 function setColor(color) {
   fogEffect.color = Cesium.Color.fromCssColorString(color)
 }
 
-// 修改近距离和远距离
+//Modify near and far distance
 function setDistanceX(val) {
   fogEffect.fogByDistance.x = val
 }

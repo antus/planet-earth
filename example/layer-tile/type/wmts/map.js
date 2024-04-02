@@ -1,16 +1,16 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 36.468047, lng: 104.069505, alt: 16801717, heading: 0, pitch: -88 }
   },
-  // 方式1：在创建地球前的参数中配置
+  // Method 1: Configure in the parameters before creating the earth
   basemaps: [
     {
-      name: "山西天地图",
+      name: "Shanxi Tianmap",
       icon: "img/basemaps/blackMarble.png",
       type: "wmts",
       url: "http://shanxi.tianditu.gov.cn/service/SX_DOM/wmts",
@@ -18,11 +18,11 @@ var mapOptions = {
       format: "image/tile",
       tileMatrixSetID: "Matrix_WD_DOM_1",
       crs: "EPSG:4490",
-      proxy: "//server.mars3d.cn/proxy/", // 代理服务，解决跨域问题
+      proxy: "//server.mars3d.cn/proxy/", // Proxy service to solve cross-domain problems
       show: true
     },
     {
-      name: "单张图片",
+      name: "Single picture",
       icon: "img/basemaps/offline.png",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/world.jpg",
@@ -32,31 +32,31 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 叠加的图层
+// overlaid layers
 let tileLayer
 function addTileLayer() {
   removeTileLayer()
 
   map.setCameraView({ lat: 31.528964, lng: 117.245717, alt: 81718, heading: 0, pitch: -67 })
 
-  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  // Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
   tileLayer = new mars3d.layer.WmtsLayer({
     url: "//server.mars3d.cn/geoserver/gwc/service/wmts",
     layer: "mars:hfgh",
@@ -74,7 +74,7 @@ function addTileLayer() {
       materialOptions: {
         image: "img/textures/fence.png",
         color: "#ffff00",
-        speed: 10, // 速度，建议取值范围1-100
+        speed: 10, // Speed, recommended value range 1-100
         axisY: true
       }
     },

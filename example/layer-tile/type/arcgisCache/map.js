@@ -1,20 +1,20 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 20.328888, lng: 110.051238, alt: 6352112, heading: 0, pitch: -78 }
   },
-  // 方式1：在创建地球前的参数中配置
+  // Method 1: Configure in the parameters before creating the earth
   basemaps: [
     {
-      name: "ArcGIS影像",
+      name: "ArcGIS Imagery",
       icon: "img/basemaps/esriWorldImagery.png",
       type: "arcgis_cache",
       url: "//data.mars3d.cn/arcgis_cache/googleVec/_alllayers/{z}/{y}/{x}.jpg",
-      upperCase: true, // 标识图片名称是否大写
+      upperCase: true, // Identifies whether the image name is uppercase or not
       minimumLevel: 0,
       maximumLevel: 4,
       show: true
@@ -22,24 +22,24 @@ var mapOptions = {
   ]
 }
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 叠加的图层
+// overlaid layers
 let tileLayer
 
 function addTileLayer() {
@@ -47,7 +47,7 @@ function addTileLayer() {
 
   map.setCameraView({ lat: 31.427562, lng: 117.193707, alt: 97757, heading: 3, pitch: -66 })
 
-  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  // Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
   tileLayer = new mars3d.layer.ArcGisCacheLayer({
     url: "//data.mars3d.cn/arcgis_cache/hfgh/_alllayers/{z}/{y}/{x}.png",
     upperCase: false,
@@ -55,7 +55,7 @@ function addTileLayer() {
     maximumLevel: 17,
     minimumTerrainLevel: 1,
     // "maximumTerrainLevel": 17,
-    rectangle: { xmin: 116.846, xmax: 117.642, ymin: 31.533, ymax: 32.185 } // 控制切片如果在矩形坐标内才显示，如果不在矩形坐标内不显示
+    rectangle: { xmin: 116.846, xmax: 117.642, ymin: 31.533, ymax: 32.185 } // Control the slice to be displayed if it is within the rectangular coordinates, and not display if it is not within the rectangular coordinates
   })
   map.addLayer(tileLayer)
 }

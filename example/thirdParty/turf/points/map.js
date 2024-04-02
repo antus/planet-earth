@@ -1,7 +1,7 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-let graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+let graphicLayer // vector layer object
 let pointsLayer
 
 var mapOptions = {
@@ -11,37 +11,37 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 点矢量数据图层
+  //Point vector data layer
   pointsLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(pointsLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
-// 生成50个随机点
+// Generate 50 random points
 function randomPoints() {
   clearlayer()
 
-  const points = turf.randomPoint(50, { bbox }) // 50个随机点
+  const points = turf.randomPoint(50, { bbox }) // 50 random points
 
   points.features.forEach((e, index) => {
     const position = e.geometry.coordinates
@@ -55,27 +55,27 @@ function randomPoints() {
         scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1),
         clampToGround: false
       },
-      popup: "第" + index + "个"
+      popup: "th" + index + "number"
     })
     pointsLayer.addGraphic(graphic)
   })
 }
 
-// 计算包围面
+// Calculate the surrounding area
 function convexPolygon() {
   graphicLayer.clear()
 
   const points = pointsLayer.toGeoJSON()
 
   if (points.features.length === 0) {
-    globalMsg("请先创建原始数据")
+    globalMsg("Please create original data first")
     return
   }
 
   const hull = turf.convex(points)
 
   const convexPoints = hull.geometry.coordinates
-  // 外包围面;
+  // Outer envelope;
   const polygonGraphic = new mars3d.graphic.PolygonEntity({
     positions: convexPoints,
     style: {
@@ -87,14 +87,14 @@ function convexPolygon() {
   graphicLayer.addGraphic(polygonGraphic)
 }
 
-// 泰森多边形
+// Thiessen polygon
 function voronoiPolygon() {
   graphicLayer.clear()
 
   const points = pointsLayer.toGeoJSON()
 
   if (points.features.length === 0) {
-    globalMsg("请先创建原始数据")
+    globalMsg("Please create original data first")
     return
   }
 
@@ -109,24 +109,24 @@ function voronoiPolygon() {
     const voronoiPolygon = new mars3d.graphic.PolygonEntity({
       positions: position,
       style: {
-        randomColor: true, // 随机色
+        randomColor: true, // random color
         opacity: 0.5,
         clampToGround: false
       },
-      popup: "第" + index + "个"
+      popup: "th" + index + "number"
     })
     graphicLayer.addGraphic(voronoiPolygon)
   })
 }
 
-// 计算TIN多边形
+// Calculate TIN polygon
 function tinPolygon() {
   graphicLayer.clear()
 
   const points = pointsLayer.toGeoJSON()
 
   if (points.features.length === 0) {
-    globalMsg("请先创建原始数据")
+    globalMsg("Please create original data first")
     return
   }
 
@@ -138,24 +138,24 @@ function tinPolygon() {
   tin.features.forEach((e, index) => {
     const position = e.geometry.coordinates
 
-    // TIN多边形
+    // TIN polygon
     const tinPolygon = new mars3d.graphic.PolygonEntity({
       positions: position,
       style: {
-        randomColor: true, // 随机色
+        randomColor: true, // random color
         opacity: 0.5,
         outline: true,
         outlineColor: "rgb(3, 4, 5,0.2)",
         outlineWidth: 2,
         clampToGround: false
       },
-      popup: "第" + index + "个"
+      popup: "th" + index + "number"
     })
     graphicLayer.addGraphic(tinPolygon)
   })
 }
 
-// 清除所有矢量图层
+// Clear all vector layers
 function clearlayer() {
   graphicLayer.clear()
   pointsLayer.clear()

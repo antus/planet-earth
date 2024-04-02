@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.692469, lng: 116.341333, alt: 16567, heading: 0, pitch: -30 },
@@ -15,15 +15,15 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 加个标识
+  //Add a logo
   const graphic = new mars3d.graphic.PointEntity({
     position: [116.317765, 30.973406, 1508],
     style: {
@@ -32,30 +32,30 @@ function onMounted(mapInstance) {
       outlineColor: "#ffffff",
       outlineWidth: 2
     },
-    tooltip: "我是视角中心点"
+    tooltip: "I am the center point of the perspective"
     // flyTo: true
   })
   map.graphicLayer.addGraphic(graphic)
 
-  // // 切换场景前事件
-  // let lastCameraView // 记录视角
+  // // Event before switching scene
+  // let lastCameraView // Record perspective
   // map.on(mars3d.EventType.morphStart, function (event) {
   //   lastCameraView = map.getCameraView()
   // })
-  // // 切换场景后事件
+  // // Events after switching scenes
   // map.on(mars3d.EventType.morphComplete, function (event) {
   //   map.setCameraView(lastCameraView, { duration: 0 })
   // })
 
-  // 切换场景前事件
-  let lastCenterPoint // 记录中心点
+  // Event before switching scene
+  let lastCenterPoint // record center point
   map.on(mars3d.EventType.morphStart, function (event) {
     lastCenterPoint = map.getCenter()
     if (lastCenterPoint) {
       graphic.position = lastCenterPoint
     }
   })
-  // 切换场景后事件
+  // Event after switching scenes
   map.on(mars3d.EventType.morphComplete, function (event) {
     if (lastCenterPoint) {
       const radius = map.camera.positionCartographic.height
@@ -65,24 +65,24 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 切换为二维视图
+//Switch to 2D view
 function to2d() {
   map.scene.morphTo2D(0)
 }
 
-// 切换为三维视图
+//Switch to 3D view
 function to3d() {
   map.scene.morphTo3D(0)
 }
 
-// 切换为2.5D维视图
+//Switch to 2.5D dimensional view
 function toGLB() {
   map.scene.morphToColumbusView(0)
 }

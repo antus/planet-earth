@@ -1,11 +1,11 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
 let drawLayer
 let measure
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   control: {
     homeButton: true,
@@ -17,10 +17,10 @@ var mapOptions = {
     fullscreenButton: true,
     navigationHelpButton: true,
 
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
 
-    contextmenu: { hasDefault: true }, // 涉及到多语言的模块：右键菜单
+    contextmenu: { hasDefault: true }, // Modules involving multiple languages: right-click menu
     compass: { top: "10px", left: "5px" },
     distanceLegend: { left: "180px", bottom: "30px" },
     locationBar: {
@@ -32,7 +32,7 @@ var mapOptions = {
   basemaps: [
     {
       name: "Google Images",
-      name_cn: "谷歌影像",
+      name_cn: "Google Image",
       name_en: "Google Images",
       icon: "/img/basemaps/google_img.png",
       type: "google",
@@ -41,30 +41,30 @@ var mapOptions = {
     },
     {
       name: "Tianditu Images",
-      name_cn: "天地图影像",
+      name_cn: "Heaven Map Image",
       name_en: "Tianditu Images",
       icon: "/img/basemaps/tdt_img.png",
       type: "group",
       layers: [
-        { name: "底图", type: "tdt", layer: "img_d" },
-        { name: "注记", type: "tdt", layer: "img_z" }
+        { name: "basemap", type: "tdt", layer: "img_d" },
+        { name: "note", type: "tdt", layer: "img_z" }
       ],
       show: false
     },
     {
       name: "Tianditu Electronic map",
-      name_cn: "天地图电子",
+      name_cn: "Tiantu Electronics",
       name_en: "Tianditu Electronic map",
       icon: "/img/basemaps/tdt_vec.png",
       type: "group",
       layers: [
-        { name: "底图", type: "tdt", layer: "vec_d" },
-        { name: "注记", type: "tdt", layer: "vec_z" }
+        { name: "basemap", type: "tdt", layer: "vec_d" },
+        { name: "note", type: "tdt", layer: "vec_z" }
       ]
     },
     {
       name: "not map",
-      name_cn: "无底图",
+      name_cn: "No basemap",
       name_en: "not map",
       icon: "/img/basemaps/null.png",
       type: "grid",
@@ -74,32 +74,32 @@ var mapOptions = {
     }
   ],
   // eslint-disable-next-line no-undef
-  lang: CustomLang // 使用自定义语言配置，配置信息在 ./CustomLang.js
+  lang: CustomLang // Use custom language configuration, the configuration information is in ./CustomLang.js
 }
 
 var eventTarget = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
   map = mapInstance
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
-  // 涉及到多语言的模块：标绘提示
+  //Modules involving multiple languages: plotting tips
   drawLayer = new mars3d.layer.GraphicLayer({
     hasEdit: true,
-    isAutoEditing: true // 绘制完成后是否自动激活编辑
+    isAutoEditing: true // Whether to automatically activate editing after drawing is completed
   })
   map.addLayer(drawLayer)
 
   drawLayer.bindContextMenu([
     {
       text: () => {
-        return map.getLangText("_删除")
+        return map.getLangText("_Delete")
       },
       icon: "fa fa-trash-o",
       show: (event) => {
@@ -115,7 +115,7 @@ function onMounted(mapInstance) {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         drawLayer.removeGraphic(graphic)
         if (parent) {
           drawLayer.removeGraphic(parent)
@@ -124,9 +124,9 @@ function onMounted(mapInstance) {
     }
   ])
 
-  // 涉及到多语言的模块：图上量算
+  // Involving multi-language modules: measurement on the picture
   measure = new mars3d.thing.Measure({
-    // 可设置文本样式
+    // Text style can be set
     label: {
       color: "#ffffff",
       font_family: "楷体",
@@ -138,8 +138,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -156,7 +156,7 @@ function toCustomLang() {
   }
 
   // eslint-disable-next-line no-undef
-  map.lang = CustomLang // 使用自定义语言配置，配置信息在 ./CustomLang.js
+  map.lang = CustomLang // Use custom language configuration, the configuration information is in ./CustomLang.js
 }
 
 function toDefaultLange() {
@@ -166,10 +166,10 @@ function toDefaultLange() {
 
   if (map.controls.locationBar) {
     map.controls.locationBar.options.template =
-      "<div>经度:{lng}</div> <div>纬度:{lat}</div> <div class='hide1000'>横{crsx}  纵{crsy}</div> <div>海拔：{alt}米</div> <div class='hide700'>层级：{level}</div><div>方向：{heading}°</div> <div>俯仰角：{pitch}°</div><div class='hide700'>视高：{cameraHeight}米</div><div class='hide700'>帧率：{fps} FPS</div>"
+      "<div>Longitude:{lng}</div> <div>Latitude:{lat}</div> <div class='hide1000'>Horizontal {crsx} Vertical {crsy}</div> <div>Altitude: {alt}meters</div> <div class='hide700'>Level: {level}</div><div>Direction: {heading}°</div> <div>Pitch angle: {pitch}°</ div><div class='hide700'>View height: {cameraHeight} meters</div><div class='hide700'>Frame rate: {fps} FPS</div>"
   }
 
-  map.lang = mars3d.Lang // 使用默认配置
+  map.lang = mars3d.Lang // Use default configuration
 }
 
 function distance() {
@@ -197,11 +197,11 @@ function angle() {
 }
 
 /**
- *开始标绘
+ *Start plotting
  *
  * @startDraw
- * @param { string } type 矢量数据类型
- * @returns {void} 无
+ * @param { string } type vector data type
+ * @returns {void} None
  */
 function startDraw(type) {
   measure.stopDraw()

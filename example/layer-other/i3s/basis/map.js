@@ -2,7 +2,7 @@
 
 var map
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 50.096737, lng: 8.670794, alt: 1148.6, heading: 28.9, pitch: -44.9 }
@@ -11,28 +11,28 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
-  // map.basemap = "ArcGIS影像"
+  map = mapInstance //Record the first created map
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
+  // map.basemap = "ArcGIS Imagery"
 
   globalNotify(
-    "已知问题提示",
-    `如图层未显示或服务URL访问超时，是因为目前国家测绘主管部门对未经审核批准的国外地图服务做了屏蔽封锁。
-     您可以需翻墙使用 或 参考示例代码替换本地服务地址使用。`
+    "Known Issue Tips",
+    `For example, if the layer is not displayed or the service URL access times out, it is because the national surveying and mapping authorities currently block foreign map services that have not been reviewed and approved.
+     You can use it if you need to circumvent the firewall or refer to the sample code to replace the local service address. `
   )
 
   showNewYorkDemo()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   removeLayer()
@@ -47,7 +47,7 @@ function removeLayer() {
   }
 }
 
-// 示例：
+// Example:
 function showNewYorkDemo() {
   removeLayer()
 
@@ -67,12 +67,12 @@ function showNewYorkDemo() {
   map.addLayer(i3sLayer)
 
   i3sLayer.on(mars3d.EventType.load, function (event) {
-    console.log("I3S图层加载完成", event)
+    console.log("I3S layer loading completed", event)
   })
 
-  // 单击事件
+  // click event
   i3sLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了I3S图层", event)
+    console.log("I3S layer clicked", event)
   })
 }
 
@@ -80,7 +80,7 @@ function showSanFranciscoDemo() {
   removeLayer()
 
   i3sLayer = new mars3d.layer.I3SLayer({
-    name: "旧金山",
+    name: "San Francisco",
     url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/SanFrancisco_3DObjects_1_7/SceneServer/layers/0",
     // geoidTiledTerrainProvider: {
     //   url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/EGM2008/ImageServer"
@@ -96,7 +96,7 @@ function showFrankfurtDemo() {
   removeLayer()
 
   i3sLayer = new mars3d.layer.I3SLayer({
-    name: "法兰克福",
+    name: "Frankfurt",
     url: "https://tiles.arcgis.com/tiles/z2tnIkrLQ2BRzr6P/arcgis/rest/services/Frankfurt2017_vi3s_18/SceneServer/layers/0",
     skipLevelOfDetail: false,
     debugShowBoundingVolume: false,

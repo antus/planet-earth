@@ -1,44 +1,44 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 53.285266, lng: 142.68078, alt: 17309707, heading: 45, pitch: -83 },
     clock: {
       currentTime: "2021-01-01T12:08:20Z",
-      multiplier: 60 // 速度
+      multiplier: 60 // speed
     },
     cameraController: {
       maximumZoomDistance: 9000000000,
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件,
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control,
     compass: { top: "10px", left: "5px" }
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map = mapInstance // record map
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  const property = getDynamicProperty() // 取数据
+  const property = getDynamicProperty() // Get data
 
-  // 视锥体 展示
+  // View frustum display
   const conicSensor = new mars3d.graphic.ConicSensor({
     position: property,
     style: {
@@ -52,15 +52,15 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function getDynamicProperty() {
-  // 该数据是由后端计算返回的轨道信息
+  // This data is the orbit information returned by the backend calculation
   const wxkjx = [
     {
       time: "2021-01-01T12:08:20Z",
@@ -108,7 +108,7 @@ function getDynamicProperty() {
     const thisTime = Cesium.JulianDate.fromIso8601(item.time)
     const position = Cesium.Cartesian3.fromDegrees(item.x, item.y, item.z)
 
-    // 添加每一个链接点的信息，到达的时间以及坐标位置
+    //Add information about each link point, arrival time and coordinate location
     property.addSample(thisTime, position)
   }
   property.setInterpolationOptions({

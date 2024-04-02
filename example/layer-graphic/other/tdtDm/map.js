@@ -1,13 +1,13 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 23.816631, lng: 111.688366, alt: 4605984, heading: 355, pitch: -80 }
   },
-  // 方式1：在创建地球前的传参中配置 terrain 参数[目前1个球只支持1个地形服务]
+  //Method 1: Configure the terrain parameters in the parameters before creating the earth [Currently, 1 ball only supports 1 terrain service]
   terrain: {
     type: "tdt",
     url: "https://t{s}.tianditu.gov.cn/mapservice/swdx",
@@ -18,17 +18,17 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  globalNotify("已知问题提示", `(1) 使用国家测绘局天地图在线地名服务。(2) 如未显示地名，可能是服务不稳定造成`)
+  globalNotify("Known problem tips", `(1) Use the National Bureau of Surveying and Mapping Tiantu online place name service. (2) If the place name is not displayed, it may be caused by unstable service`)
 
-  // 天地图 三维地名服务图层
+  // Tianmap 3D place name service layer
   const tdtDmLayer = new mars3d.layer.TdtDmLayer({
     key: mars3d.Token.tianditu,
     label: {
@@ -40,8 +40,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

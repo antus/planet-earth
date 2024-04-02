@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 属性参数，将覆盖config.json中的对应配置
+//Attribute parameters will overwrite the corresponding configuration in config.json
 var mapOptions = {
   scene: {
     center: { lat: 36.045934, lng: 113.942816, alt: 1663, heading: 2, pitch: -25 }
@@ -10,18 +10,18 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -35,7 +35,7 @@ let polyline1
 let polyline2
 let contourLine
 
-// 山顶点
+// summit point
 function workPoint1Sdd() {
   clearPoint()
   clearLine()
@@ -48,15 +48,15 @@ function workPoint1Sdd() {
     [113.949512, 36.07117, 460.67]
   ]
 
-  pointLayer = createArrPoint(arrPoint) // 添加点
-  textLayer = createArrText(arrPoint, "山顶点") // 添加注记
+  pointLayer = createArrPoint(arrPoint) //Add point
+  textLayer = createArrText(arrPoint, "Mountain Point") // Add annotation
 }
 
-// 特征点：鞍部点
+//Feature point: saddle point
 function workPoint2Abd() {
   clearPoint()
   clearLine()
-  // 视角定位
+  //View positioning
   map.setCameraView(
     {
       lat: 36.06062,
@@ -81,14 +81,14 @@ function workPoint2Abd() {
     [113.948862, 36.071282, 453.99]
   ]
   pointLayer = createArrPoint(arrPoint)
-  textLayer = createArrText(arrPoint, "鞍部点") // 添加注记
+  textLayer = createArrText(arrPoint, "Saddle Point") // Add annotation
 }
 
-// 特征点：坡度变换点
+// Feature points: slope transformation points
 function workPoint3Pdbhd() {
   clearPoint()
   clearLine()
-  // 视角定位
+  //View positioning
   map.setCameraView({ lat: 36.062523, lng: 113.946202, alt: 1343.59, heading: 353.6, pitch: -42, roll: 0 })
 
   const arrPoint = [
@@ -98,14 +98,14 @@ function workPoint3Pdbhd() {
     [113.940766, 36.0693, 389.26]
   ]
   pointLayer = createArrPoint(arrPoint)
-  textLayer = createArrText(arrPoint, "坡度变换点") // 添加注记
+  textLayer = createArrText(arrPoint, "Slope transformation point") // Add annotation
 }
 
-// 特征点：山脚点
+// Feature point: foot of mountain point
 function workPoint4Sjd() {
   clearPoint()
   clearLine()
-  // 视角定位
+  //View positioning
   map.setCameraView({ lat: 36.05423, lng: 113.945328, alt: 1087.7, heading: 352.4, pitch: -25.4, roll: 0 })
 
   const arrPoint = [
@@ -114,14 +114,14 @@ function workPoint4Sjd() {
     [113.936588, 36.065365, 351.94]
   ]
   pointLayer = createArrPoint(arrPoint)
-  textLayer = createArrText(arrPoint, "山脚点") // 添加注记
+  textLayer = createArrText(arrPoint, "Footpoint") // Add annotation
 }
 
-// 特征点：山脚坡度变化点
+// Feature point: slope change point at the foot of the mountain
 function workPoint5Sjpdbhd() {
   clearPoint()
   clearLine()
-  // 视角定位
+  //View positioning
   map.setCameraView({ lat: 36.055819, lng: 113.950153, alt: 696.74, heading: 334.4, pitch: -13.2, roll: 359.9 })
 
   const arrPoint = [
@@ -130,14 +130,14 @@ function workPoint5Sjpdbhd() {
     [113.941956, 36.064592, 365.89]
   ]
   pointLayer = createArrPoint(arrPoint)
-  textLayer = createArrText(arrPoint, "山脚坡度变换点") // 添加注记
+  textLayer = createArrText(arrPoint, "Slope transformation point at the foot of the mountain") // Add annotation
 }
 
-// 特征点：倾斜变换点
+// Feature points: tilt transformation points
 function workPoint6Qxbhd() {
   clearPoint()
   clearLine()
-  // 视角定位
+  //View positioning
   map.setCameraView(
     { lat: 36.064181, lng: 113.94491, alt: 1139.24, heading: 352.6, pitch: -41.2, roll: 0 },
     {
@@ -154,10 +154,10 @@ function workPoint6Qxbhd() {
     [113.945918, 36.073087, 452.72]
   ]
   pointLayer = createArrPoint(arrPoint)
-  textLayer = createArrText(arrPoint, "倾斜变换点") // 添加注记
+  textLayer = createArrText(arrPoint, "Oblique transformation point") // Add annotation
 }
 
-// 特征线：山脊线
+// Feature line: ridge line
 function workLine1Sjx() {
   clearPoint()
   map.setCameraView({
@@ -169,7 +169,7 @@ function workLine1Sjx() {
     roll: 0
   })
 
-  // 添加线
+  // add line
   const lineArr = [
     {
       point: [
@@ -251,11 +251,11 @@ function workLine1Sjx() {
         materialType: mars3d.MaterialType.LineFlow,
         materialOptions: {
           color: Cesium.Color.YELLOW,
-          speed: 3, // 控制速度
+          speed: 3, // control speed
           url: "img/textures/line-color-yellow.png"
         }
       },
-      tooltip: "山脊线"
+      tooltip: "Ridgeline"
     })
     polyLineLayer.addGraphic(line)
   }
@@ -272,12 +272,12 @@ function workLine1Sjx() {
   }, 4000)
 }
 
-// 特征线：山谷线
+//Characteristic line: valley line
 function workLine2Sgx() {
   clearPoint()
   map.setCameraView({ lat: 36.05648, lng: 113.944653, alt: 2092, heading: 354.4, pitch: -44.6 })
 
-  // 添加线
+  // add line
   const lineArr = [
     {
       point: [
@@ -324,11 +324,11 @@ function workLine2Sgx() {
         materialType: mars3d.MaterialType.LineFlow,
         materialOptions: {
           color: Cesium.Color.AQUA,
-          speed: 3, // 控制速度
+          speed: 3, // control speed
           url: "img/textures/line-color-yellow.png"
         }
       },
-      tooltip: "山谷线"
+      tooltip: "Valley Line"
     })
     polyLineLayer.addGraphic(line)
   }
@@ -348,13 +348,13 @@ function workLine2Sgx() {
   }, 4000)
 }
 
-// 特征线：俯瞰
+// Feature line: overlooking
 function workLine3Fk() {
   clearPoint()
   map.setCameraView({ lat: 36.070613, lng: 113.943032, alt: 3059, heading: 0.6, pitch: -88.9 })
 }
 
-// 绘制过程：计算通过点
+// Drawing process: Calculate passing points
 function workDgx1Point() {
   clearPoint()
   map.setCameraView({ lat: 36.06874, lng: 113.948078, alt: 811.62, heading: 292.6, pitch: -39.6 })
@@ -391,7 +391,7 @@ function workDgx1Point() {
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         color: Cesium.Color.MAGENTA,
-        speed: 3, // 控制速度
+        speed: 3, // control speed
         url: "img/textures/line-color-yellow.png"
       }
     }
@@ -399,7 +399,7 @@ function workDgx1Point() {
   map.graphicLayer.addGraphic(lineGraphic)
 }
 
-// 绘制过程：等高线绘制
+//Drawing process: contour drawing
 function workDgx2Line() {
   clearPoint()
   map.setCameraView({ lat: 36.069792, lng: 113.944474, alt: 1708, heading: 357, pitch: -82 })
@@ -488,7 +488,7 @@ function workDgx2Line() {
   map.graphicLayer.addGraphic(polyline2)
 }
 
-// 绘制过程：等高线结果
+//Drawing process: contour results
 function workDgx3End() {
   clearPoint()
   map.setCameraView(
@@ -515,7 +515,7 @@ function workDgx3End() {
   map.addThing(contourLine)
 }
 
-// 创建点 公共方法
+//Create point public method
 function createArrPoint(arrPoint) {
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -544,7 +544,7 @@ function createArrPoint(arrPoint) {
           outlineWidth: 2,
           horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          pixelOffset: new Cesium.Cartesian2(-10, -10) // 偏移量
+          pixelOffset: new Cesium.Cartesian2(-10, -10) // offset
         }
       }
     })
@@ -553,7 +553,7 @@ function createArrPoint(arrPoint) {
   return graphicLayer
 }
 
-// 创建文本指示  公共方法
+//Create text indication public method
 function createArrText(arrPoint, name) {
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -561,7 +561,7 @@ function createArrText(arrPoint, name) {
   for (let i = 0; i < arrPoint.length; i++) {
     const item = arrPoint[i]
 
-    // 文字注记
+    // text annotation
     const graphic = new mars3d.graphic.DivGraphic({
       position: item,
       style: {
@@ -578,17 +578,17 @@ function createArrText(arrPoint, name) {
   return graphicLayer
 }
 
-// 绕点飞行
+//Fly around point
 let rotatePoint
 function startRotatePoint(center) {
   if (!rotatePoint) {
     rotatePoint = new mars3d.thing.RotatePoint({
-      direction: false, // 方向 true逆时针，false顺时针
-      time: 50 // 给定飞行一周所需时间(单位 秒)，控制速度
+      direction: false, // Direction true is counterclockwise, false is clockwise
+      time: 50 // Given the time required for one flight (in seconds), control the speed
     })
     map.addThing(rotatePoint)
   }
-  // 开启旋转
+  // enable rotation
   rotatePoint.start(center)
 }
 
@@ -598,7 +598,7 @@ function stopRotatePoint() {
   }
 }
 
-// 清除页面
+// clear page
 function clear() {
   clearPoint()
   clearLine()
@@ -626,7 +626,7 @@ function clearLine() {
   stopRotatePoint()
 }
 
-// 停止视角定位操作
+//Stop the perspective positioning operation
 function cancelFlight() {
   map.cancelFlight()
 }

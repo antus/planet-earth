@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 var echartTarget = new mars3d.BaseClass()
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 29.526546, lng: 119.823425, alt: 803, heading: 178, pitch: -27 },
@@ -13,21 +13,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/tower.json" })
@@ -35,13 +35,13 @@ function onMounted(mapInstance) {
       showData(res.data)
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -57,7 +57,7 @@ function showData(arrdata) {
   for (let i = 0; i < arrdata.length; i++) {
     const item = arrdata[i]
 
-    // 所在经纬度坐标及海拔高度
+    //Longitude and latitude coordinates and altitude
     const longitude = Number(item.longitude)
     const latitude = Number(item.latitude)
     const height = Number(item.height)
@@ -69,10 +69,10 @@ function showData(arrdata) {
     }
     const position = Cesium.Cartesian3.fromDegrees(originPoint.longitude, originPoint.latitude, originPoint.height)
 
-    // 计算电线塔转角角度
+    // Calculate the corner angle of the wire tower
     const degree = parseInt(item.degree)
 
-    // 5条线路坐标
+    //Coordinates of 5 lines
     const hpr = new Cesium.HeadingPitchRoll(Cesium.Math.toRadians(degree), 0, 0)
     const newPoint1 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0, 9, 51.5), hpr)
     const newPoint2 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0, -9, 51.5), hpr)
@@ -80,7 +80,7 @@ function showData(arrdata) {
     const newPoint3 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0, -12, 47.5), hpr)
     const newPoint4 = mars3d.PointUtil.getPositionByHprAndOffset(position, new Cesium.Cartesian3(0, 12, 47.5), hpr)
 
-    polylinesTB.push(newPoint3) // 图标显示的点
+    polylinesTB.push(newPoint3) //The point displayed by the icon
 
     if (i === 0) {
       polylines1.push(newPoint1)
@@ -90,32 +90,32 @@ function showData(arrdata) {
     } else {
       const angularityFactor = -5000
       const num = 50
-      let positions = mars3d.PolyUtil.getLinkedPointList(polylines1[polylines1.length - 1], newPoint1, angularityFactor, num) // 计算曲线点
+      let positions = mars3d.PolyUtil.getLinkedPointList(polylines1[polylines1.length - 1], newPoint1, angularityFactor, num) // Calculate curve points
       polylines1 = polylines1.concat(positions)
 
-      positions = mars3d.PolyUtil.getLinkedPointList(polylines2[polylines2.length - 1], newPoint2, angularityFactor, num) // 计算曲线点
+      positions = mars3d.PolyUtil.getLinkedPointList(polylines2[polylines2.length - 1], newPoint2, angularityFactor, num) // Calculate curve points
       polylines2 = polylines2.concat(positions)
 
-      positions = mars3d.PolyUtil.getLinkedPointList(polylines3[polylines3.length - 1], newPoint3, angularityFactor, num) // 计算曲线点
+      positions = mars3d.PolyUtil.getLinkedPointList(polylines3[polylines3.length - 1], newPoint3, angularityFactor, num) // Calculate curve points
       polylines3 = polylines3.concat(positions)
 
-      positions = mars3d.PolyUtil.getLinkedPointList(polylines4[polylines4.length - 1], newPoint4, angularityFactor, num) // 计算曲线点
+      positions = mars3d.PolyUtil.getLinkedPointList(polylines4[polylines4.length - 1], newPoint4, angularityFactor, num) // Calculate curve points
       polylines4 = polylines4.concat(positions)
     }
 
     const html = mars3d.Util.getTemplateHtml({
-      title: "塔杆",
+      title: "Tower",
       template: [
-        { field: "roadName", name: "所属线路" },
-        { field: "towerId", name: "杆塔编号" },
-        { field: "杆塔型号", name: "杆塔型号" },
-        { field: "杆塔性质", name: "杆塔性质" },
-        { field: "杆塔类型", name: "杆塔类型" },
-        { field: "投运日期", name: "投运日期" },
-        { field: "杆塔全高", name: "杆塔全高" },
-        { field: "设计单位", name: "设计单位" },
-        { field: "施工单位", name: "施工单位" },
-        { field: "height", name: "海拔高度" }
+        { field: "roadName", name: "Line to which it belongs" },
+        { field: "towerId", name: "Tower number" },
+        { field: "Tower model", name: "Tower model" },
+        { field: "Pole and Tower Properties", name: "Pole and Tower Properties" },
+        { field: "Tower Type", name: "Tower Type" },
+        { field: "Commissioning date", name: "Commissioning date" },
+        { field: "Total height of tower", name: "Total height of tower" },
+        { field: "Design Unit", name: "Design Unit" },
+        { field: "Construction Unit", name: "Construction Unit" },
+        { field: "height", name: "elevation" }
       ],
       attr: item
     })
@@ -123,17 +123,17 @@ function showData(arrdata) {
     drawWireTowerModel(position, degree, html)
   }
 
-  // 绘制路线
+  // draw route
   drawGuideLine(polylines1, "#ffffff")
   drawGuideLine(polylines2, "#ffffff")
   drawGuideLine(polylines3, "#0000ff")
   drawGuideLine(polylines4, "#ff0000")
 
-  // 绘制断面图echarts图表
+  //Draw the cross-section echarts chart
   computeSurfacePointsHeight(polylinesTB)
 }
 
-// 绘制电线塔模型
+//Draw the wire tower model
 function drawWireTowerModel(position, degree, inthtml) {
   const graphic = new mars3d.graphic.ModelPrimitive({
     position,
@@ -160,12 +160,12 @@ function drawGuideLine(positions, color) {
   graphicLayer.addGraphic(graphic)
 }
 
-// 绘制断面图echarts图表
+//Draw the cross-section echarts chart
 function computeSurfacePointsHeight(polylines) {
-  // 绘制断面图
+  //Draw cross-section diagram
   mars3d.PolyUtil.computeSurfacePoints({
     scene: map.scene,
-    positions: polylines, // 需要计算的源路线坐标数组
+    positions: polylines, // Array of source route coordinates to be calculated
     exact: true
   }).then((result) => {
     const heightArry = []
@@ -175,15 +175,15 @@ function computeSurfacePointsHeight(polylines) {
       const item = polylines[i]
       const carto = Cesium.Cartographic.fromCartesian(item)
 
-      const height = mars3d.Util.formatNum(carto.height) // 设计高度  当小数点后面的数字一致时，会省略小数点，不显示
-      const tdHeight = mars3d.Util.formatNum(Cesium.Cartographic.fromCartesian(result.positions[i]).height) // 地面高度
+      const height = mars3d.Util.formatNum(carto.height) // Design height When the numbers after the decimal point are consistent, the decimal point will be omitted and not displayed.
+      const tdHeight = mars3d.Util.formatNum(Cesium.Cartographic.fromCartesian(result.positions[i]).height) // Ground height
       heightArry.push(height)
       heightTDArray.push(tdHeight)
 
-      // 距离数组
+      // distance array
       const positionsLineFirst = result.positions[0]
       distanceArray = result.positions.map(function (data) {
-        return Math.round(Cesium.Cartesian3.distance(data, positionsLineFirst)) // 计算两点之间的距离,返回距离
+        return Math.round(Cesium.Cartesian3.distance(data, positionsLineFirst)) // Calculate the distance between two points and return the distance
       })
     }
     echartTarget.fire("addEchart", { heightArry, heightTDArray, distanceArray })
@@ -202,11 +202,11 @@ function computeSurfacePointsHeight(polylines) {
 //   }
 //   mars3d.PolyUtil.computeSurfacePoints({
 //     scene: map.scene,
-//     positions: polylinesTB, // 需要计算的源路线坐标数组
+// positions: polylinesTB, // Array of source route coordinates to be calculated
 //     exact: true
 //   }).then((result) => {
 //     for (let i = 0; i < result.positions.length; i++) {
-//       const tdHeight = mars3d.Util.formatNum(Cesium.Cartographic.fromCartesian(result.positions[i]).height) // 地面高度
+// const tdHeight = mars3d.Util.formatNum(Cesium.Cartographic.fromCartesian(result.positions[i]).height) // Ground height
 //       res.data[i].height = tdHeight
 
 //       delete res.data[i].heightCol

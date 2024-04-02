@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var map // mars3d.Map three-dimensional map object
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 let tiles3dLayer
-var graphicLayer // 矢量图层对象
+var graphicLayer // vector layer object
 
 var mapOptions = {
   scene: {
@@ -13,13 +13,13 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   map.viewer.shadows = true
   map.viewer.shadowMap.size = 2048
@@ -50,13 +50,13 @@ function onMounted(mapInstance) {
 
   setEnabled(true)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
 
   tiles3dLayer = new mars3d.layer.OsmBuildingsLayer({
@@ -95,18 +95,18 @@ function onMounted(mapInstance) {
                   vec4 darkRefColor = texture(u_envTexture2, vec2(coord.x, (coord.z - coord.y) / 2.0));
                   material.diffuse = mix(mix(vec3(0.3), vec3(0.1,0.2,0.4),clamp(positionMC.z / 200., 0.0, 1.0)) , darkRefColor.rgb ,0.3);
                   material.diffuse *= 0.2;
-                  // 注意shader中写浮点数是 一定要带小数点 否则会报错 比如0需要写成0.0 1要写成1.0
-                  float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-                  float _heightRange = 20.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-                  float _glowRange = 300.0; // 光环的移动范围(高度)
-                  // 建筑基础色
+                  // Note that floating point numbers written in the shader must have a decimal point, otherwise an error will be reported. For example, 0 needs to be written as 0.0 and 1 needs to be written as 1.0.
+                  float _baseHeight = 0.0; // The base height of the object needs to be modified to a suitable building base height.
+                  float _heightRange = 20.0; // Highlight range (_baseHeight ~ _baseHeight + _heightRange)
+                  float _glowRange = 300.0; // The movement range (height) of the halo
+                  //Building base color
                   float czm_height = positionMC.z - _baseHeight;
                   float czm_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
                   float czm_a12 = czm_height / _heightRange + sin(czm_a11) * 0.1;
 
                   float times = czm_frameNumber / 60.0;
-                  material.diffuse *= vec3(czm_a12);// 渐变
-                  // 动态光环
+                  material.diffuse *= vec3(czm_a12);//gradient
+                  // dynamic halo
                   float time = fract(czm_frameNumber / 360.0);
                   time = abs(time - 0.5) * 2.0;
                   float czm_h = clamp(czm_height / _glowRange, 0.0, 1.0);
@@ -129,14 +129,14 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 4座高亮的大厦gltf模型的加载
+//Loading of 4 highlighted building gltf models
 function addExGltfModel() {
   const L00 = new Cesium.Cartesian3(1.234709620475769, 1.221461296081543, 1.273156881332397)
   const L1_1 = new Cesium.Cartesian3(1.135921120643616, 1.171217799186707, 1.287644743919373)
@@ -155,8 +155,8 @@ function addExGltfModel() {
   })
 
   const graphic1 = new mars3d.graphic.ModelPrimitive({
-    name: "东方明珠塔",
-    popup: "东方明珠塔",
+    name: "Oriental Pearl Tower",
+    popup: "Oriental Pearl Tower",
     modelMatrix: generateModelMatrix([121.49697607088487, 31.241891679352257, 10], [0, 0, 0], [0.15, 0.15, 0.126]),
     style: {
       url: "//data.mars3d.cn/gltf/mars/shanghai/dongfangmingzhu/scene.gltf",
@@ -190,8 +190,8 @@ function addExGltfModel() {
   graphicLayer.addGraphic(graphic1)
 
   const graphic2 = new mars3d.graphic.ModelPrimitive({
-    name: "环球金融中心",
-    popup: "环球金融中心",
+    name: "World Financial Center",
+    popup: "World Financial Center",
     modelMatrix: generateModelMatrix([121.50306517515779, 31.236594411927722, 0], [0, 0, 0], [3, 3, 4.4]),
     style: {
       url: "//data.mars3d.cn/gltf/mars/shanghai/huanqiujingrong/scene.gltf",
@@ -225,8 +225,8 @@ function addExGltfModel() {
   graphicLayer.addGraphic(graphic2)
 
   const graphic3 = new mars3d.graphic.ModelPrimitive({
-    name: "上海中心大厦",
-    popup: "上海中心大厦",
+    name: "Shanghai Tower",
+    popup: "Shanghai Tower",
     modelMatrix: generateModelMatrix([121.50140479453857, 31.237266571858395, 0], [0, 0, 0], [2.5, 2.5, 3.0]),
     style: {
       url: "//data.mars3d.cn/gltf/mars/shanghai/shanghaizhongxin/scene.gltf",
@@ -260,8 +260,8 @@ function addExGltfModel() {
   graphicLayer.addGraphic(graphic3)
 
   const graphic4 = new mars3d.graphic.ModelPrimitive({
-    name: "金茂大厦",
-    popup: "金茂大厦",
+    name: "Jinmao Tower",
+    popup: "Jinmao Tower",
     modelMatrix: generateModelMatrix([121.49805570610201, 31.23266477688614, 400], [0, 0, 45], [3, 3, 2.5]),
     style: {
       url: "//data.mars3d.cn/gltf/mars/shanghai/jinmaodasha/scene.gltf",
@@ -295,7 +295,7 @@ function addExGltfModel() {
   graphicLayer.addGraphic(graphic4)
 }
 
-// 生成矩阵
+// Generate matrix
 const generateModelMatrix = (position = [0, 0, 0], rotation = [0, 0, 0], scale = [1, 1, 1]) => {
   const rotationX = Cesium.Matrix4.fromRotationTranslation(Cesium.Matrix3.fromRotationX(Cesium.Math.toRadians(rotation[0])))
   const rotationY = Cesium.Matrix4.fromRotationTranslation(Cesium.Matrix3.fromRotationY(Cesium.Math.toRadians(rotation[1])))

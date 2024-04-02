@@ -1,8 +1,8 @@
 // // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.834317, lng: 117.2199, alt: 87, heading: 30, pitch: -29 },
@@ -11,21 +11,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("操作提示", `鼠标左键单击进行发射`)
+  globalNotify("Operation prompt", `Click the left mouse button to launch`)
   addDemo()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -47,7 +47,7 @@ function addDemo() {
   })
   map.scene.primitives.add(meshVisualizer)
 
-  meshVisualizer.showReference = true // 显示坐标轴
+  meshVisualizer.showReference = true // Show coordinate axes
 
   function createRandomColor() {
     return Cesium.Color.fromRandom({ alpha: 1 }) // fromRgba(Math.floor(Math.random() * (1 << 24)));
@@ -139,7 +139,7 @@ function addDemo() {
     }
 
     function createObject(mass, halfExtents, pos, quat, material) {
-      // y，z调换位置
+      //y,z swap positions
       const object = new THREE.Mesh(new THREE.BoxGeometry(halfExtents.x * 2, halfExtents.y * 2, halfExtents.z * 2), material)
       object.position.copy(pos)
       object.quaternion.copy(quat)
@@ -191,7 +191,7 @@ function addDemo() {
       pos.set(5, mountainHalfExtents.y * 0.5, -7)
       quat.set(0, 0, 0, 1)
       const mountainPoints = []
-      // y，z调换位置
+      //y,z swap positions
       mountainPoints.push(new THREE.Vector3(mountainHalfExtents.x, -mountainHalfExtents.y, mountainHalfExtents.z))
       mountainPoints.push(new THREE.Vector3(-mountainHalfExtents.x, -mountainHalfExtents.y, mountainHalfExtents.z))
       mountainPoints.push(new THREE.Vector3(mountainHalfExtents.x, -mountainHalfExtents.y, -mountainHalfExtents.z))
@@ -250,7 +250,7 @@ function addDemo() {
 
       for (let i = 0, il = points.length; i < il; i++) {
         const p = points[i]
-        tempBtVec3_1.setValue(p.x, p.y, p.z) // y,z调换位置
+        tempBtVec3_1.setValue(p.x, p.y, p.z) // y, z swap positions
         const lastOne = i === il - 1
         shape.addPoint(tempBtVec3_1, lastOne)
       }

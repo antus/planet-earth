@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.841762, lng: 116.26537, alt: 3281, heading: 39, pitch: -63 }
@@ -10,18 +10,18 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -34,10 +34,10 @@ function removeAll() {
 }
 
 /**
- * 面插值
+ * Surface interpolation
  *
  * @export
- * @param {number} val 步长
+ * @param {number} val step size
  * @returns {void}
  */
 function interPolygon(val) {
@@ -57,7 +57,7 @@ function interPolygon(val) {
       mars3d.PolyUtil.interPolygon({
         scene: map.scene,
         positions,
-        splitNum: val // splitNum插值分割的个数
+        splitNum: val //The number of splitNum interpolation divisions
       }).then((resultInter) => {
         showInterPolygonResult(resultInter.list)
       })
@@ -65,7 +65,7 @@ function interPolygon(val) {
   })
 }
 function showInterPolygonResult(list) {
-  clearInterResult() // 分析结果用于测试分析的，不做太多处理，直接清除之前的，只保留一个
+  clearInterResult() // The analysis results are used for test analysis. Without much processing, the previous ones are cleared directly and only one is retained.
 
   let pt1, pt2, pt3
   const arrData = []
@@ -76,7 +76,7 @@ function showInterPolygonResult(list) {
     pt2 = item.point2.pointDM
     pt3 = item.point3.pointDM
 
-    // 点
+    // point
     for (const pt of [item.point1, item.point2, item.point3]) {
       const graphic = new mars3d.graphic.PointPrimitive({
         position: pt.pointDM,
@@ -87,14 +87,14 @@ function showInterPolygonResult(list) {
       })
       interGraphicLayer.addGraphic(graphic)
 
-      graphic.bindTooltip("点高度:" + mars3d.MeasureUtil.formatDistance(pt.height))
+      graphic.bindTooltip("Point height:" + mars3d.MeasureUtil.formatDistance(pt.height))
     }
 
-    // 横截面面积
+    // cross-sectional area
     item.area = item.area || mars3d.MeasureUtil.getTriangleArea(pt1, pt2, pt3)
     item.index = i
 
-    // 三角网及边线
+    //Triangle network and edges
     arrData.push({
       positions: [pt1, pt2, pt3, pt1],
       style: {
@@ -104,7 +104,7 @@ function showInterPolygonResult(list) {
     })
   }
 
-  // 三角网面（单击用）
+  //Triangular mesh (for click)
   const primitivePoly = new mars3d.graphic.PolygonCombine({
     instances: arrData,
     highlight: {
@@ -120,10 +120,10 @@ function showInterPolygonResult(list) {
       return
     }
 
-    return "三角面积:" + mars3d.MeasureUtil.formatArea(item.area) + "(第" + item.index + "个)"
+    return "Triangular area:" + mars3d.MeasureUtil.formatArea(item.area) + "(th" + item.index + "number)"
   })
 
-  // 三角网边线
+  // Triangle network edges
   const primitiveLine = new mars3d.graphic.PolylineCombine({
     instances: arrData,
     highlight: {
@@ -165,10 +165,10 @@ function interPolygonGrid(val) {
 }
 
 /**
- * 面插值
+ * Surface interpolation
  *
  * @export
- * @param {number} val 步长
+ * @param {number} val step size
  * @returns {void}
  */
 function interPolygonByDepth(val) {
@@ -189,7 +189,7 @@ function interPolygonByDepth(val) {
       mars3d.PolyUtil.interPolygonByDepth({
         scene: map.scene,
         positions,
-        splitNum: val // splitNum插值分割的个数
+        splitNum: val //The number of splitNum interpolation divisions
       }).then((resultInter) => {
         updateAllGraphicShow(map, true)
         showInterPolygonByDepthResult(resultInter)
@@ -198,7 +198,7 @@ function interPolygonByDepth(val) {
   })
 }
 function showInterPolygonByDepthResult(resultInter) {
-  clearInterResult() // 分析结果用于测试分析的，不做太多处理，直接清除之前的，只保留一个
+  clearInterResult() // The analysis results are used for test analysis. Without much processing, the previous ones are cleared directly and only one is retained.
 
   const arrData = []
   for (let i = 0, len = resultInter.count; i < len; i++) {
@@ -212,7 +212,7 @@ function showInterPolygonByDepthResult(resultInter) {
     //   }
     // })
     // interGraphicLayer.addGraphic(graphic)
-    // graphic.bindTooltip("点高度:" + mars3d.MeasureUtil.formatDistance(position.height))
+    // graphic.bindTooltip("Point height:" + mars3d.MeasureUtil.formatDistance(position.height))
 
     arrData.push({
       positions: position.getOutline(),
@@ -238,11 +238,11 @@ function showInterPolygonByDepthResult(resultInter) {
       return
     }
 
-    return "点高度:" + mars3d.MeasureUtil.formatDistance(item.height) + "(第" + item.index + "个)"
+    return "Point height:" + mars3d.MeasureUtil.formatDistance(item.height) + "(th" + item.index + ")"
   })
 }
 
-// 线插值
+// line interpolation
 function interPolyline(val) {
   map.graphicLayer.startDraw({
     type: "polyline",
@@ -258,7 +258,7 @@ function interPolyline(val) {
       const arrLine = mars3d.PolyUtil.interPolyline({
         scene: map.scene,
         positions,
-        splitNum: val // 插值分割的个数
+        splitNum: val // Number of interpolation splits
       })
 
       showInterLineResult(arrLine)
@@ -266,7 +266,7 @@ function interPolyline(val) {
   })
 }
 
-// 高度等分
+// height equal parts
 function interLine(val) {
   map.graphicLayer.startDraw({
     type: "polyline",
@@ -279,7 +279,7 @@ function interLine(val) {
       map.graphicLayer.clear()
 
       const arrLine = mars3d.PolyUtil.interLine(positions, {
-        splitNum: val // 插值分割的个数
+        splitNum: val // Number of interpolation splits
       })
 
       showInterLineResult(arrLine)
@@ -302,7 +302,7 @@ function interLineByDepth(val) {
       mars3d.PolyUtil.interPolylineByDepth({
         scene: map.scene,
         positions,
-        splitNum: val // 插值分割的个数
+        splitNum: val // Number of interpolation splits
       }).then((resultInter) => {
         updateAllGraphicShow(map, true)
         showInterLineResult(resultInter.positions)
@@ -311,7 +311,7 @@ function interLineByDepth(val) {
   })
 }
 
-// 显示影藏矢量数据
+//Display shadow vector data
 function updateAllGraphicShow(map, show) {
   map.eachLayer((layer) => {
     if (layer.type === "graphic") {
@@ -320,8 +320,8 @@ function updateAllGraphicShow(map, show) {
   })
 }
 
-// 显示mars3d.polygon.interPolygon处理后的面内插值分析结果，主要用于测试对比
-// 显示面的插值计算结果，方便比较分析
+// Display the in-plane interpolation analysis results after mars3d.polygon.interPolygon processing, mainly used for testing and comparison
+//Display the interpolation calculation results of the surface to facilitate comparison and analysis.
 let interGraphicLayer
 function clearInterResult() {
   if (!interGraphicLayer) {
@@ -334,7 +334,7 @@ function clearInterResult() {
 
 //
 function showInterLineResult(list) {
-  clearInterResult() // 分析结果用于测试分析的，不做太多处理，直接清除之前的，只保留最后一个
+  clearInterResult() // The analysis results are used for test analysis. Without much processing, the previous ones are cleared directly and only the last one is retained.
 
   const colorList = [Cesium.Color.fromCssColorString("#ffff00"), Cesium.Color.fromCssColorString("#00ffff")]
 
@@ -373,6 +373,6 @@ function showInterLineResult(list) {
     if (!item) {
       return
     }
-    return "长度:" + mars3d.MeasureUtil.formatDistance(item.distance) + "(第" + item.index + "个)"
+    return "Length:" + mars3d.MeasureUtil.formatDistance(item.distance) + "(th" + item.index + ")"
   })
 }

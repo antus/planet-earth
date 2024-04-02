@@ -1,41 +1,41 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 23.729961, lng: 116.284734, alt: 1868672, heading: 355, pitch: -65 },
     cameraController: {
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     }
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 
-  // 加个模型
+  //Add a model
   const graphic = new mars3d.graphic.ModelPrimitive({
-    name: "地面站模型",
+    name: "Ground station model",
     position: [117.170264, 31.840312, 258],
     style: {
       url: "//data.mars3d.cn/gltf/mars/leida.glb",
@@ -50,16 +50,16 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 初始化创建一个四棱锥体
+//Initialize to create a four-sided pyramid
 function addDemoGraphic1() {
-  // 测试连接线
+  //Test the connection line
   const testLine = new mars3d.graphic.PolylineEntity({
     positions: new Cesium.CallbackProperty(function (time) {
       const localEnd = rectSensor?.rayPosition
@@ -86,7 +86,7 @@ function addDemoGraphic1() {
       angle2: 30,
       length: 700000,
       // length: new Cesium.CallbackProperty(function (time) {
-      //   length += 100 //测试动态length
+      //length += 100 //Test dynamic length
       //   return length
       // }, false),
       heading: 0,
@@ -106,14 +106,14 @@ function addDemoGraphic1() {
   })
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 1000)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -133,11 +133,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制 相阵控雷达
+// Start drawing phased array radar
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "rectSensor",
@@ -154,7 +154,7 @@ function startDrawGraphic() {
   })
 }
 
-// 凝视目标
+// gaze target
 function changeLookAt() {
   const cone = graphicLayer.graphics[0]
   if (cone.lookAt) {
@@ -176,23 +176,23 @@ function changeLookAt() {
   }
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -212,7 +212,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -232,7 +232,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -247,7 +247,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)

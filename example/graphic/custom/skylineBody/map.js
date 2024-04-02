@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
 
-// 事件对象，用于抛出事件给面板
+//Event object, used to throw events to the panel
 var eventTarget = new mars3d.BaseClass()
 
 var mapOptions = {
@@ -16,15 +16,15 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 添加参考三维模型
+  //Add reference 3D model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
@@ -34,19 +34,19 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   setTimeout(() => {
-    // 加一些演示数据
+    //Add some demo data
     addDemoGraphic1()
   }, 5000)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

@@ -1,67 +1,67 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var map // mars3d.Map three-dimensional map object
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
-    // 此处参数会覆盖config.json中的对应配置
+    // The parameters here will overwrite the corresponding configuration in config.json
     center: { lat: 5.459746, lng: 68.238291, alt: 36261079, heading: 143, pitch: -89 },
     cameraController: {
       zoomFactor: 3.0,
       minimumZoomDistance: 1000,
       maximumZoomDistance: 300000000,
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true // Whether to display the timeline control
   }
 }
 
 var weixin
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map  map.toolbar.style.bottom = "55px"// 修改toolbar控件的样式
+  map = mapInstance // Record map map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
-  // 指定时间
+  // specified time
   // map.clock.currentTime = Cesium.JulianDate.fromDate(new Date('2020-11-27 10:48:28'))
   map.clock.shouldAnimate = true
-  map.clock.multiplier = 1 // 速度
+  map.clock.multiplier = 1 // speed
 
   addGraphicLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addGraphicLayer() {
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了卫星", event)
+    console.log("Satellite clicked", event)
   })
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "卫星图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Satellite Layer", template: "all", attr })
   })
 
   weixin = new mars3d.graphic.Satellite({
@@ -76,7 +76,7 @@ function addGraphicLayer() {
       silhouette: false
     },
     label: {
-      text: "高分1号",
+      text: "High Score No. 1",
       color: "#ffffff",
       opacity: 1,
       font_family: "楷体",
@@ -120,7 +120,7 @@ function addGraphicLayer() {
         width: 2
       }
     },
-    attr: { name: "高分1号" }
+    attr: { name: "High Score No. 1" }
   })
   graphicLayer.addGraphic(weixin)
 
@@ -129,7 +129,7 @@ function addGraphicLayer() {
   weixinData.tle1 = weixin.options.tle1
   weixinData.tle2 = weixin.options.tle2
 
-  // 显示实时坐标和时间
+  //Display real-time coordinates and time
   weixin.on(mars3d.EventType.change, (e) => {
     const date = Cesium.JulianDate.toDate(map.clock.currentTime)
     weixinData.time = mars3d.Util.formatDate(date, "yyyy-MM-dd HH:mm:ss")
@@ -143,16 +143,16 @@ function addGraphicLayer() {
   })
 }
 
-// 定位至卫星
+// Position to satellite
 function locate() {
   weixin.flyTo()
 }
 
-// 参考轴系显示与隐藏
+// Display and hide reference axis system
 function chkShowModelMatrix(val) {
   weixin.debugAxis = val
 }
-// 凝视目标
+// gaze target
 function selPoint() {
   if (weixin.cone.lookAt) {
     weixin.cone.lookAt = null
@@ -173,7 +173,7 @@ function selPoint() {
   }
 }
 
-// 类型选择
+// type selection
 function chkSensorType(value) {
   if (value === "1") {
     weixin.setOptions({
@@ -190,22 +190,22 @@ function chkSensorType(value) {
   }
 }
 
-// 俯仰角
+// Pitch angle
 function pitchChange(value) {
   weixin.model.pitch = value
 }
 
-// 左右角
+// left and right corners
 function rollChange(value) {
   weixin.model.roll = value
 }
 
-// 夹角1
+// included angle 1
 function angle1(value) {
   weixin.cone.angle1 = value
 }
 
-// 夹角2
+// included angle 2
 function angle2(value) {
   weixin.cone.angle2 = value
 }

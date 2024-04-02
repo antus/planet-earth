@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 24.688611, lng: 119.260277, alt: 1673759, heading: 348, pitch: -69 }
@@ -11,13 +11,13 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   // addGraphicLayer()
   addBusinessLayer()
@@ -37,9 +37,9 @@ function onMounted(mapInstance) {
 //   })
 //   map.addLayer(graphicLayer)
 
-//   // 单击事件
+// // Click event
 //   graphicLayer.on(mars3d.EventType.click, function (event) {
-//     console.log("你单击了", event)
+// console.log("You clicked", event)
 //   })
 
 //   const res = await mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/hfty-point.json" })
@@ -49,11 +49,11 @@ function onMounted(mapInstance) {
 //       position: item.geometry.coordinates,
 //       style: {
 //         show: true,
-//         text: "测试",
+// text: "Test",
 //         font_size: 14,
 //         fill: true,
 //         color: "#fcfa36",
-//         font_family: "楷体",
+// font_family: "楷体",
 //         font_weight: "bold",
 //         outline: true,
 //         outlineColor: "rgba(0,0,0,0.8)",
@@ -70,38 +70,38 @@ function onMounted(mapInstance) {
 function addBusinessLayer() {
   const singleDigitPins = {}
 
-  // 创建矢量数据图层（业务数据图层）
+  //Create vector data layer (business data layer)
   graphicLayer = new mars3d.layer.BusineDataLayer({
     url: "//data.mars3d.cn/file/apidemo/mudi.json",
-    dataColumn: "data", // 数据接口中对应列表所在的取值字段名
+    dataColumn: "data", //The name of the value field where the corresponding list is located in the data interface
     lngColumn: "lng",
     latColumn: "lat",
     altColumn: "z",
-    // 点的聚合配置
+    //Point aggregation configuration
     clustering: {
       enabled: true,
       pixelRange: 20,
       clampToGround: false,
       addHeight: 1000,
       opacity: 1,
-      // getImage是完全自定义方式
+      // getImage is a completely customized method
       getImage: async function (count, result) {
-        const key = "type1-" + count // 唯一标识，不同图层需要设置不一样
+        const key = "type1-" + count // Unique identifier, different layers need to be set differently
 
         let image = singleDigitPins[key]
         if (image) {
-          return image // 当前页面变量有记录
+          return image //The current page variable has a record
         }
 
         image = await localforage.getItem(key)
         if (image) {
           singleDigitPins[key] = image
-          return image // 浏览器客户端缓存有记录
+          return image // Browser client cache has records
         }
 
-        image = await getClusterImage(count) // 生成图片
-        singleDigitPins[key] = image // 记录到当前页面变量，未刷新页面时可直接使用
-        localforage.setItem(key, image) // 记录到浏览器客户端缓存，刷新页面后也可以继续复用
+        image = await getClusterImage(count) // Generate image
+        singleDigitPins[key] = image //Record to the current page variable, which can be used directly when the page is not refreshed.
+        localforage.setItem(key, image) // Record to the browser client cache and can continue to be reused after refreshing the page.
 
         return image
       }
@@ -111,7 +111,7 @@ function addBusinessLayer() {
       styleOptions: {
         image: "img/marker/mark-blue.png",
         width: 25,
-        height: 34, // billboard聚合必须有width、height
+        height: 34, // billboard aggregation must have width and height
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
         scaleByDistance: new Cesium.NearFarScalar(1000, 0.7, 5000000, 0.3),
@@ -124,19 +124,19 @@ function addBusinessLayer() {
           outlineWidth: 2,
           horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          pixelOffset: new Cesium.Cartesian2(10, 0), // 偏移量
+          pixelOffset: new Cesium.Cartesian2(10, 0), // offset
           distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 80000)
         }
       }
     }
-    // 自定义创建对象，可替代symbol、
+    // Custom created object, which can replace symbol,
     // onCreateGraphic: function (e) {
     //   const graphic = new mars3d.graphic.BillboardEntity({
     //     position: e.position,
     //     style: {
     //       image: "img/marker/lace-blue.png",
     //       width: 25,
-    //       height: 34, // 聚合必须有width、height
+    // height: 34, // Aggregation must have width and height
     //       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
     //       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     //     },
@@ -148,27 +148,27 @@ function addBusinessLayer() {
   map.addLayer(graphicLayer)
 
   graphicLayer.on("clustering", function (event) {
-    console.log("新增聚合对象", event)
+    console.log("New aggregate object", event)
   })
 
-  // 单击事件
+  // click event
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("你单击了", event)
+    console.log("You clicked", event)
 
     if (map.camera.positionCartographic.height > 90000) {
       const graphic = event.graphic
       // graphic.closePopup()
       if (graphic?.cluster) {
-        // 单击了聚合的点
-        console.log("单击了聚合的点", graphic.getGraphics())
+        // Clicked on the aggregated point
+        console.log("The aggregated point was clicked", graphic.getGraphics())
       } else {
-        // 单击了具体的点对象
+        // Clicked on a specific point object
         const position = graphic.positionShow
         map.flyToPoint(position, {
-          radius: 5000, // 距离目标点的距离
+          radius: 5000, // distance from the target point
           duration: 4,
           complete: function (e) {
-            // 飞行完成回调方法
+            //Flight completion callback method
             // graphic.openPopup()
           }
         })
@@ -178,9 +178,9 @@ function addBusinessLayer() {
 
   graphicLayer.bindPopup(function (event) {
     if (event.graphic.cluster && event.graphic.getGraphics) {
-      const graphics = event.graphic.getGraphics() // 对应的grpahic数组，可以自定义显示
+      const graphics = event.graphic.getGraphics() // The corresponding grpahic array can be customized for display
       if (graphics) {
-        const inthtml = `单击了聚合点(${graphics.length}个)`
+        const inthtml = `The convergence point (${graphics.length}) was clicked`
         return inthtml
       }
     }
@@ -194,26 +194,26 @@ function addBusinessLayer() {
                     <th scope="col" colspan="2" style="text-align:center;font-size:15px;">${item.text} </th>
                   </tr>
                   <tr>
-                    <td>省：</td><td>${item.province}</td>
+                    <td>Province:</td><td>${item.province}</td>
                   </tr>
                   <tr>
-                    <td>市：</td> <td>${item.city}</td>
+                    <td>City:</td> <td>${item.city}</td>
                   </tr>
                   <tr>
-                    <td>县/区：</td> <td>${item.district}</td>
+                    <td>County/district:</td> <td>${item.district}</td>
                   </tr>
                   <tr>
-                    <td>地址：</td> <td>${item.address}</td>
+                    <td>Address:</td> <td>${item.address}</td>
                   </tr>
                   <tr>
-                    <td>视频：</td> <td><video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video></td>
+                    <td>Video:</td> <td><video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video> </td>
                   </tr>
                 </table>`
     return inthtml
   })
 }
 
-// 生成聚合图标，支持异步
+// Generate aggregation icons, support asynchronous
 async function getClusterImage(count) {
   let colorIn
   if (count < 10) {
@@ -236,7 +236,7 @@ async function getClusterImage(count) {
   circleCtx.globalAlpha = 0.0
   circleCtx.fillRect(0, 0, thisSize, thisSize)
 
-  // 圆形底色
+  // round background color
   circleCtx.globalAlpha = 1.0
   circleCtx.beginPath()
   circleCtx.arc(radius, radius, radius, 0, Math.PI * 2, true)
@@ -244,20 +244,20 @@ async function getClusterImage(count) {
   circleCtx.fillStyle = colorIn
   circleCtx.fill()
 
-  // 数字文字
-  const text = count + "个"
-  circleCtx.font = radius * 0.6 + "px bold normal" // 设置字体
-  circleCtx.fillStyle = "#ffffff" // 设置颜色
-  circleCtx.textAlign = "center" // 设置水平对齐方式
-  circleCtx.textBaseline = "middle" // 设置垂直对齐方式
-  circleCtx.fillText(text, radius, radius) // 绘制文字（参数：要写的字，x坐标，y坐标）
+  //numeric literal
+  const text = count + "piece"
+  circleCtx.font = radius * 0.6 + "px bold normal" // Set font
+  circleCtx.fillStyle = "#ffffff" // Set color
+  circleCtx.textAlign = "center" // Set horizontal alignment
+  circleCtx.textBaseline = "middle" // Set vertical alignment
+  circleCtx.fillText(text, radius, radius) // Draw text (parameters: word to be written, x coordinate, y coordinate)
 
-  return circleCanvas.toDataURL("image/png") // getImage方法返回任意canvas的图片即可
+  return circleCanvas.toDataURL("image/png") // The getImage method can return any canvas image
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   graphicLayer.remove()
@@ -266,15 +266,15 @@ function onUnmounted() {
   map = null
 }
 
-// 计算贴地高度示例代码，可以将获取到的高度更新到数据库内，后续不用重复计算。
+// The sample code for calculating the height of the ground can update the obtained height into the database, so there is no need to repeat the calculation in the future.
 function getDataSurfaceHeight() {
   if (graphicLayer.length === 0) {
-    globalMsg("数据尚未加载成功！")
+    globalMsg("The data has not been loaded successfully!")
     return
   }
   showLoading()
 
-  // 对图层内的数据做贴地运算,自动得到贴地高度
+  // Perform the grounding operation on the data in the layer to automatically obtain the grounding height.
   graphicLayer.autoSurfaceHeight().then((graphics) => {
     hideLoading()
 

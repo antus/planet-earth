@@ -1,11 +1,11 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
 let zmGraphic
 let waterLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 29.791718, lng: 121.479859, alt: 29, heading: 187, pitch: -14 }
@@ -13,7 +13,7 @@ var mapOptions = {
   layers: [
     {
       type: "3dtiles",
-      name: "整体模型",
+      name: "Overall model",
       url: "//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json",
       position: { alt: 15.2 },
       maximumScreenSpaceError: 1,
@@ -21,21 +21,21 @@ var mapOptions = {
     },
     {
       type: "geojson",
-      name: "河流(面状)",
+      name: "River (surface)",
       url: "//data.mars3d.cn/file/geojson/hedao-nei.json",
       symbol: {
         type: "waterC",
         styleOptions: {
-          height: 17, // 水面高度
-          normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
-          frequency: 8000.0, // 控制波数的数字。
-          animationSpeed: 0.02, // 控制水的动画速度的数字。
-          amplitude: 5.0, // 控制水波振幅的数字。
-          specularIntensity: 0.8, // 控制镜面反射强度的数字。
-          baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-          blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
-          opacity: 0.4, // 透明度
-          clampToGround: false // 是否贴地
+          height: 17, // water surface height
+          normalMap: "img/textures/waterNormals.jpg", // Normal map of water normal disturbance
+          frequency: 8000.0, // Number that controls the wave number.
+          animationSpeed: 0.02, // Number that controls the animation speed of water.
+          amplitude: 5.0, // Number that controls the amplitude of the water wave.
+          specularIntensity: 0.8, // Number that controls the intensity of specular reflection.
+          baseWaterColor: "#006ab4", // The base color of water in the rgba color object. #00ffff,#00baff,#006ab4
+          blendColor: "#006ab4", // The rgba color object used when blending from water to non-water.
+          opacity: 0.4, // transparency
+          clampToGround: false // Whether to stick to the ground
         }
       },
       show: true
@@ -44,46 +44,46 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
   waterLayer = new mars3d.layer.GeoJsonLayer({
-    name: "河流(面状)",
+    name: "River (surface)",
     url: "//data.mars3d.cn/file/geojson/hedao-wai.json",
     symbol: {
       type: "waterC",
       styleOptions: {
-        height: 16, // 水面高度
+        height: 16, // water surface height
         offsetHeight: 0,
-        normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
-        frequency: 8000.0, // 控制波数的数字。
-        animationSpeed: 0.02, // 控制水的动画速度的数字。
-        amplitude: 5.0, // 控制水波振幅的数字。
-        specularIntensity: 0.8, // 控制镜面反射强度的数字。
-        baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-        blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
-        opacity: 0.4 // 透明度
+        normalMap: "img/textures/waterNormals.jpg", // Normal map of water normal disturbance
+        frequency: 8000.0, // Number that controls the wave number.
+        animationSpeed: 0.02, // Number that controls the animation speed of water.
+        amplitude: 5.0, // Number that controls the amplitude of the water wave.
+        specularIntensity: 0.8, // Number that controls the intensity of specular reflection.
+        baseWaterColor: "#006ab4", // The base color of water in the rgba color object. #00ffff,#00baff,#006ab4
+        blendColor: "#006ab4", // The rgba color object used when blending from water to non-water.
+        opacity: 0.4 // transparency
       }
     }
   })
   map.addLayer(waterLayer)
 
-  // 绑定事件
+  //Bind event
   waterLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
   waterLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 
-  // 闸门的控制
+  // Gate control
   zmGraphic = new mars3d.graphic.ModelEntity({
-    name: "闸门",
+    name: "gate",
     position: [121.479813, 29.791278, 16],
     style: {
       url: "//data.mars3d.cn/gltf/mars/zhamen.glb",
@@ -94,60 +94,60 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 let timeInv
-// 高度更新
+// height update
 function updateHeight(height) {
-  zmGraphic.height = 16 + height // 阀门高度
+  zmGraphic.height = 16 + height // Valve height
 
   waterLayer.eachGraphic((graphic) => {
-    graphic.offsetHeight = height // 水域高度变化
+    graphic.offsetHeight = height // Water height changes
   })
 }
 
 /**
- * 开启阀门
+ * Open the valve
  *
  * @export
- * @param {number} height  阀门高度  单位: m
- * @param {number} time //时间 单位:s
- * @returns {void} 无
+ * @param {number} height Valve height Unit: m
+ * @param {number} time //Time unit: s
+ * @returns {void} None
  */
 function openZm(height, time) {
-  let thisHeight = 0 // 当前高度
-  const endHeight = height // 结束高度
+  let thisHeight = 0 // current height
+  const endHeight = height // end height
 
-  const step = time / 0.1 // 步长
-  const stepHeight = (endHeight - thisHeight) / step // 每次阀门、水面上移高度
+  const step = time / 0.1 // step size
+  const stepHeight = (endHeight - thisHeight) / step // Each time the valve and water surface move upward
 
-  // 再次点击"开启"时从当前位置开启
+  //Open from the current location when "Open" is clicked again
   updateHeight(thisHeight)
 
   clearInterval(timeInv)
   timeInv = setInterval(() => {
-    thisHeight += stepHeight // 上移后的当前高度,相当于时实更新
+    thisHeight += stepHeight //The current height after moving up, equivalent to real-time update
 
     if (thisHeight >= endHeight) {
       thisHeight = endHeight
-      clearInterval(timeInv) // 清除定时器,当前阀门的高度值等于结束时阀门的高度值时，停止上移，关闭定时器
+      clearInterval(timeInv) // Clear the timer. When the height value of the current valve is equal to the height value of the valve at the end, stop moving upward and close the timer.
     }
     updateHeight(thisHeight)
   }, 100)
 }
 
 /**
- * 关闭阀门
+ * Close valve
  *
  * @export
- * @param {number} height  阀门高度 单位: m
- * @param {number} time //时间 单位:s
- * @returns {void} 无
+ * @param {number} height Valve height Unit: m
+ * @param {number} time //Time unit: s
+ * @returns {void} None
  */
 function closeZm(height, time) {
   let thisHeight = height

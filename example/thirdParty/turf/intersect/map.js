@@ -1,7 +1,7 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-let graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+let graphicLayer // vector layer object
 
 let graphic1
 let graphic2
@@ -14,30 +14,30 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
   addEntity()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addEntity() {
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 面1
+  // Side 1
   graphic1 = new mars3d.graphic.PolygonEntity({
     positions: [
       [117.182288, 31.854164, 35.2],
@@ -55,7 +55,7 @@ function addEntity() {
   })
   graphicLayer.addGraphic(graphic1)
 
-  // 面2
+  // Side 2
   graphic2 = new mars3d.graphic.PolygonEntity({
     positions: [
       [117.267046, 31.842971, 25.4],
@@ -73,7 +73,7 @@ function addEntity() {
   graphicLayer.addGraphic(graphic2)
 }
 
-// 求交
+// Seek friendship
 let intersectGraphic
 function intersect() {
   if (intersectGraphic) {
@@ -83,7 +83,7 @@ function intersect() {
 
   const layer1 = graphic1.toGeoJSON()
   const layer2 = graphic2.toGeoJSON()
-  console.log("2个面的geojson对象", layer1, layer2)
+  console.log("2 geojson objects", layer1, layer2)
 
   const geojson = turf.intersect(layer1, layer2)
 
@@ -97,7 +97,7 @@ function intersect() {
     outlineColor: "#ffffff",
     clampToGround: true,
     label: {
-      text: "我是相交部分",
+      text: "I am the intersection part",
       font_size: 18,
       color: "#000000"
     }
@@ -105,7 +105,7 @@ function intersect() {
   intersectGraphic = graphicLayer.addGraphic(intersectGraphic)
 }
 
-// 清除
+// clear
 function clear() {
   if (intersectGraphic) {
     graphicLayer.removeGraphic(intersectGraphic, true)

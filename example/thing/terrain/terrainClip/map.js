@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let terrainClip
 
 var mapOptions = {
@@ -12,20 +12,20 @@ var mapOptions = {
 var eventTabel = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", `(1) 开挖区域内矢量对象无法穿透进行拾取。 (2) 多个开挖区域距离太远时会存在误差。`)
+  globalNotify("Known Problem Tips", `(1) Vector objects in the excavation area cannot penetrate for picking. (2) There will be errors when multiple excavation areas are too far apart.`)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -33,10 +33,10 @@ function onUnmounted() {
 
 function addTerrainClip(height) {
   terrainClip = new mars3d.thing.TerrainClip({
-    diffHeight: height, // 井的深度
+    diffHeight: height, //The depth of the well
     image: "img/textures/poly-stone.jpg",
     imageBottom: "img/textures/poly-soil.jpg",
-    splitNum: 80 // 井边界插值数
+    splitNum: 80 // Well boundary interpolation number
   })
   map.addThing(terrainClip)
 
@@ -69,7 +69,7 @@ function addTerrainClip(height) {
   addTableItem(areaItem2)
 }
 
-// 添加矩形
+// add rectangle
 function btnDrawExtent(isShow) {
   map.graphicLayer.startDraw({
     type: "rectangle",
@@ -78,19 +78,19 @@ function btnDrawExtent(isShow) {
       opacity: 0.8
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 
-      console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 打印下边界
+      console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Print the lower boundary
 
-      // 挖地区域
+      // Digging area
       const areaItem = terrainClip.addArea(positions)
       addTableItem(areaItem, isShow)
     }
   })
 }
-// 添加多边形
+//Add polygon
 function btnDraw(isShow) {
   map.graphicLayer.startDraw({
     type: "polygon",
@@ -100,11 +100,11 @@ function btnDraw(isShow) {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
-      console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 打印下边界
+      console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Print the lower boundary
 
       const areaItem = terrainClip.addArea(positions)
       addTableItem(areaItem, isShow)
@@ -112,36 +112,36 @@ function btnDraw(isShow) {
   })
 }
 
-// 清除
+// clear
 function removeAll() {
-  terrainClip.clear() // 清除挖地区域
+  terrainClip.clear() // Clear the excavation area
   table = []
 }
 
-// 改变切割的深度
+//Change the depth of the cut
 function changeClipHeight(val) {
   terrainClip.diffHeight = val
 }
 
-// 是否挖地
+// Whether to dig the ground
 function chkClippingPlanes(val) {
   terrainClip.enabled = val
 }
 
-// 是否外切割
+// Whether to cut outside
 function chkUnionClippingRegions(val) {
   terrainClip.clipOutSide = val
 }
 
-// 是否深度检测
+// Whether to detect depth
 function chkTestTerrain(val) {
   map.scene.globe.depthTestAgainstTerrain = val
 }
 
 let table = []
-// 区域表格添加一行记录
+//Add a row of records to the area table
 function addTableItem(item) {
-  table.push({ key: item.id, name: "开挖区域" + item.id })
+  table.push({ key: item.id, name: "Excavation area" + item.id })
 
   eventTabel.fire("tableObject", { table })
 }
@@ -149,7 +149,7 @@ function changeTable(data) {
   table = data
 }
 
-// 表格操作
+// table operations
 function flyToGraphic(item) {
   const graphic = terrainClip.getAreaById(item)
   map.flyToPositions(graphic.positions)

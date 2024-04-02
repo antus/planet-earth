@@ -4,23 +4,23 @@ let map3d
 let map2d
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map3d = mapInstance // 记录map
+  map3d = mapInstance // record map
   map3d.camera.percentageChanged = 0.001
 
-  globalNotify("已知问题提示", `三维事件目前监听不灵敏，视角同步不够平滑。 `)
+  globalNotify("Known Problem Tips", `The current monitoring of 3D events is not sensitive, and the perspective synchronization is not smooth enough. `)
 
   creatMap2D()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   unbind3dEvent()
@@ -45,26 +45,26 @@ function creatMap2D() {
   const configUrl = "http://mars2d.cn/config/config.json"
   mars2d.Util.fetchJson({ url: configUrl })
     .then(function (data) {
-      // 构建地图
+      // Build the map
       map2d = new mars2d.Map("map2d", data.mars2d)
       bind2dEvent(map2d)
       bind3dEvent()
 
       _map2d_extentChangeHandler()
 
-      viewTo23D() // 默认
+      viewTo23D() //Default
 
       hideLoading()
     })
     .catch(function (error) {
       hideLoading()
 
-      console.log("构建地图错误", error)
+      console.log("Build map error", error)
       globalMsg(error && error.message, "error")
     })
 }
 
-// 二维地图变化事件
+// 2D map change event
 function bind2dEvent() {
   map2d.on("drag", _map2d_extentChangeHandler, this)
   map2d.on("zoomend", _map2d_extentChangeHandler, this)
@@ -83,7 +83,7 @@ function _map2d_extentChangeHandler(e) {
     ymin: bounds.getSouth(),
     ymax: bounds.getNorth()
   }
-  console.log(`二维地图变化了，区域： ${JSON.stringify(extent)} `)
+  console.log(`The two-dimensional map has changed, area: ${JSON.stringify(extent)}`)
 
   unbind3dEvent()
   map3d.camera.setView({
@@ -93,7 +93,7 @@ function _map2d_extentChangeHandler(e) {
   bind3dEvent()
 }
 
-// 三维地图相机移动结束事件
+// 3D map camera movement end event
 function bind3dEvent() {
   map3d.on(mars3d.EventType.cameraChanged, camera_moveEndHandler, this)
 }
@@ -103,9 +103,9 @@ function unbind3dEvent() {
 }
 
 function camera_moveEndHandler(e) {
-  const point = map3d.getCenter() // 范围对象
+  const point = map3d.getCenter() // range object
   const level = map3d.level
-  console.log(`'三维地图变化了，位置： ${point.toString()},层级 ${level} `)
+  console.log(`'The three-dimensional map has changed, location: ${point.toString()}, level ${level} `)
 
   unbind2dEvent()
 

@@ -1,7 +1,7 @@
 // import * as mars3d from "mars3d"
 // import { PoiQueryButton } from "./PoiQueryButton"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
 var mapOptions = {
   scene: {
@@ -13,23 +13,23 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   const poiQueryButton = new PoiQueryButton({
-    insertIndex: 0 // 插入的位置顺序
+    insertIndex: 0 // Insert position order
   })
   map.addControl(poiQueryButton)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.728284, lng: 117.274164, alt: 25061, heading: 358, pitch: -69 },
@@ -10,16 +10,16 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   const point = map.getCenter()
   point.format()
@@ -27,14 +27,14 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 获取默认point点
+// Get the default point
 function defultPoint() {
   const point = map.getCenter()
   point.format()
@@ -45,7 +45,7 @@ function defultPoint() {
   }
 }
 
-// 坐标转化的三种方法
+//Three methods of coordinate conversion
 function marsUtilFormtNum(item, num) {
   return mars3d.Util.formatNum(item, num)
 }
@@ -60,7 +60,7 @@ function marsProj4Trans(JD, WD, radio) {
   }
 }
 
-// 转换成十进制的方法
+// Method to convert to decimal
 function marsDms2degree(du, fen, miao) {
   return mars3d.PointTrans.dms2degree(du, fen, miao)
 }
@@ -72,14 +72,14 @@ function marsZONEtoCRS(jd, wd, radio) {
   }
 }
 
-// 地图选点
+// Map point selection
 function bindMourseClick() {
   map.setCursor(true)
   map.once(mars3d.EventType.click, function (event) {
     map.setCursor(false)
     const cartesian = event.cartesian
     const point = mars3d.LngLatPoint.fromCartesian(cartesian)
-    point.format() // 经度、纬度、高度
+    point.format() // longitude, latitude, altitude
 
     eventTarget.fire("clickMap", { point })
   })

@@ -1,17 +1,17 @@
-// 采用高德地图定位的算法
-// 参考帮助文档：https://lbs.amap.com/api/javascript-api/guide/services/geolocation
+//Using the algorithm of Amap positioning
+// Refer to the help documentation: https://lbs.amap.com/api/javascript-api/guide/services/geolocation
 
 class Geolocation extends mars3d.control.ToolButton {
   /**
-   * 创建_container控件容器对象的方法，
-   * 只会调用一次
-   * @return {Promise<object>}  无
+   * Method to create _container control container object,
+   * Will only be called once
+   * @return {Promise<object>} None
    * @private
    */
   _mountedHook() {
-    // 缩小
+    // zoom out
     this._container = mars3d.DomUtil.create("div", "cesium-button cesium-toolbar-button tracking-deactivated")
-    this._container.setAttribute("title", "查看GPS位置")
+    this._container.setAttribute("title", "View GPS location")
 
     this._container.addEventListener("click", (e) => {
       // one time tracking
@@ -33,21 +33,21 @@ class Geolocation extends mars3d.control.ToolButton {
 
       if (!this.geolocation) {
         this.geolocation = new AMap.Geolocation({
-          enableHighAccuracy: true, // 是否使用高精度定位，默认：true
-          timeout: 10000, // 设置定位超时时间，默认：无穷大
-          convert: true // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+          enableHighAccuracy: true, // Whether to use high-accuracy positioning, default: true
+          timeout: 10000, // Set positioning timeout, default: infinity
+          convert: true // Automatically offset coordinates. The offset coordinates are Gaode coordinates. Default: true
         })
       }
 
       this.geolocation.getCurrentPosition()
       AMap.event.addListener(this.geolocation, "complete", (data) => {
-        // data是具体的定位信息
+        //data is specific positioning information
         const wgsPoint = mars3d.PointTrans.gcj2wgs([data.position.lng, data.position.lat])
         this.flyToLocation({ lng: wgsPoint[0], lat: wgsPoint[1] })
       })
       AMap.event.addListener(this.geolocation, "error", (data) => {
-        // 定位出错,参考：https://lbs.amap.com/faq/js-api/map-js-api/position-related
-        globalMsg("定位失败")
+        // Positioning error, reference: https://lbs.amap.com/faq/js-api/map-js-api/position-related
+        globalMsg("Location failed")
       })
     })
   }
@@ -63,14 +63,14 @@ class Geolocation extends mars3d.control.ToolButton {
         color: "#ffff00",
         clampToGround: true
       },
-      tooltip: "我的位置：" + position.lng + "," + position.lat
+      tooltip: "My position:" + position.lng + "," + position.lat
     })
     this._map.graphicLayer.addGraphic(graphic)
 
     graphic.flyTo({
       radius: 2000,
       complete: function () {
-        console.log("飞行操作完成")
+        console.log("Flight operation completed")
       }
     })
 

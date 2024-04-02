@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 24.890314, lng: 118.165162, alt: 831420, heading: 355, pitch: -48 },
@@ -11,29 +11,29 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  map.basemap = 2017 // 蓝色底图
+  map.basemap = 2017 // blue basemap
 
-  // 添加矢量图层
+  //Add vector layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 添加对象
+  // add object
   addAnhui(graphicLayer)
   addCenterCity(graphicLayer)
   addOutCircle(graphicLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -41,9 +41,9 @@ function onUnmounted() {
 
 const diffHeight = 20000
 
-// 添加安徽省底图和墙
+//Add Anhui Province base map and wall
 function addAnhui(graphicLayer) {
-  // 安徽省卫星底图
+  // Satellite base map of Anhui Province
   const anhuiImg = new mars3d.graphic.RectanglePrimitive({
     positions: [
       [114.877478595, 29.395624614],
@@ -59,14 +59,14 @@ function addAnhui(graphicLayer) {
   })
   graphicLayer.addGraphic(anhuiImg)
 
-  // 安徽省边界线墙
+  // Anhui Province Boundary Wall
   const anhuiWall = new mars3d.layer.GeoJsonLayer({
-    name: "安徽省边界墙",
+    name: "Anhui Province Border Wall",
     url: "//data.mars3d.cn/file/geojson/areas/340000.json",
     symbol: {
       type: "wallP",
       styleOptions: {
-        diffHeight, // 墙高
+        diffHeight, // wall height
         materialType: mars3d.MaterialType.Image2,
         materialOptions: {
           image: "./img/icon/wall.png"
@@ -76,9 +76,9 @@ function addAnhui(graphicLayer) {
   })
   map.addLayer(anhuiWall)
 
-  // 安徽各市边界线和名称
+  // Boundary lines and names of cities in Anhui
   const shiLayer = new mars3d.layer.GeoJsonLayer({
-    name: "安徽各市边界线",
+    name: "Boundary lines of cities in Anhui",
     url: "//data.mars3d.cn/file/geojson/areas/340000_full.json",
     symbol: {
       type: "polyline",
@@ -95,7 +95,7 @@ function addAnhui(graphicLayer) {
           outline: true,
           outlineColor: "#f1f3f4",
           outlineWidth: 3,
-          // 视距的设置
+          //Sight distance settings
           scaleByDistance: true,
           scaleByDistance_far: 20000000,
           scaleByDistance_farValue: 0.1,
@@ -105,7 +105,7 @@ function addAnhui(graphicLayer) {
       },
       styleField: "name",
       styleFieldOptions: {
-        合肥市: { color: "rgba(17, 230, 14)" }
+        Hefei City: { color: "rgba(17, 230, 14)" }
       }
     },
     popup: "{name}"
@@ -113,24 +113,24 @@ function addAnhui(graphicLayer) {
   map.addLayer(shiLayer)
 }
 
-// 添加示范城市的相关对象
+//Add related objects of the demonstration city
 function addCenterCity(graphicLayer) {
   const point = [117.234218, 31.814155, diffHeight + 500]
 
-  // divgraphic标注
+  // divgraphic annotation
   const divgraphic = new mars3d.graphic.DivGraphic({
     position: point,
     style: {
       html: `<div class="marsBlackPanel">
-          <div class="marsBlackPanel-text">示范城市</div>
+          <div class="marsBlackPanel-text">Model City</div>
       </div>`,
-      horizontalOrigin: Cesium.HorizontalOrigin.LEFT, // 横向定位
-      verticalOrigin: Cesium.VerticalOrigin.CENTER // 垂直定位
+      horizontalOrigin: Cesium.HorizontalOrigin.LEFT, // horizontal positioning
+      verticalOrigin: Cesium.VerticalOrigin.CENTER // Vertical positioning
     }
   })
   graphicLayer.addGraphic(divgraphic)
 
-  // 圆形动态扩散图
+  // Circular dynamic diffusion chart
   const cicle = new mars3d.graphic.CirclePrimitive({
     position: point,
     style: {
@@ -146,11 +146,11 @@ function addCenterCity(graphicLayer) {
   graphicLayer.addGraphic(cicle)
 }
 
-// 添加周边的圆圈刻度尺等对象
+//Add surrounding circles, scales and other objects
 function addOutCircle(graphicLayer) {
   const arrImg = [
     {
-      // 刻度
+      //scale
       image: "./img/icon/calib.png",
       positions: [
         [113.564329, 35.654741],
@@ -158,7 +158,7 @@ function addOutCircle(graphicLayer) {
       ]
     },
     {
-      // 刻度尺
+      //scale
       image: "./img/icon/calib-value.png",
       positions: [
         [114.162597, 29.256489],
@@ -166,7 +166,7 @@ function addOutCircle(graphicLayer) {
       ]
     },
     {
-      // 方向
+      // direction
       image: "./img/icon/calib-dir.png",
       positions: [
         [114.162597, 29.256489],
@@ -190,7 +190,7 @@ function addOutCircle(graphicLayer) {
     graphicLayer.addGraphic(graphic)
   }
 
-  // 自转的半椭圆
+  // Rotating semi-ellipse
   let rotation = Cesium.Math.toRadians(50)
   function getRotationValue() {
     rotation += 0.005

@@ -1,19 +1,19 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
 const arrData = [
-  { name: "油罐一", position: [117.09521, 31.814404, 47.3] },
-  { name: "油罐二", position: [117.095206, 31.814878, 47.3] },
-  { name: "油罐三", position: [117.094653, 31.814428, 47.3] },
-  { name: "发电机", position: [117.093428, 31.816959, 31.8] },
-  { name: "指挥室", position: [117.093953, 31.814397, 36] },
-  { name: "加热罐", position: [117.09385, 31.815837, 36.9] },
-  { name: "冷却室", position: [117.094662, 31.816403, 32.9] }
+  { name: "Oil Tank One", position: [117.09521, 31.814404, 47.3] },
+  { name: "Oil Tank Two", position: [117.095206, 31.814878, 47.3] },
+  { name: "Oil Tank Three", position: [117.094653, 31.814428, 47.3] },
+  { name: "Generator", position: [117.093428, 31.816959, 31.8] },
+  { name: "Command Room", position: [117.093953, 31.814397, 36] },
+  { name: "Heating tank", position: [117.09385, 31.815837, 36.9] },
+  { name: "Cooling Room", position: [117.094662, 31.816403, 32.9] }
 ]
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.81226, lng: 117.096703, alt: 231, heading: 329, pitch: -28 }
@@ -21,17 +21,17 @@ var mapOptions = {
 }
 
 /**
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 加载油田联合站模型
+  //Load the oilfield joint station model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     pid: 2020,
     type: "3dtiles",
-    name: "油田联合站",
+    name: "Oilfield Union Station",
     url: "//data.mars3d.cn/3dtiles/max-ytlhz/tileset.json",
     position: { lng: 117.094224, lat: 31.815859, alt: 26.4 },
     rotation: { z: 116.2 },
@@ -40,19 +40,19 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建DIV数据图层
+  //Create DIV data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
 
-  // 初始加载
+  // initial load
   divGraphicYellow()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -61,7 +61,7 @@ function onUnmounted() {
   graphicLayer = null
 }
 
-// 效果一
+// Effect one
 function divGraphicYellow() {
   graphicLayer.clear()
 
@@ -86,9 +86,9 @@ function divGraphicYellow() {
     })
     graphicLayer.addGraphic(divGraphic)
 
-    // 刷新局部DOM,不影响popup面板的其他控件操作
+    // Refresh the local DOM without affecting the operations of other controls in the popup panel.
     divGraphic.on(mars3d.EventType.popupRender, function (event) {
-      const container = event.container // popup对应的DOM
+      const container = event.container // DOM corresponding to popup
       const graphic = event.target
 
       const oldVal = graphic.attr.duNum
@@ -105,7 +105,7 @@ function divGraphicYellow() {
   }
 }
 
-// 效果二
+// Effect two
 function divGraphicBule() {
   graphicLayer.clear()
 
@@ -127,7 +127,7 @@ function divGraphicBule() {
   }
 }
 
-// 效果三
+// Effect three
 function divGraphicWhite() {
   graphicLayer.clear()
 
@@ -140,17 +140,17 @@ function divGraphicWhite() {
         text: item.name,
         color: "#fff",
         font_size: 16,
-        font_family: "微软雅黑",
+        font_family: "Microsoft Yahei",
         lineHeight: 50,
         circleSize: 8,
-        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 100000) // 按视距距离显示
+        distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 100000) //Display according to sight distance
       }
     })
     graphicLayer.addGraphic(divGraphic)
   }
 }
 
-// 效果四
+// Effect four
 function divGraphicHotSpot() {
   graphicLayer.clear()
 
@@ -175,14 +175,14 @@ function divGraphicHotSpot() {
   }
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }

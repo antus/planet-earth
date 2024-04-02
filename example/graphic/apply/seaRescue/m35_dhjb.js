@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-//脚本对象方法
+//Script object method
 function initEditorJS(map) {
   let first = {
     activate: function () {
-      JB.showPanel("第一步 发送信号")
+      JB.showPanel("The first step is to send a signal")
       firstStep()
     },
     disable: function () {
@@ -13,7 +13,7 @@ function initEditorJS(map) {
 
   let second = {
     activate: function () {
-      JB.showPanel("第二步 传送信号")
+      JB.showPanel("Step 2: Send signal")
       secondStep()
     },
     disable: function () {
@@ -22,7 +22,7 @@ function initEditorJS(map) {
   }
   let third = {
     activate: function () {
-      JB.showPanel("第三步 下达指令")
+      JB.showPanel("The third step is to issue the command")
       thirdStep()
     },
     disable: function () {
@@ -31,7 +31,7 @@ function initEditorJS(map) {
   }
   let forth = {
     activate: function () {
-      JB.showPanel("第四步 准备出发")
+      JB.showPanel("Step 4: Get ready to go")
       forthStep()
     },
     disable: function () {
@@ -40,7 +40,7 @@ function initEditorJS(map) {
   }
   let fifth = {
     activate: function () {
-      JB.showPanel("第五步 出发")
+      JB.showPanel("Step 5: Start")
       fifthStep()
     },
     disable: function () {
@@ -49,7 +49,7 @@ function initEditorJS(map) {
   }
   let sixth = {
     activate: function () {
-      JB.showPanel("第六步 处理泄露")
+      JB.showPanel("Step 6: Deal with leaks")
       sixthStep()
     },
     disable: function () {
@@ -58,7 +58,7 @@ function initEditorJS(map) {
   }
   let seventh = {
     activate: function () {
-      JB.showPanel("第七步 完成营救")
+      JB.showPanel("Step 7: Complete rescue")
       seventhStep()
     },
     disable: function () {
@@ -66,47 +66,47 @@ function initEditorJS(map) {
     }
   }
 
-  //脚本配置信息（包括顺序、时间、业务对象）
+  //Script configuration information (including sequence, time, business objects)
   let data = [
     {
-      text: "救援步骤",
+      text: "Rescue Steps",
       state: {
         opened: true,
         selected: false
       },
       children: [
         {
-          text: "发送信号",
+          text: "Send signal",
           times: 4,
           widget: first
         },
         {
-          text: "传送信号",
+          text: "Transmit signal",
           times: 4,
           widget: second
         },
         {
-          text: "下达指令",
+          text: "Give instructions",
           times: 4,
           widget: third
         },
         {
-          text: "准备出发",
+          text: "Ready to go",
           times: 4,
           widget: forth
         },
         {
-          text: "出发",
+          text: "departure",
           times: 6,
           widget: fifth
         },
         {
-          text: "处理泄露",
+          text: "Handling leaks",
           times: 4,
           widget: sixth
         },
         {
-          text: "完成营救",
+          text: "Rescue completed",
           times: 4,
           widget: seventh
         }

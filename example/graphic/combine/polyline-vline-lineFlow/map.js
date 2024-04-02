@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.801072, lng: 117.208356, alt: 1250, heading: 35, pitch: -17 }
@@ -11,14 +11,14 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.basemap = 2017 // 切换到蓝色底图
+  map = mapInstance // record map
+  map.basemap = 2017 // switch to blue basemap
 
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
@@ -28,13 +28,13 @@ function onMounted(mapInstance) {
         conditions: [["true", `color("rgba(42, 160, 224, 1)")`]]
       }
     },
-    marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
+    marsJzwStyle: true, // Turn on building special effects (built-in Shader code)
     center: { lat: 31.801072, lng: 117.208356, alt: 1250, heading: 35, pitch: -17 },
     popup: "all"
   })
   map.addLayer(tilesetLayer)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -61,7 +61,7 @@ function onMounted(mapInstance) {
     })
   }
 
-  // 多个线对象的合并渲染。
+  // Combined rendering of multiple line objects.
   const graphic = new mars3d.graphic.PolylineCombine({
     instances: arrData
   })
@@ -69,8 +69,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -79,14 +79,14 @@ function onUnmounted() {
   graphicLayer = null
 }
 
-// 取区域内的随机点
+// Get random points in the area
 function randomPoint() {
   const jd = random(117.208056 * 1000, 117.25548 * 1000) / 1000
   const wd = random(31.816617 * 1000, 31.855756 * 1000) / 1000
   return new mars3d.LngLatPoint(jd, wd, 100)
 }
 
-// 取随机数字
+// Get random numbers
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }

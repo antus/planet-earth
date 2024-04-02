@@ -3,24 +3,24 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="author" content="Mars Technology http://mars3d.cn " />
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="x5-fullscreen" content="true" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-    <!-- 标题及搜索关键字 -->
-    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <!-- Title and search keywords -->
+    <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
     <meta
       name="description"
-      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+      content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework three-dimensional earth model gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming Geographic Information System Cloud GIS 3D GIS GIS Platform WebGIS"
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
-    <title>动画脚本演示 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>Animation script demonstration | Mars3D | 3D map | Mars Technology | Hefei Mars Technology Co., Ltd.</title>
 
-    <!--第三方lib-->
+    <!--Third-party lib-->
     <script
       type="text/javascript"
       src="/lib/include-lib.js"
@@ -59,17 +59,17 @@
 
     <div id="viewReset" class="infoview" style="overflow: auto; top: 10px">
       <div class="btn-group">
-        <button id="btn_start" type="button" class="btn btn-primary"><i class="fa fa-play-circle-o"></i>开始</button>
-        <button id="btn_pause" type="button" class="btn btn-primary" style="display: none"><i class="fa fa-pause-circle-o"></i>暂停</button>
-        <button id="btn_proceed" type="button" class="btn btn-primary" style="display: none"><i class="fa fa-play-circle-o"></i>继续</button>
-        <button id="btn_stop" type="button" class="btn btn-primary" style="display: none"><i class="fa fa-stop-circle-o"></i>停止</button>
+        <button id="btn_start" type="button" class="btn btn-primary"><i class="fa fa-play-circle-o"></i>Start</button>
+        <button id="btn_pause" type="button" class="btn btn-primary" style="display: none"><i class="fa fa-pause-circle-o"></i>Pause</i> button>
+        <button id="btn_proceed" type="button" class="btn btn-primary" style="display: none"><i class="fa fa-play-circle-o"></i>Continue</i> button>
+        <button id="btn_stop" type="button" class="btn btn-primary" style="display: none"><i class="fa fa-stop-circle-o"></i>Stop</i> button>
       </div>
 
       <ul id="treeOverlays" style="padding: 0"></ul>
       <br />
-      总时长: <span id="alltimes">0s</span> &nbsp;&nbsp;
+      Total duration: <span id="alltimes">0s</span>
       <br />
-      当前:&nbsp;&nbsp;<span id="thisStep">无</span> &nbsp;&nbsp;
+      Current: <span id="thisStep">None</span>
       <span id="thistimes"></span>
     </div>
 
@@ -79,7 +79,7 @@
     <script src="./map.js"></script>
 
     <script type="text/javascript">
-      "use script" //开发环境建议开启严格模式
+      "use script" //It is recommended to turn on strict mode in the development environment
 
       let isPlay = false
       let isPause = false
@@ -92,7 +92,7 @@
       let timer
       let interval
 
-      //UI界面相关
+      //UI interface related
       function initUI() {
         initEditorJS(map)
 
@@ -134,28 +134,28 @@
           )
         })
         console.log(animations)
-        totalTimes = `${Math.floor(time / 60)}分${time % 60}秒`
+        totalTimes = `${Math.floor(time / 60)}minutes${time % 60}seconds`
 
         map.on(mars3d.EventType.keydown, (event) => {
           switch (event.keyCode) {
             default:
               break
-            case "1".charCodeAt(0): //播放、暂停切换
+            case "1".charCodeAt(0): //Play and pause switching
               if (dataWork._isStart) {
                 $("#btn_pause").click()
               } else {
                 $("#btn_proceed").click()
               }
               break
-            case "2".charCodeAt(0): //停止
+            case "2".charCodeAt(0): //Stop
               $("#btn_stop").click()
               break
-            case "3".charCodeAt(0): //绑定和解绑键盘(控制器)控制
+            case "3".charCodeAt(0): //Bind and unbind keyboard (controller) control
               map.keyboardRoam.enabled = !map.keyboardRoam.enabled
               if (map.keyboardRoam.enabled) {
-                haoutil.msg("已开启键盘控制")
+                haoutil.msg("Keyboard control turned on")
               } else {
-                haoutil.msg("已关闭键盘控制，您可以鼠标进行操作了！")
+                haoutil.msg("Keyboard control has been closed, you can operate with the mouse!")
               }
               break
           }
@@ -202,7 +202,7 @@
         $("#btn_stop").hide()
         $("#btn_proceed").hide()
 
-        $("#thisStep").html("无")
+        $("#thisStep").html("None")
         $("#thistimes").html("")
         $("#treeOverlays").jstree("deselect_all", true)
       }
@@ -217,7 +217,7 @@
         if (currentIndex < animations.length) {
           const animate = animations[currentIndex]
           selectedKeys = [animate.key]
-          currentWork = `${animate.title}(${animate.times}秒)`
+          currentWork = `${animate.title}(${animate.times} seconds)`
           counter = animate.times
           countOn()
           animate.widget()
@@ -241,11 +241,11 @@
 
       const treeData = [
         {
-          title: "特征点",
+          title: "Feature Points",
           key: "01",
           children: [
             {
-              title: "山顶点",
+              title: "Mountain Peak",
               key: "01-01",
               times: 6,
               widget() {
@@ -253,7 +253,7 @@
               }
             },
             {
-              title: "鞍部点",
+              title: "Saddle Point",
               key: "01-02",
               times: 10,
               widget() {
@@ -261,7 +261,7 @@
               }
             },
             {
-              title: "坡度变换点",
+              title: "Slope transformation point",
               key: "01-03",
               times: 6,
               widget() {
@@ -269,7 +269,7 @@
               }
             },
             {
-              title: "山脚点",
+              title: "Mountain Foot Point",
               key: "01-04",
               times: 6,
               widget() {
@@ -277,7 +277,7 @@
               }
             },
             {
-              title: "山脚坡度变换点",
+              title: "Slope change point at the foot of the mountain",
               key: "01-05",
               times: 6,
               widget() {
@@ -285,7 +285,7 @@
               }
             },
             {
-              title: "倾斜变换点",
+              title: "Oblique transformation point",
               key: "01-06",
               times: 6,
               widget() {
@@ -295,11 +295,11 @@
           ]
         },
         {
-          title: "特征线",
+          title: "Characteristic Line",
           key: "02",
           children: [
             {
-              title: "山脊线",
+              title: "Ridgeline",
               key: "02-01",
               times: 6,
               widget() {
@@ -307,7 +307,7 @@
               }
             },
             {
-              title: "山谷线",
+              title: "Valley Line",
               key: "02-02",
               times: 8,
               widget() {
@@ -315,7 +315,7 @@
               }
             },
             {
-              title: "俯瞰",
+              title: "Overlook",
               key: "02-03",
               times: 5,
               widget() {
@@ -325,11 +325,11 @@
           ]
         },
         {
-          title: "绘制过程",
+          title: "Drawing Process",
           key: "03",
           children: [
             {
-              title: "计算通过点",
+              title: "Calculate passing points",
               key: "03-01",
               times: 6,
               widget() {
@@ -337,7 +337,7 @@
               }
             },
             {
-              title: "等高线绘制",
+              title: "Contour Drawing",
               key: "03-02",
               times: 6,
               widget() {
@@ -345,7 +345,7 @@
               }
             },
             {
-              title: "等高线结果",
+              title: "Contour results",
               key: "03-03",
               times: 10,
               widget() {
@@ -356,20 +356,20 @@
         }
       ]
 
-      // //数据处理，及自动播放
+      // //Data processing, and automatic playback
       let dataWork = {
         alltimes: 0,
         arrNode: [],
         analysisData: function (arr) {
           for (let i = 0; i < arr.length; i++) {
             let item = arr[i]
-            // item.state = { disabled: true }; //前端播放时禁用单击
+            // item.state = { disabled: true }; // Disable clicking during front-end playback
 
             if (item.widget) {
               item.index = this.arrNode.length //this.getNextId();
               item.id = item.index
               item.times = item.times || 60
-              item.text = item.text + "(" + item.times + "秒)"
+              item.text = item.text + "(" + item.times + "seconds)"
               item.icon = "fa fa-tag"
               this.arrNode.push(item)
               this.alltimes += item.times
@@ -390,7 +390,7 @@
               return
             }
             this.steptimes++
-            $("#thistimes").html(this.steptimes + "秒")
+            $("#thistimes").html(this.steptimes + "seconds")
           }, 1000)
 
           $("#treeOverlays").jstree({
@@ -413,7 +413,7 @@
         },
         _isStart: false,
         selectdNode: null,
-        //开始
+        //start
         start: function (node) {
           this.stop()
 
@@ -426,7 +426,7 @@
           map.clock.shouldAnimate = true
           dataWork.activateNode(node || this.arrNode[0])
         },
-        //暂停
+        //pause
         pause: function () {
           $("#btn_start").hide()
           $("#btn_pause").hide()
@@ -444,7 +444,7 @@
             this.timeIdx = -1
           }
         },
-        //   //继续
+        //   //continue
         proceed: function () {
           $("#btn_start").hide()
           $("#btn_pause").show()
@@ -471,7 +471,7 @@
           this._isStart = true
         },
 
-        //停止
+        //stop
         stop: function () {
           this.pause()
           $("#btn_start").show()
@@ -479,7 +479,7 @@
           $("#btn_stop").hide()
           $("#btn_proceed").hide()
 
-          $("#thisStep").html("无")
+          $("#thisStep").html("None")
           $("#thistimes").html("")
           $("#treeOverlays").jstree("deselect_all", true)
 
@@ -493,14 +493,14 @@
         },
         activateNode: function (node) {
           this.selectdNode = node
-          $("#stopRoate").val("暂停")
+          $("#stopRoate").val("Pause")
           this.steptimes = 0
           $("#thisStep").html(node.text)
           $("#treeOverlays").jstree("deselect_all", true)
           $("#treeOverlays").jstree("select_node", node.id, true)
           node.widget.activate(node)
 
-          // $("#treeOverlays").jstree().close_all(); //收起树
+          // $("#treeOverlays").jstree().close_all(); //Close the tree
 
           let that = this
           this.timeIdx = setTimeout(function () {
@@ -520,7 +520,7 @@
         }
       }
 
-      //通用方法 脚本列表
+      //General method script list
       let JB = {
         showPanel(html) {
           $("#viewResult").remove()
@@ -534,19 +534,19 @@
         },
         playMP3(src) {
           let mp3 = new Audio(src)
-          mp3.play() //播放 mp3这个音频对象
+          mp3.play() //Play the mp3 audio object
           return mp3
         },
-        //绕点飞行
+        //Fly around the point
         startRotatePoint(center) {
           if (!this.rotatePoint) {
             this.rotatePoint = new mars3d.thing.RotatePoint({
-              direction: false, //方向 true逆时针，false顺时针
-              time: 50 //给定飞行一周所需时间(单位 秒)，控制速度
+              direction: false, //direction true counterclockwise, false clockwise
+              time: 50 //Given the time required for one flight (in seconds), control the speed
             })
             map.addThing(this.rotatePoint)
           }
-          //开启旋转
+          //Enable rotation
           this.rotatePoint.start(center)
         },
         stopRotatePoint() {

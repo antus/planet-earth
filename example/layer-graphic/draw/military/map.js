@@ -1,51 +1,51 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 var kgUtil = window.kgUtil
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.516143, lng: 117.282937, alt: 46242, heading: 2, pitch: -49 }
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer({
     hasEdit: true,
-    isAutoEditing: true // 绘制完成后是否自动激活编辑
+    isAutoEditing: true // Whether to automatically activate editing after drawing is completed
   })
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
 
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 绘制
+// draw
 function drawPolygon(type) {
   graphicLayer.startDraw({
     type,
@@ -61,7 +61,7 @@ function drawPolygon(type) {
   })
 }
 
-// 绘制(带高度)
+// Draw (with height)
 function drawExtrudedPolygon(type) {
   graphicLayer.startDraw({
     type,
@@ -74,23 +74,23 @@ function drawExtrudedPolygon(type) {
   })
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -110,7 +110,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -130,7 +130,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -145,7 +145,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -154,38 +154,38 @@ function bindLayerContextMenu() {
     },
 
     {
-      text: "计算周长",
+      text: "Calculate perimeter",
       icon: "fa fa-medium",
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
-        globalAlert("该对象的周长为:" + strDis)
+        globalAlert("The perimeter of this object is:" + strDis)
       }
     },
     {
-      text: "计算面积",
+      text: "Calculate area",
       icon: "fa fa-reorder",
       callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
-        globalAlert("该对象的面积为:" + strArea)
+        globalAlert("The area of ​​this object is:" + strArea)
       }
     }
   ])
 }
 
-// 保存GeoJSON
+//Save GeoJSON
 function downloadJsonFile() {
   const geojson = graphicLayer.toGeoJSON()
-  mars3d.Util.downloadFile("我的标注.json", JSON.stringify(geojson))
+  mars3d.Util.downloadFile("My annotation.json", JSON.stringify(geojson))
 }
 
 /**
- * 打开geojson文件
+ * Open geojson file
  *
  * @export
- * @param {FileInfo} file 文件
- * @returns {void} 无
+ * @param {FileInfo} file file
+ * @returns {void} None
  */
 function openGeoJSON(file) {
   const fileName = file.name
@@ -196,7 +196,7 @@ function openGeoJSON(file) {
     reader.readAsText(file, "UTF-8")
     reader.onloadend = function (e) {
       const geojson = this.result
-      // geojson = simplifyGeoJSON(geojson) // 简化geojson的点
+      // geojson = simplifyGeoJSON(geojson) // Simplify geojson points
       graphicLayer.loadGeoJSON(geojson, {
         flyTo: true
       })
@@ -207,7 +207,7 @@ function openGeoJSON(file) {
     reader.onloadend = function (e) {
       const strkml = this.result
       kgUtil.toGeoJSON(strkml).then((geojson) => {
-        // geojson = simplifyGeoJSON(geojson) // 简化geojson的点
+        // geojson = simplifyGeoJSON(geojson) // Simplify geojson points
         console.log("kml2geojson", geojson)
 
         graphicLayer.loadGeoJSON(geojson, {
@@ -216,9 +216,9 @@ function openGeoJSON(file) {
       })
     }
   } else if (fileType === "kmz") {
-    // 加载input文件控件的二进制流
+    //Load the binary stream of the input file control
     kgUtil.toGeoJSON(file).then((geojson) => {
-      // geojson = simplifyGeoJSON(geojson) // 简化geojson的点
+      // geojson = simplifyGeoJSON(geojson) // Simplify geojson points
       console.log("kmz2geojson", geojson)
 
       graphicLayer.loadGeoJSON(geojson, {
@@ -226,16 +226,16 @@ function openGeoJSON(file) {
       })
     })
   } else {
-    globalMsg("暂不支持 " + fileType + " 文件类型的数据！")
+    globalMsg("Data of " + fileType + " file type is not supported yet!")
   }
 }
 
-// 简化geojson的坐标
+// Simplify geojson coordinates
 // function simplifyGeoJSON(geojson) {
 //   try {
 //     geojson = turf.simplify(geojson, { tolerance: 0.000001, highQuality: true, mutate: true })
 //   } catch (e) {
-//     console.log("加载出错", e)
+// console.log("Loading error", e)
 //   }
 //   return geojson
 // }

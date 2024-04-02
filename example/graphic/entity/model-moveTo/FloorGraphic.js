@@ -1,37 +1,37 @@
 /**
- * 分层的楼栋 模型对象
+ * Layered building model object
  *
  * @class FloorGraphic
  * @extends {mars3d.graphic.BasePointEntity}
  */
 class FloorGraphic extends mars3d.graphic.BasePointEntity {
   /**
-   * 对象添加到图层前创建一些对象的钩子方法，
-   * 只会调用一次
-   * @return {Promise<object>}  无
+   * Hook method to create some objects before adding them to the layer,
+   * Will only be called once
+   * @return {Promise<object>} None
    * @private
    */
   _mountedHook() {
     this._models = []
 
-    const point = this.point // 楼栋位置
-    const floorHeight = this.style.spacing // 每层层高,单位:米
-    const floorCount = this.style.count // 总层数（不含楼顶）
+    const point = this.point // Building location
+    const floorHeight = this.style.spacing //Height of each floor, unit: meters
+    const floorCount = this.style.count //Total number of floors (excluding roof)
 
-    // 增加楼层
+    //Add floor
     for (let i = 0; i < floorCount; i++) {
       const alt = point.alt + i * floorHeight
       const model = new mars3d.graphic.ModelEntity({
         position: [point.lng, point.lat, alt],
         style: this.style,
         attr: {
-          origAlt: alt // 记录原始高度
+          origAlt: alt // record the original height
         }
       })
       this._models.push(model)
     }
 
-    // 增加楼顶
+    //Add roof
     const topAlt = point.alt + floorCount * floorHeight
     const topModel = new mars3d.graphic.ModelEntity({
       position: [point.lng, point.lat, topAlt],
@@ -40,16 +40,16 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
         url: this.style.topUrl
       },
       attr: {
-        origAlt: topAlt // 记录原始高度
+        origAlt: topAlt // record the original height
       }
     })
     this._models.push(topModel)
   }
 
   /**
-   * 对象添加到图层上的创建钩子方法，
-   * 每次add时都会调用
-   * @return {void}  无
+   * The object is added to the creation hook method on the layer,
+   * Called every time add
+   * @return {void} None
    * @private
    */
   _addedHook() {
@@ -59,9 +59,9 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
   }
 
   /**
-   * 对象从图层上移除的创建钩子方法，
-   * 每次remove时都会调用
-   * @return {void}  无
+   * Create a hook method for object removal from the layer,
+   * Called every time remove
+   * @return {void} None
    * @private
    */
   _removedHook() {
@@ -71,16 +71,16 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
   }
 
   /**
-   * 展开所有楼层
+   * Expand all floors
    *
-   * @param {number} height 展开的每层间隔高度，单位：米
-   * @param {number} [time=4] 完全展开时间,单位:秒
-   * @return {void}  无
+   * @param {number} height The height of each expanded layer interval, unit: meters
+   * @param {number} [time=4] Full expansion time, unit: seconds
+   * @return {void} None
    */
   openAll(height, time = 4) {
     this.reset()
 
-    const point = this.point // 楼栋位置
+    const point = this.point // Building location
 
     for (let i = 0; i < this._models.length; i++) {
       const model = this._models[i]
@@ -88,20 +88,20 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
       const alt = i * height + model.attr.origAlt
       model.moveTo({
         position: [point.lng, point.lat, alt],
-        time // 移动的时长(单位 秒)
+        time // length of movement (unit seconds)
       })
     }
   }
 
   /**
-   * 合并所有楼层
+   * Combine all floors
    *
-   * @param {number} [time=4] 完成合并时间,单位:秒
+   * @param {number} [time=4] Time to complete the merge, unit: seconds
    * @memberof FloorGraphic
    * @returns {void}
    */
   mergeAll(time = 4) {
-    const point = this.point // 楼栋位置
+    const point = this.point // Building location
 
     for (let i = 0; i < this._models.length; i++) {
       const model = this._models[i]
@@ -109,17 +109,17 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
       model.show = true
       model.moveTo({
         position: [point.lng, point.lat, model.attr.origAlt],
-        time // 移动的时长(单位 秒)
+        time // length of movement (unit seconds)
       })
     }
   }
 
   /**
-   * 还原重置所有楼层
-   * @return {void}  无
+   * Restore and reset all floors
+   * @return {void} None
    */
   reset() {
-    const point = this.point // 楼栋位置
+    const point = this.point // Building location
 
     for (let i = 0; i < this._models.length; i++) {
       const model = this._models[i]
@@ -130,17 +130,17 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
   }
 
   /**
-   * 显示指定楼层
+   * Display the specified floor
    *
-   * @param {Number} floorNum 指定显示的楼层，第1层开始
-   * @param {Number} [time=1] 楼层下落需要时间,单位:秒
-   * @return {void}  无
+   * @param {Number} floorNum specifies the displayed floor, starting from the 1st floor
+   * @param {Number} [time=1] The time it takes for the floor to fall, unit: seconds
+   * @return {void} None
    */
   showFloor(floorNum, time = 1) {
     floorNum--
 
-    const point = this.point // 楼栋位置
-    const maxHeight = 120 // 顶部落下的高度
+    const point = this.point // Building location
+    const maxHeight = 120 //Height of the top falling
 
     for (let i = floorNum; i < this._models.length; i++) {
       const model = this._models[i]
@@ -154,7 +154,7 @@ class FloorGraphic extends mars3d.graphic.BasePointEntity {
       model.show = true
       model.moveTo({
         position: [point.lng, point.lat, model.attr.origAlt],
-        time // 移动的时长(单位 秒)
+        time // length of movement (unit seconds)
       })
     }
   }

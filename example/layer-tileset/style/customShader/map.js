@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tiles3dLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.795446, lng: 117.219725, alt: 1816, heading: 15, pitch: -34 }
@@ -11,17 +11,17 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.basemap = 2017 // 蓝色底图
+  map = mapInstance // record map
+  map.basemap = 2017 // blue basemap
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥市建筑物",
+    name: "Hefei City Building",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
     popup: "all"
@@ -30,8 +30,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -42,7 +42,7 @@ function setStyleDef() {
 }
 
 function setStyle1() {
-  globalMsg(`当前效果是：根据视角距离，模型呈现不同颜色`)
+  globalMsg(`The current effect is: the model appears in different colors according to the viewing distance`)
 
   tiles3dLayer.customShader = new Cesium.CustomShader({
     lightingModel: Cesium.LightingModel.UNLIT,
@@ -56,28 +56,28 @@ function setStyle1() {
 }
 
 function setStyle2() {
-  globalMsg(`当前效果是：动态渐变+动态光环的特效`)
+  globalMsg(`The current effect is: dynamic gradient + dynamic halo special effects`)
 
   tiles3dLayer.customShader = new Cesium.CustomShader({
     lightingModel: Cesium.LightingModel.UNLIT,
     fragmentShaderText: `
       void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
       {
-        vec4 position = czm_inverseModelView * vec4(fsInput.attributes.positionEC,1); // 位置
+        vec4 position = czm_inverseModelView * vec4(fsInput.attributes.positionEC,1); // position
 
-        // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
-        float _baseHeight = 50.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-        float _heightRange = 380.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-        float _glowRange = 400.0; // 光环的移动范围(高度)
+        // Note that when writing floating point numbers in the shader, they must have a decimal point, otherwise an error will be reported. For example, 0 needs to be written as 0.0, and 1 needs to be written as 1.0.
+        float _baseHeight = 50.0; // The base height of the object needs to be modified to a suitable building base height.
+        float _heightRange = 380.0; // Highlight range (_baseHeight ~ _baseHeight + _heightRange)
+        float _glowRange = 400.0; // The movement range (height) of the halo
 
-        // 建筑基础色
+        //Building base color
         float mars_height = position.z - _baseHeight; //position.y
         float mars_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
         float mars_a12 = mars_height / _heightRange + sin(mars_a11) * 0.1;
-        material.diffuse = vec3(0.0, 0.0, 1.0); // 颜色
-        material.diffuse *= vec3(mars_a12);// 渐变
+        material.diffuse = vec3(0.0, 0.0, 1.0); // color
+        material.diffuse *= vec3(mars_a12);//gradient
 
-        // 动态光环
+        // dynamic halo
         float time = fract(czm_frameNumber / 360.0);
         time = abs(time - 0.5) * 2.0;
         float mars_h = clamp(mars_height / _glowRange, 0.0, 1.0);
@@ -87,9 +87,9 @@ function setStyle2() {
   })
 }
 
-//  夜景贴图
+// Night scene texture
 function setStyle3() {
-  globalMsg(`当前效果是：夜景贴图的特效`)
+  globalMsg(`The current effect is: the special effect of the night scene texture`)
 
   tiles3dLayer.customShader = new Cesium.CustomShader({
     lightingModel: Cesium.LightingModel.UNLIT,
@@ -108,14 +108,14 @@ function setStyle3() {
     void vertexMain(VertexInput vsInput, inout czm_modelVertexOutput vsOutput){
         v_mars3d_normalMC = vsInput.attributes.normalMC;
       }`,
-    fragmentShaderText: /* glsl 如果贴图方向不对，用下面这个 */ `
+    fragmentShaderText: /* glsl If the texture direction is wrong, use the following */ `
     void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
       vec3 positionMC = fsInput.attributes.positionMC;
       if (dot(vec3(0.0, 0.0, 1.0), v_mars3d_normalMC) > 0.95) {
-        //处理楼顶:统一处理成深色。
+        //Processing the roof: uniformly process it into dark color.
         material.diffuse = vec3(0.079, 0.107, 0.111);
       } else {
-        //处理四个侧面: 贴一样的图
+        //Process four sides: paste the same picture
         float mars3d_width = 100.0;
         float mars3d_height = 100.0;
         float mars3d_textureX = 0.0;
@@ -134,9 +134,9 @@ function setStyle3() {
 
 //
 function setStyle4() {
-  globalMsg(`当前效果是：色彩动态变化的特效`)
+  globalMsg(`The current effect is: special effects of dynamic color changes`)
 
-  // 特效
+  // special effects
   const customShader = new Cesium.CustomShader({
     uniforms: {
       u_build0: {

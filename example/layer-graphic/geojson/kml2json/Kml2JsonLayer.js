@@ -1,19 +1,19 @@
 // import kgUtil from "kml-geojson"
 
 /**
- * 通过转geojson方式 加载kml和kmz文件。
- * kgUtil使用需要引入 ../lib/geojson/kml-geojson.js文件
+ * Load kml and kmz files by converting to geojson.
+ * Use of kgUtil requires the introduction of the ../lib/geojson/kml-geojson.js file
  */
 class Kml2JsonLayer extends mars3d.layer.GeoJsonLayer {
   /**
-   * 加载新数据 或 刷新数据
+   * Load new data or refresh data
    *
-   * @param {Object} [newOptions] 新设定的参数，会与类的构造参数合并。
-   * @param {String} [newOptions.url] geojson文件或服务url地址
-   * @param {Object} [newOptions.data] geojson格式规范数据对象，与url二选一即可。
-   * @param {Object} [newOptions.类参数] 包含当前类支持的所有参数
-   * @param {BaseGraphicLayer.ConstructorOptions} [newOptions.通用参数] 包含父类支持的所有参数
-   * @return {this} 当前对象本身，可以链式调用
+   * @param {Object} [newOptions] The newly set parameters will be merged with the construction parameters of the class.
+   * @param {String} [newOptions.url] geojson file or service url address
+   * @param {Object} [newOptions.data] geojson format specification data object, choose one from url.
+   * @param {Object} [newOptions.Class parameters] contains all parameters supported by the current class
+   * @param {BaseGraphicLayer.ConstructorOptions} [newOptions.General parameters] contains all parameters supported by the parent class
+   * @return {this} the current object itself, which can be called in a chain
    */
   load(newOptions) {
     if (newOptions) {
@@ -39,7 +39,7 @@ class Kml2JsonLayer extends mars3d.layer.GeoJsonLayer {
           this._load_data(data)
         })
         .catch(function (error) {
-          console.error("服务出错", error)
+          console.error("Service error", error)
         })
     } else if (this.options.data) {
       kgUtil
@@ -51,11 +51,11 @@ class Kml2JsonLayer extends mars3d.layer.GeoJsonLayer {
           this._load_data(data)
         })
         .catch(function (error) {
-          console.error("服务出错", error)
+          console.error("Service error", error)
         })
     } else {
       if (newOptions) {
-        console.warn("Kml2JsonLayer：没有传入 url 或 data 参数,请确认是否有误。")
+        console.warn("Kml2JsonLayer: No url or data parameters were passed in, please confirm whether there is an error.")
       }
     }
   }
@@ -63,5 +63,5 @@ class Kml2JsonLayer extends mars3d.layer.GeoJsonLayer {
 
 mars3d.layer.Kml2JsonLayer = Kml2JsonLayer
 
-// 注册下
+//Register
 mars3d.LayerUtil.register("kml2json", Kml2JsonLayer)

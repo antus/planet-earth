@@ -1,16 +1,16 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.816469, lng: 117.188323, alt: 6109.8, heading: 358.1, pitch: -64.6 }
   },
-  // 方式1：在创建地球前的参数中配置
+  // Method 1: Configure in the parameters before creating the earth
   basemaps: [
     // {
-    //   name: "光污染图层",
+    // name: "Light Pollution Layer",
     //   icon: "img/basemaps/blackMarble.png",
     //   type: "wms",
     //   url: "//www.lightpollutionmap.info/geoserver/gwc/service/wms",
@@ -20,21 +20,21 @@ var mapOptions = {
     //     transparent: true,
     //     format: "image/png"
     //   },
-    //   alpha: 0.6, // 透明度
-    //   proxy: "//server.mars3d.cn/proxy/", // 代理服务，解决跨域问题
+    // alpha: 0.6, // transparency
+    // proxy: "//server.mars3d.cn/proxy/", // Proxy service to solve cross-domain problems
     //   show: true
     // },
     // {
-    //   // wms也可以换一种xyz的直接写法
-    //   name: "光污染图层(XYZ方式)",
+    // // wms can also be written in a direct way of writing xyz
+    // name: "Light pollution layer (XYZ mode)",
     //   icon: "img/basemaps/blackMarble.png",
     //   type: "xyz",
     //   url: "//www.lightpollutionmap.info/geoserver/gwc/service/wms?transparent=true&format=image%2Fpng&service=WMS&version=1.1.1&request=GetMap&styles=&layers=PostGIS%3AVIIRS_2019&bbox={westProjected},{southProjected},{eastProjected},{northProjected}&width={width}&height={height}&srs=EPSG%3A3857",
-    //   alpha: 0.6, // 透明度
-    //   proxy: "//server.mars3d.cn/proxy/" // 代理服务，解决跨域问题
+    // alpha: 0.6, // transparency
+    // proxy: "//server.mars3d.cn/proxy/" // Proxy service to solve cross-domain problems
     // },
     {
-      name: "单张图片",
+      name: "Single picture",
       icon: "img/basemaps/offline.png",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/world.jpg",
@@ -43,29 +43,29 @@ var mapOptions = {
   ]
 }
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
   addTileLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 叠加的图层
+// overlaid layers
 let tileLayer
 
-// 改wms请求的大小写
+//Change the case of wms request
 // Cesium.Resource.ReplaceUrl = function (url) {
 //   if (this._url.startsWith("//server.mars3d.cn/geoserver/mars/wms")) {
 //     return url.replaceAll("bbox", "BBOX")
@@ -77,7 +77,7 @@ let tileLayer
 function addTileLayer() {
   removeTileLayer()
 
-  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  // Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
   tileLayer = new mars3d.layer.WmsLayer({
     url: "//server.mars3d.cn/geoserver/mars/wms",
     layers: "mars:hf",
@@ -88,7 +88,7 @@ function addTileLayer() {
     getFeatureInfoParameters: {
       feature_count: 10
     },
-    // 单击高亮及其样式
+    // Click highlight and its style
     highlight: {
       type: "wallP",
       diffHeight: 100,
@@ -96,7 +96,7 @@ function addTileLayer() {
       materialOptions: {
         image: "img/textures/fence.png",
         color: "#ffff00",
-        speed: 10, // 速度，建议取值范围1-100
+        speed: 10, // Speed, recommended value range 1-100
         axisY: true
       }
     },
@@ -118,25 +118,25 @@ function addTileLayer() {
   })
   map.addLayer(tileLayer)
 
-  // 单击事件
+  // click event
   tileLayer.on(mars3d.EventType.loadConfig, function (event) {
-    console.log("加载了GetCapabilities", event)
+    console.log("GetCapabilities loaded", event)
 
     setTimeout(() => {
       map.mouseEvent.pickImageryLayerFeatures([117.169993, 31.842132, 214.6]).then((result) => {
-        console.log("手动模拟了单击，返回了：", result)
+        console.log("Manually simulated click and returned:", result)
       })
     }, 6000)
   })
   tileLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了矢量数据，共" + event.features.length + "条", event)
+    console.log("Clicked vector data, total" + event.features.length + "bar", event)
   })
 }
 
 function addTileLayer2() {
   removeTileLayer()
 
-  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  // Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
   tileLayer = new mars3d.layer.WmsLayer({
     url: "https://localhost/geoserver/wms",
     layers: "sz_building:building_plat",
@@ -150,17 +150,17 @@ function addTileLayer2() {
       feature_count: 10,
       INFO_FORMAT: "text/plain"
     },
-    // 不支持json格式的wms服务时，可以自定义方法解析数据
+    // When the wms service in json format is not supported, you can customize the method to parse the data.
     featureToGraphic: (feature, event) => {
       const data = feature.data
 
-      // 自行加解析data的代码，下面是测试演示
+      //Add the code to parse the data yourself. The following is a test demonstration
       const attr = {}
-      attr["名称"] = "皇岗村文化广场及音乐喷水泉"
-      attr["街道名称"] = "福田街道"
-      attr["社区名称"] = "皇岗社区"
+      attr["name"] = "Huanggang Village Cultural Square and Music Fountain"
+      attr["street name"] = "Futian Street"
+      attr["community name"] = "Huanggang Community"
 
-      // 返回graphic对应的构造参数
+      // Return the construction parameters corresponding to graphic
       return {
         type: "point",
         position: event.cartesian,
@@ -179,12 +179,12 @@ function addTileLayer2() {
   })
   map.addLayer(tileLayer)
 
-  // 单击事件
+  // click event
   tileLayer.on(mars3d.EventType.loadConfig, function (event) {
-    console.log("加载了GetCapabilities", event)
+    console.log("GetCapabilities loaded", event)
   })
   tileLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了矢量数据，共" + event.features.length + "条", event)
+    console.log("Clicked vector data, total" + event.features.length + "bar", event)
   })
 }
 

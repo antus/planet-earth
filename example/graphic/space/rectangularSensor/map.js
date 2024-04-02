@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     fxaa: true,
@@ -20,27 +20,27 @@ var mapOptions = {
 var eventTarget = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", `该矢量对象不支持拾取`)
+  globalNotify("Known problem prompt", `This vector object does not support picking`)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 添加演示数据
+  //Add demo data
   addDemoGraphic1()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -54,25 +54,25 @@ function addDemoGraphic1() {
       pitch: 0,
       roll: 0,
 
-      radius: 100000, // 传感器的半径
-      xHalfAngleDegree: 50, // 传感器水平半角
-      yHalfAngleDegree: 50, // 传感器垂直半角
+      radius: 100000, // Radius of the sensor
+      xHalfAngleDegree: 50, // Sensor horizontal half angle
+      yHalfAngleDegree: 50, // Sensor vertical half angle
 
       color: "rgba(0,255,255,0.4)",
-      lineColor: "#ffffff", // 线的颜色
+      lineColor: "#ffffff", // line color
 
-      showScanPlane: true, // 是否显示扫描面
+      showScanPlane: true, // Whether to display the scan plane
       scanPlaneColor: "rgba(0,255,255,0.9)",
-      scanPlaneMode: "vertical", // 扫描面模式 垂直vertical/水平horizontal
-      scanPlaneRate: 3, // 扫描速率,
+      scanPlaneMode: "vertical", //Scan plane mode vertical/horizontal
+      scanPlaneRate: 3, //Scan rate,
       depthTest: true
     }
   })
   graphicLayer.addGraphic(rectangularSensor)
 
-  // 加个模型
+  //Add a model
   const model = new mars3d.graphic.ModelPrimitive({
-    name: "地面站模型",
+    name: "Ground station model",
     position: [117.218875, 31.817812, 138],
     style: {
       url: "//data.mars3d.cn/gltf/mars/leida.glb",
@@ -87,14 +87,14 @@ function addDemoGraphic1() {
   graphicLayer.addGraphic(model)
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -103,13 +103,13 @@ function addRandomGraphicByCount(count) {
     const graphic = new mars3d.graphic.RectangularSensor({
       position,
       style: {
-        radius: result.radius, // 传感器的半径
-        xHalfAngleDegree: 50, // 传感器水平半角
-        yHalfAngleDegree: 50, // 传感器垂直半角
+        radius: result.radius, // Radius of the sensor
+        xHalfAngleDegree: 50, // Sensor horizontal half angle
+        yHalfAngleDegree: 50, // Sensor vertical half angle
         color: "#00ffff",
         opacity: 0.4,
-        lineColor: "#ffffff", // 线的颜色
-        showScanPlane: false, // 是否显示扫描面
+        lineColor: "#ffffff", // line color
+        showScanPlane: false, // Whether to display the scan plane
         depthTest: true
       },
       attr: { index }
@@ -117,11 +117,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制 相阵控雷达
+// Start drawing phased array radar
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "rectangularSensor",
@@ -130,17 +130,17 @@ function startDrawGraphic() {
       pitch: 0,
       roll: 0,
 
-      radius: 10000, // 传感器的半径
-      xHalfAngleDegree: 50, // 传感器水平半角
-      yHalfAngleDegree: 50, // 传感器垂直半角
+      radius: 10000, // Radius of the sensor
+      xHalfAngleDegree: 50, // Sensor horizontal half angle
+      yHalfAngleDegree: 50, // Sensor vertical half angle
 
       color: "rgba(0,255,255,0.4)",
-      lineColor: "#ffffff", // 线的颜色
+      lineColor: "#ffffff", // line color
 
-      showScanPlane: true, // 是否显示扫描面
+      showScanPlane: true, // Whether to display the scan plane
       scanPlaneColor: "rgba(0,255,255,0.9)",
-      scanPlaneMode: "vertical", // 扫描面模式 垂直vertical/水平horizontal
-      scanPlaneRate: 3, // 扫描速率,
+      scanPlaneMode: "vertical", //Scan plane mode vertical/horizontal
+      scanPlaneRate: 3, //Scan rate,
       depthTest: true
     }
   })

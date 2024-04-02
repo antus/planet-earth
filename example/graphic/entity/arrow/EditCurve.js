@@ -1,5 +1,5 @@
 /**
- * 【自定义线状标号】 曲线 对应的编辑类
+ * [Customized linear label] Curve corresponding editing class
  */
 class EditCurve extends mars3d.edit.EditBase {
   bindDraggers() {
@@ -8,7 +8,7 @@ class EditCurve extends mars3d.edit.EditBase {
     for (let i = 0, len = positions.length; i < len; i++) {
       const position = this.updatePositionsHeightByAttr(positions[i])
 
-      // 各顶点
+      //Each vertex
       const dragger = this.createDragger({
         position,
         onDrag: (dragger, position) => {
@@ -30,48 +30,48 @@ class EditCurve extends mars3d.edit.EditBase {
       dragger.index = i
       this.draggers.push(dragger)
 
-      // 中间点，拖动后新增点
+      //Middle point, add new point after dragging
       if (!this.hasClosure && i < len - 1) {
         const nextIndex = (i + 1) % len
         const nextPosition = positions[nextIndex]
-        // 第一个中间点
+        // first intermediate point
         let midpoint = mars3d.PointUtil.getMidpoint(position, nextPosition, 0.33)
         midpoint = this.updatePositionsHeightByAttr(midpoint)
 
         const draggerMid = this.createDragger({
           position: midpoint,
           type: mars3d.EditPointType.AddMidPoint,
-          tooltip: this._map.getLangText("_增加点"),
+          tooltip: this._map.getLangText("_Add point"),
           onDragStart: (dragger, position) => {
-            this.positions.splice(dragger.index, 0, position) // 插入点
+            this.positions.splice(dragger.index, 0, position) //Insertion point
           },
           onDrag: (dragger, position) => {
             this.positions[dragger.index] = position
           },
           onDragEnd: (dragger, position) => {
-            this._fireAddPoint(dragger, position) // 新增点事件
+            this._fireAddPoint(dragger, position) //Add point event
             this.updateDraggers()
           }
         })
         draggerMid.index = nextIndex
         this.draggers.push(draggerMid)
 
-        // 第二个中间点
+        // second intermediate point
         let midpoint2 = mars3d.PointUtil.getMidpoint(position, nextPosition, 0.66)
         midpoint2 = this.updatePositionsHeightByAttr(midpoint2)
 
         const draggerMid2 = this.createDragger({
           position: midpoint2,
           type: mars3d.EditPointType.AddMidPoint,
-          tooltip: this._map.getLangText("_增加点"),
+          tooltip: this._map.getLangText("_Add point"),
           onDragStart: (dragger, position) => {
-            this.positions.splice(dragger.index, 0, position) // 插入点
+            this.positions.splice(dragger.index, 0, position) //Insertion point
           },
           onDrag: (dragger, position) => {
             this.positions[dragger.index] = position
           },
           onDragEnd: (dragger, position) => {
-            this._fireAddPoint(dragger, position) // 新增点事件
+            this._fireAddPoint(dragger, position) //Add point event
             this.updateDraggers()
           }
         })
@@ -80,11 +80,11 @@ class EditCurve extends mars3d.edit.EditBase {
       }
     }
 
-    // 整体平移移动点
+    //Move the overall translation point
     this._bindMoveAllDragger()
   }
 
-  // 整体平移移动点
+  //Move the overall translation point
   _bindMoveAllDragger() {
     if (!this._graphic._hasMoveEdit) {
       return
@@ -100,12 +100,12 @@ class EditCurve extends mars3d.edit.EditBase {
     const draggerMove = this.createDragger({
       position: positionMove,
       type: mars3d.EditPointType.MoveAll,
-      tooltip: this._map.getLangText("_整体平移"),
+      tooltip: this._map.getLangText("_Overall translation"),
       onDragStart: (dragger, position) => {
         positionMove = position
       },
       onDrag: (dragger, position) => {
-        // 记录差值
+        //Record the difference
         const diff = Cesium.Cartesian3.subtract(position, positionMove, new Cesium.Cartesian3())
         positionMove = position
 
@@ -127,10 +127,10 @@ class EditCurve extends mars3d.edit.EditBase {
     this.draggers.push(draggerMove)
   }
 
-  // 根据属性更新坐标
+  //Update coordinates based on attributes
   updatePositionsHeightByAttr(position) {
     // if (this.clampToGround) {
-    //   position = getSurfacePosition(this._map.scene, position, { has3dtiles: true }) // 贴地时求贴模型和贴地的高度
+    // position = getSurfacePosition(this._map.scene, position, { has3dtiles: true }) // When attaching to the ground, find the height of the attached model and the ground.
     // }
     return position
   }

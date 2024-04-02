@@ -1,22 +1,22 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tilesetLayer
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", `因为使用clippingPlanes接口，绘制面时，有些绘制的角度存在效果不对`)
+  globalNotify("Known problem tips", `Because the clippingPlanes interface is used, when drawing surfaces, some drawing angles have incorrect effects`)
 
-  // 加模型
+  //Add model
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "县城社区",
+    name: "County Community",
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
@@ -26,7 +26,7 @@ function onMounted(mapInstance) {
 
     center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
 
-    // 可传入TilesetPlanClip构造参数，下面是演示裁剪区域
+    //TilesetPlanClip construction parameters can be passed in. The following is the demonstration cropping area.
     planClip: {
       positions: [
         [119.481231, 28.440357, 0],
@@ -41,14 +41,14 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tilesetLayer)
 
-  // 也兼容原生cesium的tileset，按下面方式使用
+  // Also compatible with native cesium tileset, use as follows
   // let tilesetPlanClip = new mars3d.thing.TilesetPlanClip()
   // tilesetPlanClip.clipTarget = tileset
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -64,12 +64,12 @@ function drawPoly() {
       clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
-      // 加入positions才能使3d裁剪确定位置，生效
+      // Adding positions can make 3D cropping determine the position and take effect.
       tilesetLayer.planClip.positions = positions
     }
   })
@@ -86,10 +86,10 @@ function drawPoly2() {
       clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       tilesetLayer.planClip.clipOutSide = true
       tilesetLayer.planClip.positions = positions
@@ -108,10 +108,10 @@ function drawExtent() {
       // clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       tilesetLayer.planClip.positions = positions
     }
@@ -129,10 +129,10 @@ function drawExtent2() {
       // clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       tilesetLayer.planClip.clipOutSide = true
       tilesetLayer.planClip.positions = positions

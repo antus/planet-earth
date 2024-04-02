@@ -1,29 +1,29 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.563158, lng: 116.329235, alt: 16165, heading: 0, pitch: -45 }
   }
 }
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
   map.on(mars3d.EventType.load, () => {
     LodGraphicLayer()
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -31,10 +31,10 @@ function onUnmounted() {
 
 function LodGraphicLayer() {
   const lodGraphicLayer = new mars3d.layer.LodGraphicLayer({
-    IdField: "id", // 数据的唯一主键 字段名称
-    minimumLevel: 11, // 限定层级，只加载该层级下的数据。[与效率相关的重要参数]
+    IdField: "id", // The unique primary key of the data field name
+    minimumLevel: 11, //Limit the level and only load data under this level. [Important parameters related to efficiency]
     debuggerTileInfo: true,
-    // 根据LOD分块信息去请求对应的Tile瓦块内的数据
+    //Request the data in the corresponding Tile tile based on the LOD block information
     queryGridData: (grid) => {
       return mars3d.Util.fetchJson({
         url: "//server.mars3d.cn/server/pointRandom/",
@@ -46,11 +46,11 @@ function LodGraphicLayer() {
           count: 5
         }
       }).then(function (data) {
-        grid.list = data // list标识回传数据
+        grid.list = data //list identifies the returned data
         return grid
       })
     },
-    // 根据 attr属性 创建 矢量对象[必须返回Graphic对象]
+    //Create vector object based on attr attribute [Must return Graphic object]
     createGraphic(grid, attr) {
       const height = map.getHeight(Cesium.Cartesian3.fromDegrees(attr.x, attr.y))
 
@@ -70,6 +70,6 @@ function LodGraphicLayer() {
   map.addLayer(lodGraphicLayer)
 
   lodGraphicLayer.on(mars3d.EventType.click, (event) => {
-    console.log("你单击了对象", event)
+    console.log("You clicked the object", event)
   })
 }

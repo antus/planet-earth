@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tilesetClip
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.623553, lng: 117.322405, alt: 123536, heading: 359, pitch: -81 }
@@ -13,44 +13,44 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   queryTilesetData()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function createLayer(layers) {
-  return mars3d.LayerUtil.create(layers) // 创建图层
+  return mars3d.LayerUtil.create(layers) // Create layers
 }
 
-// 添加矢量数据图层
+//Add vector data layer
 function addLayer(layer) {
   map.addLayer(layer)
   layer.flyTo()
 }
 
-// 取消勾选移除图层
+// Uncheck remove layer
 function removeLayer(layer) {
   map.removeLayer(layer)
 }
 
-// 数据获取
+// data collection
 function queryTilesetData() {
   mars3d.Util.fetchJson({ url: "config/tileset.json" })
     .then(function (arr) {
@@ -58,6 +58,6 @@ function queryTilesetData() {
       eventTarget.fire("loadTypeList", { modelData })
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }

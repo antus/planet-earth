@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 var eventTarget = new mars3d.BaseClass()
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.471758, lng: 117.20494, alt: 47660, heading: 4, pitch: -45 }
@@ -12,26 +12,26 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
@@ -53,8 +53,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -84,45 +84,45 @@ function addDemoGraphic1(graphicLayer) {
       //   return Cesium.Color.BLUE
       // }, false),
 
-      label: { text: "鼠标移入会高亮", pixelOffsetY: -30 },
-      // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+      label: { text: "Mouseover will highlight", pixelOffsetY: -30 },
+      // The style when highlighting (default is mouse move in, you can also specify type:'click' to click to highlight). After construction, you can also manually call the openHighlight and closeHighlight methods.
       highlight: {
         color: "#ff0000"
       }
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
   graphicLayer.addGraphic(graphic)
 
-  // 演示个性化处理graphic
+  // Demonstrate personalized processing graphic
   // initGraphicManager(graphic)
 }
 
-// 也可以在单个Graphic上做个性化管理及绑定操作
+// You can also perform personalized management and binding operations on a single Graphic
 function initGraphicManager(graphic) {
-  // 3.在graphic上绑定监听事件
+  // 3. Bind the listening event to the graphic
   // graphic.on(mars3d.EventType.click, function (event) {
-  //   console.log("监听graphic，单击了矢量对象", event)
+  // console.log("Listening to graphic, clicked vector object", event)
   // })
-  // 绑定Tooltip
-  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
+  // Bind Tooltip
+  // graphic.bindTooltip('I am the Tooltip bound to graphic') //.openTooltip()
 
-  // 绑定Popup
+  // Bind Popup
   const inthtml = `<table style="width: auto;">
             <tr>
-              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
+              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">I am a Popup bound to the graphic </th>
             </tr>
             <tr>
-              <td>提示：</td>
-              <td>这只是测试信息，可以任意html</td>
+              <td>Tips:</td>
+              <td>This is just test information, you can use any html</td>
             </tr>
           </table>`
   graphic.bindPopup(inthtml).openPopup()
 
-  // 绑定右键菜单
+  //Bind right-click menu
   graphic.bindContextMenu([
     {
-      text: "删除对象[graphic绑定的]",
+      text: "Delete object [graphic-bound]",
       icon: "fa fa-trash-o",
       callback: (e) => {
         const graphic = e.graphic
@@ -133,20 +133,20 @@ function initGraphicManager(graphic) {
     }
   ])
 
-  // 测试 颜色闪烁
+  //Test color flash
   if (graphic.startFlicker) {
     graphic.startFlicker({
-      time: 20, // 闪烁时长（秒）
+      time: 20, // Flashing duration (seconds)
       maxAlpha: 0.5,
       color: Cesium.Color.YELLOW,
       onEnd: function () {
-        // 结束后回调
+        // Callback after completion
       }
     })
   }
 }
 
-// 有衬色边线,附带的label演示，导出geojson，加载geojson
+// There are colored edges, attached label demonstration, export geojson, load geojson
 function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.PolylineEntity({
     positions: [
@@ -162,7 +162,7 @@ function addDemoGraphic2(graphicLayer) {
         outlineColor: Cesium.Color.BLACK
       },
       label: {
-        text: "我是原始线",
+        text: "I am the original line",
         font_size: 18,
         color: "#ffffff",
         distanceDisplayCondition: true,
@@ -170,31 +170,31 @@ function addDemoGraphic2(graphicLayer) {
         distanceDisplayCondition_near: 0
       }
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "Example 2" }
   })
   graphicLayer.addGraphic(graphic)
 
-  // graphic转geojson
+  // graphic to geojson
   const geojson = graphic.toGeoJSON()
-  console.log("转换后的geojson", geojson)
+  console.log("Converted geojson", geojson)
   addGeoJson(geojson, graphicLayer)
 }
 
-// 添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+// Add a single geojson as graphic, use graphicLayer.loadGeoJSON directly for multiple
 function addGeoJson(geojson, graphicLayer) {
   const graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
   delete graphicCopy.attr
-  // 新的坐标
+  // new coordinates
   graphicCopy.positions = [
     [117.172852, 31.872736, 33.69],
     [117.251461, 31.866011, 26.44]
   ]
   graphicCopy.style.label = graphicCopy.style.label || {}
-  graphicCopy.style.label.text = "我是转换后生成的"
+  graphicCopy.style.label.text = "I generated it after conversion"
   graphicLayer.addGraphic(graphicCopy)
 }
 
-// 箭头线
+// arrow line
 function addDemoGraphic3(graphicLayer) {
   const graphic = new mars3d.graphic.PolylineEntity({
     positions: [
@@ -209,12 +209,12 @@ function addDemoGraphic3(graphicLayer) {
         color: Cesium.Color.YELLOW
       }
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "Example 3" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
-// 虚线
+// dashed line
 function addDemoGraphic4(graphicLayer) {
   const graphic = new mars3d.graphic.PolylineEntity({
     positions: [
@@ -230,12 +230,12 @@ function addDemoGraphic4(graphicLayer) {
         dashLength: 8.0
       }
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "Example 4" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
-// 虚线 ，双色间隔
+// Dotted line, two-color interval
 function addDemoGraphic5(graphicLayer) {
   const graphic = new mars3d.graphic.PolylineEntity({
     positions: [
@@ -252,7 +252,7 @@ function addDemoGraphic5(graphicLayer) {
         dashPattern: parseInt("1111000000", 2)
       }
     },
-    attr: { remark: "示例5" }
+    attr: { remark: "Example 5" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -272,7 +272,7 @@ function addDemoGraphic6(graphicLayer) {
         speed: 3
       }
     },
-    attr: { remark: "示例6" }
+    attr: { remark: "Example 6" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -280,13 +280,13 @@ function addDemoGraphic6(graphicLayer) {
 function addDemoGraphic7(graphicLayer) {
   const startPoint = Cesium.Cartesian3.fromDegrees(117.025419, 32.00651, 51.2)
   const endPoint = Cesium.Cartesian3.fromDegrees(117.323963, 32.050384, 33.8)
-  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) // 计算曲线点
+  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) // Calculate curve points
 
   const graphic = new mars3d.graphic.PolylineEntity({
     positions,
     style: {
       width: 8,
-      // 动画线材质
+      //Animation line material
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         image: "img/textures/line-gradual.png",
@@ -295,7 +295,7 @@ function addDemoGraphic7(graphicLayer) {
         speed: 25
       }
     },
-    attr: { remark: "示例7" }
+    attr: { remark: "Example 7" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -303,13 +303,13 @@ function addDemoGraphic7(graphicLayer) {
 function addDemoGraphic8(graphicLayer) {
   const startPoint = Cesium.Cartesian3.fromDegrees(117.128446, 31.943352, 42.31)
   const endPoint = Cesium.Cartesian3.fromDegrees(117.410216, 31.975375, 37.53)
-  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) // 计算曲线点
+  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) // Calculate curve points
 
   const graphic = new mars3d.graphic.PolylineEntity({
     positions,
     style: {
       width: 10,
-      // 动画线材质
+      //Animation line material
       materialType: mars3d.MaterialType.LineFlow,
       materialOptions: {
         image: "img/textures/line-arrow-blue.png",
@@ -319,16 +319,16 @@ function addDemoGraphic8(graphicLayer) {
         repeat: new Cesium.Cartesian2(5, 1)
       }
     },
-    attr: { remark: "示例8" }
+    attr: { remark: "Example 8" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
-// 演示CallbackProperty属性
+// Demonstrate CallbackProperty property
 function addDemoGraphic9(graphicLayer) {
   const startPoint = Cesium.Cartesian3.fromDegrees(117.281455, 31.896386, 22.64)
   const endPoint = Cesium.Cartesian3.fromDegrees(117.528249, 31.921552, 43.3)
-  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) // 计算曲线点
+  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) // Calculate curve points
 
   const graphic = new mars3d.graphic.PolylineEntity({
     positions,
@@ -342,7 +342,7 @@ function addDemoGraphic9(graphicLayer) {
         alpha: 0.2
       }
     },
-    attr: { remark: "示例9" }
+    attr: { remark: "Example 9" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -350,7 +350,7 @@ function addDemoGraphic9(graphicLayer) {
 function addDemoGraphic10(graphicLayer) {
   const startPoint = Cesium.Cartesian3.fromDegrees(116.96385, 32.089068, 38.1)
   const endPoint = Cesium.Cartesian3.fromDegrees(117.299257, 32.137552, 40)
-  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) // 计算曲线点
+  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) // Calculate curve points
 
   const graphic = new mars3d.graphic.PolylineEntity({
     positions,
@@ -362,7 +362,7 @@ function addDemoGraphic10(graphicLayer) {
         speed: 10
       }
     },
-    attr: { remark: "示例10" }
+    attr: { remark: "Example 10" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -383,7 +383,7 @@ function addDemoGraphic11(graphicLayer) {
         speed: 30
       }
     },
-    attr: { remark: "示例11" }
+    attr: { remark: "Example 11" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -404,7 +404,7 @@ function addDemoGraphic12(graphicLayer) {
         speed: 20
       }
     },
-    attr: { remark: "示例12" }
+    attr: { remark: "Example 12" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -425,7 +425,7 @@ function addDemoGraphic13(graphicLayer) {
         speed: 25
       }
     },
-    attr: { remark: "示例13" }
+    attr: { remark: "Example 13" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -446,7 +446,7 @@ function addDemoGraphic14(graphicLayer) {
         speed: 8
       }
     },
-    attr: { remark: "示例14" }
+    attr: { remark: "Example 14" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -467,7 +467,7 @@ function addDemoGraphic15(graphicLayer) {
   ]
 
   const graphic = new mars3d.graphic.PolylineEntity({
-    positions: mars3d.PolyUtil.interLine(positions, { minDistance: "auto" }), // 切分坐标，使流动材质均匀些
+    positions: mars3d.PolyUtil.interLine(positions, { minDistance: "auto" }), // Split the coordinates to make the flowing material more uniform
     style: {
       width: 7,
       materialType: mars3d.MaterialType.LineFlow,
@@ -479,9 +479,9 @@ function addDemoGraphic15(graphicLayer) {
         speed: 10
       }
     },
-    attr: { remark: "示例15" }
+    attr: { remark: "Example 15" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic16(graphicLayer) {
@@ -495,15 +495,15 @@ function addDemoGraphic16(graphicLayer) {
       width: 3,
       color: "#ff0000"
     },
-    attr: { remark: "示例16" }
+    attr: { remark: "Example 16" }
   })
   graphicLayer.addGraphic(graphic)
 
-  // 动态平滑追加点
-  const positions_draw = graphic.setCallbackPositions() // 切换坐标为动态回调模式
+  //Dynamic smooth additional points
+  const positions_draw = graphic.setCallbackPositions() // Switch coordinates to dynamic callback mode
   setInterval(() => {
     const position = new mars3d.LngLatPoint(116.979661 + Math.random() * 0.01, 31.863542 + Math.random() * 0.01, 38).toCartesian()
-    positions_draw.push(position) // 追加点
+    positions_draw.push(position) //Add points
   }, 3000)
 }
 
@@ -518,15 +518,15 @@ function addDemoGraphic17(graphicLayer) {
       width: 20,
       materialType: mars3d.MaterialType.LineThreeDash,
       materialOptions: {
-        color: Cesium.Color.RED, // 中心线颜色
-        dashLength: 64, // 中心长度
-        widthRatio: 0.1, // 中心百分比
-        sidesColor: Cesium.Color.WHITE, // 外侧颜色
-        sidesDashLength: 32, // 外侧长度
-        sidesWidthRatio: 0.1 // 外侧百分比
+        color: Cesium.Color.RED, // center line color
+        dashLength: 64, // center length
+        widthRatio: 0.1, // Center percentage
+        sidesColor: Cesium.Color.WHITE, // Outside color
+        sidesDashLength: 32, // outside length
+        sidesWidthRatio: 0.1 // Outside percentage
       }
     },
-    attr: { remark: "示例17" }
+    attr: { remark: "Example 17" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -542,26 +542,26 @@ function addDemoGraphic18(graphicLayer) {
       width: 10,
       materialType: mars3d.MaterialType.LineCross,
       materialOptions: {
-        color: Cesium.Color.RED, // 中心线颜色
-        dashLength: 36, // 十字长度
-        maskLength: 10, // 空隙间隔长度
-        centerPower: 0.1, // 中心宽百分比
-        dashPower: 0.2 // 虚线百分比
+        color: Cesium.Color.RED, // center line color
+        dashLength: 36, // cross length
+        maskLength: 10, // Gap interval length
+        centerPower: 0.1, // Center width percentage
+        dashPower: 0.2 // dashed line percentage
       }
     },
-    attr: { remark: "示例18" }
+    attr: { remark: "Example 18" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -581,15 +581,15 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "polyline",
-    // maxPointNum: 2, //可以限定最大点数，2个点绘制后自动结束
+    // maxPointNum: 2, //The maximum number of points can be limited, and it will automatically end after drawing 2 points
     // hasMidPoint: false,
     style: {
       color: "#55ff33",
@@ -606,7 +606,7 @@ function startDrawGraphic() {
   })
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic2() {
   graphicLayer.startDraw({
     type: "polyline",
@@ -618,7 +618,7 @@ function startDrawGraphic2() {
   })
 }
 
-// 开始绘制 自由曲线
+// Start drawing free curve
 function startDrawBrushLine() {
   graphicLayer.startDraw({
     type: "brushLine",
@@ -630,23 +630,23 @@ function startDrawBrushLine() {
   })
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -666,7 +666,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -686,7 +686,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -701,7 +701,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -709,12 +709,12 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "计算长度",
+      text: "Calculate length",
       icon: "fa fa-medium",
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
-        globalAlert("该对象的长度为:" + strDis)
+        globalAlert("The length of this object is:" + strDis)
       }
     }
   ])

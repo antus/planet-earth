@@ -1,18 +1,18 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 28.665233, lng: 108.757799, alt: 4255656, heading: 356, pitch: -87 }
   },
-  // 方式1：在创建地球前的参数中配置
+  // Method 1: Configure in the parameters before creating the earth
   layers: [
     {
-      name: "矢量瓦片图层",
+      name: "Vector Tile Layer",
       icon: "img/basemaps/osm.png",
-      type: "pbf", // lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js 中定义的类型
+      type: "pbf", // Type defined in lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js
       url: "https://api.maptiler.com/maps/basic/style.json?key=pSHUA9sSkNny3iqoWG4P",
       popup: "all",
       show: true
@@ -21,41 +21,41 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   globalNotify(
-    "已知问题提示",
-    `(1) 无数据区域mapbox-gl.js解析失败F12会有错误提示，但不影响使用。(2) 如果部分PBF数据未显示，需要扩展开发对应解析style代码。`
+    "Known Issue Tips",
+    `(1) If mapbox-gl.js fails to be parsed in the data-free area, an error message will appear in F12, but it does not affect use. (2) If some PBF data is not displayed, the corresponding parsing style code needs to be expanded and developed. `
   )
 
   addPbfLayer2()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 // function addPbfLayer() {
-//   // 在 lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js 中定义的
+// // Defined in lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js
 //   const pbfLayer = new mars3d.layer.PbfLayer({
 //     url: "https://api.maptiler.com/maps/basic/style.json?key=pSHUA9sSkNny3iqoWG4P",
 //     popup: "all"
 //   })
 //   map.addLayer(pbfLayer)
 
-//   // 单击事件
+// // Click event
 //   pbfLayer.on(mars3d.EventType.click, function (event) {
-//     console.log("单击了矢量数据，共" + event.features.length + "条", event)
+// console.log("Clicked vector data, total" + event.features.length + "bar", event)
 //   })
 // }
 
@@ -496,15 +496,15 @@ function addPbfLayer2() {
     }
   }
 
-  // 在 lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js 中定义的
+  // Defined in lib\mars3d\thirdParty\pbf-mapbox\PbfLayer.js
   const pbfLayer = new mars3d.layer.PbfLayer({
     style: exampleStyle,
     popup: "all"
   })
   map.addLayer(pbfLayer)
 
-  // 单击事件
+  // click event
   pbfLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了矢量数据，共" + event.features.length + "条", event)
+    console.log("Clicked vector data, total" + event.features.length + "bar", event)
   })
 }

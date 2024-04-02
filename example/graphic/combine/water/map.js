@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.674602, lng: 117.236871, alt: 15562, heading: 360, pitch: -44 }
@@ -14,35 +14,35 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
     const pickedItem = event.pickedObject?.data
     // let attr = event.graphic.attr
-    console.log("单击了合并对象中的单个值为", pickedItem)
+    console.log("The single value in the merged object was clicked", pickedItem)
   })
 
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
 
-  // 加演示数据
+  //Add demo data
   addRandomGraphicByCount(10000)
   graphicLayer.flyTo()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -50,11 +50,11 @@ function onUnmounted() {
 
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   const arrData = []
   for (let j = 0; j < result.points.length; ++j) {
@@ -74,37 +74,37 @@ function addRandomGraphicByCount(count) {
     arrData.push({
       positions: [pt1, pt2, pt3, pt4, pt5],
       style: {
-        normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
-        frequency: 8000.0, // 控制波数的数字。
-        animationSpeed: 0.02, // 控制水的动画速度的数字。
-        amplitude: 5.0, // 控制水波振幅的数字。
-        specularIntensity: 0.8, // 控制镜面反射强度的数字。
-        baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-        blendColor: "#006ab4", // 从水中混合到非水域时使用的rgba颜色对象。
-        opacity: 0.6, // 透明度
+        normalMap: "img/textures/waterNormals.jpg", // Normal map of water normal disturbance
+        frequency: 8000.0, // Number that controls the wave number.
+        animationSpeed: 0.02, // Number that controls the animation speed of water.
+        amplitude: 5.0, // Number that controls the amplitude of the water wave.
+        specularIntensity: 0.8, // Number that controls the intensity of specular reflection.
+        baseWaterColor: "#006ab4", // The base color of water in the rgba color object. #00ffff,#00baff,#006ab4
+        blendColor: "#006ab4", // The rgba color object used when blending from water to non-water.
+        opacity: 0.6, // transparency
 
-        offsetAttribute: Cesium.GeometryOffsetAttribute.ALL, // 需要有
+        offsetAttribute: Cesium.GeometryOffsetAttribute.ALL, // required
         offsetHeight: Math.random() * 1000
       },
       attr: { index }
     })
   }
 
-  // 多个面对象的合并渲染。
+  // Combined rendering of multiple area objects.
   const graphic = new mars3d.graphic.WaterCombine({
     instances: arrData
   })
   graphicLayer.addGraphic(graphic)
 
-  // 演示：平滑移动高度
+  // Demo: Smoothly move height
   // let height = 0
   // setInterval(() => {
   //   if (height > 10000 || graphic.isDestroy) {
   //     return
   //   }
   //   height += 1
-  //   graphic.offsetHeight = height // 更新所有
-  //   // graphic.setOffsetHeight(height, 0) // 更新第0个数据
+  // graphic.offsetHeight = height // Update all
+  // // graphic.setOffsetHeight(height, 0) // Update the 0th data
   // }, 10)
 
   // setInterval(() => {
@@ -112,7 +112,7 @@ function addRandomGraphicByCount(count) {
   //     return
   //   }
   //   graphic.eachInstances((item, index) => {
-  //     // 下面只是为了方便演示，生成的区间高度值
+  // // The following is just for the convenience of demonstration, the generated interval height value
   //     if (!Cesium.defined(item.isUp)) {
   //       item.isUp = Math.random() > 0.5 ? -1 : 1
   //     }
@@ -128,23 +128,23 @@ function addRandomGraphicByCount(count) {
   //   graphic.setOffsetHeight()
   // }, 10)
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 取区域内的随机点
+// Get random points in the area
 function randomPoint() {
   const jd = random(115.955684 * 1000, 117.474003 * 1000) / 1000
   const wd = random(30.7576 * 1000, 32.008782 * 1000) / 1000

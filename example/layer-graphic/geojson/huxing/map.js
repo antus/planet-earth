@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 // import { HuxingLayer } from "./HuxingLayer.js"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.820474, lng: 117.178655, alt: 326, heading: 24, pitch: -45 }
@@ -12,42 +12,42 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // HuxingLayer类定义在HuxingLayer.js
+  // The HuxingLayer class is defined in HuxingLayer.js
   graphicLayer = new HuxingLayer({
     url: "//data.mars3d.cn/file/geojson/huxing.json"
   })
   map.addLayer(graphicLayer)
 
-  // 可以绑定Popup弹窗，回调方法中任意处理
+  // You can bind the Popup window and handle it arbitrarily in the callback method.
   // layer.bindPopup(function (event) {
   //   let item = event.graphic.attr;
   //   if (!item) {
   //     return false;
   //   }
   //   return mars3d.Util.getTemplateHtml({
-  //     title: "楼栋",
+  // title: "Building",
   //     attr: item,
   //     template: [
-  //       { field: "CH", name: "层号" },
-  //       { field: "DYH", name: "单元" },
-  //       { field: "FH", name: "房号" },
-  //       { field: "WZ", name: "位置" },
+  // { field: "CH", name: "Layer number" },
+  // { field: "DYH", name: "Unit" },
+  // { field: "FH", name: "Room number" },
+  // { field: "WZ", name: "Location" },
   //     ],
   //   });
   // });
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

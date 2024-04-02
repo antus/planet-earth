@@ -1,26 +1,26 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lng: 117.084439, lat: 31.653047, alt: 354, heading: 319, pitch: -23 }
   }
 }
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 加载石化工厂模型
+  //Load the petrochemical plant model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "石化工厂",
+    name: "Petrochemical Plant",
     url: "http://data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
@@ -28,11 +28,11 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建div数据图层
+  //Create div data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 添加矢量数据
+  //Add vector data
   addRandomGraphicByCount([117.077462, 31.657745, 60], { value: 0.53, color: "#fb980b" })
   addRandomGraphicByCount([117.079091, 31.65898, 90], { value: 0.45, color: "#00ff00" })
   addRandomGraphicByCount([117.079766, 31.658268, 70], { value: 0.35, color: "#00ffff" })
@@ -40,8 +40,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -63,8 +63,8 @@ function addRandomGraphicByCount(position, attr) {
 
     const liquidfillchartChart = echarts.init(dom)
 
-    // 参考API：https://github.com/ecomfe/echarts-liquidfill
-    // 参考示例：https://www.makeapie.com/explore.html#tags=liquidFill~sort=rank~timeframe=all~author=all
+    // Reference API: https://github.com/ecomfe/echarts-liquidfill
+    // Reference example: https://www.makeapie.com/explore.html#tags=liquidFill~sort=rank~timeframe=all~author=all
     const option = {
       series: [
         {

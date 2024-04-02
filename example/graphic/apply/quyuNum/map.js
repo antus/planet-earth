@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.053342, lng: 117.677104, alt: 187118, heading: 350, pitch: -50 },
@@ -12,9 +12,9 @@ var mapOptions = {
     showSkyBox: false,
     showSkyAtmosphere: false,
     fog: false,
-    backgroundColor: " #120f44", // 天空背景色
+    backgroundColor: " #120f44", // sky background color
     globe: {
-      baseColor: "#120f44", // 地球地面背景色
+      baseColor: "#120f44", // Earth ground background color
       showGroundAtmosphere: false,
       enableLighting: false
     }
@@ -27,23 +27,23 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 合肥市边界墙
+  //Hefei City Boundary Wall
   const borderWall = new mars3d.layer.GeoJsonLayer({
-    name: "合肥市边界墙",
+    name: "Hefei City Boundary Wall",
     url: "//data.mars3d.cn/file/geojson/areas/340100.json",
     symbol: {
       type: "wallP",
       styleOptions: {
         setHeight: -25000,
-        diffHeight: 25000, // 墙高
+        diffHeight: 25000, // wall height
         materialType: mars3d.MaterialType.Image2,
         materialOptions: {
           image: "./img/textures/fence-top.png",
@@ -54,7 +54,7 @@ function onMounted(mapInstance) {
   })
   map.addLayer(borderWall)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -62,8 +62,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -73,19 +73,19 @@ function onUnmounted() {
 }
 
 /**
- * 添加矢量数据
- *polygon面 PolylineEntity线  光锥体  和 LED数字显示
- * @returns {void} 无
+ * Add vector data
+ *polygon surface PolylineEntity line light cone and LED digital display
+ * @returns {void} None
  */
 function addGraphics() {
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/areas/340100_full.json" })
     .then(function (geojson) {
-      const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+      const arr = mars3d.Util.geoJsonToGraphics(geojson) // Parse geojson
 
       for (let i = 0; i < arr.length; i++) {
         const item = arr[i]
 
-        // polygon面
+        //polygon face
         const polygonEntity = new mars3d.graphic.PolygonEntity({
           positions: item.positions,
           style: {
@@ -108,7 +108,7 @@ function addGraphics() {
         })
         graphicLayer.addGraphic(polygonEntity)
 
-        // PolylineEntity线
+        // PolylineEntity line
         const graphicLine = new mars3d.graphic.PolylineEntity({
           positions: item.positions,
           style: {
@@ -118,10 +118,10 @@ function addGraphics() {
         })
         graphicLayer.addGraphic(graphicLine)
 
-        // 中心点
+        // center point
         const center = item.attr.centroid
 
-        // 光锥体
+        // light cone
         const coneGlow = new mars3d.graphic.LightCone({
           position: center,
           style: {
@@ -131,8 +131,8 @@ function addGraphics() {
         })
         graphicLayer.addGraphic(coneGlow)
 
-        // LED数字显示
-        const number = Math.floor(Math.random() * (4000 - 3000 + 1) + 3000) // 随机数字 3000-4000
+        // LED digital display
+        const number = Math.floor(Math.random() * (4000 - 3000 + 1) + 3000) // Random number 3000-4000
         const graphic = new mars3d.graphic.DivGraphic({
           position: [center[0], center[1], 12000],
           style: {
@@ -147,6 +147,6 @@ function addGraphics() {
       }
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }

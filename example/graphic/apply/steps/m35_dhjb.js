@@ -1,14 +1,14 @@
 /* eslint-disable no-undef */
-//脚本对象方法
+//Script object method
 function initEditorJS(map) {
-  //特征点：山顶点
+  //Feature points: mountain top points
   let workPoint1Sdd = {
     activate: function () {
-      JB.showPanel("山顶点")
-      //视角定位
+      JB.showPanel("Mountaintop Point")
+      //Perspective positioning
       map.centerAt({ y: 36.061395, x: 113.94298, alt: 1903, heading: 0, pitch: -57.5 })
 
-      //清除所有点
+      //Clear all points
       workPoint1Sdd.clearPoint()
       workPoint2Abd.clearPoint()
       workPoint3Pdbhd.clearPoint()
@@ -25,10 +25,10 @@ function initEditorJS(map) {
         [113.942957, 36.067383, 462.29],
         [113.949512, 36.07117, 460.67]
       ]
-      this.pointLayer = createArrPoint(arrPoint) //添加点
-      this.textLayer = createArrText(arrPoint, "山顶点") //添加注记
+      this.pointLayer = createArrPoint(arrPoint) //Add point
+      this.textLayer = createArrText(arrPoint, "Mountain Point") //Add annotation
     },
-    //移除点
+    //Remove points
     clearPoint: function () {
       if (this.pointLayer) {
         this.pointLayer.destroy()
@@ -45,11 +45,11 @@ function initEditorJS(map) {
     }
   }
 
-  //特征点：鞍部点
+  //Feature point: saddle point
   let workPoint2Abd = {
     activate: function () {
-      JB.showPanel("鞍部点")
-      //视角定位
+      JB.showPanel("Saddle Point")
+      //Perspective positioning
       map.centerAt(
         {
           y: 36.06062,
@@ -74,9 +74,9 @@ function initEditorJS(map) {
         [113.948862, 36.071282, 453.99]
       ]
       this.pointLayer = createArrPoint(arrPoint)
-      this.textLayer = createArrText(arrPoint, "鞍部点") //添加注记
+      this.textLayer = createArrText(arrPoint, "Saddle Point") //Add annotation
     },
-    //移除点
+    //Remove points
     clearPoint: function () {
       if (this.pointLayer) {
         this.pointLayer.destroy()
@@ -99,11 +99,11 @@ function initEditorJS(map) {
     }
   }
 
-  //特征点：坡度变换点
+  //Feature points: slope transformation points
   let workPoint3Pdbhd = {
     activate: function () {
-      JB.showPanel("坡度变换点")
-      //视角定位
+      JB.showPanel("Slope transformation point")
+      //Perspective positioning
       map.centerAt({ y: 36.062523, x: 113.946202, z: 1343.59, heading: 353.6, pitch: -42, roll: 0 })
 
       let arrPoint = [
@@ -113,9 +113,9 @@ function initEditorJS(map) {
         [113.940766, 36.0693, 389.26]
       ]
       this.pointLayer = createArrPoint(arrPoint)
-      this.textLayer = createArrText(arrPoint, "坡度变换点") //添加注记
+      this.textLayer = createArrText(arrPoint, "Slope transformation point") //Add annotation
     },
-    //移除点
+    //Remove points
     clearPoint: function () {
       if (this.pointLayer) {
         this.pointLayer.destroy()
@@ -132,11 +132,11 @@ function initEditorJS(map) {
     }
   }
 
-  //特征点：山脚点
+  //Feature point: foot of mountain point
   let workPoint4Sjd = {
     activate: function () {
-      JB.showPanel("山脚点")
-      //视角定位
+      JB.showPanel("Footpoint")
+      //Perspective positioning
       map.centerAt({ y: 36.05423, x: 113.945328, z: 1087.7, heading: 352.4, pitch: -25.4, roll: 360 })
 
       let arrPoint = [
@@ -145,9 +145,9 @@ function initEditorJS(map) {
         [113.936588, 36.065365, 351.94]
       ]
       this.pointLayer = createArrPoint(arrPoint)
-      this.textLayer = createArrText(arrPoint, "山脚点") //添加注记
+      this.textLayer = createArrText(arrPoint, "Mountain Foot Point") //Add annotation
     },
-    //移除点
+    //Remove points
     clearPoint: function () {
       if (this.pointLayer) {
         this.pointLayer.destroy()
@@ -164,11 +164,11 @@ function initEditorJS(map) {
     }
   }
 
-  //特征点：山脚坡度变化点
+  //Feature point: slope change point at the foot of the mountain
   let workPoint5Sjpdbhd = {
     activate: function () {
-      JB.showPanel("山脚坡度变换点")
-      //视角定位
+      JB.showPanel("Slope transformation point at the foot of the mountain")
+      //Perspective positioning
       map.centerAt({ y: 36.055819, x: 113.950153, z: 696.74, heading: 334.4, pitch: -13.2, roll: 359.9 })
 
       let arrPoint = [
@@ -177,9 +177,9 @@ function initEditorJS(map) {
         [113.941956, 36.064592, 365.89]
       ]
       this.pointLayer = createArrPoint(arrPoint)
-      this.textLayer = createArrText(arrPoint, "山脚坡度变换点") //添加注记
+      this.textLayer = createArrText(arrPoint, "Slope transformation point at the foot of the mountain") //Add annotation
     },
-    //移除点
+    //Remove points
     clearPoint: function () {
       if (this.pointLayer) {
         this.pointLayer.destroy()
@@ -196,11 +196,11 @@ function initEditorJS(map) {
     }
   }
 
-  //特征点：倾斜变换点
+  //Feature points: tilt transformation points
   let workPoint6Qxbhd = {
     activate: function () {
-      JB.showPanel("倾斜变换点")
-      //视角定位
+      JB.showPanel("tilt transformation point")
+      //Perspective positioning
       map.centerAt(
         { y: 36.064181, x: 113.94491, z: 1139.24, heading: 352.6, pitch: -41.2, roll: 360 },
         {
@@ -217,9 +217,9 @@ function initEditorJS(map) {
         [113.945918, 36.073087, 452.72]
       ]
       this.pointLayer = createArrPoint(arrPoint)
-      this.textLayer = createArrText(arrPoint, "倾斜变换点") //添加注记
+      this.textLayer = createArrText(arrPoint, "Oblique transformation point") //Add annotation
     },
-    //移除点
+    //Remove points
     clearPoint: function () {
       if (this.pointLayer) {
         this.pointLayer.destroy()
@@ -236,10 +236,10 @@ function initEditorJS(map) {
     }
   }
 
-  //特征线：山脊线
+  //Feature line: ridge line
   let workLine1Sjx = {
     activate: function () {
-      JB.showPanel("山脊线")
+      JB.showPanel("Ridgeline")
       map.centerAt({
         y: 36.05982,
         x: 113.943515,
@@ -251,10 +251,10 @@ function initEditorJS(map) {
 
       workPoint6Qxbhd.clearPoint()
 
-      // 以防止暂停过后继续转换视角
+      //To prevent the camera from continuing to change the perspective after a pause
       JB.stopRotatePoint()
 
-      //添加线
+      //add line
       let lineArr = [
         {
           point: [
@@ -337,11 +337,11 @@ function initEditorJS(map) {
             clampToGround: true,
             material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
               color: Cesium.Color.YELLOW,
-              speed: 3, //控制速度
+              speed: 3, //Control speed
               url: "img/textures/line-color-yellow.png"
             })
           },
-          tooltip: "山脊线"
+          tooltip: "Ridgeline"
         })
         this.polyLineLayer.addGraphic(line)
       }
@@ -380,13 +380,13 @@ function initEditorJS(map) {
     }
   }
 
-  //特征线：山谷线
+  //Characteristic line: valley line
   let workLine2Sgx = {
     activate: function () {
-      JB.showPanel("山谷线")
+      JB.showPanel("Valley Line")
       map.centerAt({ y: 36.05648, x: 113.944653, z: 2092, heading: 354.4, pitch: -44.6 })
 
-      //添加线
+      //add line
       let lineArr = [
         {
           point: [
@@ -434,11 +434,11 @@ function initEditorJS(map) {
             clampToGround: true,
             material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
               color: Cesium.Color.AQUA,
-              speed: 3, //控制速度
+              speed: 3, //Control speed
               url: "img/textures/line-color-yellow.png"
             })
           },
-          tooltip: "山谷线"
+          tooltip: "Valley Line"
         })
         this.polyLineLayer.addGraphic(line)
       }
@@ -485,10 +485,10 @@ function initEditorJS(map) {
     }
   }
 
-  //特征线：俯瞰
+  //Characteristic line: overlooking
   let workLine3Fk = {
     activate: function () {
-      JB.showPanel("俯瞰")
+      JB.showPanel("Overview")
       map.centerAt({ y: 36.070613, x: 113.943032, z: 3059, heading: 356.6, pitch: -88.9 })
     },
     disable: function () {
@@ -496,15 +496,15 @@ function initEditorJS(map) {
     }
   }
 
-  //绘制过程：计算通过点
+  //Drawing process: Calculate passing points
   let workDgx1Point = {
     activate: function () {
-      JB.showPanel(`等高线计算过程展示 <br />
+      JB.showPanel(`Contour calculation process display <br />
         <ul class="contentUl">
-          <li>完成地性线的连接工作后，即可在同一坡度的两相邻点之间内插出每整米高程的等高线通过点。</li>
-          <li>前提：相邻点等坡度, 原理：比例内插</li>
+          <li>After completing the connection of the ground lines, the contour passing points for each full meter of elevation can be interpolated between two adjacent points on the same slope. </li>
+          <li>Premise: adjacent points have equal slopes, principle: proportional interpolation</li>
           <li><img src="img/jiaoben/dgx1.jpg" style="height:150px"/></li>
-          <li>假设ab间的坡度是均匀的，则根据a和b点间的高差为6.4m，ab线上图上的平距为48mm，由a点到22m等高线的高差为0.8m，由b点到27m等高线的高差为0.6m，则由a点到22m等高线及由b点到27m等高线的线长，x1和x2可以根据相似三角形状原理得到如下关系式</li>
+          <li>Assuming that the slope between ab is uniform, then the height difference between points a and b is 6.4m, the horizontal distance on the line ab is 48mm, and the height difference from point a to the 22m contour is 0.8 m, the height difference from point b to the 27m contour line is 0.6m, then the line lengths from point a to the 22m contour line and from point b to the 27m contour line, x1 and x2 can be obtained as follows based on the principle of similar triangle shapes Relation</li>
           <li><img src="img/jiaoben/dgx2.jpg" style="height:80px;"/></li>
         <ul>`)
 
@@ -541,7 +541,7 @@ function initEditorJS(map) {
           clampToGround: true,
           material: mars3d.MaterialUtil.createMaterialProperty(mars3d.MaterialType.LineFlow, {
             color: Cesium.Color.MAGENTA,
-            speed: 3, //控制速度
+            speed: 3, //Control speed
             url: "img/textures/line-color-yellow.png"
           })
         }
@@ -562,10 +562,10 @@ function initEditorJS(map) {
     }
   }
 
-  //绘制过程：等高线绘制
+  //Drawing process: contour drawing
   let workDgx2Line = {
     activate: function () {
-      JB.showPanel(`等高线通过点绘制 <br /><img src="img/jiaoben/dgx3.jpg" style="width:100%;"/>`)
+      JB.showPanel(`Contour lines are drawn through points <br /><img src="img/jiaoben/dgx3.jpg" style="width:100%;"/>`)
       map.centerAt({ lat: 36.069792, lng: 113.944474, alt: 1708, heading: 357, pitch: -82 })
 
       let arrPoint = [
@@ -669,10 +669,10 @@ function initEditorJS(map) {
     }
   }
 
-  //绘制过程：等高线结果
+  //Drawing process: contour results
   let workDgx3End = {
     activate: function () {
-      JB.showPanel("等高线结果")
+      JB.showPanel("Contour results")
       map.setCameraView(
         { y: 36.064736, x: 113.935567, z: 1276.68, heading: 52.4, pitch: -44.5, roll: 0, duration: 3 },
         {
@@ -682,7 +682,7 @@ function initEditorJS(map) {
         }
       )
 
-      //清除所有点和线
+      //Clear all points and lines
       workPoint1Sdd.clearPoint()
       workPoint2Abd.clearPoint()
       workPoint3Pdbhd.clearPoint()
@@ -720,90 +720,90 @@ function initEditorJS(map) {
     }
   }
 
-  //脚本配置信息（包括顺序、时间、业务对象）
+  //Script configuration information (including sequence, time, business objects)
   let data = [
     {
-      text: "特征点",
+      text: "Feature point",
       state: {
         opened: true,
         selected: false
       },
       children: [
         {
-          text: "山顶点",
+          text: "Mountain Peak",
           times: 6,
           widget: workPoint1Sdd
         },
         {
-          text: "鞍部点",
+          text: "saddle point",
           times: 10,
           widget: workPoint2Abd
         },
         {
-          text: "坡度变换点",
+          text: "Slope transformation point",
           times: 6,
           widget: workPoint3Pdbhd
         },
         {
-          text: "山脚点",
+          text: "Footpoint",
           times: 6,
           widget: workPoint4Sjd
         },
         {
-          text: "山脚坡度变换点",
+          text: "Slope change point at the foot of the mountain",
           times: 6,
           widget: workPoint5Sjpdbhd
         },
         {
-          text: "倾斜变换点",
+          text: "Oblique transformation point",
           times: 6,
           widget: workPoint6Qxbhd
         }
       ]
     },
     {
-      text: "特征线",
+      text: "Characteristic line",
       state: {
         opened: true,
         selected: false
       },
       children: [
         {
-          text: "山脊线",
+          text: "Ridgeline",
           times: 6,
           widget: workLine1Sjx
         },
         {
-          text: "山谷线",
+          text: "Valley Line",
           times: 8,
           widget: workLine2Sgx
         },
         {
-          text: "俯瞰",
+          text: "Overlook",
           times: 5,
           widget: workLine3Fk
         }
       ]
     },
     {
-      text: "绘制过程",
+      text: "Drawing process",
       state: {
         opened: true,
         selected: false
       },
       children: [
         {
-          text: "计算通过点",
+          text: "Calculate passing points",
           times: 6,
           widget: workDgx1Point
         },
         {
-          text: "等高线绘制",
+          text: "Contour drawing",
           times: 6,
           widget: workDgx2Line
         },
         {
-          text: "等高线结果",
+          text: "Contour results",
           times: 10,
           widget: workDgx3End
         }
@@ -814,7 +814,7 @@ function initEditorJS(map) {
   dataWork.initData(data)
 }
 
-//创建点 公共方法
+//Create point public method
 function createArrPoint(arrPoint) {
   let graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -843,7 +843,7 @@ function createArrPoint(arrPoint) {
           outlineWidth: 2,
           horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          pixelOffset: new Cesium.Cartesian2(-10, -10) //偏移量
+          pixelOffset: new Cesium.Cartesian2(-10, -10) //Offset
         }
       }
     })
@@ -852,7 +852,7 @@ function createArrPoint(arrPoint) {
   return graphicLayer
 }
 
-//创建文本指示  公共方法
+//Create text indication public method
 function createArrText(arrPoint, name) {
   let graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -860,7 +860,7 @@ function createArrText(arrPoint, name) {
   for (let i = 0; i < arrPoint.length; i++) {
     let item = arrPoint[i]
 
-    //文字注记
+    //Text annotation
     let graphic = new mars3d.graphic.DivGraphic({
       position: item,
       style: {

@@ -1,7 +1,7 @@
-// 通过Canvas绘制复杂或动态对象的图标点Graphic
+//Draw the icon points of complex or dynamic objects through Canvas Graphic
 class CanvasBillboard extends mars3d.graphic.BillboardPrimitive {
   /**
-   * 文字
+   * Word
    * @type {string}
    */
   get text() {
@@ -16,9 +16,9 @@ class CanvasBillboard extends mars3d.graphic.BillboardPrimitive {
   }
 
   /**
-   * 对象添加到图层前创建一些对象的钩子方法，
-   * 只会调用一次
-   * @return {Promise<object>}  无
+   * Hook method to create some objects before adding them to the layer,
+   * Will only be called once
+   * @return {Promise<object>} None
    * @private
    */
   _mountedHook() {
@@ -34,7 +34,7 @@ class CanvasBillboard extends mars3d.graphic.BillboardPrimitive {
     }
   }
 
-  // 创建canvas
+  //Create canvas
   _updateCanvas() {
     if (!this._pngImage || this._map.camera.positionCartographic.height > 100000) {
       return
@@ -47,24 +47,24 @@ class CanvasBillboard extends mars3d.graphic.BillboardPrimitive {
 
     const ctx = canvas.getContext("2d")
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    // 绘制图片
+    // draw pictures
     ctx.drawImage(this._pngImage, 0, 0)
 
-    // 绘制文字
+    // draw text
     ctx.fillStyle = "rgb(255, 255, 255)"
-    ctx.font = "55px 楷体"
+    ctx.font = "55px regular script"
     ctx.textBaseline = "middle"
-    ctx.fillText("温度：", 20, canvas.height / 2)
+    ctx.fillText("Temperature:", 20, canvas.height / 2)
     ctx.fillText(this.style.text, 160, canvas.height / 2)
     ctx.fillText("℃", 220, canvas.height / 2)
 
-    // 将图片赋予给矢量对象进行显示，this.image是父类的属性
+    // Assign the image to the vector object for display. This.image is an attribute of the parent class.
     // this.image = canvas
     this.image = canvas.toDataURL("image/png")
   }
 }
 
-// 注册下
+//Register
 mars3d.GraphicUtil.register("canvasBillboard", CanvasBillboard)
 
 mars3d.graphic.CanvasBillboard = CanvasBillboard

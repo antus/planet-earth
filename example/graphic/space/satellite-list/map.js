@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     shadows: true,
@@ -12,22 +12,22 @@ var mapOptions = {
       zoomFactor: 3.0,
       minimumZoomDistance: 1000,
       maximumZoomDistance: 300000000,
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     },
     globe: { enableLighting: true },
     clock: {
-      multiplier: 1 // 速度
+      multiplier: 1 // speed
     }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
     compass: { top: "10px", left: "5px" }
   },
   terrain: false,
   layers: [
     {
-      name: "夜晚图片",
+      name: "Night Picture",
       icon: "img/basemaps/blackMarble.png",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/night2.jpg",
@@ -40,25 +40,25 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map  map.toolbar.style.bottom = "55px"// 修改toolbar控件的样式
+  map = mapInstance // Record map map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了卫星", event)
-    // 单击事件
+    console.log("Satellite clicked", event)
+    // click event
     highlightSatellite(event.graphic)
   })
   graphicLayer.on(mars3d.EventType.change, function (event) {
-    // 位置变化事件
+    // Location change event
     processInArea(event.graphic)
   })
 
@@ -71,21 +71,21 @@ function onMounted(mapInstance) {
       createSatelliteList(data.data)
     })
     .catch(function () {
-      globalMsg("获取卫星信息异常！")
+      globalMsg("Abnormal acquisition of satellite information!")
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 创建卫星列表
+// Create satellite list
 function createSatelliteList(arr) {
-  // 单击地图空白处
+  // Click on an empty space on the map
   map.on(mars3d.EventType.clickMap, function (event) {
     highlightSatellite()
   })
@@ -93,7 +93,7 @@ function createSatelliteList(arr) {
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i]
 
-    // 属性处理
+    //Property processing
     item.model = {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 1,
@@ -103,7 +103,7 @@ function createSatelliteList(arr) {
       distanceDisplayCondition_near: 0,
       distanceDisplayCondition_far: 20000000
     }
-    // 当视角距离超过20000000米(distanceDisplayCondition_far定义的) 后显示为点对象的样式
+    // When the viewing angle distance exceeds 20000000 meters (defined by distanceDisplayCondition_far), it is displayed as a point object style
     item.point = {
       color: "#ffff00",
       pixelSize: 5,
@@ -132,7 +132,7 @@ function createSatelliteList(arr) {
     }
     item.label.text = item.name
 
-    // path显示后FPS下降的厉害
+    // FPS drops sharply after path is displayed
     item.path = item.path || {}
     item.path.color = Cesium.defaultValue(item.path.color, "#e2e2e2")
     item.path.closure = false
@@ -144,19 +144,19 @@ function createSatelliteList(arr) {
       color: "rgba(0,255,0,0.5)",
       show: false
     }
-    // 属性处理  END
+    //Property processing END
 
     const satelliteObj = new mars3d.graphic.Satellite(item)
     graphicLayer.addGraphic(satelliteObj)
   }
-  console.log("当前卫星数量: " + arr.length)
+  console.log("Current number of satellites: " + arr.length)
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.options
-    return `名称：${attr.name}<br/>英文名：${attr.name_en || ""}<br/>类型：${attr.type}`
+    return `Name: ${attr.name}<br/>English name: ${attr.name_en || ""}<br/>Type: ${attr.type}`
   })
 }
 
@@ -164,7 +164,7 @@ let lastSelectWX
 
 function highlightSatellite(satelliteObj) {
   if (lastSelectWX) {
-    // 重置上次选中的轨道样式
+    //Reset the last selected track style
     lastSelectWX.setOptions({
       path: {
         color: "#e2e2e2",
@@ -172,12 +172,12 @@ function highlightSatellite(satelliteObj) {
         width: 1
       }
     })
-    lastSelectWX.coneShow = false // 关闭视锥体
+    lastSelectWX.coneShow = false // Turn off the view frustum
     lastSelectWX = null
   }
 
   if (satelliteObj) {
-    // 高亮选中的轨道样式
+    // Highlight the selected track style
     satelliteObj.setOptions({
       path: {
         color: "#ffff00",
@@ -185,12 +185,12 @@ function highlightSatellite(satelliteObj) {
         width: 2
       }
     })
-    satelliteObj.coneShow = true // 打开视锥体
+    satelliteObj.coneShow = true // Turn on the view frustum
     lastSelectWX = satelliteObj
   }
 }
 
-// 判断卫星是否在面内
+// Determine whether the satellite is within the plane
 function processInArea(weixin) {
   const position = weixin?.position
   if (!position) {
@@ -208,8 +208,8 @@ function processInArea(weixin) {
     const thisIsInPoly = dmzGraphic.isInPoly(position)
     if (thisIsInPoly !== lastState.state) {
       if (thisIsInPoly) {
-        // 开始进入区域内
-        console.log(`${weixin.name} 卫星开始进入 ${dmzGraphic.name} 地面站区域内`)
+        // Start entering the area
+        console.log(`${weixin.name} satellite begins to enter ${dmzGraphic.name} ground station area`)
 
         const line = new mars3d.graphic.PolylineEntity({
           positions: new Cesium.CallbackProperty(function (time) {
@@ -221,13 +221,13 @@ function processInArea(weixin) {
           }, false),
           style: {
             width: 7,
-            // 动画线材质
+            //Animation line material
             materialType: mars3d.MaterialType.LineFlow,
             materialOptions: {
               url: "./img/textures/arrow-h.png",
               color: Cesium.Color.AQUA,
               repeat: new Cesium.Cartesian2(15, 1),
-              speed: 60 // 时长，控制速度
+              speed: 60 // Duration, control speed
             },
             arcType: Cesium.ArcType.NONE
           }
@@ -235,16 +235,16 @@ function processInArea(weixin) {
         map.graphicLayer.addGraphic(line)
         lastState.line = line
 
-        weixin.coneShow = true // 打开视锥体
+        weixin.coneShow = true // Turn on the view frustum
       } else {
-        // 离开区域
-        console.log(`${weixin.name} 卫星离开 ${dmzGraphic.name} 地面站区域内`)
+        //Leave the area
+        console.log(`${weixin.name} satellite leaves ${dmzGraphic.name} ground station area`)
 
         if (lastState.line) {
           map.graphicLayer.removeGraphic(lastState.line)
           delete lastState.line
         }
-        weixin.coneShow = false // 关闭视锥体
+        weixin.coneShow = false // Turn off the view frustum
       }
 
       dmzGraphic._lastInPoly[weixin.id].state = thisIsInPoly
@@ -252,30 +252,30 @@ function processInArea(weixin) {
   })
 }
 
-// 取随机数字
+// Get random numbers
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-// 地面站图层
+// Ground station layer
 let dmzLayer
-// 创建地面站
+// Create ground station
 function creatreDmzList() {
   const arr = [
-    { name: "西安", radius: 1500000, point: [108.938314, 34.345614, 342.9] },
-    { name: "喀什", radius: 1800000, point: [75.990372, 39.463507, 1249.5] },
-    { name: "文昌", radius: 1200000, point: [110.755151, 19.606573, 21.1] }
+    { name: "Xi'an", radius: 1500000, point: [108.938314, 34.345614, 342.9] },
+    { name: "Kashi", radius: 1800000, point: [75.990372, 39.463507, 1249.5] },
+    { name: "Wenchang", radius: 1200000, point: [110.755151, 19.606573, 21.1] }
   ]
 
-  // 创建矢量数据图层
+  //Create vector data layer
   dmzLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(dmzLayer)
 
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i]
-    // 地面站gltf模型
+    // Ground station gltf model
     const graphic = new mars3d.graphic.ModelEntity({
-      name: "地面站模型",
+      name: "Ground station model",
       position: item.point,
       style: {
         url: "//data.mars3d.cn/gltf/mars/leida.glb",
@@ -299,7 +299,7 @@ function creatreDmzList() {
     })
     dmzLayer.addGraphic(dmfwGraphic)
 
-    // 判断时会用到的变量
+    //Variables that will be used when making judgments
     dmfwGraphic._isFW = true
     dmfwGraphic._lastInPoly = {}
   }

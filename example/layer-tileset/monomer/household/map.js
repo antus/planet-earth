@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let geoJsonLayerDTH
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 43.823957, lng: 125.136704, alt: 286, heading: 11, pitch: -24 }
@@ -11,19 +11,19 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 模型
+  // Model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     pid: 2030,
     type: "3dtiles",
-    name: "校园",
+    name: "campus",
     url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
     position: { alt: 279.0 },
     maximumScreenSpaceError: 1,
@@ -31,33 +31,33 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建单体化图层
+  //Create a single layer
   geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
-    name: "分层分户单体化",
+    name: "stratified household unitization",
     url: "//data.mars3d.cn/file/geojson/dth-xuexiao-fcfh.json",
-    onCreateGraphic: createDthGraphic // 自定义解析数据
+    onCreateGraphic: createDthGraphic // Customized parsing data
   })
   map.addLayer(geoJsonLayerDTH)
 
   geoJsonLayerDTH.bindPopup((e) => {
     const item = e.graphic.attr
-    const html = `房号：${item.name}<br/>
-                楼层：第${item.thisFloor}层 (共${item.allFloor}层)<br/>
-                班级：${item.remark}<br/>
-                说明：教学楼`
+    const html = `Room number: ${item.name}<br/>
+                Floor: ${item.thisFloor} (total ${item.allFloor})<br/>
+                Class: ${item.remark}<br/>
+                Description: Teaching building`
     return html
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 是否显示个户颜色
+// Whether to display individual account colors
 function chkShowColor(val) {
   geoJsonLayerDTH.closePopup()
   if (val) {
@@ -75,24 +75,24 @@ function chkShowColor(val) {
   }
 }
 
-// 添加单体化矢量对象
+//Add singleton vector object
 function createDthGraphic(options) {
-  const points = options.positions // 各顶点的坐标
-  const attr = options.attr // 楼层层高配置信息
+  const points = options.positions // Coordinates of each vertex
+  const attr = options.attr // Floor height configuration information
 
-  const minHight = attr.bottomHeight // 当前层的 底部海拔高度
-  const maxHight = attr.topHeight // 当前层的 顶部海拔高度
+  const minHight = attr.bottomHeight // Bottom altitude of the current layer
+  const maxHight = attr.topHeight // Top altitude of the current layer
 
   const graphic = new mars3d.graphic.PolygonPrimitive({
     positions: points,
     style: {
       height: minHight,
       extrudedHeight: maxHight,
-      // 单体化默认显示样式
+      //Single default display style
       color: getColor(),
       opacity: 0.3,
       classification: true,
-      // 单体化鼠标移入或单击后高亮的样式
+      // Singletify the style highlighted after the mouse is moved or clicked
       highlight: {
         type: mars3d.EventType.click,
         color: "#ffff00",
@@ -104,7 +104,7 @@ function createDthGraphic(options) {
   geoJsonLayerDTH.addGraphic(graphic)
 }
 
-// 颜色
+// color
 let index = 0
 const colors = ["#99CCCC", "#66FF66", "#FF6666", "#00CCFF", "#00FF33", "#CC0000", "#CC00CC", "#CCFF00", "#0000FF"]
 function getColor() {

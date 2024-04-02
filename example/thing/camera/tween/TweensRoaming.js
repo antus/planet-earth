@@ -1,5 +1,5 @@
 /**
- * 基于Tweens插值的自定义漫游
+ * Customized roaming based on Tweens interpolation
  */
 class TweensRoaming extends mars3d.BaseThing {
   constructor(options) {
@@ -9,7 +9,7 @@ class TweensRoaming extends mars3d.BaseThing {
   }
 
   /**
-   * 漫游坐标列表
+   *Roaming coordinate list
    * @type {object[]}
    * @readonly
    */
@@ -22,9 +22,9 @@ class TweensRoaming extends mars3d.BaseThing {
   }
 
   /**
-   * 对象添加到地图上的创建钩子方法，
-   * 每次add时都会调用
-   * @return {void}  无
+   * Create hook method to add objects to the map,
+   * Called every time add
+   * @return {void} None
    * @private
    */
   _addedHook() {
@@ -32,9 +32,9 @@ class TweensRoaming extends mars3d.BaseThing {
   }
 
   /**
-   * 对象从地图上移除的创建钩子方法，
-   * 每次remove时都会调用
-   * @return {void}  无
+   * Create hook method for object removal from the map,
+   * Called every time remove
+   * @return {void} None
    * @private
    */
   _removedHook() {
@@ -42,7 +42,7 @@ class TweensRoaming extends mars3d.BaseThing {
   }
 
   /**
-   * 开始漫游
+   * Start roaming
    */
   start() {
     this._map.scene.camera.cancelFlight()
@@ -73,7 +73,7 @@ class TweensRoaming extends mars3d.BaseThing {
   }
 
   /**
-   * 停止漫游
+   * Stop roaming
    */
   stop() {
     this._map.off(mars3d.EventType.preUpdate, this._map_preUpdateHandler, this)
@@ -90,14 +90,14 @@ class TweensRoaming extends mars3d.BaseThing {
   }
 
   /**
-   * 暂停漫游
+   * Pause roaming
    */
   pause() {
     this._map.clock.shouldAnimate = false
   }
 
   /**
-   * 恢复漫游
+   * Resume roaming
    */
   resume() {
     this._map.clock.shouldAnimate = true
@@ -205,7 +205,7 @@ class TweensRoaming extends mars3d.BaseThing {
   _map_preUpdateHandler(event) {
     const now = Cesium.JulianDate.toDate(this._map.clock.currentTime).getTime()
 
-    // 调用了 camera.flyTo 时
+    //When camera.flyTo is called
     if (this._map.scene.camera._currentFlight && this._tweens.length > 0) {
       for (let index = 0; index < this._tweens.length; index++) {
         const tween = this._tweens[index]
@@ -216,7 +216,7 @@ class TweensRoaming extends mars3d.BaseThing {
       return
     }
 
-    // 漫游被暂停时
+    // When roaming is suspended
     if (this._tweens.length === 0 || !this._map.clock.shouldAnimate) {
       return
     }
@@ -274,7 +274,7 @@ function catmullRom(v, t, alpha = 0.5) {
     p2 = v[2]
     p3 = v[3]
   } else {
-    throw new Error("参数格式错误")
+    throw new Error("Parameter format error")
   }
 
   let dt0 = Math.pow(Math.abs(p0 - p1), alpha)

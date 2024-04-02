@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let shadows
 
 var mapOptions = {
@@ -13,24 +13,24 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", `模型上日照阴影可能存在锯齿。`)
+  globalNotify("Known Issue Tips", `The sun shadow on the model may have jagged edges.`)
 
   // let imageryLayer = map.scene.imageryLayers.get(0)
-  // imageryLayer.dayAlpha = 0.1  //白天图层透明值
-  // imageryLayer.nightAlpha = 1.0 //夜晚图层透明值
+  // imageryLayer.dayAlpha = 0.1 // Daytime layer transparency value
+  // imageryLayer.nightAlpha = 1.0 //Night layer transparency value
 
-  // 加个模型
+  //Add a model
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 38.8 },
@@ -40,7 +40,7 @@ function onMounted(mapInstance) {
   map.addLayer(tilesetLayer)
 
   shadows = new mars3d.thing.Shadows({
-    darkness: 0.4, // 阴影透明度, 0-1，值越大越透明
+    darkness: 0.4, // Shadow transparency, 0-1, the larger the value, the more transparent it is
     multiplier: 1600
     // terrain: false,
     // lighting: false
@@ -55,8 +55,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -69,12 +69,12 @@ function stopPlay() {
 }
 
 /**
- * 开始播放
+ * Start playing
  *
  * @export
- * @param {*} date 年月日
- * @param {number} hours 小时
- * @param {number} minutes 分钟
+ * @param {*} date year month day
+ * @param {number} hours hours
+ * @param {number} minutes minutes
  */
 function startPlay(date, hours, minutes) {
   const currentTime = setShadows(date, hours, minutes)
@@ -86,12 +86,12 @@ function startPlay(date, hours, minutes) {
 }
 
 /**
- * 修改shadows 当前时间
+ * Modify shadows current time
  *
  * @export
- * @param {*} date 年月日
- * @param {number} hours 小时
- * @param {number} minutes 分钟
+ * @param {*} date year month day
+ * @param {number} hours hours
+ * @param {number} minutes minutes
  */
 function setShadows(date, hours, minutes) {
   const dateTime = new Date(`${date} ${hours}:${minutes}:00`)
@@ -115,13 +115,13 @@ function drawArea(date) {
       clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
-      // 求最大、最小高度值
+      // Find the maximum and minimum height values
       shadows.multiplier = 14400
       shadows
         .startRate({
@@ -131,7 +131,7 @@ function drawArea(date) {
           positions,
           step: 3,
           minHeight: 20
-          // maxHeight: 30 //可以多层
+          // maxHeight: 30 //Can be multi-layered
         })
         .then((result) => {
           showRateResult(result)
@@ -146,25 +146,25 @@ const colorRamp = new mars3d.ColorRamp({
 })
 
 function showRateResult(result) {
-  console.log("分析结果", result)
+  console.log("Analysis results", result)
 
   map.graphicLayer.clear()
 
   result.positions.forEach((p, i) => {
-    const rate = p.rate * 100 // 阴影率，取值范围是0到1，0代表一直有光照，1代表一直无光照
+    const rate = p.rate * 100 // Shadow rate, the value range is 0 to 1, 0 means there is always light, 1 means there is always no light
     const graphic = new mars3d.graphic.PointEntity({
       position: p,
       style: {
         pixelSize: 10,
-        color: colorRamp.getColor(rate) // 计算颜色，色带颜色
+        color: colorRamp.getColor(rate) // Calculate color, ribbon color
       },
-      popup: `阴影率: ${rate.toFixed(2)}%`
+      popup: `Shadow rate: ${rate.toFixed(2)}%`
     })
     map.graphicLayer.addGraphic(graphic)
   })
 }
 
-// // 获取色带
+// // Get the ribbon
 // function getImageData() {
 //   const nWidth = 100
 //   const canvas = document.createElement("canvas")
@@ -172,9 +172,9 @@ function showRateResult(result) {
 //   canvas.height = nWidth
 //   const ctx = canvas.getContext("2d")
 //   ctx.beginPath()
-//   /* 指定渐变区域 */
+// /* Specify the gradient area */
 //   const grad = ctx.createLinearGradient(0, 0, nWidth, 0)
-//   /* 指定几个颜色 */
+// /* Specify several colors */
 //   grad.addColorStop(0.05, "rgb(0, 228, 0)") // green
 //   grad.addColorStop(0.15, "rgb(256, 256, 0)") // yellow
 //   grad.addColorStop(0.25, "rgb(256, 126, 0)") // orange
@@ -182,9 +182,9 @@ function showRateResult(result) {
 //   grad.addColorStop(0.5, "rgb(153, 0, 76)") // purple
 //   grad.addColorStop(0.8, "rgb(126, 0, 35)") // maroon
 
-//   /* 将这个渐变设置为fillStyle */
+// /* Set this gradient to fillStyle */
 //   ctx.fillStyle = grad
-//   /* 绘制矩形 */
+// /* Draw a rectangle */
 //   ctx.rect(0, 0, nWidth, nWidth)
 //   ctx.fill()
 //   return ctx.getImageData(0, 0, nWidth, 1).data
@@ -192,7 +192,7 @@ function showRateResult(result) {
 
 // const imgData = getImageData()
 
-// // 计算颜色，色带颜色
+// // Calculate color, ribbon color
 // function getColor(rate) {
 //   if (rate > 100) {
 //     return "rgba(126,0,35,0.8)"

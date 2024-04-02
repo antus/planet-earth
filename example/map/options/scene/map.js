@@ -2,7 +2,7 @@
 
 var map
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 20.772952, lng: 82.609338, alt: 22604251, heading: 0, pitch: -90 }
@@ -10,23 +10,23 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 2也可以通过下面方法获取center参数
+  // 2 You can also obtain the center parameter through the following method
   const center = map.getCameraView()
-  console.log("center参数为", JSON.stringify(center))
+  console.log("center parameter is", JSON.stringify(center))
 
-  // 可以通过centerAt切换视角
+  //You can switch the perspective through centerAt
   map.setCameraView(center)
 }
 
-// 视图切换
+// View switching
 function sceneMode(name) {
   const value = Number(name)
   setSceneOptions("sceneMode", value)
@@ -36,7 +36,7 @@ function setSceneOptions(name, value) {
   const options = {}
   options[name] = value
 
-  console.log("更新了地图参数", options)
+  console.log("Updated map parameters", options)
   map.setSceneOptions(options)
 }
 
@@ -44,7 +44,7 @@ function setSceneGlobeOptions(name, value) {
   const options = { globe: {} }
   options.globe[name] = value
 
-  console.log("更新了地图参数", options)
+  console.log("Updated map parameters", options)
   map.setSceneOptions(options)
 }
 
@@ -52,7 +52,7 @@ function setSceneCameraControllerOptions(name, value) {
   const options = { cameraController: {} }
   options.cameraController[name] = value
 
-  console.log("更新了地图参数", options)
+  console.log("Updated map parameters", options)
   map.setSceneOptions(options)
 
   if (name === "constrainedAxis" && value === true) {
@@ -60,7 +60,7 @@ function setSceneCameraControllerOptions(name, value) {
   }
 }
 
-// 是否显示底图
+// Whether to display the base map
 function showBaseMap(val) {
   if (val === "1") {
     map.basemap = 2021

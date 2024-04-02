@@ -8,11 +8,11 @@ function initMap(mapOptions) {
       showSun: true,
       showMoon: true,
       showSkyBox: true,
-      showSkyAtmosphere: false, // 关闭球周边的白色轮廓 map.scene.skyAtmosphere = false
+      showSkyAtmosphere: false, // Turn off the white outline around the ball map.scene.skyAtmosphere = false
       fog: true,
       fxaa: true,
       globe: {
-        showGroundAtmosphere: false, // 关闭大气（球表面白蒙蒙的效果）
+        showGroundAtmosphere: false, // Turn off the atmosphere (white effect on the ball surface)
         depthTestAgainstTerrain: false,
         baseColor: "#546a53"
       },
@@ -23,16 +23,16 @@ function initMap(mapOptions) {
         enableRotate: true,
         enableZoom: true
       },
-      mapProjection: mars3d.CRS.EPSG3857, // 2D下展示墨卡托投影
-      mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL// 2D下左右一直可以滚动重复世界地图
+      mapProjection: mars3d.CRS.EPSG3857, // Display Mercator projection in 2D
+      mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL// The world map can be scrolled left and right in 2D
     },
     control: {
-      baseLayerPicker: true, // basemaps底图切换按钮
-      homeButton: true, // 视角复位按钮
-      sceneModePicker: true, // 二三维切换按钮
-      navigationHelpButton: true, // 帮助按钮
-      fullscreenButton: true, // 全屏按钮
-      contextmenu: { hasDefault: true } // 右键菜单
+      baseLayerPicker: true, // basemaps basemap switching button
+      homeButton: true, //View reset button
+      sceneModePicker: true, // 2D and 3D switching button
+      navigationHelpButton: true, // Help button
+      fullscreenButton: true, // full screen button
+      contextmenu: { hasDefault: true } // Right-click menu
     },
     terrain: {
       url: "//data.mars3d.cn/terrain",
@@ -40,7 +40,7 @@ function initMap(mapOptions) {
     },
     basemaps: [
       {
-        name: "天地图影像",
+        name: "Heaven Map Image",
         icon: "img/basemaps/tdt_img.png",
         type: "tdt",
         layer: "img_d",
@@ -49,15 +49,15 @@ function initMap(mapOptions) {
     ]
   })
 
-  // 创建三维地球场景
+  //Create a 3D earth scene
   const map = new mars3d.Map("mars3dContainer", options)
 
-  // 打印测试信息
-  console.log("mars3d的Map主对象构造完成", map)
-  console.log("其中Cesium原生的Cesium.Viewer为", map.viewer)
+  //Print test information
+  console.log("Mars3d's Map main object construction completed", map)
+  console.log("The native Cesium.Viewer of Cesium is ", map.viewer)
 
 
-  console.log("当前电脑是否支持webgl2", Cesium.FeatureDetection.supportsWebgl2(map.scene))
+  console.log("Does the current computer support webgl2", Cesium.FeatureDetection.supportsWebgl2(map.scene))
 
   return map
 }

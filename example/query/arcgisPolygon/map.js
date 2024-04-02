@@ -1,11 +1,11 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let queryMapserver
 let drawGraphic
 let geoJsonLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.837532, lng: 117.202653, alt: 10586, heading: 0, pitch: -90 }
@@ -15,18 +15,18 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 用于参考
+  // for reference
   const arcGisLayer = new mars3d.layer.ArcGisLayer({
     url: "//server.mars3d.cn/arcgis/rest/services/mars/guihua/MapServer",
     highlight: {
@@ -41,38 +41,38 @@ function onMounted(mapInstance) {
   })
   map.addLayer(arcGisLayer)
 
-  // 查询服务
+  // Query service
   queryMapserver = new mars3d.query.QueryArcServer({
     url: "http://server.mars3d.cn/arcgis/rest/services/mars/guihua/MapServer/0"
   })
 
-  // 用于显示查询结果（geojson）的图层
+  //Layer used to display query results (geojson)
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-    name: "规划用地",
+    name: "Planning land",
     symbol: {
       type: "polygonP",
       styleOptions: {
-        color: "rgba(205, 233, 247, 0.7)", // 填充颜色
+        color: "rgba(205, 233, 247, 0.7)", // fill color
         clampToGround: true
       },
-      styleField: "用地编号",
+      styleField: "Land number",
       styleFieldOptions
     },
     // popup: "all",
-    popup: "名称：{用地名称}<br />编号：{用地编号}<br />类型：{规划用地}<br />面积：{muArea}亩"
+    popup: "Name: {land name}<br />Number: {land number}<br />Type: {planned land}<br />Area: {muArea} acres"
   })
   map.addLayer(geoJsonLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 框选查询 矩形
+// Frame selection query rectangle
 function drawRectangle() {
   clearAll()
   map.graphicLayer.startDraw({
@@ -90,7 +90,7 @@ function drawRectangle() {
     }
   })
 }
-// 框选查询   圆
+// Frame selection query circle
 function drawCircle() {
   clearAll()
   map.graphicLayer.startDraw({
@@ -108,7 +108,7 @@ function drawCircle() {
     }
   })
 }
-// 框选查询   多边行
+// Frame selection query multi-row
 function drawPolygon() {
   clearAll()
   map.graphicLayer.startDraw({
@@ -126,31 +126,31 @@ function drawPolygon() {
     }
   })
 }
-// 清除数据
+// clear data
 function clearAll() {
   drawGraphic = null
   map.graphicLayer.clear()
   geoJsonLayer.clear()
 }
 
-// 查询数据
+// Query data
 function queryData(queryVal) {
   if (drawGraphic == null) {
-    globalMsg("请绘制查询区域！")
+    globalMsg("Please draw the query area!")
     return
   }
 
   queryMapserver.query({
-    column: "用地名称",
+    column: "land name",
     text: queryVal,
     graphic: drawGraphic,
     page: false,
     success: (result) => {
       if (result.count === 0) {
-        globalMsg("未查询到相关记录！")
+        globalMsg("No relevant records found!")
         return
       }
-      console.log("查询到的记录", result)
+      console.log("queried records", result)
 
       const drawGeoJSON = drawGraphic.toGeoJSON({ outline: true })
 
@@ -160,40 +160,40 @@ function queryData(queryVal) {
         const feature = arrFeatures[i]
 
         try {
-          const geojsonNew = turf.intersect(drawGeoJSON, feature) // 切割
+          const geojsonNew = turf.intersect(drawGeoJSON, feature) // Cutting
 
           if (geojsonNew) {
             feature.geometry = geojsonNew.geometry
           }
         } catch (e) {
-          globalMsg("切割异常，请重新切割")
+          globalMsg("Cutting abnormality, please cut again")
           clearAll()
         }
 
         const area = turf.area(feature) || feature.properties.Shape_Area || 0
-        feature.properties.muArea = mars3d.Util.formatNum(area * 0.0015, 2) // 平方米转亩
+        feature.properties.muArea = mars3d.Util.formatNum(area * 0.0015, 2) // Square meters to acres
 
-        // 需要统计的数据
+        // Data that need statistics
         arrArea.push({
-          type: feature.properties.用地名称,
+          type: feature.properties.Land name,
           area: feature.properties.muArea
         })
       }
 
-      // 显示数据
+      // Display Data
       geoJsonLayer.load({ data: result.geojson })
       calculateArea(arrArea)
     },
     error: (error, msg) => {
-      console.log("服务访问错误", error)
-      globalAlert(msg, "服务访问错误")
+      console.log("Service access error", error)
+      globalAlert(msg, "Service access error")
     }
   })
 }
 
-// 统计面积数据并按表格图表来展示
+// Statistics area data and displays it in tables and charts
 function calculateArea(arr) {
-  console.log("计算前数据", arr)
+  console.log("Data before calculation", arr)
 
   const objTemp = {}
   for (let i = 0; i < arr.length; i++) {
@@ -207,7 +207,7 @@ function calculateArea(arr) {
     objTemp[item.type].count++
   }
 
-  const arrTable = [] // 类型+面积+数量
+  const arrTable = [] // type + area + quantity
   for (const type in objTemp) {
     const area = mars3d.Util.formatNum(objTemp[type].area, 2)
     arrTable.push({ type, area, count: objTemp[type].count })
@@ -215,342 +215,342 @@ function calculateArea(arr) {
   eventTarget.fire("tableData", { list: arrTable })
 }
 
-// 规划面着色配置
+//Plan surface shading configuration
 const styleFieldOptions = {
   A1: {
-    // 行政办公用地
+    // Administrative office space
     color: "rgba(255,127,159,0.9)"
   },
   A2: {
-    // 文化设施用地
+    // Land for cultural facilities
     color: "rgba(255,159,127,0.9)"
   },
   A22: {
-    // 文化活动用地
+    // Land for cultural activities
     color: "rgba(255,159,127,0.9)"
   },
   A3: {
-    // 教育科研用地
+    // Land for education and scientific research
     color: "rgba(255,127,191,0.9)"
   },
   A31: {
-    // 高等院校用地
+    // Land for higher education institutions
     color: "rgba(255,127,191,0.9)"
   },
   A32: {
-    // 中等专业学校用地
+    // Land for secondary vocational schools
     color: "rgba(255,127,191,0.9)"
   },
   A33: {
-    // 中小学用地
+    // Land for primary and secondary schools
     color: "rgba(255,255,127,0.9)"
   },
   A34: {
-    // 特殊教育用地
+    //Special education land
     color: "rgba(255,127,191,0.9)"
   },
   A35: {
-    // 科研用地
+    //Scientific research land
     color: "rgba(255,127,191,0.9)"
   },
   A4: {
-    // 体育用地
+    //Sports land
     color: "rgba(255,127,0,0.9)"
   },
   A41: {
-    // 体育场馆用地
+    //Sports venue land
     color: "rgba(255,127,0,0.9)"
   },
   A5: {
-    // 医疗卫生用地
+    //Medical and health land
     color: "rgba(255,127,127,0.9)"
   },
   A51: {
-    // 医院用地
+    //Hospital land
     color: "rgba(255,127,127,0.9)"
   },
   A52: {
-    // 卫生防疫用地
+    // Land for health and epidemic prevention
     color: "rgba(255,127,127,0.9)"
   },
   A59: {
-    // 其他医疗卫生用地
+    //Other medical and health land
     color: "rgba(255,127,127,0.9)"
   },
   A6: {
-    // 社会福利用地
+    // Social welfare land
     color: "rgba(165,82,103,0.9)"
   },
   A7: {
-    // 文物古迹用地
+    // Land for cultural relics and historic sites
     color: "rgba(165,41,0,0.9)"
   },
   A9: {
-    // 宗教用地
+    // religious land
     color: "rgba(165,82,103,0.9)"
   },
   B: {
-    // 商业服务业设施用地
+    // Land for commercial service industry facilities
     color: "rgba(255,0,63,0.9)"
   },
   B1: {
-    // 商业用地
+    // Commercial land
     color: "rgba(255,0,63,0.9)"
   },
   B11: {
-    // 零售商业用地
+    //Retail commercial land
     color: "rgba(255,0,63,0.9)"
   },
   B12: {
-    // 批发市场用地
+    // Wholesale market land
     color: "rgba(255,0,63,0.9)"
   },
   B13: {
-    // 餐饮用地
+    //Catering area
     color: "rgba(255,0,63,0.9)"
   },
   B14: {
-    // 旅馆用地
+    // hotel land
     color: "rgba(255,0,63,0.9)"
   },
   B2: {
-    // 商务用地
+    //Business land
     color: "rgba(255,0,63,0.9)"
   },
   B21: {
-    // 金融保险用地
+    //Finance and insurance land
     color: "rgba(255,0,63,0.9)"
   },
   B29: {
-    // 其他商务用地
+    // Other business areas
     color: "rgba(255,0,63,0.9)"
   },
   B3: {
-    // 娱乐康体用地
+    // Entertainment and sports land
     color: "rgba(255,159,127,0.9)"
   },
   B31: {
-    // 娱乐用地
+    // entertainment land
     color: "rgba(255,159,127,0.9)"
   },
   B32: {
-    // 康体用地
+    // Recreation and sports land
     color: "rgba(255,159,127,0.9)"
   },
   B4: {
-    // 公用设施营业网点用地
+    // Land for public facilities business outlets
     color: "rgba(255,159,127,0.9)"
   },
   B41: {
-    // 加油加气站用地
+    // Land for gas station
     color: "rgba(255,159,127,0.9)"
   },
   B9: {
-    // 其他服务设施用地
+    // Land for other service facilities
     color: "rgba(255,159,127,0.9)"
   },
   BR: {
-    // 商住混合用地
+    // Mixed commercial and residential land
     color: "rgba(255,0,63,0.9)"
   },
   E1: {
-    // 水域
+    // waters
     color: "rgba(127,255,255,0.9)"
   },
   E2: {
-    // 农林用地
+    // Agricultural and forestry land
     color: "rgba(41,165,0,0.9)"
   },
   E9: {
-    // 其他非建设用地
+    //Other non-construction land
     color: "rgba(127,127,63,0.9)"
   },
   G: {
-    // 绿地与广场用地
+    // Green space and square land
     color: "rgba(0,127,0,0.9)"
   },
   G1: {
-    // 公园绿地
+    // Park green space
     color: "rgba(0,255,63,0.9)"
   },
   G2: {
-    // 防护绿地
+    // Protective green space
     color: "rgba(0,127,0,0.9)"
   },
   G3: {
-    // 广场用地
+    //Plaza land
     color: "rgba(128,128,128,0.9)"
   },
   H: {
-    // 建设用地
+    // construction land
     color: "rgba(165,124,0,0.9)"
   },
   H1: {
-    // 城乡居民点建设用地
+    // Construction land for urban and rural residential areas
     color: "rgba(165,124,0,0.9)"
   },
   H14: {
-    // 村庄建设用地
+    //Village construction land
     color: "rgba(165,165,82,0.9)"
   },
   H2: {
-    // 区域交通设施用地
+    // Land for regional transportation facilities
     color: "rgba(192,192,192,0.9)"
   },
   H21: {
-    // 铁路用地
+    // Railway land
     color: "rgba(192,192,192,0.9)"
   },
   H22: {
-    // 公路用地
+    // road land
     color: "rgba(192,192,192,0.9)"
   },
   H23: {
-    // 港口用地
+    // Port land
     color: "rgba(192,192,192,0.9)"
   },
   H3: {
-    // 区域公共设施用地
+    // Land for regional public facilities
     color: "rgba(82,165,82,0.9)"
   },
   H4: {
-    // 特殊用地
+    // Special land
     color: "rgba(47,76,38,0.9)"
   },
   H41: {
-    // 军事用地
+    // military land
     color: "rgba(47,76,38,0.9)"
   },
   H42: {
-    // 安保用地
+    // Security land
     color: "rgba(47,76,38,0.9)"
   },
   H9: {
-    // 其他建设用地
+    //Other construction land
     color: "rgba(165,165,82,0.9)"
   },
   M: {
-    // 工业用地
+    // Industrial land
     color: "rgba(127,95,63,0.9)"
   },
   M1: {
-    // 一类工业用地
+    // Class I industrial land
     color: "rgba(127,95,63,0.9)"
   },
   M2: {
-    // 二类工业用地
+    // Class II industrial land
     color: "rgba(76,57,38,0.9)"
   },
   M4: {
-    // 农业服务设施用地
+    // Land for agricultural service facilities
     color: "rgba(153,38,0,0.9)"
   },
   R: {
-    // 居住用地
+    // Residential land
     color: "rgba(255,255,0,0.9)"
   },
   R1: {
-    // 一类居住用地
+    // Class I residential land
     color: "rgba(255,255,127,0.9)"
   },
   R2: {
-    // 二类居住用地
+    // Class II residential land
     color: "rgba(255,255,0,0.9)"
   },
   R21: {
-    // 住宅用地
+    // Residential land
     color: "rgba(255,255,0,0.9)"
   },
   R22: {
-    // 服务设施用地
+    // Land for service facilities
     color: "rgba(255,255,0,0.9)"
   },
   RB: {
-    // 商住混合用地
+    // Mixed commercial and residential land
     color: "rgba(255,191,0,0.9)"
   },
   S: {
-    // 道路与交通设施用地
+    // Land for roads and transportation facilities
     color: "rgba(128,128,128,0.9)"
   },
   S2: {
-    // 城市轨道交通用地
+    //Urban rail transit land
     color: "rgba(128,128,128,0.9)"
   },
   S3: {
-    // 交通枢纽用地
+    // Transportation hub land
     color: "rgba(192,192,192,0.9)"
   },
   S4: {
-    // 交通场站用地
+    // Traffic station land
     color: "rgba(128,128,128,0.9)"
   },
   S41: {
-    // 公共交通场站用地
+    //Public transport station land
     color: "rgba(128,128,128,0.9)"
   },
   S42: {
-    // 社会停车场用地
+    // Social parking lot land
     color: "rgba(128,128,128,0.9)"
   },
   S9: {
-    // 其他交通设施用地
+    // Land for other transportation facilities
     color: "rgba(63,111,127,0.9)"
   },
   U: {
-    // 公用设施用地
+    // Land for public facilities
     color: "rgba(0,95,127,0.9)"
   },
   U1: {
-    // 供应设施用地
+    // Supply facility land
     color: "rgba(0,95,127,0.9)"
   },
   U11: {
-    // 供水用地
+    //land for water supply
     color: "rgba(0,95,127,0.9)"
   },
   U12: {
-    // 供电用地
+    // power supply land
     color: "rgba(0,95,127,0.9)"
   },
   U13: {
-    // 供燃气用地
+    // Land for gas
     color: "rgba(0,95,127,0.9)"
   },
   U14: {
-    // 供热用地
+    // Heating land
     color: "rgba(0,95,127,0.9)"
   },
   U15: {
-    // 通信用地
+    // communication land
     color: "rgba(0,95,127,0.9)"
   },
   U2: {
-    // 环境设施用地
+    // Land for environmental facilities
     color: "rgba(0,95,127,0.9)"
   },
   U21: {
-    // 排水用地
+    // Drainage land
     color: "rgba(0,95,127,0.9)"
   },
   U22: {
-    // 环卫用地
+    // Sanitation land
     color: "rgba(0,95,127,0.9)"
   },
   U3: {
-    // 安全设施用地
+    // Land for safety facilities
     color: "rgba(0,95,127,0.9)"
   },
   U4: {
-    // 环境设施用地
+    // Land for environmental facilities
     color: "rgba(0,95,127,0.9)"
   },
   U9: {
-    // 其他公用设施用地
+    //Other public facilities land
     color: "rgba(0,95,127,0.9)"
   },
   W: {
-    // 仓储用地
+    // Warehousing land
     color: "rgba(159,127,255,0.9)"
   }
 }

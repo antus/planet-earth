@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.798703, lng: 117.207366, alt: 2033, heading: 31, pitch: -29 }
@@ -12,12 +12,12 @@ var mapOptions = {
   },
   layers: [
     {
-      name: "合肥教育点",
+      name: "Hefei Education Point",
       type: "wfs",
       url: "//server.mars3d.cn/geoserver/mars/wfs",
       layer: "mars:hfjy",
       parameters: {
-        // 支持所有wfs的参数
+        //Supports all wfs parameters
         maxFeatures: 500
       },
       minimumLevel: 13,
@@ -34,7 +34,7 @@ var mapOptions = {
           scaleByDistance_nearValue: 1,
           clampToGround: true,
           label: {
-            text: "{项目名称}",
+            text: "{project name}",
             font_size: 15,
             color: "#ffffff",
             outline: true,
@@ -53,36 +53,36 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
-  map.basemap = 2017 // 蓝色底图
+  map = mapInstance //Record the first created map
+  map.basemap = 2017 // blue basemap
 
   addWmsLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 /**
- * WFS图层
+ * WFS layer
  *
- * @returns {void} 无
+ * @returns {void} None
  */
 function addWmsLayer() {
   const changeLevel = 15
 
-  // 瓦片图，参考用
+  // Tile image, for reference
   const tileLayer = new mars3d.layer.WmsLayer({
-    name: "建筑物面WMS",
+    name: "Building Surface WMS",
     type: "wms",
     url: "//server.mars3d.cn/geoserver/mars/wms",
     layers: "mars:hfjzw",
@@ -93,17 +93,17 @@ function addWmsLayer() {
     },
     maximumLevel: changeLevel - 1,
     maximumTerrainLevel: changeLevel - 1,
-    popup: "名称：{NAME}<br />层数：{floor}",
+    popup: "Name: {NAME}<br />Number of floors: {floor}",
     show: true
   })
   map.addLayer(tileLayer)
 
   const wfsLayer = new mars3d.layer.WfsLayer({
-    name: "建筑物面WFS",
+    name: "Building Surface WFS",
     url: "//server.mars3d.cn/geoserver/mars/wfs",
     layer: "mars:hfjzw",
     parameters: {
-      // 支持所有wfs的参数
+      //Supports all wfs parameters
       maxFeatures: 210
     },
     minimumLevel: changeLevel,
@@ -119,30 +119,30 @@ function addWmsLayer() {
       cloumn: "floor"
     },
     debuggerTileInfo: false,
-    popup: "名称：{NAME}<br />层数：{floor}",
+    popup: "Name: {NAME}<br />Number of floors: {floor}",
     show: true
   })
   map.addLayer(wfsLayer)
 
-  // 绑定事件
+  //Bind event
   wfsLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 
   let timeTik
   wfsLayer.on(mars3d.EventType.update, function (event) {
-    console.log(`图层内数据更新了`, event)
+    console.log(`Data in layer updated`, event)
 
     clearTimeout(timeTik)
     timeTik = setTimeout(() => {
       if (!wfsLayer.isLoading) {
-        console.log(`本批次数据加载完成`)
+        console.log(`This batch of data loading is completed`)
       }
     }, 1000)
   })
 }
 
-// 图层状态 在组件中进行管理的图层
+//Layer state The layer managed in the component
 function getManagerLayer() {
-  return map.getLayerByAttr("建筑物面WFS", "name")
+  return map.getLayerByAttr("Building surface WFS", "name")
 }

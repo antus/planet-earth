@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.73204, lng: 117.286568, alt: 50785, heading: 359, pitch: -76 }
@@ -10,22 +10,22 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 构造鹰眼地图
+  //Construct the eagle eye map
   const overviewMap = new mars3d.control.OverviewMap({
     basemap: {
-      name: "天地图电子",
+      name: "Tiantu Electronics",
       type: "group",
       layers: [
-        { name: "底图", type: "tdt", layer: "vec_d" },
-        { name: "注记", type: "tdt", layer: "vec_z" }
+        { name: "basemap", type: "tdt", layer: "vec_d" },
+        { name: "note", type: "tdt", layer: "vec_z" }
       ]
     },
     rectangle: {
@@ -43,20 +43,20 @@ function onMounted(mapInstance) {
   })
   map.addControl(overviewMap)
 
-  // 给鹰眼小地图添加一个矢量对象
+  //Add a vector object to the Eagle Eye minimap
   addGraphicToOverviewMap(overviewMap)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addGraphicToOverviewMap(overviewMap) {
-  const mapEx = overviewMap.smallMap // 也是 mars3d.Map 对象
+  const mapEx = overviewMap.smallMap // also a mars3d.Map object
 
   const graphic = new mars3d.graphic.BillboardEntity({
     position: new Cesium.CallbackProperty(() => {

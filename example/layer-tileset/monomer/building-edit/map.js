@@ -1,11 +1,11 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
 
 let geoJsonLayerDTH
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 43.822109, lng: 125.14311, alt: 890, heading: 337, pitch: -50 }
@@ -15,39 +15,39 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 三维模型
+  // 3D model
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     type: "3dtiles",
-    name: "校园",
+    name: "campus",
     url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
     position: { alt: 279.0 },
     maximumScreenSpaceError: 1
   })
   map.addLayer(tilesetLayer)
 
-  // 单体化图层
+  //Single layer
   geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
-    name: "校园-单体化",
+    name: "Campus-Single",
     symbol: {
       type: "polygonP",
       styleOptions: {
-        // 单体化默认显示样式
+        //Single default display style
         color: "rgba(255, 255, 255, 0.01)",
         clampToGround: true,
         classification: true,
         buffer: 1,
-        // 单体化鼠标移入或单击后高亮的样式
+        // Singletify the style highlighted after the mouse is moved or clicked
         highlight: {
           type: mars3d.EventType.click,
           color: "rgba(255,255,0,0.4)"
@@ -55,21 +55,21 @@ function onMounted(mapInstance) {
       }
     },
     popup: [
-      { field: "name", name: "学校场所" },
-      { field: "sfkf", name: "是否开放" },
-      { field: "remark", name: "备注信息" }
+      { field: "name", name: "school place" },
+      { field: "sfkf", name: "Is it open" },
+      { field: "remark", name: "Remarks information" }
     ]
   })
   map.addLayer(geoJsonLayerDTH)
 
-  mars3d.DrawUtil.setEditPointStyle(mars3d.EditPointType.Control, { has3dtiles: true }) // 编辑点贴模型
+  mars3d.DrawUtil.setEditPointStyle(mars3d.EditPointType.Control, { has3dtiles: true }) // Edit point and paste model
 
   graphicLayer = new mars3d.layer.GraphicLayer({
     hasEdit: true,
-    isAutoEditing: true, // 绘制完成后是否自动激活编辑
+    isAutoEditing: true, // Whether to automatically activate editing after drawing is completed
     symbol: {
       type: "polygon",
-      merge: true, // 是否合并并覆盖json中已有的style，默认不合并
+      merge: true, // Whether to merge and overwrite existing styles in json, not merged by default
       styleOptions: {
         color: "rgba(255, 255, 0, 0.4)",
         clampToGround: true
@@ -78,35 +78,35 @@ function onMounted(mapInstance) {
   })
   map.addLayer(graphicLayer)
 
-  // 加载数据
+  // Download Data
   const configUrl = "//data.mars3d.cn/file/geojson/dth-xuexiao-fd.json"
   mars3d.Util.fetchJson({ url: configUrl })
     .then(function (result) {
       graphicLayer.loadGeoJSON(result)
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 
   bindLayerContextMenu()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 /**
- * 绑定右键菜单功能，开始编辑，删除等
- *@returns {void} 无
+ * Bind right-click menu functions to start editing, deleting, etc.
+ *@returns {void} None
  */
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -126,7 +126,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -146,7 +146,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -161,7 +161,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -169,27 +169,27 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "计算周长",
+      text: "Calculate perimeter",
       icon: "fa fa-medium",
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
-        globalAlert("该对象的周长为:" + strDis)
+        globalAlert("The perimeter of this object is:" + strDis)
       }
     },
     {
-      text: "计算面积",
+      text: "Calculate area",
       icon: "fa fa-reorder",
       callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
-        globalAlert("该对象的面积为:" + strArea)
+        globalAlert("The area of ​​this object is:" + strArea)
       }
     }
   ])
 }
 
-// 切换到预览模式
+//Switch to preview mode
 function toYLMS() {
   const geojson = graphicLayer.toGeoJSON()
 
@@ -199,7 +199,7 @@ function toYLMS() {
   graphicLayer.show = false
 }
 
-// 切换到编辑模式
+//Switch to edit mode
 function toBJMS() {
   geoJsonLayerDTH.clear()
   graphicLayer.hasEdit = true
@@ -224,11 +224,11 @@ function drawPolygon() {
 }
 
 /**
- *打开geojson文件
+ *Open geojson file
  *
  * @export
- * @param {FileInfo} file 文件名称
- * @returns {void} 无
+ * @param {FileInfo} file file name
+ * @returns {void} None
  */
 function openGeoJSON(file) {
   const fileName = file.name
@@ -245,17 +245,17 @@ function openGeoJSON(file) {
       })
     }
   } else {
-    globalMsg("暂不支持 " + fileType + " 文件类型的数据！")
+    globalMsg("Data of " + fileType + " file type is not supported yet!")
   }
 }
 
-// 保存JSON文件
+//Save JSON file
 function saveGeoJSON() {
   if (graphicLayer.length === 0) {
-    globalMsg("当前没有标注任何数据，无需保存！")
+    globalMsg("No data is currently marked, no need to save!")
     return
   }
   const layers = map.getLayerById(graphicLayer.id)
   const geojson = layers.toGeoJSON()
-  mars3d.Util.downloadFile("单体化.json", JSON.stringify(geojson))
+  mars3d.Util.downloadFile("Single.json", JSON.stringify(geojson))
 }

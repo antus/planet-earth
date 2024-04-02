@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.820398, lng: 116.218603, alt: 6483, heading: 22, pitch: -40 }
@@ -10,17 +10,17 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -30,8 +30,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -39,7 +39,7 @@ function onUnmounted() {
 
 function addDemoGraphic1(graphicLayer) {
   const graphic = new mars3d.graphic.ModelEntity({
-    name: "飞机",
+    name: "airplane",
     position: [116.239918, 30.879709, 1208],
     style: {
       url: "//data.mars3d.cn/gltf/mars/feiji.glb",
@@ -48,10 +48,10 @@ function addDemoGraphic1(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic)
 
-  // 开始 自旋转效果
+  // Start the self-rotation effect
   graphic.rotateStart({
-    direction: false, // 控制方向, true逆时针，false顺时针
-    time: 20 // time：给定飞行一周所需时间(单位 秒)，控制速度
+    direction: false, // Control direction, true counterclockwise, false clockwise
+    time: 20 // time: given the time required for one flight (in seconds), control the speed
   })
 
   // setTimeout(() => {
@@ -61,7 +61,7 @@ function addDemoGraphic1(graphicLayer) {
 
 function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.ModelEntity({
-    name: "四凌锥体",
+    name: "Four Ling Cone",
     position: [116.257665, 30.869372, 1500],
     style: {
       url: "//data.mars3d.cn/gltf/mars/zhui.glb",
@@ -71,16 +71,16 @@ function addDemoGraphic2(graphicLayer) {
   })
   graphicLayer.addGraphic(graphic)
 
-  // 开始 自旋转效果
+  // Start the self-rotation effect
   graphic.rotateStart({
-    direction: true, // 控制方向, true逆时针，false顺时针
-    time: 6 // time：给定飞行一周所需时间(单位 秒)，控制速度
+    direction: true, // Control direction, true counterclockwise, false clockwise
+    time: 6 // time: given the time required for one flight (in seconds), control the speed
   })
 }
 
 function addDemoGraphic3(graphicLayer) {
   const graphicCar = new mars3d.graphic.ModelEntity({
-    name: "汽车",
+    name: "car",
     position: [116.210938, 30.87518, 613.1],
     style: {
       url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
@@ -91,10 +91,10 @@ function addDemoGraphic3(graphicLayer) {
   })
   graphicLayer.addGraphic(graphicCar)
 
-  // 移动模型
+  //Move model
   graphicCar.moveTo({
     position: [116.259138, 30.855247, 562],
     orientation: true,
-    time: 8 // 移动的时长(单位 秒)
+    time: 8 // Duration of movement (unit seconds)
   })
 }

@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.402686, lng: 116.303632, alt: 48692, heading: 3, pitch: -43 }
@@ -12,24 +12,24 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
   // map.on(mars3d.EventType.removeLayer, function (event) {
-  //   console.log("移除了图层", event)
+  // console.log("Layer removed", event)
   // })
 
   showDraw()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -48,22 +48,22 @@ function removeLayer() {
 }
 
 /**
- * 平台通过draw标绘后保存的geojosn数据（已经内置style了，无需配置symbol）
+ * Geojosn data saved by the platform after plotting through draw (style is already built-in, no need to configure symbol)
  */
 function showDraw(isFlyTo) {
   removeLayer()
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
-    name: "标绘示例数据",
+    name: "Plotting sample data",
     url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
     popup: "{type} {name}",
     queryParameters: {
-      token: "mars3d" // 可以传自定义url参数，如token等
+      token: "mars3d" // Custom url parameters can be passed, such as token, etc.
     },
     symbol: {
       merge: true,
       styleOptions: {
-        // 高亮时的样式
+        // Style when highlighted
         highlight: {
           type: "click",
           opacity: 0.9
@@ -74,38 +74,38 @@ function showDraw(isFlyTo) {
   })
   map.addLayer(graphicLayer)
 
-  // load事件,必须在load完成前绑定才能监听
+  // The load event must be bound before the load is completed to listen.
   graphicLayer.on(mars3d.EventType.load, function (event) {
     if (event.layer) {
-      console.log("数据加载完成", event)
+      console.log("Data loading completed", event)
     }
   })
 
   setTimeout(() => {
-    // readyPromise是可以load加载数据完成后去获取
+    // readyPromise can be obtained after load loading data is completed.
     graphicLayer.readyPromise.then(function (layer) {
-      console.log("readyPromise:数据加载完成", layer)
+      console.log("readyPromise: data loading completed", layer)
     })
   }, 5000)
 
-  // 单击事件
+  // click event
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
 /**
- * 点数据
+ *Point data
  */
 function showPoint() {
   removeLayer()
 
   window._test_button_click = function (attr) {
-    globalAlert(JSON.stringify(attr), "测试查看详情")
+    globalAlert(JSON.stringify(attr), "Test to view details")
   }
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
-    name: "体育设施点",
+    name: "Sports facilities",
     url: "//data.mars3d.cn/file/geojson/hfty-point.json",
     symbol: {
       styleOptions: {
@@ -117,9 +117,9 @@ function showPoint() {
         scaleByDistance_farValue: 0.5,
         scaleByDistance_near: 1000,
         scaleByDistance_nearValue: 1,
-        // setHeight: 5000, //指定高度
+        // setHeight: 5000, //Specify height
         label: {
-          text: "{项目名称}",
+          text: "{project name}",
           font_size: 25,
           color: "#ffffff",
           outline: true,
@@ -137,55 +137,55 @@ function showPoint() {
       }
     },
     popup: [
-      { field: "项目名称", name: "项目名称" },
-      { field: "建设性质", name: "建设性质" },
-      { field: "设施级别", name: "设施级别" },
-      { field: "所属区县", name: "所属区县" },
-      { field: "建筑内容及", name: "建筑内容" },
-      { field: "新增用地（", name: "新增用地" },
-      { field: "开工", name: "开工" },
-      { field: "总投资（万", name: "总投资" },
-      { field: "资金来源", name: "资金来源" },
-      { field: "初步选址", name: "初步选址" },
-      { field: "设施类型", name: "设施类型" },
-      { field: "设施等级", name: "设施等级" },
-      { field: "所在区县", name: "所在区县" },
-      { field: "具体位置", name: "具体位置" },
-      { field: "建设内容（", name: "建设内容" },
-      { field: "用地面积（", name: "用地面积", format: "mars3d.MeasureUtil.formatArea" },
-      { field: "设施规模（", name: "设施规模" },
-      { field: "举办者类型", name: "举办者类型" },
-      { field: "开工时间", name: "开工时间" },
-      { field: "总投资额（", name: "总投资额", unit: "亿元" },
-      { field: "项目推进主", name: "项目推进主体" },
-      { field: "项目进度", name: "项目进度" },
-      { field: "项目来源", name: "项目来源" },
-      { field: "备注", name: "备注" },
-      { name: "详情", type: "button", className: "mars3d-popup-btn-custom", callback: "_test_button_click" }
+      { field: "Project name", name: "Project name" },
+      { field: "Construction Nature", name: "Construction Nature" },
+      { field: "Facility Level", name: "Facility Level" },
+      {field: "Affiliated district and county", name: "Affiliated district and county" },
+      { field: "Architectural content and", name: "Architectural content" },
+      { field: "New land (", name: "New land" },
+      { field: "Start of construction", name: "Start of construction" },
+      { field: "Total investment (10,000", name: "Total investment" },
+      { field: "Funding Source", name: "Funding Source" },
+      { field: "Preliminary site selection", name: "Preliminary site selection" },
+      { field: "Facility Type", name: "Facility Type" },
+      { field: "Facility Level", name: "Facility Level" },
+      { field: "District and County where you are located", name: "District and County where you are located" },
+      { field: "Specific location", name: "Specific location" },
+      { field: "Construction content (", name: "Construction content" },
+      { field: "Land area (", name: "Land area", format: "mars3d.MeasureUtil.formatArea" },
+      { field: "Facility size (", name: "Facility size" },
+      { field: "organizer type", name: "organizer type" },
+      { field: "Start time", name: "Start time" },
+      { field: "Total investment amount (", name: "Total investment amount", unit: "100 million yuan" },
+      { field: "Project promotion main body", name: "Project promotion main body" },
+      { field: "Project Progress", name: "Project Progress" },
+      { field: "Project Source", name: "Project Source" },
+      { field: "Remarks", name: "Remarks" },
+      { name: "Details", type: "button", className: "mars3d-popup-btn-custom", callback: "_test_button_click" }
     ],
     flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
 /**
- * 全国省界
+ * Nationwide provincial boundaries
  */
 function showChinaLine() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
-    name: "全国省界",
+    name: "National Provincial Boundaries",
     url: "//data.mars3d.cn/file/geojson/areas/100000_full.json",
-    format: simplifyGeoJSON, // 用于自定义处理geojson
+    format: simplifyGeoJSON, // used for custom processing of geojson
     symbol: {
       type: "polylineP",
       styleOptions: {
@@ -202,7 +202,7 @@ function showChinaLine() {
         distanceDisplayCondition_near: 100000,
         label: {
           text: "{name}",
-          position: "{center}", // 省会位置center
+          position: "{center}", // Provincial capital position center
           font_size: 30,
           color: "#ffffff",
           outline: true,
@@ -223,13 +223,13 @@ function showChinaLine() {
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
 }
 
-// 简化geojson的坐标
+// Simplify geojson coordinates
 function simplifyGeoJSON(geojson) {
   try {
     geojson = turf.simplify(geojson, { tolerance: 0.0001, highQuality: true, mutate: true })
@@ -240,18 +240,18 @@ function simplifyGeoJSON(geojson) {
 }
 
 /**
- * 显示合肥区域面
+ * Show Hefei area
  */
 function showRegion() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
-    name: "合肥市",
+    name: "Hefei City",
     url: "//data.mars3d.cn/file/geojson/areas/340100_full.json",
     symbol: {
       styleOptions: {
         fill: true,
-        randomColor: true, // 随机色
+        randomColor: true, // random color
         opacity: 0.3,
         outline: true,
         outlineStyle: {
@@ -259,7 +259,7 @@ function showRegion() {
           width: 3,
           opacity: 1
         },
-        // 高亮时的样式
+        // Style when highlighted
         highlight: {
           opacity: 0.9,
           outlineStyle: {
@@ -271,8 +271,8 @@ function showRegion() {
         },
         label: {
           show: false,
-          // 面中心点，显示文字的配置
-          text: "{name}", // 对应的属性名称
+          // Center point of the surface, display text configuration
+          text: "{name}", // Corresponding attribute name
           opacity: 1,
           font_size: 40,
           color: "#ffffff",
@@ -308,16 +308,16 @@ function showRegion() {
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 规划面
+// Planning surface
 function showPlanningSurface() {
   removeLayer()
 
@@ -325,14 +325,14 @@ function showPlanningSurface() {
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
     id: 1987,
-    name: "用地规划",
-    // 1.支持URL
+    name: "Land Use Planning",
+    // 1. Support URL
     url: "//data.mars3d.cn/file/geojson/guihua.json",
-    // 2.也支持直接传入数据
+    // 2. Also supports direct incoming data
     // data: {
     //   type: "FeatureCollection",
-    //   name: "用地规划",
-    //   features: [] //数据已省略，可以从上面guihua.json中复制
+    // name: "Land Planning",
+    // features: [] //Data has been omitted and can be copied from guihua.json above
     // },
     symbol: {
       type: "polygonC",
@@ -340,61 +340,61 @@ function showPlanningSurface() {
         opacity: 0.6,
         color: "#0000FF"
       },
-      styleField: "类型",
+      styleField: "type",
       styleFieldOptions: {
-        一类居住用地: { color: "#FFDF7F" },
-        二类居住用地: { color: "#FFFF00" },
-        社区服务用地: { color: "#FF6A38" },
-        幼托用地: { color: "#FF6A38" },
-        商住混合用地: { color: "#FF850A" },
-        行政办公用地: { color: "#FF00FF" },
-        文化设施用地: { color: "#FF00FF" },
-        小学用地: { color: "#FF7FFF" },
-        初中用地: { color: "#FF7FFF" },
-        体育场用地: { color: "#00A57C" },
-        医院用地: { color: "#A5527C" },
-        社会福利用地: { color: "#FF7F9F" },
-        商业用地: { color: "#FF0000" },
-        商务用地: { color: "#7F0000" },
-        营业网点用地: { color: "#FF7F7F" },
-        一类工业用地: { color: "#A57C52" },
-        社会停车场用地: { color: "#C0C0C0" },
-        通信用地: { color: "#007CA5" },
-        排水用地: { color: "#00BFFF" },
-        公园绿地: { color: "#00FF00" },
-        防护绿地: { color: "#007F00" },
-        河流水域: { color: "#7FFFFF" },
-        配建停车场: { color: "#ffffff" },
-        道路用地: { color: "#ffffff" }
+        Class I residential land: { color: "#FFDF7F" },
+        Class II residential land: { color: "#FFFF00" },
+        Community service land: { color: "#FF6A38" },
+        Child care site: { color: "#FF6A38" },
+        Mixed commercial and residential land: { color: "#FF850A" },
+        Administrative office space: { color: "#FF00FF" },
+        Cultural facilities land: { color: "#FF00FF" },
+        Primary school land: { color: "#FF7FFF" },
+        Junior high school land: { color: "#FF7FFF" },
+        Stadium land: { color: "#00A57C" },
+        Hospital land: { color: "#A5527C" },
+        Social welfare land: { color: "#FF7F9F" },
+        Commercial land: { color: "#FF0000" },
+        Business land: { color: "#7F0000" },
+        Business outlet land: { color: "#FF7F7F" },
+        Class I industrial land: { color: "#A57C52" },
+        Social parking lot: { color: "#C0C0C0" },
+        Communication land: { color: "#007CA5" },
+        Drainage land: { color: "#00BFFF" },
+        Park green space: { color: "#00FF00" },
+        Protective green space: { color: "#007F00" },
+        River water: { color: "#7FFFFF" },
+        Equipped with parking lot: { color: "#ffffff" },
+        Road land: { color: "#ffffff" }
       }
     },
-    popup: "类型:{类型}"
+    popup: "Type:{type}"
     // flyTo: true,
   })
   map.addLayer(graphicLayer)
 
-  // 下面代码演示如果再config.json中配置的图层，如何绑定额外事件方法
-  // 绑定config.json中对应图层配置的"id"值图层的单击事件（比如下面是id:1987对应图层）
+  //The following code demonstrates how to bind additional event methods if the layer is configured in config.json
+  // Bind the click event of the "id" value layer corresponding to the layer configuration in config.json (for example, the following is the layer corresponding to id:1987)
   const layerTest = map.getLayerById(1987)
-  // 绑定事件
+  //Bind event
   layerTest.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
 
   layerTest.on(mars3d.EventType.click, function (event) {
-    // 单击事件
-    console.log("单击了图层", event)
+    // click event
+    console.log("Layer clicked", event)
   })
 }
 
 /**
- * 立体建筑物
+ * Three-dimensional buildings
  */
 function showBuilding() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
-    name: "建筑物面",
+    name: "Building Floor",
     url: "//data.mars3d.cn/file/geojson/buildings-demo.json",
     symbol: {
       styleOptions: {
@@ -413,20 +413,20 @@ function showBuilding() {
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
 }
 
 /**
- *  分层分户立体建筑物
+ * Layered and divided three-dimensional buildings
  */
 function showFloor() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
-    name: "分层分户建筑物面",
+    name: "stratified household building floor",
     url: "//data.mars3d.cn/file/geojson/huxing.json",
     symbol: {
       styleOptions: {
@@ -443,8 +443,8 @@ function showFloor() {
         }
       },
       callback: function (attr, styleOpt) {
-        const flrH = attr.floorh || 0 // 底面高度
-        const lyrH = attr.layerh || 0 // 楼层高度
+        const flrH = attr.floorh || 0 // Floor height
+        const lyrH = attr.layerh || 0 // Floor height
 
         return { height: flrH, diffHeight: lyrH }
       }
@@ -455,14 +455,14 @@ function showFloor() {
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
 }
 
 /**
- * 行政区划 ，转为wall显示
+ * Administrative division, converted to wall display
  */
 function showBoundaryWall() {
   removeLayer()
@@ -470,22 +470,22 @@ function showBoundaryWall() {
   map.setCameraView({ lat: 30.561661, lng: 117.663884, alt: 113078, heading: 346, pitch: -43 })
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
-    name: "合肥市",
+    name: "Hefei City",
     url: "//data.mars3d.cn/file/geojson/areas/340100_full.json",
     symbol: {
       type: "wall",
       styleOptions: {
-        diffHeight: 5000, // 墙高
+        diffHeight: 5000, // wall height
         materialType: mars3d.MaterialType.LineFlow,
         materialOptions: {
-          color: "#00ffff", // 颜色
-          opacity: 0.6, // 透明度
-          image: "img/textures/fence.png", // 图片
-          repeatX: 1, // 重复数量
-          axisY: true, // 竖直方向
-          speed: 10 // 速度
+          color: "#00ffff", // color
+          opacity: 0.6, // transparency
+          image: "img/textures/fence.png", // image
+          repeatX: 1, // number of repeats
+          axisY: true, // vertical direction
+          speed: 10 // speed
         },
-        // 高亮时的样式
+        // Style when highlighted
         highlight: {
           type: "click",
           color: "#ffff00"
@@ -498,26 +498,26 @@ function showBoundaryWall() {
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
 /**
- * 显示特殊面数据（单体化）
+ * Display special surface data (single)
  */
 let tilesetLayer
 function showMonomer() {
   removeLayer()
 
-  // 三维模型
+  // 3D model
   if (!tilesetLayer) {
     tilesetLayer = new mars3d.layer.TilesetLayer({
-      name: "文庙",
+      name: "Confucian Temple",
       type: "3dtiles",
       url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
       position: { alt: 38.8 },
@@ -528,16 +528,16 @@ function showMonomer() {
   }
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
-    name: "文庙-单体化",
+    name: "Confucian Temple-Single",
     url: " //data.mars3d.cn/file/geojson/dth-wm.json",
     symbol: {
       type: "polygonP",
       styleOptions: {
-        // 单体化默认显示样式
+        //Single default display style
         color: "rgba(255, 255, 255, 0.01)",
         clampToGround: true,
         classification: true,
-        // 单体化鼠标移入或单击后高亮的样式
+        // Singletify the style highlighted after the mouse is moved or clicked
         highlight: {
           // type: mars3d.EventType.click,
           color: "rgba(255,255,0,0.4)"
@@ -545,24 +545,24 @@ function showMonomer() {
       }
     },
     popup: [
-      { field: "name", name: "房屋名称" },
-      { field: "jznf", name: "建造年份" },
-      { field: "ssdw", name: "所属单位" },
-      { field: "remark", name: "备注信息" }
+      { field: "name", name: "House name" },
+      { field: "jznf", name: "Year of construction" },
+      { field: "ssdw", name: "Affiliated unit" },
+      { field: "remark", name: "Remarks information" }
     ],
     center: { lat: 33.589442, lng: 119.031613, alt: 254, heading: 5, pitch: -37 },
     flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
 }
 
 /**
- * 显示世界各国
+ * Show countries around the world
  */
 function showWorld() {
   removeLayer()
@@ -570,7 +570,7 @@ function showWorld() {
   map.setCameraView({ lat: 22.564341, lng: 89.44688, alt: 10817167, heading: 0, pitch: -87 })
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
-    name: "国界线",
+    name: "National Boundary Line",
     url: "//data.mars3d.cn/file/geojson/world.json",
     symbol: {
       type: "polygonP",
@@ -581,7 +581,7 @@ function showWorld() {
         randomColor: true,
         opacity: 0.5,
 
-        // 高亮时的样式
+        // Style when highlighted
         highlight: {
           type: "click",
           color: "#ffff00"
@@ -596,21 +596,21 @@ function showWorld() {
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 加载GCJ数据进行纠偏
+//Load GCJ data for correction
 function showGCJ02Data() {
   removeLayer()
 
   const gcjLayer = new mars3d.layer.GeoJsonLayer({
-    name: "纠偏前",
+    name: "before correction",
     url: "//data.mars3d.cn/file/geojson/areas/340303.json",
     symbol: {
       styleOptions: {
@@ -622,14 +622,14 @@ function showGCJ02Data() {
         }
       }
     },
-    popup: "纠偏前GCJ02坐标"
+    popup: "GCJ02 coordinates before correction"
   })
   map.addLayer(gcjLayer)
 
   graphicLayer = new mars3d.layer.GeoJsonLayer({
-    name: "纠偏后",
+    name: "After correction",
     url: "//data.mars3d.cn/file/geojson/areas/340303.json",
-    chinaCRS: mars3d.ChinaCRS.GCJ02, // 标识数据坐标，内部会纠偏
+    chinaCRS: mars3d.ChinaCRS.GCJ02, //Identifies the data coordinates, which will be corrected internally
     symbol: {
       styleOptions: {
         fill: false,
@@ -640,7 +640,7 @@ function showGCJ02Data() {
         }
       }
     },
-    popup: "纠偏后WGS坐标",
+    popup: "WGS coordinates after correction",
     flyTo: true
   })
   map.addLayer(graphicLayer)

@@ -1,32 +1,32 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = function (option) {
   option.control = {
-    baseLayerPicker: false // 是否显示图层选择控件
+    baseLayerPicker: false // Whether to display the layer selection control
   }
   return option
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
+  // Method 2: After creating the earth, call addControl on demand (directly new the control corresponding to the type type)
   const baseLayerPicker = new mars3d.control.BaseLayerPicker({
     icon: "img/svg/baseLayerPicker.svg"
   })
   map.addControl(baseLayerPicker)
 
   map.on(mars3d.EventType.changeBasemap, (event) => {
-    console.log("切换了底图，当前底图为", map.basemap)
+    console.log("The basemap was switched, the current basemap is ", map.basemap)
   })
 
   // setTimeout(() => {
@@ -35,23 +35,23 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 获取自定义底图切换
+// Get custom basemap switching
 function getImageryProviderArr() {
   const providerViewModels = []
   let imgModel
 
   imgModel = new Cesium.ProviderViewModel({
-    name: "本地图片",
-    tooltip: "本地单张图片",
+    name: "local picture",
+    tooltip: "Local single image",
     iconUrl: "img/basemaps/esriNationalGeographic.png",
-    category: "标准坐标系",
+    category: "Standard coordinate system",
     creationFunction: function () {
       return mars3d.LayerUtil.createImageryProvider({
         type: "image",
@@ -62,10 +62,10 @@ function getImageryProviderArr() {
   providerViewModels.push(imgModel)
 
   imgModel = new Cesium.ProviderViewModel({
-    name: "天地图影像",
-    tooltip: "天地图全球影像地图服务（国家测绘局）",
+    name: "Heaven Map Image",
+    tooltip: "Tiantu Global Image Map Service (National Bureau of Surveying and Mapping)",
     iconUrl: "img/basemaps/tdt_img.png",
-    category: "标准坐标系",
+    category: "Standard coordinate system",
     creationFunction: function () {
       return [
         mars3d.LayerUtil.createImageryProvider({
@@ -84,10 +84,10 @@ function getImageryProviderArr() {
   providerViewModels.push(imgModel)
 
   imgModel = new Cesium.ProviderViewModel({
-    name: "Bing影像",
+    name: "Bing image",
     iconUrl: "img/basemaps/bingAerial.png",
-    tooltip: "微软提供的高清影像地图",
-    category: "标准坐标系",
+    tooltip: "HD image map provided by Microsoft",
+    category: "Standard coordinate system",
     creationFunction: function () {
       return mars3d.LayerUtil.createImageryProvider({
         type: "bing",
@@ -98,10 +98,10 @@ function getImageryProviderArr() {
   providerViewModels.push(imgModel)
 
   imgModel = new Cesium.ProviderViewModel({
-    name: "ESRI影像",
+    name: "ESRI Image",
     iconUrl: "img/basemaps/esriWorldImagery.png",
-    tooltip: "ESRI提供的高清影像地图",
-    category: "标准坐标系",
+    tooltip: "HD image map provided by ESRI",
+    category: "Standard coordinate system",
     creationFunction: function () {
       return mars3d.LayerUtil.createImageryProvider({
         type: "arcgis",
@@ -112,10 +112,10 @@ function getImageryProviderArr() {
   providerViewModels.push(imgModel)
 
   imgModel = new Cesium.ProviderViewModel({
-    name: "谷歌影像",
-    tooltip: "谷歌影像地图服务",
+    name: "Google Image",
+    tooltip: "Google Image Map Service",
     iconUrl: "img/basemaps/google_img.png",
-    category: "国测局偏移坐标系",
+    category: "National Bureau of Surveying Offset Coordinate System",
     creationFunction: function () {
       return [
         mars3d.LayerUtil.createImageryProvider({ type: "google", layer: "img_d" }),
@@ -126,10 +126,10 @@ function getImageryProviderArr() {
   providerViewModels.push(imgModel)
 
   imgModel = new Cesium.ProviderViewModel({
-    name: "高德影像",
-    tooltip: "高德影像地图服务",
+    name: "Gaode Image",
+    tooltip: "Amap Image Map Service",
     iconUrl: "img/basemaps/gaode_img.png",
-    category: "国测局偏移坐标系",
+    category: "National Bureau of Surveying Offset Coordinate System",
     creationFunction: function () {
       return [
         mars3d.LayerUtil.createImageryProvider({ type: "gaode", layer: "img_d" }),
@@ -145,8 +145,8 @@ function getImageryProviderArr() {
 function getTerrainProviderViewModelsArr() {
   return [
     new Cesium.ProviderViewModel({
-      name: "无地形",
-      tooltip: "WGS84标准球体",
+      name: "No terrain",
+      tooltip: "WGS84 standard sphere",
       iconUrl: "img/basemaps/TerrainEllipsoid.png",
       creationFunction: function () {
         return new Cesium.EllipsoidTerrainProvider({
@@ -155,8 +155,8 @@ function getTerrainProviderViewModelsArr() {
       }
     }),
     new Cesium.ProviderViewModel({
-      name: "全球地形",
-      tooltip: "由 Cesium官方 提供的高分辨率全球地形",
+      name: "Global Terrain",
+      tooltip: "High-resolution global terrain provided by Cesium officials",
       iconUrl: "img/basemaps/TerrainSTK.png",
       creationFunction: function () {
         return Cesium.createWorldTerrainAsync({
@@ -166,8 +166,8 @@ function getTerrainProviderViewModelsArr() {
       }
     }),
     new Cesium.ProviderViewModel({
-      name: "中国地形",
-      tooltip: "由 Mars3D 提供的中国国内地形",
+      name: "China Terrain",
+      tooltip: "China domestic terrain provided by Mars3D",
       iconUrl: "img/basemaps/TerrainSTK.png",
       creationFunction: function () {
         return new Cesium.CesiumTerrainProvider({

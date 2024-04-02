@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.838348, lng: 117.206494, alt: 752, heading: 359, pitch: -54 }
@@ -10,17 +10,17 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  // 添加参考三维模型
+  //Add reference 3D model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥国家大学科技园",
+    name: "Hefei National University Science and Technology Park",
     url: "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
     position: { alt: 80 },
     maximumScreenSpaceError: 1
@@ -28,9 +28,9 @@ function onMounted(mapInstance) {
   map.addLayer(tiles3dLayer)
 
   const graphicLayer = new mars3d.layer.ArcGisWfsLayer({
-    name: "兴趣点",
+    name: "Point of Interest",
     url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/1",
-    where: " NAME like '%大学%' ",
+    where: " NAME like '%University%' ",
     minimumLevel: 15,
     symbol: {
       type: "billboardP",
@@ -47,7 +47,7 @@ function onMounted(mapInstance) {
         }
       }
     },
-    popup: "名称：{NAME}<br />地址：{address}",
+    popup: "Name: {NAME}<br />Address: {address}",
     show: true
   })
   graphicLayer.on(mars3d.EventType.addGraphic, function (event) {
@@ -60,23 +60,23 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 点的自动贴地处理
+// Automatically attach points to the ground
 function updateAutoSurfaceHeight(graphic) {
   if (!graphic.position) {
     return
   }
 
-  // 点贴模型测试
+  // Click and paste model test
   const position = graphic.position
   mars3d.PointUtil.getSurfaceHeight(map.scene, position, { has3dtiles: true }).then((result) => {
-    console.log("原始高度为：" + result.height_original.toFixed(2) + ",贴地高度：" + result.height.toFixed(2))
+    console.log("Original height is: " + result.height_original.toFixed(2) + ", floor-mounted height: " + result.height.toFixed(2))
 
     graphic.position = result.position
   })

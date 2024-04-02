@@ -30,27 +30,27 @@ class CanvasEdit {
     ]
   }
 
-  // 开始绘制模式
+  // Start drawing mode
   draw() {
     this.clear()
     this._draw = true
     this._pickIndex = undefined
   }
 
-  // 清除点
+  // clear point
   clear() {
     this._points = []
     this.update()
   }
 
-  // 开始编辑状态
+  //Start editing status
   edit(canEdit) {
     console.log("canEdit", canEdit)
     this._draw = false
     this._canEdit = canEdit
   }
 
-  // 通过UV坐标集合更新点
+  //Update points through UV coordinate collection
   setPointsRorUvs(uvs) {
     this._points = []
     uvs.forEach((uv) => {
@@ -75,14 +75,14 @@ class CanvasEdit {
   mousedownHandler(event) {
     if (event.button === 0) {
       if (this._draw) {
-        // 如果处于绘制状态则左键按下为绘制点
+        // If it is in the drawing state, the left button is pressed as the drawing point
         this._points.push({
           x: event.offsetX,
           y: event.offsetY
         })
         this.update()
       } else if (!this._draw && this._canEdit) {
-        // 如果不处于绘制状态，则左键按下为编辑点
+        // If it is not in the drawing state, the left button is pressed as the editing point
         for (let i = 0; i < this._points.length; i++) {
           const x = this._points[i].x - event.offsetX
           const y = this._points[i].y - event.offsetY
@@ -101,7 +101,7 @@ class CanvasEdit {
     if (this._points.length > 0) {
       this._ctx.fillStyle = parameter.fillStyle
       this._ctx.strokeStyle = parameter.strokeStyle
-      // 绘制面和边界
+      // Draw faces and boundaries
       this._ctx.beginPath()
       this._ctx.moveTo(this._points[0].x, this._points[0].y)
       for (let i = 1; i < this._points.length; i++) {
@@ -110,7 +110,7 @@ class CanvasEdit {
       this._ctx.closePath()
       this._ctx.stroke()
       this._ctx.fill()
-      // 绘制节点
+      // draw nodes
       this._points.forEach((point) => {
         this._ctx.beginPath()
         this._ctx.arc(point.x, point.y, parameter.radius, 0, 2 * Math.PI)
@@ -118,7 +118,7 @@ class CanvasEdit {
       })
     }
     this.uvList = this.getUvForPoints()
-    console.log("uv集合:", this.getUvForPoints())
+    console.log("uv collection:", this.getUvForPoints())
   }
 
   getUvForPoints() {

@@ -1,34 +1,34 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
 let tleArr
 let drawGraphic
 let tableList = []
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 21.105826, lng: 108.202174, alt: 4426845, heading: 0, pitch: -77 },
     cameraController: {
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     }
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -36,26 +36,26 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 访问后端接口，取数据
+//Access the backend interface and get data
 function queryTleChinaApiData() {
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/tle-china.json" })
     .then(function (data) {
       tleArr = data.data
-      console.log("卫星数量：" + tleArr.length)
+      console.log("Number of satellites: " + tleArr.length)
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }
 
-// 框选查询 矩形
+// Frame selection query rectangle
 
 function drawRectangle() {
   map.graphicLayer.clear()
@@ -74,7 +74,7 @@ function drawRectangle() {
   })
 }
 
-// 框选查询   多边
+// Frame selection query multi-edge
 function drawPolygon() {
   map.graphicLayer.clear()
   map.graphicLayer.startDraw({
@@ -92,7 +92,7 @@ function drawPolygon() {
   })
 }
 
-// 框选查询   圆
+// Frame selection query circle
 function drawCircle() {
   map.graphicLayer.clear()
   map.graphicLayer.startDraw({
@@ -115,38 +115,38 @@ function drawClear() {
   drawGraphic = null
 }
 
-// 清除效果
+// clear effect
 function clearResult() {
   tableList = []
   drawClear()
 }
 
-//= ===============卫星过境===================================
+//= ===============Satellite transit============================== =====
 
-// 颜色
+// color
 const pointClr = Cesium.Color.fromCssColorString("#ff0000").withAlpha(0.7)
 /**
  *
  * @export
- * @param {time} startTimes 开始时间
- * @param {time} endTimes 结束时间
+ * @param {time} startTimes start time
+ * @param {time} endTimes end time
  * @returns {void}
  */
 function startFX(startTimes, endTimes) {
   if (!drawGraphic) {
-    globalMsg("请先在图上绘制区域")
+    globalMsg("Please draw an area on the map first")
     return
   }
 
-  // 范围相关信息
+  //Scope related information
   const options = {
     startTimes,
     endTimes,
     graphic: drawGraphic
   }
 
-  // 分析卫星位置
-  const newSatelliteArr = [] // 存储飞过指定范围的卫星的数据
+  //Analyze satellite position
+  const newSatelliteArr = [] //Storage data of satellites flying through the specified range
   for (let ind = 0; ind < tleArr.length; ind++) {
     const item = tleArr[ind]
     const arr = fxOneSatellite(item, options)
@@ -169,18 +169,18 @@ function fxOneSatellite(item, options) {
   const graphic = options.graphic
   const startTimes = options.startTimes
   const endTimes = options.endTimes
-  const step = 10 * 1000 // 插值数
+  const step = 10 * 1000 // Number of interpolations
 
   let nowTime = startTimes
 
   let position
   while (nowTime <= endTimes) {
-    // 根据时间计算卫星的位置
+    // Calculate satellite position based on time
     const position = mars3d.Tle.getEcfPosition(item.tle1, item.tle2, nowTime)
     if (!position) {
       break
     }
-    // 显示点[参考比较结果是否正确]
+    //Display points [refer to whether the comparison result is correct]
     // let timeStr = new Date(nowTime).format("yyyy-MM-dd HH:mm:ss")
     const pointPrimitive = new mars3d.graphic.PointPrimitive({
       position,
@@ -189,17 +189,17 @@ function fxOneSatellite(item, options) {
         pixelSize: 3
       },
       attr: item
-      // tooltip: `编号：${item.norad} <br />卫星：${item.name} <br />时间：${timeStr}`
+      // tooltip: `Number: ${item.norad} <br />Satellite: ${item.name} <br />Time: ${timeStr}`
     })
     map.graphicLayer.addGraphic(pointPrimitive)
 
-    // 判断是卫星否在缓冲区内
+    // Determine whether the satellite is in the buffer zone
     const isInPoly = graphic.isInPoly(position)
 
-    // console.log(`${item.name},时间：${timeStr},结果：${isInPoly}`);
+    // console.log(`${item.name}, time: ${timeStr}, result: ${isInPoly}`);
 
     if (lastObj && !lastObj.isInPoly && isInPoly) {
-      // 表示进入范围
+      //Indicates entering the range
       inAreaPath.push({
         lastPosition: lastObj.position,
         lastTime: lastObj.time,
@@ -210,7 +210,7 @@ function fxOneSatellite(item, options) {
     }
 
     if (lastObj && lastObj.isInPoly && !isInPoly) {
-      // 表示出范围
+      // show range
       inAreaPath.push({
         position,
         lastPosition: lastObj.position,
@@ -230,7 +230,7 @@ function fxOneSatellite(item, options) {
   }
 
   if (lastObj && lastObj.isInPoly) {
-    // 表示出范围
+    // show range
     inAreaPath.push({
       position,
       lastPosition: lastObj.position,
@@ -243,10 +243,10 @@ function fxOneSatellite(item, options) {
   return inAreaPath
 }
 
-//= ====================结果展示==================================
+//= ====================Result display========================== =========
 
 function showResult(newSatelliteArr) {
-  // 显示卫星条带
+  // Display satellite strips
 
   for (let ind = 0; ind < newSatelliteArr.length; ind++) {
     const item = newSatelliteArr[ind]
@@ -257,7 +257,7 @@ function showResult(newSatelliteArr) {
 
     let index = 0
     if (inAreaPath[0].inOrOut === "out") {
-      // 保证从进入 开始计算
+      // Guaranteed to start counting from entry
       index = 1
     }
 
@@ -295,7 +295,7 @@ function showResult(newSatelliteArr) {
   }
   eventTarget.fire("dataList", { tableList })
 
-  globalMsg("分析完成，共" + tableList.length + "条过境记录")
+  globalMsg("Analysis completed, total" + tableList.length + "transit records")
 }
 
 function showCorridor(data) {
@@ -303,7 +303,7 @@ function showCorridor(data) {
     positions: data.positions,
     style: {
       width: 6000,
-      cornerType: Cesium.CornerType.MITERED, // 指定转角处样式
+      cornerType: Cesium.CornerType.MITERED, // Specify the corner style
       color: "#00ff00"
     }
   })
@@ -311,20 +311,20 @@ function showCorridor(data) {
 
   const inthtml =
     '<table style="width:280px;">' +
-    '<tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">信息</th></tr>' +
-    "<tr><td >卫星名称：</td><td >" +
+    '<tr><th scope="col" colspan="4" style="text-align:center;font-size:15px;">Information</th></tr>' +
+    "<tr><td >Satellite name:</td><td >" +
     data.name +
     " </td></tr>" +
-    "<tr><td >进入时间：</td><td >" +
+    "<tr><td >Entry time:</td><td >" +
     data.inTime +
     " </td></tr>" +
-    "<tr><td >飞出时间：</td><td >" +
+    "<tr><td >Flyout time:</td><td >" +
     data.outTime +
     " </td></tr>" +
-    "<tr><td >过境时长：</td><td >" +
+    "<tr><td >Transit duration:</td><td >" +
     data.often +
     " </td></tr>" +
-    "<tr><td >过境距离：</td><td >" +
+    "<tr><td >Transit distance:</td><td >" +
     data.distance +
     " </td></tr>" +
     "</table>"

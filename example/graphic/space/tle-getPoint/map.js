@@ -1,40 +1,40 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
-    // 此处参数会覆盖config.json中的对应配置
+    // The parameters here will overwrite the corresponding configuration in config.json
     center: { lat: 6.148021, lng: 58.982029, alt: 42278441, heading: 220, pitch: -85 },
     cameraController: {
       zoomFactor: 3.0,
       minimumZoomDistance: 1000,
       maximumZoomDistance: 300000000,
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
     compass: { top: "10px", left: "5px" }
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map = mapInstance // record map
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -42,8 +42,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -55,7 +55,7 @@ function addSatellite() {
     if (!points) {
       return
     }
-    // 单击轨迹连线上的点后，求该点对应的时间
+    // After clicking a point on the trajectory connection, find the time corresponding to the point
     const positionDM = event.cartesian
     const val1 = points[0]
     const val2 = points[points.length - 1]
@@ -66,10 +66,10 @@ function addSatellite() {
     const len1 = Math.abs(Cesium.Cartesian3.distance(positionDM, val1.position))
     const len2 = Math.abs(Cesium.Cartesian3.distance(positionDM, val2.position))
 
-    const adds = (len1 / (len1 + len2)) * (endTime.getTime() - startTime.getTime()) // 求按距离比例的时间增加值
+    const adds = (len1 / (len1 + len2)) * (endTime.getTime() - startTime.getTime()) // Find the time increase value in proportion to distance
     const currentTime = new Date(startTime.getTime() + adds)
 
-    const inthtml = "单击处时间：" + mars3d.Util.formatDate(currentTime, "yyyy-MM-dd HH:mm:ss")
+    const inthtml = "Click time:" + mars3d.Util.formatDate(currentTime, "yyyy-MM-dd HH:mm:ss")
     return inthtml
   })
 
@@ -122,8 +122,8 @@ function addSatellite() {
 
   setTimeout(() => {
     weixin.flyTo({
-      radius: 900000, // 距离目标点的距离
-      pitch: -60 // 相机方向
+      radius: 900000, // distance from the target point
+      pitch: -60 // camera direction
     })
   }, 1000)
 
@@ -177,14 +177,14 @@ function changeGuidaoJ(valJ) {
   updateVisibleForFaceNouth(false, valJ)
 }
 
-// options参数包含：startTime开始时间，endTime结束时间，angle张开角度，color颜色，opacity透明度
+// options parameters include: startTime start time, endTime end time, angle opening angle, color color, opacity transparency
 function addTimeShading(weixin, options) {
   graphicLayer.clear()
 
   const bt = new Date(options.startTime).getTime()
   const et = new Date(options.endTime).getTime()
   if (bt >= et) {
-    globalMsg("开始时间需要小于结束时间。")
+    globalMsg("The start time needs to be less than the end time.")
     return
   }
 
@@ -214,34 +214,34 @@ function addTimeShading(weixin, options) {
   }
 
   if (positions.length < 2) {
-    globalMsg("没有该时间段内的轨迹数据。")
+    globalMsg("There is no trajectory data for this time period.")
     return
   }
 
   let clr = Cesium.Color.fromCssColorString(options.color || "#ff0000").withAlpha(Number(options.opacity || 1.0))
   clr = Cesium.ColorGeometryInstanceAttribute.fromColor(clr)
 
-  const geometryInstancesSG = [] // 升轨
-  const geometryInstancesJG = [] // 降轨
+  const geometryInstancesSG = [] // Orbit raising
+  const geometryInstancesJG = [] // Lower orbit
   for (let i = 1; i < positions.length; i++) {
     const position1 = positions[i - 1]
     const position2 = positions[i]
 
-    const height = points[i].height // 也可以取position2的高度
-    const shadingWidth = height * Math.tan(Cesium.Math.toRadians(options.angle)) * 2 // 根据卫星角度求其带宽度
+    const height = points[i].height // You can also take the height of position2
+    const shadingWidth = height * Math.tan(Cesium.Math.toRadians(options.angle)) * 2 // Find the band width based on the satellite angle
 
     const instance = new Cesium.GeometryInstance({
       geometry: new Cesium.CorridorGeometry({
         vertexFormat: Cesium.VertexFormat.POSITION_ONLY,
         positions: [position1, position2],
         width: shadingWidth,
-        cornerType: Cesium.CornerType.MITERED // 指定转角处样式
+        cornerType: Cesium.CornerType.MITERED // Specify the corner style
       }),
       attributes: {
         color: clr
       }
     })
-    // 重要：绑定相关属性
+    // Important: Bind related properties
     instance.attr = {
       points: [points[i - 1], points[i]]
     }
@@ -255,7 +255,7 @@ function addTimeShading(weixin, options) {
     }
   }
 
-  // 升轨
+  // Raise orbit
   if (geometryInstancesSG.length > 0) {
     const primitiveSG = new mars3d.graphic.BaseCombine({
       instances: geometryInstancesSG
@@ -264,7 +264,7 @@ function addTimeShading(weixin, options) {
     graphicLayer.addGraphic(primitiveSG)
   }
 
-  // 降轨
+  // Lower orbit
   if (geometryInstancesJG.length > 0) {
     const primitiveJG = new mars3d.graphic.BaseCombine({
       instances: geometryInstancesJG
@@ -274,7 +274,7 @@ function addTimeShading(weixin, options) {
   }
 }
 
-// 升降轨类型筛选
+//Lift rail type filtering
 function updateVisibleForFaceNouth(isFaceNouth, show) {
   graphicLayer.eachGraphic(function (graphic) {
     if (isFaceNouth && graphic.isFaceNouth) {

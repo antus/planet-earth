@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let measureObj
 
 var mapOptions = {
@@ -9,19 +9,19 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   measureObj = new mars3d.thing.Measure({
-    // 设置文本样式
+    //Set text style
     label: {
       color: "#ffffff",
       font_family: "楷体",
@@ -30,15 +30,15 @@ function onMounted(mapInstance) {
   })
   map.addThing(measureObj)
 
-  // 触发事件：开始分析前
+  // Trigger event: before starting analysis
   measureObj.on(mars3d.EventType.start, function (e) {
-    // console.log("开始分析", e)
+    // console.log("Start analysis", e)
     showLoading()
   })
 
-  // 触发事件：异步分析完成后
+  //Trigger event: after asynchronous analysis is completed
   measureObj.on(mars3d.EventType.end, function (e) {
-    // console.log("分析结束", e)
+    // console.log("Analysis ended", e)
 
     hideLoading()
     if (e.graphic?.type === mars3d.graphic.SectionMeasure.type) {
@@ -47,7 +47,7 @@ function onMounted(mapInstance) {
   })
 
   measureObj.on(mars3d.EventType.click, function (e) {
-    // console.log("单击了对象", e)
+    // console.log("Object clicked", e)
     hideTipMarker()
 
     if (e.graphic?.type === mars3d.graphic.SectionMeasure.type) {
@@ -55,12 +55,12 @@ function onMounted(mapInstance) {
     }
   })
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(measureObj.graphicLayer)
 }
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -82,7 +82,7 @@ function addDemoGraphic1(graphicLayer) {
       width: 5,
       color: "#3388ff"
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -95,8 +95,8 @@ function removeAll() {
 function measureSection() {
   measureObj.section({
     // maxPointNum:2,
-    splitNum: 300, // 插值次数
-    exact: false // 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
+    splitNum: 300, // Number of interpolations
+    exact: false // Whether to perform precise calculations. When false is passed, whether to use a quick rough calculation method. This method has lower calculation accuracy but fast calculation speed. It can only calculate the height of coordinates within the current field of view.
   })
 }
 
@@ -109,11 +109,11 @@ function calculation(params) {
 
 let tipGraphic
 /**
- *  echart图表中的图标
+ *Icons in echart charts
  *
  * @export
- * @param {Array} point 坐标点
- * @param {number} z 海拔高度
+ * @param {Array} point coordinate point
+ * @param {number} z altitude
  * @param {html} inthtml html
  * @returns {void}
  */
@@ -122,7 +122,7 @@ function showTipMarker(point, z, inthtml) {
 
   if (!tipGraphic) {
     tipGraphic = new mars3d.graphic.BillboardEntity({
-      name: "当前点",
+      name: "Current point",
       position: _position_draw,
       style: {
         image: "img/marker/mark-blue.png",

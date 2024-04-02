@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 29.851048, lng: 117.477098, alt: 1294279, heading: 358, pitch: -87 }
@@ -11,44 +11,44 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
 
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
 
-  // 加载气象
+  //Load weather
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/windpoint.json" })
     .then(function (res) {
       showWindLine(res.data)
     })
     .catch(function () {
-      globalMsg("实时查询气象信息失败，请稍候再试")
+      globalMsg("Real-time query of weather information failed, please try again later")
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 流场线
+// flow field lines
 function showWindLine(arr) {
   const arrData = []
   const radius = 12000
@@ -77,16 +77,16 @@ function showWindLine(arr) {
     })
   }
 
-  // 多个线对象的合并渲染。
+  // Combined rendering of multiple line objects.
   const graphic = new mars3d.graphic.PolylineCombine({
     instances: arrData
   })
   graphicLayer.addGraphic(graphic)
 }
 
-// 按单个线渲染，效率差些
+// Rendering according to a single line is less efficient
 /* function showWindLine(arr) {
-  // 创建矢量数据图层
+  //Create vector data layer
   let graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -110,7 +110,7 @@ function showWindLine(arr) {
       positions: [position, pt1],
       style: {
         width: 8,
-        material: lineMaterial // 动画线材质
+        material: lineMaterial // animation line material
       }
     })
     graphic.bindPopup(`${angle}`)
@@ -118,14 +118,14 @@ function showWindLine(arr) {
   }
 } */
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }

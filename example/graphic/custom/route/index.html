@@ -3,24 +3,24 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="author" content="Mars Technology http://mars3d.cn " />
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="x5-fullscreen" content="true" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-    <!-- 标题及搜索关键字 -->
-    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <!-- Title and search keywords -->
+    <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
     <meta
       name="description"
-      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+      content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework three-dimensional earth model gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming Geographic Information System Cloud GIS 3D GIS GIS Platform WebGIS"
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
-    <title>实时动态轨迹路线 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>Real-time dynamic trajectory route | Mars3D | 3D map | Mars Technology | Hefei Mars Technology Co., Ltd.</title>
 
-    <!--第三方lib-->
+    <!--Third-party lib-->
     <script
       type="text/javascript"
       src="/lib/include-lib.js"
@@ -39,10 +39,10 @@
   <body class="dark">
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <!-- 面板 -->
+    <!-- Panel -->
     <div id="logView" class="infoview infoview-left"></div>
 
-    <!-- 车辆列表 -->
+    <!-- Vehicle List -->
     <div class="infoview">
       <table id="tableCar"></table>
     </div>
@@ -51,7 +51,7 @@
     <script src="./map.js"></script>
 
     <script type="text/javascript">
-      "use script" //开发环境建议开启严格模式
+      "use script" //It is recommended to turn on strict mode in the development environment
       function addLog(log) {
         let logView = $("#logView")
         let oldhtml = logView.html()
@@ -71,7 +71,7 @@
           checkboxHeader: false,
           columns: [
             {
-              title: "是否显示",
+              title: "Whether to display",
               field: "show",
               align: "center",
               checkbox: true,
@@ -83,7 +83,7 @@
               }
             },
             {
-              title: "序号",
+              title: "serial number",
               sortable: true,
               editable: false,
               align: "left",
@@ -93,22 +93,22 @@
             },
             {
               field: "name",
-              title: "车牌号"
+              title: "License Plate Number"
             },
             {
               field: "type",
-              title: "类型",
+              title: "type",
               formatter: function (value, row, index) {
                 if (value == 1) {
-                  return "土方车"
+                  return "earthmoving truck"
                 } else if (value == 2) {
-                  return "挖掘机"
+                  return "excavator"
                 }
                 return ""
               }
             },
             {
-              title: "操作",
+              title: "Operation",
               align: "center",
               width: 80,
               events: {
@@ -124,21 +124,21 @@
               },
               formatter: function (value, row, index) {
                 return [
-                  '<a class="edit" href="javascript:void(0)" title="编辑"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;',
-                  '<a class="remove" href="javascript:void(0)" title="删除"><i class="fa fa-trash"></i></a>'
+                  '<a class="edit" href="javascript:void(0)" title="Edit"><i class="fa fa-edit"></i></a> ',
+                  '<a class="remove" href="javascript:void(0)" title="Delete"><i class="fa fa-trash"></i></a>'
                 ].join("")
               }
             }
           ],
-          //定位车辆区域
+          //Locate vehicle area
           onClickRow: function (row) {
             flyToModel(row.id)
           },
-          //勾选显示车辆
+          //Check to display vehicles
           onCheck: function (row) {
             onSelect(row.id, true)
           },
-          //取消勾选显示车辆
+          //Uncheck display vehicle
           onUncheck: function (row) {
             onSelect(row.id, false)
           }
@@ -156,15 +156,15 @@
       eventTarget.on("removeCar", function (event) {
         removeTableItem(event.id)
       })
-      //附加：激活属性编辑widget【非必需，可以注释该方法内部代码】
+      //Additional: activate attribute editing widget [not required, you can comment the internal code of this method]
       let timeTik
       function showEditor(e) {
         const graphic = e.graphic
         clearTimeout(timeTik)
 
         if (!graphic._conventStyleJson) {
-          graphic.options.style = graphic.toJSON().style //因为示例中的样式可能有复杂对象，需要转为单个json简单对象
-          graphic._conventStyleJson = true //只处理一次
+          graphic.options.style = graphic.toJSON().style //Because the style in the example may have complex objects, it needs to be converted into a single json simple object
+          graphic._conventStyleJson = true //Only process once
         }
 
         let plotAttr = es5widget.getClass("widgets/plotAttr/widget.js")
@@ -174,7 +174,7 @@
           es5widget.activate({
             map: map,
             uri: "widgets/plotAttr/widget.js",
-            name: "属性编辑",
+            name: "Property Edit",
             graphic: graphic,
             lonlats: graphic.coordinates
           })

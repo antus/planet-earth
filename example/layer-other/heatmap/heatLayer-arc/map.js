@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-let graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+let graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.794428, lng: 117.235343, alt: 2351.9, heading: 1.6, pitch: -28.8, roll: 0 }
@@ -11,28 +11,28 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
   addLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addLayer() {
-  map.basemap = 2017 // 蓝色底图
+  map.basemap = 2017 // blue basemap
 
-  // 加载城市模型
+  //Load city model
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
@@ -46,38 +46,38 @@ function addLayer() {
   })
   map.addLayer(tilesetLayer)
 
-  // 视角切换（分步执行）
+  // Perspective switching (step-by-step execution)
   map.setCameraViewList([
     { lat: 31.813938, lng: 117.240085, alt: 3243, heading: 357, pitch: -52 },
     { lat: 31.821728, lng: 117.253605, alt: 1702, heading: 319, pitch: -37 },
     { lat: 31.836674, lng: 117.260762, alt: 1779, heading: 269, pitch: -37 }
   ])
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 测试点数据，实际开发时换掉
+  // Test point data, replaced during actual development
   const arrPoints = getRandomPoints(1000)
 
-  // 热力图 图层
+  //Heat map layer
   const heatLayer = new mars3d.layer.HeatLayer({
     positions: arrPoints,
-    // 以下为热力图本身的样式参数，可参阅api：https://www.patrick-wied.at/static/heatmapjs/docs.html
+    //The following are the style parameters of the heat map itself, please refer to the API: https://www.patrick-wied.at/static/heatmapjs/docs.html
     heatStyle: {
       radius: 60,
       blur: 0.85
     },
-    // 以下为矩形矢量对象的样式参数
+    //The following are the style parameters of the rectangular vector object
     style: {
-      arc: true, // 是否为曲面
+      arc: true, // Is it a surface?
       height: 200.0
     }
     // flyTo: true,
   })
   map.addLayer(heatLayer)
 
-  // 显示地面对应的点，测试渲染结果的正确性
+  //Display the corresponding points on the ground to test the correctness of the rendering results
   for (let i = 0; i < arrPoints.length; i++) {
     const item = arrPoints[i]
 
@@ -93,22 +93,22 @@ function addLayer() {
   graphicLayer.show = false
 }
 
-// 显示对应的数据点
+//Display the corresponding data points
 function chkUnderground(val) {
   graphicLayer.show = val
 }
 
-// 获取bbox矩形区域内的count个随机点
+// Get count random points within the bbox rectangular area
 function getRandomPoints(count) {
   const xmin = 117.226189
   const xmax = 117.245831
   const ymin = 31.828858
   const ymax = 31.842967
   const arr = []
-  const arrPoint = turf.randomPoint(count, { bbox: [xmin, ymin, xmax, ymax] }).features // 随机点
+  const arrPoint = turf.randomPoint(count, { bbox: [xmin, ymin, xmax, ymax] }).features // Random point
   for (let i = 0; i < arrPoint.length; i++) {
     const item = arrPoint[i].geometry.coordinates
-    const val = Math.floor(Math.random() * 100) // 热力值
+    const val = Math.floor(Math.random() * 100) // Thermal value
     arr.push({ lng: item[0], lat: item[1], value: val })
   }
   return arr

@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.586463, lng: 117.640209, alt: 178487.6, heading: 356.2, pitch: -52.2 }
@@ -13,13 +13,13 @@ var graphicLayer
 var radarJamming
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -28,8 +28,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -41,14 +41,14 @@ function addDemoGraphic1(graphicLayer) {
     position: [117.271756, 31.863786, 16.6],
     vertexs: [],
     style: {
-      // color: new mars3d.Cesium.Color(1, 0, 0, 1.0), // 设置雷达颜色，默认是过渡色
-      outline: true // 是否显示线框
-      // outlineColor: new mars3d.Cesium.Color(1, 1, 0, 1.0), // 设置线框颜色，默认是过渡色
+      // color: new mars3d.Cesium.Color(1, 0, 0, 1.0), // Set the radar color, the default is the transition color
+      outline: true // Whether to display the wireframe
+      // outlineColor: new mars3d.Cesium.Color(1, 1, 0, 1.0), // Set the wireframe color, the default is the transition color
     },
     jammers: [
-      // 内置的默认干扰机
+      // Built-in default jammer
       {
-        id: "固定干扰机",
+        id: "Fixed Jammer",
         position: [116.98875, 32.634335, 40000],
         bji: 2000000,
         yji: 0.5,
@@ -58,16 +58,16 @@ function addDemoGraphic1(graphicLayer) {
   })
   graphicLayer.addGraphic(radarJamming)
 
-  // 构造雷达后添加干扰机
+  // Add jammer after constructing radar
   const jammer = radarJamming.addJammer({
-    id: "动态干扰机",
+    id: "Dynamic Jammer",
     position: [116.387754, 31.292601, 50000],
     bji: 2000000,
     yji: 0.5,
     pitch: 9.68
   })
 
-  // 测试动态更新位置
+  //Test dynamically update location
   const dsq = setInterval(() => {
     jammer.position[0] += 0.05
     if (radarJamming.isDestroy || jammer.position[0] > 119) {
@@ -77,10 +77,10 @@ function addDemoGraphic1(graphicLayer) {
     radarJamming.addJammer(jammer)
   }, 100)
 
-  // 显示干扰机位置，方便对比
+  // Display the jammer position for easy comparison
   map.viewer.entities.add({
     position: new Cesium.CallbackProperty(() => {
-      return radarJamming && radarJamming.getJammer("固定干扰机")?._position
+      return radarJamming && radarJamming.getJammer("Fixed Jammer")?._position
     }, false),
     point: {
       pixelSize: 10,
@@ -89,10 +89,10 @@ function addDemoGraphic1(graphicLayer) {
     }
   })
 
-  // 显示干扰机位置，方便对比
+  // Display the jammer position for easy comparison
   map.viewer.entities.add({
     position: new Cesium.CallbackProperty(() => {
-      return radarJamming && radarJamming.getJammer("动态干扰机")?._position
+      return radarJamming && radarJamming.getJammer("Dynamic Jammer")?._position
     }, false),
     point: {
       pixelSize: 10,
@@ -102,14 +102,14 @@ function addDemoGraphic1(graphicLayer) {
   })
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -126,16 +126,16 @@ function addRandomGraphicByCount(count) {
       },
       attr: { index: index },
       jammers: [
-        // 内置的默认干扰机
+        // Built-in default jammer
         {
-          id: "干扰机1",
+          id: "Jammer 1",
           position: [116.98875, 32.634335, 40000],
           bji: 2000000,
           yji: 0.5,
           pitch: 9.682362975434472
         },
         {
-          id: "干扰机2",
+          id: "Jammer 2",
           position: [117.506527, 31.515046, 50000],
           bji: 2000000,
           yji: 0.5,
@@ -146,11 +146,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "fixedJammingRadar",
@@ -158,16 +158,16 @@ function startDrawGraphic() {
       outline: true
     },
     jammers: [
-      // 内置的默认干扰机
+      // Built-in default jammer
       {
-        id: "干扰机1",
+        id: "Jammer 1",
         position: [116.98875, 32.634335, 40000],
         bji: 2000000,
         yji: 0.5,
         pitch: 9.682362975434472
       },
       {
-        id: "干扰机2",
+        id: "Jammer 2",
         position: [117.506527, 31.515046, 50000],
         bji: 2000000,
         yji: 0.5,

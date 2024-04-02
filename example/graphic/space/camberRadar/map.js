@@ -1,15 +1,15 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.784488, lng: 117.16699, alt: 9030, heading: 1, pitch: -57 },
     cameraController: {
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     }
   },
   control: {
@@ -18,15 +18,15 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -35,8 +35,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -58,7 +58,7 @@ function addDemoGraphic1() {
 
   const camberRadar = new mars3d.graphic.CamberRadar({
     position: [117.170264, 31.840312, 363],
-    name: "雷达模型",
+    name: "Radar model",
     style: {
       color: "#ff0000",
       opacity: 0.5,
@@ -81,9 +81,9 @@ function addDemoGraphic1() {
 }
 
 function addDemoGraphic2() {
-  // 加个模型
+  //Add a model
   const graphic = new mars3d.graphic.ModelEntity({
-    name: "地面站模型",
+    name: "Ground station model",
     position: [117.170264, 31.840312, 258],
     style: {
       url: "//data.mars3d.cn/gltf/mars/leida.glb",
@@ -95,14 +95,14 @@ function addDemoGraphic2() {
   graphicLayer.addGraphic(graphic)
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -128,11 +128,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制 相阵控雷达
+// Start drawing phased array radar
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "camberRadar",
@@ -152,7 +152,7 @@ function startDrawGraphic() {
   })
 }
 
-// 取图层的最后一条数据，用于测试参数调整
+// Get the last data of the layer for testing parameter adjustment
 function getLastGraphic() {
   const arr = graphicLayer.getGraphics()
   if (arr.length === 0) {

@@ -1,32 +1,32 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 默认是无偏坐标系，内部已纠偏，当前示例演示偏移坐标系
+//The default is an unbiased coordinate system, which has been corrected internally. The current example demonstrates an offset coordinate system.
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
-  chinaCRS: mars3d.ChinaCRS.GCJ02, // 标识坐标系
+  chinaCRS: mars3d.ChinaCRS.GCJ02, // Identification coordinate system
   scene: {
     center: { lat: 31.833439, lng: 117.212587, alt: 1237, heading: 0, pitch: -60 }
   },
   basemaps: [
     {
-      name: "天地图影像",
+      name: "Heaven Map Image",
       icon: "/img/basemaps/tdt_img.png",
       type: "group",
       layers: [
-        { name: "底图", type: "tdt", layer: "img_d" },
-        { name: "注记", type: "tdt", layer: "img_z" }
+        { name: "basemap", type: "tdt", layer: "img_d" },
+        { name: "note", type: "tdt", layer: "img_z" }
       ]
     },
     {
-      name: "高德影像",
+      name: "Gaode Image",
       type: "group",
       icon: "/img/basemaps/gaode_img.png",
       layers: [
-        { name: "底图", type: "gaode", layer: "img_d" },
-        { name: "注记", type: "gaode", layer: "img_z" }
+        { name: "basemap", type: "gaode", layer: "img_d" },
+        { name: "note", type: "gaode", layer: "img_z" }
       ],
       show: true
     }
@@ -34,28 +34,28 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
   map.hasTerrain = false
 
-  // 添加参考三维模型
+  //Add reference 3D model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥国家大学科技园",
+    name: "Hefei National University Science and Technology Park",
     url: "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
     position: { alt: 0 },
     maximumScreenSpaceError: 1,
-    chinaCRS: mars3d.ChinaCRS.WGS84 // 标识坐标系，自动加偏
+    chinaCRS: mars3d.ChinaCRS.WGS84 // Identifies the coordinate system and automatically adds offsets
   })
   map.addLayer(tiles3dLayer)
 
-  // 增加高德偏移坐标点，进行对比
+  // Add Gaode offset coordinate points for comparison
   const graphic = new mars3d.graphic.PointEntity({
-    position: [117.21343, 31.84052], // 从 https://lbs.amap.com/demo/jsapi-v2/example/geocoder/regeocoding 拾取
+    position: [117.21343, 31.84052], // Picked up from https://lbs.amap.com/demo/jsapi-v2/example/geocoder/regeocoding
     style: {
       color: "#ff0000",
       pixelSize: 10,
@@ -63,21 +63,21 @@ function onMounted(mapInstance) {
       outlineWidth: 2,
       clampToGround: true,
       label: {
-        text: "我是高德偏移坐标的点",
+        text: "I am the point of Gaode's offset coordinates",
         font_size: 18,
         color: "#ff0000",
         pixelOffsetY: -30,
         clampToGround: true
       }
     },
-    popup: `我是从 <a href="https://lbs.amap.com/demo/jsapi-v2/example/geocoder/regeocoding"  target="_black" >高德官网</a>拾取的高德原始偏移坐标`
+    popup: `I picked up Gaode from <a href="https://lbs.amap.com/demo/jsapi-v2/example/geocoder/regeocoding" target="_black" >Amap official website</a> Original offset coordinates`
   })
   map.graphicLayer.addGraphic(graphic)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

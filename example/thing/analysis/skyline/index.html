@@ -1,4 +1,4 @@
-<!-- 2017-12-7 14:56:03 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!-- 2017-12-7 14:56:03 | Modification Mu Yao (WeChat: http://marsgis.cn/weixin.html ) -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,7 +11,7 @@
     <meta name="x5-fullscreen" content="true" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
-    <title>天际线描边</title>
+    <title>Skyline Stroke</title>
 
     <script
       type="text/javascript"
@@ -31,14 +31,14 @@
   <body class="dark">
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <!-- 面板 -->
+    <!-- Panel -->
     <div class="infoview">
       <div class="checkbox checkbox-primary checkbox-inline">
         <input id="chkSkyline" class="styled" type="checkbox" checked />
-        <label for="chkSkyline"> 开启天际线 </label>
+        <label for="chkSkyline"> Turn on Skyline </label>
       </div>
       <div style="margin-top: 5px">
-        线宽：
+        Line width:
         <input
           id="lineWidth"
           class="input-slider"
@@ -49,16 +49,16 @@
           max="10"
           class="form-control"
           style="width: 100px"
-        />（像素）
+        />(pixels)
 
-        <input id="randomCor" class="btn btn-primary" type="button" value="换色" />
+        <input id="randomCor" class="btn btn-primary" type="button" value="Change Color" />
       </div>
     </div>
 
     <script src="/js/common.js"></script>
     <script src="./map.js"></script>
     <script type="text/javascript">
-      "use script" //开发环境建议开启严格模式
+      "use script" //It is recommended to turn on strict mode in the development environment
 
       function initUI(options) {
         $("#chkSkyline").change(function () {
@@ -72,7 +72,7 @@
         })
 
         $("#randomCor").click(function () {
-          changeColor() // 随机颜色
+          changeColor() // random color
         })
       }
     </script>

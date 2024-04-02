@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.752136, lng: 117.269021, alt: 3782, heading: 338, pitch: -23 }
@@ -11,16 +11,16 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
-  map.basemap = 2017 // 蓝色底图
+  map = mapInstance //Record the first created map
+  map.basemap = 2017 // blue basemap
 
-  globalMsg("文件数据较大，正在加载数据，请稍等片刻……")
+  globalMsg("The file data is large and the data is being loaded, please wait a moment...")
   showLoading()
 
   const colorHash = {
@@ -35,10 +35,10 @@ function onMounted(mapInstance) {
   }
 
   const geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-    name: "建筑物面",
+    name: "Building Floor",
     url: "//data.mars3d.cn/file/geojson/buildings-hf.json",
     symbol: {
-      type: "polygonC", // 大数据面类型，效率高
+      type: "polygonC", // Large data surface type, high efficiency
       styleOptions: {
         color: "#0d3685",
         opacity: 1.0,
@@ -59,23 +59,23 @@ function onMounted(mapInstance) {
   })
   map.addLayer(geoJsonLayer)
 
-  // 绑定事件
+  //Bind event
   geoJsonLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
 
-    hideLoading() // 关闭
+    hideLoading() // Close
   })
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   geoJsonLayer.on(mars3d.EventType.click, function (event) {
     const pickedItem = event.graphic.attr
-    console.log("单击了合并对象中的单个值为", pickedItem)
+    console.log("The single value in the merged object was clicked", pickedItem)
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

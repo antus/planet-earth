@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let underground
 let terrainPlanClip
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.839437, lng: 117.216104, alt: 554, heading: 359, pitch: -55 },
@@ -15,20 +15,20 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 加个模型
+  //Add a model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "地下管网",
+    name: "Underground Pipe Network",
     url: "//data.mars3d.cn/3dtiles/max-piping/tileset.json",
     position: { lng: 117.215457, lat: 31.843363, alt: -3.6 },
     rotation: { z: 336.7 },
@@ -43,8 +43,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -72,9 +72,9 @@ function centerAtDX2() {
   })
 }
 
-// 是否开启地下模式
+// Whether to enable underground mode
 function chkUnderground(val, alphaVal) {
-  // 地下模式
+  // underground mode
   if (!underground) {
     underground = new mars3d.thing.Underground({
       alpha: alphaVal,
@@ -86,25 +86,25 @@ function chkUnderground(val, alphaVal) {
   underground.enabled = val
 }
 
-// 透明度发生改变
+//Transparency changes
 function alphaChange(value) {
   if (underground) {
     underground.alpha = value
   }
 }
-// 是否开挖
+// Whether to excavate
 function chkClippingPlanes(val) {
   terrainPlanClip.enabled = val
 }
 
 function terrainClips(heightVal) {
-  // 挖地区域
+  // Digging area
   terrainPlanClip = new mars3d.thing.TerrainClip({
-    diffHeight: heightVal, // 高度
+    diffHeight: heightVal, // height
     exact: true,
     image: "./img/textures/poly-stone.jpg",
     imageBottom: "./img/textures/poly-soil.jpg",
-    splitNum: 50 // 井边界插值数
+    splitNum: 50 // Well boundary interpolation number
   })
   map.addThing(terrainPlanClip)
 
@@ -120,7 +120,7 @@ function heightChange(num) {
   terrainPlanClip.diffHeight = num
 }
 
-// 绘制矩形
+// draw rectangle
 function drawExtent() {
   terrainPlanClip.clear()
 
@@ -132,19 +132,19 @@ function drawExtent() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
-      // 挖地区域
+      // Digging area
       terrainPlanClip.addArea(positions)
     }
   })
 }
 
-// 绘制多边形
+// draw polygon
 function drawPolygon() {
   terrainPlanClip.clear()
 
@@ -156,20 +156,20 @@ function drawPolygon() {
       clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
-      // 挖地区域
+      // Digging area
       terrainPlanClip.addArea(positions)
     }
   })
 }
 
 function clearWJ() {
-  terrainPlanClip.clear() // 清除挖地区域
+  terrainPlanClip.clear() // Clear the excavation area
 }
 
 function distanceChange(value) {

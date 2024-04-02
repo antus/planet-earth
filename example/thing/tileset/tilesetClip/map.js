@@ -1,7 +1,7 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var map // mars3d.Map three-dimensional map object
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 var mapOptions = {
   scene: {
@@ -12,41 +12,41 @@ var mapOptions = {
 let tilesetLayer
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map = mapInstance // record map
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  globalNotify("已知问题提示", `(1) 目前不支持所有类型3dtile数据，请替换url进行自测`)
+  globalNotify("Known Issue Tips", `(1) Currently all types of 3dtile data are not supported, please replace the url for self-test`)
 
   showTehDemo()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// true:  精确模式, 直接存储范围,但传入的范围顶点数量多时，就会造成一定程度的卡顿；
-// false: 掩膜模式，栅格化范围,效率与范围顶点数量无关,但放大后锯齿化严重
+// true: Precise mode, directly stores the range, but when the number of passed range vertices is large, it will cause a certain degree of lag;
+// false: Mask mode, rasterization range, efficiency has nothing to do with the number of range vertices, but aliasing is serious after zooming in
 const precise = false
 
 function showDytDemo() {
   removeLayer()
 
-  // 加模型
+  //Add model
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "大雁塔",
+    name: "Big Wild Goose Pagoda",
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
-    maximumScreenSpaceError: 1, // 可传入TilesetFlat构造参数，下面是演示压平区域
+    maximumScreenSpaceError: 1, // The TilesetFlat construction parameter can be passed in. The following is a demonstration flattening area.
     clip: {
       precise: precise,
       enabled: true
@@ -55,7 +55,7 @@ function showDytDemo() {
   })
   map.addLayer(tilesetLayer)
 
-  // tilesetLayer.clip是TilesetClip对象，因为与模型是1对1关系，已经内置进去
+  // tilesetLayer.clip is a TilesetClip object. Because it has a 1-to-1 relationship with the model, it has been built in.
   tilesetLayer.clip.on(mars3d.EventType.addItem, onAddClipArea)
 }
 
@@ -63,7 +63,7 @@ function showTehDemo() {
   removeLayer()
 
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥天鹅湖",
+    name: "Hefei Swan Lake",
     type: "3dtiles",
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
@@ -75,7 +75,7 @@ function showTehDemo() {
     preferLeaves: true,
     flyTo: true,
 
-    // 可传入TilesetClip构造参数，下面是演示压平区域
+    //TilesetClip construction parameters can be passed in. The following is the demo flattening area.
     clip: {
       precise: precise,
       area: [
@@ -93,12 +93,12 @@ function showTehDemo() {
   })
   map.addLayer(tilesetLayer)
 
-  // 会执行多次，重新加载一次完成后都会回调
+  // Will be executed multiple times, and will be called back after reloading.
   // tilesetLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
-  //   console.log("触发allTilesLoaded事件", event)
+  // console.log("Trigger allTilesLoaded event", event)
   // })
 
-  // tilesetLayer.clip是TilesetClip对象，因为与模型是1对1关系，已经内置进去
+  // tilesetLayer.clip is a TilesetClip object. Because it has a 1-to-1 relationship with the model, it has been built in.
   tilesetLayer.clip.on(mars3d.EventType.addItem, onAddClipArea)
 }
 
@@ -106,7 +106,7 @@ function showXianDemo() {
   removeLayer()
 
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "县城社区",
+    name: "County Community",
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
@@ -122,12 +122,12 @@ function showXianDemo() {
   })
   map.addLayer(tilesetLayer)
 
-  // 会执行多次，重新加载一次完成后都会回调
+  // Will be executed multiple times, and will be called back after reloading.
   // tilesetLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
-  //   console.log("触发allTilesLoaded事件", event)
+  // console.log("Trigger allTilesLoaded event", event)
   // })
 
-  // tilesetLayer.clip是TilesetClip对象，因为与模型是1对1关系，已经内置进去
+  // tilesetLayer.clip is a TilesetClip object. Because it has a 1-to-1 relationship with the model, it has been built in.
   tilesetLayer.clip.on(mars3d.EventType.addItem, onAddClipArea)
 }
 
@@ -138,12 +138,12 @@ function removeLayer() {
   }
 }
 
-// 添加了压平区域后的回调事件
+// Added callback event after flattening area
 function onAddClipArea(event) {
   eventTarget.fire("addItem", event)
 }
 
-// 绘制矩形
+// draw rectangle
 function btnDrawExtent() {
   map.graphicLayer.clear()
   map.graphicLayer.startDraw({
@@ -154,17 +154,17 @@ function btnDrawExtent() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       tilesetLayer.clip.addArea(positions)
     }
   })
 }
-// 绘制裁剪区
+//Draw the cropping area
 function btnDraw() {
   map.graphicLayer.clear()
   map.graphicLayer.startDraw({
@@ -175,29 +175,29 @@ function btnDraw() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       tilesetLayer.clip.addArea(positions)
     }
   })
 }
-// 清除
+// clear
 function removeAll() {
   map.graphicLayer.clear()
   tilesetLayer.clip.clear()
 }
 
-// 定位至模型
+// Locate the model
 function flyToGraphic(item) {
   const graphic = tilesetLayer.clip.getAreaById(item)
   map.flyToPositions(graphic.positions)
 }
 
-// 删除模型
+//delete model
 function deletedGraphic(item) {
   tilesetLayer.clip.removeArea(item)
 }

@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 27.689337, lng: 118.112448, alt: 762174, heading: 358, pitch: -62 }
@@ -10,19 +10,19 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/areas/340000_full.json" })
     .then(function (geojson) {
       showBJXLine(geojson.features[0])
     })
     .catch(function () {
-      globalAlert("Json文件加载失败！")
+      globalAlert("Json file loading failed!")
     })
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/areas/340000_full.json" })
@@ -30,44 +30,44 @@ function onMounted(mapInstance) {
       showGeoJsonVectorTile(geojson)
     })
     .catch(function () {
-      globalAlert("Json文件加载失败！")
+      globalAlert("Json file loading failed!")
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 /**
- * API文档，参考lib\mars3d\thirdParty\weiVectorTile\Document.rar（解压Document.rar）
+ * API documentation, refer to lib\mars3d\thirdParty\weiVectorTile\Document.rar (unzip Document.rar)
  *
- * @param {Array} geojson 获取得到的数据 数组对象
- * @returns {void} 无
+ * @param {Array} geojson obtains the data array object
+ * @returns {void} None
  */
 function showGeoJsonVectorTile(geojson) {
   const tileLayer = new mars3d.layer.WeiVectorTileLayer({
     source: geojson,
     zIndex: 2,
     removeDuplicate: false,
-    allowPick: true, // 允许单击
+    allowPick: true, // Allow clicks
     defaultStyle: {
-      // 参考api文档的Cesium.VectorStyle类
+      // Refer to the Cesium.VectorStyle class in the api documentation
       tileCacheSize: 200,
 
-      fill: true, // 是否填充，仅面数据有效。
+      fill: true, // Whether to fill or not, only surface data is valid.
       fillColor: "rgba(0,255,255,0.1)",
 
-      outline: true, // 是否显示边，仅面数据有效。
+      outline: true, // Whether to display edges, only face data is valid.
       outlineColor: "rgba(138,138,138,1)",
       lineWidth: 2,
 
       showMaker: false,
 
-      showCenterLabel: true, // 是否显示文本，仅对线和面数据有效
+      showCenterLabel: true, // Whether to display text, only valid for line and surface data
       centerLabelPropertyName: "name",
       fontColor: "rgba(255,255,255,1)",
       fontSize: 23,
@@ -85,15 +85,15 @@ function showGeoJsonVectorTile(geojson) {
         style.fontSize = 23
       }
 
-      if (feature.properties && feature.properties.name && feature.properties.name === "合肥市") {
+      if (feature.properties && feature.properties.name && feature.properties.name === "Hefei City") {
         style.fillColor = Cesium.Color.YELLOW.withAlpha(0.2)
       }
       return style
     },
-    // 以下为mars3d参数,API参考http://mars3d.cn/api/BaseTileLayer.html#.ConstructorOptions
+    //The following are mars3d parameters, API reference http://mars3d.cn/api/BaseTileLayer.html#.ConstructorOptions
     hasToGraphic: true,
     highlight: {
-      crs: mars3d.CRS.EPSG4326, // 数据坐标系与图层坐标系不一致时，可以这样额外指定
+      crs: mars3d.CRS.EPSG4326, // When the data coordinate system is inconsistent with the layer coordinate system, you can additionally specify it like this
       clampToGround: true,
       color: "#2deaf7",
       opacity: 0.6,
@@ -106,12 +106,12 @@ function showGeoJsonVectorTile(geojson) {
   map.addLayer(tileLayer)
 
   tileLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
 function showBJXLine(feature) {
-  // 缓冲区
+  // buffer
   let bufferedOuter = turf.buffer(feature, 2000, {
     units: "meters"
   })

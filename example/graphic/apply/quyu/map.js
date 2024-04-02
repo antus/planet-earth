@@ -4,7 +4,7 @@ var map
 let graphicLayer
 let terrainClip
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并)
+// Need to override the map attribute parameters in config.json (the merge is automatically processed in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.773023, lng: 116.473055, alt: 133111.3, heading: 40.4, pitch: -47.9 },
@@ -27,20 +27,20 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
   map.basemap = 2017
 
-  // 添加矢量图层
+  //Add vector layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // graphicLayer 图层下的所有矢量数据都会触发该事件
+  // All vector data under the graphicLayer layer will trigger this event
   graphicLayer.on(mars3d.EventType.click, (event) => {
     const attr = event.graphic?.attr
     if (attr) {
@@ -52,13 +52,13 @@ function onMounted(mapInstance) {
 
   terrainClip = new mars3d.thing.TerrainClip({
     image: false,
-    splitNum: 80 // 井边界插值数
+    splitNum: 80 // Well boundary interpolation number
   })
   map.addThing(terrainClip)
 
   mars3d.Util.fetchJson({ url: "http://data.mars3d.cn/file/geojson/areas/340100.json" })
     .then(function (geojson) {
-      const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+      const arr = mars3d.Util.geoJsonToGraphics(geojson) // Parse geojson
       const options = arr[0]
 
       terrainClip.addArea(options.positions, { simplify: { tolerance: 0.002 } })
@@ -84,7 +84,7 @@ function onMounted(mapInstance) {
         positions: options.positions,
         style: {
           setHeight: -20000,
-          diffHeight: 20000, // 墙高
+          diffHeight: 20000, // wall height
           width: 10,
           materialType: mars3d.MaterialType.Image2,
           materialOptions: {
@@ -96,14 +96,14 @@ function onMounted(mapInstance) {
       graphicLayer.addGraphic(wall)
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 
   mars3d.Util.fetchJson({ url: "http://data.mars3d.cn/file/geojson/areas/340100_full.json" }).then(function (geojson) {
-    const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+    const arr = mars3d.Util.geoJsonToGraphics(geojson) // Parse geojson
     for (let i = 0; i < arr.length; i++) {
       const item = arr[i]
-      const attr = item.attr // 属性信息
+      const attr = item.attr // attribute information
 
       const graphic = new mars3d.graphic.PolylinePrimitive({
         positions: item.positions,
@@ -122,8 +122,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -161,7 +161,7 @@ function addCenterGraphi(attr) {
   graphicLayer.addGraphic(divGraphic)
 }
 
-// 简化geojson的坐标
+// Simplify geojson coordinates
 function simplifyGeoJSON(geojson) {
   try {
     geojson = turf.simplify(geojson, { tolerance: 0.009, highQuality: true, mutate: true })
@@ -171,7 +171,7 @@ function simplifyGeoJSON(geojson) {
   return geojson
 }
 
-// 根据随机数字取图片
+// Get pictures based on random numbers
 function getImage() {
   const num = Math.floor(Math.random() * 5)
   switch (num) {

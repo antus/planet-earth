@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let pointLayer
 let graphicLayer
 
@@ -23,16 +23,16 @@ const pointStyle = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   pointLayer = new mars3d.layer.GeoJsonLayer({
-    name: "体育设施点",
+    name: "Sports facilities",
     url: "//data.mars3d.cn/file/geojson/hfty-point.json",
     symbol: {
       styleOptions: {
@@ -40,12 +40,12 @@ function onMounted(mapInstance) {
         image: "img/marker/mark-blue.png"
       }
     },
-    popup: "{项目名称}",
+    popup: "{project name}",
     zIndex: 10
   })
   map.addLayer(pointLayer)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer({
     zIndex: 20
   })
@@ -53,8 +53,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -79,26 +79,26 @@ function drawPoint() {
 
 function clickPoint(position) {
   if (pointLayer.length === 0) {
-    globalMsg("正在加载数据,请稍等......")
+    globalMsg("Loading data, please wait...")
     return
   }
 
   graphicLayer.clear()
 
-  // 生成查询点
+  // Generate query points
   const queryPoint = new mars3d.graphic.BillboardEntity({
     position,
     style: {
       ...pointStyle,
       image: "img/marker/route-start.png"
     },
-    popup: "查询点"
+    popup: "query point"
   })
   graphicLayer.addGraphic(queryPoint)
 
-  console.log(`分析${pointLayer.length}个数据中的最近点`)
+  console.log(`Analyze the closest point in ${pointLayer.length} data`)
 
-  // turf分析
+  // turf analysis
   const targetPoint = queryPoint.toGeoJSON()
   const points = pointLayer.toGeoJSON()
   const nearest = turf.nearestPoint(targetPoint, points)
@@ -111,7 +111,7 @@ function clickPoint(position) {
   const graphic = pointLayer.getGraphicById(nearestPoint.attr.id)
   updateSelect(graphic)
 
-  // 连线
+  // connect
   const polyline = new mars3d.graphic.PolylineEntity({
     positions: [position, nearestPoint.position],
     style: {
@@ -127,7 +127,7 @@ function clickPoint(position) {
   })
   graphicLayer.addGraphic(polyline)
 
-  // 终点
+  //end point
   const endPoint = new mars3d.graphic.CircleEntity({
     position: nearestPoint.position,
     style: {
@@ -140,7 +140,7 @@ function clickPoint(position) {
         speed: 20
       }
     },
-    popup: "最近的体育场所是:<br />" + nearestPoint.attr["项目名称"]
+    popup: "The nearest sports venue is:<br />" + nearestPoint.attr["Project Name"]
   })
   graphicLayer.addGraphic(endPoint)
   endPoint.openPopup()

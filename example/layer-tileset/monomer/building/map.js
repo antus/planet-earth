@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let geoJsonLayerDTH
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 43.821193, lng: 125.143124, alt: 990, heading: 342, pitch: -50 }
@@ -11,38 +11,38 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 三维模型
+  // 3D model
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     type: "3dtiles",
-    name: "校园",
+    name: "campus",
     url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
     position: { alt: 279.0 },
     maximumScreenSpaceError: 1
   })
   map.addLayer(tilesetLayer)
 
-  // 单体化图层
+  //Single layer
   geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer({
-    name: "学校-单体化",
+    name: "School-Single",
     url: "//data.mars3d.cn/file/geojson/dth-xuexiao-fd.json",
     symbol: {
       type: "polygonP",
       styleOptions: {
-        // 单体化默认显示样式
+        //Single default display style
         color: "#00ffff",
         opacity: 0.2,
         clampToGround: true,
         classification: true,
         // buffer: 1,
-        // 单体化鼠标移入或单击后高亮的样式
+        // Singletify the style highlighted after the mouse is moved or clicked
         highlight: {
           type: mars3d.EventType.click,
           color: "#ffff00",
@@ -51,7 +51,7 @@ function onMounted(mapInstance) {
 
         label: {
           text: "{name}",
-          height: 240, // 单体化面没有高度，所以中心点文字需要指定一个高度值。
+          height: 240, // The singleton surface has no height, so the center point text needs to specify a height value.
           opacity: 1,
           font_size: 30,
           color: "#ffffff",
@@ -71,23 +71,23 @@ function onMounted(mapInstance) {
       }
     },
     popup: [
-      { field: "name", name: "学校场所" },
-      { field: "sfkf", name: "是否开放" },
-      { field: "remark", name: "备注信息" }
+      { field: "name", name: "school place" },
+      { field: "sfkf", name: "Is it open" },
+      { field: "remark", name: "Remarks information" }
     ]
   })
   map.addLayer(geoJsonLayerDTH)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 是否显示各栋颜色
+// Whether to display the color of each building
 function chkShowColor(val) {
   geoJsonLayerDTH.closePopup()
 

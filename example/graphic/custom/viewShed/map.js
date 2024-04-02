@@ -1,33 +1,33 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
 
-// 事件对象，用于抛出事件给面板
+//Event object, used to throw events to the panel
 var eventTarget = new mars3d.BaseClass()
 
 var mapOptions = {
   scene: {
     center: { lat: 28.440007, lng: 119.48322, alt: 424, heading: 282, pitch: -56 },
-    fxaa: true, // 不开启抗锯齿，可视域会闪烁
+    fxaa: true, // If anti-aliasing is not turned on, the visual area will flicker
     globe: {
-      depthTestAgainstTerrain: true // 不加无法投射到地形上
+      depthTestAgainstTerrain: true // Cannot be projected onto the terrain without adding
     }
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", `(1) 平面上视域内可能存在锯齿。(2) 视角变化时可能有锯齿抖动。`)
+  globalNotify("Known Issue Tips", `(1) There may be aliasing in the visual field on the plane. (2) There may be aliasing jitter when the viewing angle changes.`)
 
-  // 添加参考三维模型
+  //Add reference 3D model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
@@ -37,17 +37,17 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -68,9 +68,9 @@ function addDemoGraphic1() {
   graphicLayer.addGraphic(viewShed)
 }
 
-// 添加可视域
+//Add visible area
 function startDrawGraphic() {
-  // 开始绘制
+  // Start drawing
   graphicLayer.startDraw({
     type: "viewShed",
     style: {
@@ -79,19 +79,19 @@ function startDrawGraphic() {
       distance: 80,
       heading: 44,
       pitch: -12,
-      addHeight: 0.5 // 在坐标点增加的高度值，规避遮挡，效果更友好
+      addHeight: 0.5 // The height value added at the coordinate point to avoid occlusion and the effect is more friendly
     }
   })
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -112,11 +112,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 属性编辑
+//Property editing
 let selectedView
 function getGraphic(graphicId) {
   selectedView = graphicLayer.getGraphicById(graphicId)
@@ -132,63 +132,63 @@ function selCamera() {
     type: "point",
     success: (graphic) => {
       const point = graphic.point
-      graphic.remove() // 删除绘制的点
+      graphic.remove() // Delete the drawn point
 
       selectedView.position = point
     }
   })
 }
 
-// 修改水平角度
+//Modify horizontal angle
 function onChangeAngle(value) {
   if (selectedView) {
     selectedView.angle = value
   }
 }
 
-// 修改垂直角度
+//Modify vertical angle
 function onChangeAngle2(value) {
   if (selectedView) {
     selectedView.angle2 = value
   }
 }
 
-// 修改投射距离
+// Modify the projection distance
 function onChangeDistance(value) {
   if (selectedView) {
     selectedView.distance = value
   }
 }
 
-// 修改四周距离 value 修改后的数值
+//Modify the surrounding distance value to the modified value
 function onChangeHeading(value) {
   if (selectedView) {
     selectedView.heading = value
   }
 }
 
-//  修改俯仰角数值   value 修改后的数值
+// Modify the pitch angle value value modified value
 function onChangePitch(value) {
   if (selectedView) {
     selectedView.pitch = value
   }
 }
 
-//   线框是否显示   isCheckde 修改后的数值
+// Whether the wireframe displays the modified value of isCheckde
 function showFrustum(isCheckde) {
   if (selectedView) {
     selectedView.showFrustum = isCheckde
   }
 }
 
-// 修改视频的透明度   opacity 透明度数值
+// Modify the transparency of the video opacity transparency value
 function onChangeOpacity(opacity) {
   if (selectedView) {
     selectedView.opacity = opacity
   }
 }
 
-// 四周视角选点
+//Select points from surrounding perspectives
 function onClickSelView() {
   if (!selectedView) {
     return
@@ -198,7 +198,7 @@ function onClickSelView() {
     type: "point",
     success: (graphic) => {
       const point = graphic.point
-      graphic.remove() // 删除绘制的点
+      graphic.remove() // Delete the drawn point
 
       selectedView.targetPosition = point
     }

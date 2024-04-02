@@ -1,7 +1,7 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-let graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+let graphicLayer // vector layer object
 let shortestPathLayer
 
 let polygonZAM
@@ -15,15 +15,15 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -32,14 +32,14 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 绘制障碍面
+//Draw the obstacle surface
 function drawPolygon() {
   if (polygonZAM) {
     polygonZAM.remove()
@@ -59,7 +59,7 @@ function drawPolygon() {
     }
   })
 }
-// 绘制起点
+// draw starting point
 function startPoint() {
   if (pointQD) {
     pointQD.remove()
@@ -71,7 +71,7 @@ function startPoint() {
       pixelSize: 10,
       color: "red",
       label: {
-        text: "起点",
+        text: "starting point",
         font_size: 20,
         color: "#ffffff",
         outline: true,
@@ -85,7 +85,7 @@ function startPoint() {
   })
 }
 
-// 绘制终点
+// draw end point
 function endPoint() {
   if (pointZD) {
     pointZD.remove()
@@ -97,7 +97,7 @@ function endPoint() {
       pixelSize: 10,
       color: "red",
       label: {
-        text: "终点",
+        text: "end",
         font_size: 20,
         color: "#ffffff",
         outline: true,
@@ -111,26 +111,26 @@ function endPoint() {
   })
 }
 
-// 计算最短路径
+// Calculate the shortest path
 function shortestPath() {
   if (!polygonZAM) {
-    globalMsg("请绘制障碍面")
+    globalMsg("Please draw the obstacle surface")
     return
   }
   if (!pointQD) {
-    globalMsg("请绘制起点")
+    globalMsg("Please draw the starting point")
     return
   }
   if (!pointZD) {
-    globalMsg("请绘制终点")
+    globalMsg("Please draw the end point")
     return
   }
 
   shortestPathLayer.clear()
 
-  const polygon = polygonZAM.toGeoJSON() // 障碍面
-  const startPoint = pointQD.toGeoJSON() // 起点
-  const endPoint = pointZD.toGeoJSON() // 终点
+  const polygon = polygonZAM.toGeoJSON() // Obstacle surface
+  const startPoint = pointQD.toGeoJSON() // starting point
+  const endPoint = pointZD.toGeoJSON() // end point
 
   const options = {
     obstacles: polygon

@@ -1,22 +1,22 @@
 /**
- * 户型图 图层
+ * House plan layer
  * @class HuxingLayer
  * @extends {mars3d.layer.GraphicLayer}
  */
 class HuxingLayer extends mars3d.layer.GraphicLayer {
   /**
-   * 对象添加到地图前创建一些对象的钩子方法，
-   * 只会调用一次
-   * @return {void}  无
+   * Hook method to create some objects before adding them to the map,
+   * Will only be called once
+   * @return {void} None
    */
   _mountedHook() {
     //
   }
 
   /**
-   * 对象添加到地图上的创建钩子方法，
-   * 每次add时都会调用
-   * @return {void}  无
+   * Create hook method to add objects to the map,
+   * Called every time add
+   * @return {void} None
    */
   _addedHook() {
     super._addedHook()
@@ -30,9 +30,9 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
   }
 
   /**
-   * 对象从地图上移除的创建钩子方法，
-   * 每次remove时都会调用
-   * @return {void}  无
+   * Create hook method for object removal from the map,
+   * Called every time remove
+   * @return {void} None
    */
   _removedHook() {
     super._removedHook()
@@ -44,7 +44,7 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
     this.off(mars3d.EventType.mouseOut, this._graphic_mouseOutHandler, this)
   }
 
-  // 加载数据
+  // Download Data
   load(newOptions = {}) {
     this.options = {
       ...this.options,
@@ -60,12 +60,12 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
           this._load_data(data)
         })
         .catch(function (error) {
-          console.error("服务出错", error)
+          console.error("Service error", error)
         })
     } else if (this.options.data) {
       this._load_data(this.options.data)
     } else {
-      console.warn("HuxinLayer：没有传入 url 或 data 参数,请确认是否有误。")
+      console.warn("HuxinLayer: No url or data parameters were passed in, please confirm whether there are errors.")
     }
   }
 
@@ -74,7 +74,7 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
 
     this._cache_huxin = {}
 
-    const arr = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+    const arr = mars3d.Util.geoJsonToGraphics(geojson) // Parse geojson
     for (let i = 0; i < arr.length; i++) {
       this.addHuxing(arr[i].positions, arr[i].attr)
     }
@@ -91,8 +91,8 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
       return
     }
 
-    const flrH = attr.floorh || 0 // 底面高度
-    const lyrH = attr.layerh || 0 // 楼层高度
+    const flrH = attr.floorh || 0 // Floor height
+    const lyrH = attr.layerh || 0 // Floor height
 
     const primitiveBian = new mars3d.graphic.CorridorPrimitive({
       positions,
@@ -121,9 +121,9 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
     })
     this.addGraphic(primitiveDi)
 
-    // 记录到缓存中
-    const loudongHao = attr.LDH // 楼栋号
-    const cengHao = attr.CH // 层号
+    //Record to cache
+    const loudongHao = attr.LDH // Building number
+    const cengHao = attr.CH //Layer number
 
     this._cache_huxin[loudongHao] = this._cache_huxin[loudongHao] || {}
     this._cache_huxin[loudongHao][cengHao] = this._cache_huxin[loudongHao][cengHao] || []
@@ -133,17 +133,17 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
   }
 
   _graphic_clickHandler(event) {
-    // 将上次隐藏的层，恢复下
+    //Restore the last hidden layer
     this._map_clickHandler()
 
     const attr = event.graphic.attr
 
-    const loudongHao = attr.LDH // 楼栋号
-    const cengHao = attr.CH // 层号
+    const loudongHao = attr.LDH // Building number
+    const cengHao = attr.CH //Layer number
 
     const loudongGraphics = this._cache_huxin[loudongHao]
     Object.keys(loudongGraphics).forEach((ceng) => {
-      const showHu = Number(ceng) <= cengHao // 大于本层的隐藏不显示。
+      const showHu = Number(ceng) <= cengHao // Hides larger than this layer will not be displayed.
 
       const cengGraphics = loudongGraphics[ceng]
       cengGraphics.forEach((huGraphic) => {
@@ -156,7 +156,7 @@ class HuxingLayer extends mars3d.layer.GraphicLayer {
   }
 
   _map_clickHandler(event) {
-    // 将上次隐藏的层，恢复下
+    //Restore the last hidden layer
     if (this._lastHideGraphics) {
       this._lastHideGraphics.forEach((huGraphic) => {
         huGraphic.show = true

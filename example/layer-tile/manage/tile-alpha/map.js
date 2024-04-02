@@ -1,13 +1,13 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 28.118943, lng: 114.834765, alt: 4038547, heading: 351, pitch: -83 },
-    mapProjection: mars3d.CRS.EPSG3857, // 2D下展示墨卡托投影
-    mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL // 2D下左右一直可以滚动重复世界地图
+    mapProjection: mars3d.CRS.EPSG3857, // Display Mercator projection in 2D
+    mapMode2D: Cesium.MapMode2D.INFINITE_SCROLL // The world map can be scrolled left and right in 2D
   },
   control: {
     timeline: true,
@@ -16,26 +16,26 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
   showImagesByGraphic()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-//  RectangleEntity的方式
+// RectangleEntity method
 async function showImagesByGraphic() {
   const urlArr = [
     "//data.mars3d.cn/file/img/radar_water/20200522145400_20200522145400_0c972b7abe4f4b4fbdbe909f5c1ca17a.png",
@@ -63,27 +63,27 @@ async function showImagesByGraphic() {
     "//data.mars3d.cn/file/img/radar_water/20200522145400_20200522170600_964ada943fcf4a13aa59364b1efd0b1b.png"
   ]
 
-  // 添加矢量图层
+  //Add vector layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 指定固定时间 ，方便写演示代码。
+  // Specify a fixed time to facilitate writing demonstration code.
   const startTime = Cesium.JulianDate.fromDate(new Date("2017-08-25 08:00:00"))
   let stopTime
   let tempTime = startTime.clone()
 
-  // 预加载图片
+  // Preload images
   const arrImage = []
   const property = new Cesium.TimeIntervalCollectionProperty()
   for (let i = 0, len = urlArr.length; i < len; i++) {
     const image = await Cesium.Resource.fetchImage({ url: urlArr[i] })
     arrImage.push(image)
 
-    // 采用属性机制，与时间轴关联起来
-    stopTime = Cesium.JulianDate.addSeconds(tempTime, 3, new Cesium.JulianDate()) // 演示时间，显示3秒
+    // Use attribute mechanism to associate with timeline
+    stopTime = Cesium.JulianDate.addSeconds(tempTime, 3, new Cesium.JulianDate()) // Demonstration time, displayed for 3 seconds
     property.intervals.addInterval(
       new Cesium.TimeInterval({
-        start: tempTime, // 在 start至stop 这个时间段显示该图片
+        start: tempTime, // Display the image during the time period from start to stop
         stop: stopTime,
         isStartIncluded: true,
         isStopIncluded: false,
@@ -93,19 +93,19 @@ async function showImagesByGraphic() {
     tempTime = stopTime
   }
 
-  // 时钟设置
+  // Clock settings
   map.clock.startTime = startTime.clone()
   map.clock.stopTime = stopTime.clone()
   map.clock.currentTime = startTime
-  map.clock.multiplier = 1 // 当前速度，默认为1
-  map.clock.clockRange = Cesium.ClockRange.LOOP_STOP // 到达终止时间后循环
+  map.clock.multiplier = 1 // Current speed, default is 1
+  map.clock.clockRange = Cesium.ClockRange.LOOP_STOP // Loop after reaching the end time
 
   if (map.controls.timeline) {
     map.controls.timeline.zoomTo(startTime, stopTime)
   }
-  console.log("图片列表预加载完成", arrImage) // 打印图片数组
+  console.log("Picture list preloading completed", arrImage) //Print picture array
 
-  // 添加图片graphic
+  //Add image graphic
   const graphic = new mars3d.graphic.RectangleEntity({
     positions: [
       [63.8148899733, 12.7700338517],
@@ -136,13 +136,13 @@ async function showImagesByGraphic() {
   // })
   // graphicLayer.addGraphic(graphic)
 
-  // // 更新
+  // // renew
   // setInterval(() => {
   //   graphic.uniforms.image = property.getValue(map.clock.currentTime)
   // }, 1000)
 }
 
-// ImageLayer的方式，直接替换
+// ImageLayer method, direct replacement
 function showImages() {
   const urlArr = [
     "//data.mars3d.cn/file/img/radar_water/20200522145400_20200522145400_0c972b7abe4f4b4fbdbe909f5c1ca17a.png",
@@ -204,7 +204,7 @@ function showImages() {
   play()
 }
 
-// ImageLayer的方式,渐变方式
+// ImageLayer method, gradient method
 function showImagesByAlpha() {
   const urlArr = [
     "//data.mars3d.cn/file/img/radar/201906211112.PNG",

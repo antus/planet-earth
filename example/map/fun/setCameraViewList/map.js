@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lng: 102.5, lat: 35.13135, alt: 14307887.9, heading: 0, pitch: -90 }
@@ -10,23 +10,23 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "大雁塔",
+    name: "Big Wild Goose Pagoda",
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
     maximumScreenSpaceError: 1
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建视点，duration参数调节每个步骤时长
+  //Create a viewpoint, the duration parameter adjusts the duration of each step
   const viewPoints = [
     { lng: 108.961601, lat: 34.217109, alt: 509.2, heading: 314.5, pitch: -22.5, duration: 6, stop: 0 },
     { lng: 108.96164, lat: 34.222159, alt: 510.3, heading: 211.2, pitch: -22.5, duration: 8, stop: 0 },
@@ -34,10 +34,10 @@ function onMounted(mapInstance) {
     { lng: 108.957319, lat: 34.217225, alt: 515.5, heading: 25.4, pitch: -25.3, duration: 8 }
   ]
 
-  // 视角切换（分步执行）
+  // Perspective switching (step-by-step execution)
   map.setCameraViewList(viewPoints)
 
-  // showCameraRoute(viewPoints) // 显示相机点的位置方向和路线，便于对比查看
+  // showCameraRoute(viewPoints) // Display the location, direction and route of camera points for easy comparison and viewing
 }
 
 function pauseCameraViewList() {
@@ -49,16 +49,16 @@ function proceedCameraViewList() {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 显示相机点的位置方向和路线，便于对比查看
+// Display the position, direction and route of the camera point for easy comparison and viewing
 function showCameraRoute(viewPoints) {
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -68,7 +68,7 @@ function showCameraRoute(viewPoints) {
     const position = Cesium.Cartesian3.fromDegrees(item.lng, item.lat, item.alt)
     points.push(position)
 
-    // 文本
+    // text
     const graphic = new mars3d.graphic.LabelPrimitive({
       position,
       style: {
@@ -78,7 +78,7 @@ function showCameraRoute(viewPoints) {
     })
     graphicLayer.addGraphic(graphic)
 
-    // 相机角度示意
+    // Camera angle indication
     const camera = new Cesium.Camera(map.scene)
     camera.position = position
     camera.frustum.aspectRatio = 1
@@ -105,7 +105,7 @@ function showCameraRoute(viewPoints) {
     graphicLayer.addGraphic(frustumPrimitive)
   }
 
-  // 线
+  // Wire
   const graphicLine = new mars3d.graphic.PolylinePrimitive({
     positions: points,
     style: {

@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.771475, lng: 117.219579, alt: 8642, heading: 0, pitch: -57 }
@@ -10,30 +10,30 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 叠加的图层
+// overlaid layers
 let tileLayer
 
 function addTileLayer() {
   removeTileLayer()
 
-  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  // Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
   tileLayer = new mars3d.layer.ArcGisLayer({
     url: "//server.mars3d.cn/arcgis/rest/services/crs/ssjzw4326/MapServer",
     highlight: {

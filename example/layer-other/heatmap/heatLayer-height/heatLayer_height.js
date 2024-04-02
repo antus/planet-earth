@@ -1,18 +1,18 @@
 let chartsData = {
   fltj: [
-    { name: "公共文化", xms: 160, zds: 10, zjl: 645 },
-    { name: "公共教育", xms: 848, zds: 580, zjl: 10 },
-    { name: "医疗卫生", xms: 370, zds: 10, zjl: 150560 },
-    { name: "公共体育", xms: 91, zds: 0, zjl: 182 },
-    { name: "社会保障", xms: 233, zds: 10, zjl: 808 },
-    { name: "基层公共服务", xms: 20, zds: 10, zjl: 10 }
+    { name: "Public Culture", xms: 160, zds: 10, zjl: 645 },
+    { name: "Public Education", xms: 848, zds: 580, zjl: 10 },
+    { name: "Medical and Health", xms: 370, zds: 10, zjl: 150560 },
+    { name: "Public Sports", xms: 91, zds: 0, zjl: 182 },
+    { name: "Social Security", xms: 233, zds: 10, zjl: 808 },
+    { name: "Grassroots Public Service", xms: 20, zds: 10, zjl: 10 }
   ],
   zjly: [
-    { name: "省级", value: 88 },
-    { name: "市级", value: 127 },
-    { name: "区县级", value: 175 },
-    { name: "街道级", value: 270 },
-    { name: "社会资本", value: 42 }
+    { name: "provincial level", value: 88 },
+    { name: "City level", value: 127 },
+    { name: "District and county level", value: 175 },
+    { name: "street level", value: 270 },
+    { name: "Social Capital", value: 42 }
   ],
   ndtj: {
     xms: [
@@ -22,7 +22,7 @@ let chartsData = {
       { name: "2016", value: 36 },
       { name: "2017", value: 85 },
       { name: "2018", value: 10 },
-      { name: "2018年", value: 17 }
+      { name: "2018", value: 17 }
     ],
     zds: [
       { name: "2013", value: 10 },
@@ -43,26 +43,26 @@ let chartsData = {
   }
 }
 
-//初始化图表
+//Initialize chart
 function initCharts() {
   initCharts_One(chartsData.fltj)
   initCharts_Two(chartsData.zjly)
   initCharts_Three(chartsData.ndtj)
 }
 
-// chartOne  分类统计
+// chartOne classification statistics
 function initCharts_One(arr) {
   for (let i = 0, len = arr.length; i < len; i++) {
     let item = arr[i]
     let html = `<li>
         <div class="title">${item.name}</div>
-        <div class="conter"><span>${item.xms}</span>个，投资<span>${item.zds}</span>亿，占地<span>${item.zjl}</span>亩</div>
+        <div class="conter"><span>${item.xms}</span>, investment <span>${item.zds}</span> billion, covering an area of ​​<span>${item.zjl} </span>acre</div>
       </li>`
     $("#ulFLTJ").append(html)
   }
 }
 
-//chartTwo  Echart圆形  分类资金来源
+//chartTwo Echart round classification source of funds
 function initCharts_Two(arr) {
   let data = []
   for (let i = 0; i < arr.length; i++) {
@@ -84,7 +84,7 @@ function initCharts_Two(arr) {
       trigger: "item",
       formatter: "{b}<br/>{c}"
     },
-    //图例 的相关设置
+    //Legend related settings
     legend: {
       orient: "vertical",
       left: "right",
@@ -92,14 +92,14 @@ function initCharts_Two(arr) {
         color: "#ccc"
       }
     },
-    //图形的设置
+    //Graphic settings
     series: [
       {
-        // name: '访问来源',
+        // name: 'Access source',
         type: "pie",
         radius: "80%",
         right: "20%",
-        //图形上文本标签的样式设置
+        //Style settings for text labels on graphics
         label: {
           show: false
         },
@@ -119,7 +119,7 @@ function initCharts_Two(arr) {
           "#96BFFF"
         ],
         center: ["45%", "55%"],
-        data: data, //使用for循环添加
+        data: data, //Add using for loop
         emphasis: {
           itemStyle: {
             shadowBlur: 10,
@@ -133,21 +133,21 @@ function initCharts_Two(arr) {
   myChart.setOption(option)
 }
 
-//chartThree   Echart柱状   年度统计
+//chartThree Echart column annual statistics
 function initCharts_Three(arr) {
-  histogram(arr.xms, "个")
+  histogram(arr.xms, "a")
   $("#btnNDTJ_xms").click(function () {
-    histogram(arr.xms, "个")
+    histogram(arr.xms, "a")
   })
   $("#btnNDTJ_zds").click(function () {
-    histogram(arr.zds, "亩")
+    histogram(arr.zds, "mu")
   })
   $("#btnNDTJ_zjl").click(function () {
-    histogram(arr.zjl, "亿")
+    histogram(arr.zjl, "billion")
   })
 }
 
-//项目、占地、资金    按钮点击切换
+//Project, land area, funds button click to switch
 function histogram(arr, Word) {
   let arrName = []
   let arrValue = []
@@ -164,19 +164,19 @@ function histogram(arr, Word) {
 
   let myChart = echarts.init(document.getElementById("ul_ NDTJ"))
   let option = {
-    //xAxis和yAxis的nameTextStyle不起作用
-    // 因此设置了字体的全局样式
+    //nameTextStyle of xAxis and yAxis does not work
+    // So the global style of the font is set
     textStyle: {
       color: "#ccc"
     },
     title: {
-      text: "单位:" + Word,
-      // 全局样式对此不生效，
+      text: "Unit:" + Word,
+      //Global styles have no effect on this,
       textStyle: {
         color: "#ccc"
       }
     },
-    //移入柱子时的阴影
+    //Shadow when moving into the column
     tooltip: {
       trigger: "axis",
       formatter: "{b}<br/>{c}" + Word,
@@ -199,7 +199,7 @@ function histogram(arr, Word) {
     },
     series: [
       {
-        //柱子的相关设置
+        //Related settings for pillars
         itemStyle: {
           color: "rgb(0, 174, 255)"
         },

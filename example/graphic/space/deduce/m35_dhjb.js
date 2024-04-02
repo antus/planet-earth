@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-//脚本对象方法
+//Script object method
 function initEditorJS(map) {
   let initSceneFun = {
     activate: function () {
-      JB.showPanel("第一步 发送信号")
+      JB.showPanel("The first step is to send a signal")
       initScene()
     },
     disable: function () {
@@ -13,7 +13,7 @@ function initEditorJS(map) {
 
   let acceptanceFun = {
     activate: function () {
-      JB.showPanel("第二步 传送信号")
+      JB.showPanel("Step 2: Send signal")
       acceptance()
     },
     disable: function () {
@@ -23,7 +23,7 @@ function initEditorJS(map) {
 
   let taskFun = {
     activate: function () {
-      JB.showPanel("第三步 下达指令")
+      JB.showPanel("The third step is to issue the command")
       task()
     },
     disable: function () {
@@ -33,7 +33,7 @@ function initEditorJS(map) {
 
   let startTaskFun = {
     activate: function () {
-      JB.showPanel("第四步 准备出发")
+      JB.showPanel("Step 4: Get ready to go")
       startTask()
     },
     disable: function () {
@@ -43,7 +43,7 @@ function initEditorJS(map) {
 
   let satelliteLookFun = {
     activate: function () {
-      JB.showPanel("第五步 出发")
+      JB.showPanel("Step 5: Start")
       satelliteLook()
     },
     disable: function () {
@@ -53,7 +53,7 @@ function initEditorJS(map) {
 
   let sendDataActionFun = {
     activate: function () {
-      JB.showPanel("第六步 处理泄露")
+      JB.showPanel("Step 6: Deal with leaks")
       sendDataAction()
     },
     disable: function () {
@@ -63,7 +63,7 @@ function initEditorJS(map) {
 
   let transferringDataFun = {
     activate: function () {
-      JB.showPanel("第七步 完成营救")
+      JB.showPanel("Step 7: Complete rescue")
       transferringData()
     },
     disable: function () {
@@ -73,7 +73,7 @@ function initEditorJS(map) {
 
   let productionFun = {
     activate: function () {
-      JB.showPanel("第六步 处理泄露")
+      JB.showPanel("Step 6: Deal with leaks")
       production()
     },
     disable: function () {
@@ -83,7 +83,7 @@ function initEditorJS(map) {
 
   let distributionFun = {
     activate: function () {
-      JB.showPanel("第七步 完成营救")
+      JB.showPanel("Step 7: Complete rescue")
       distribution()
     },
     disable: function () {
@@ -91,57 +91,57 @@ function initEditorJS(map) {
     }
   }
 
-  //脚本配置信息（包括顺序、时间、业务对象）
+  //Script configuration information (including sequence, time, business objects)
   let data = [
     {
-      text: "卫星推演",
+      text: "Satellite deduction",
       state: {
         opened: true,
         selected: false
       },
       children: [
         {
-          text: "初始化场景",
+          text: "Initialization scene",
           times: 2,
           widget: initSceneFun
         },
         {
-          text: "需求受理",
+          text: "Demand Acceptance",
           times: 8,
           widget: acceptanceFun
         },
         {
-          text: "任务编排",
+          text: "Task Arrangement",
           times: 7,
           widget: taskFun
         },
         {
-          text: "任务上注",
+          text: "Task note",
           times: 10,
           widget: startTaskFun
         },
         {
-          text: "卫星观测",
+          text: "Satellite Observation",
           times: 15,
           widget: satelliteLookFun
         },
         {
-          text: "数据接收",
+          text: "data reception",
           times: 10,
           widget: sendDataActionFun
         },
         {
-          text: "数据传输",
+          text: "Data transmission",
           times: 10,
           widget: transferringDataFun
         },
         {
-          text: "产品生产",
+          text: "Product Production",
           times: 5,
           widget: productionFun
         },
         {
-          text: "产品分发",
+          text: "Product Distribution",
           times: 5,
           widget: distributionFun
         }

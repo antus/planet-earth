@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tilesetPlanClip
 let terrainPlanClip
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.842658, lng: 117.251492, alt: 249, heading: 358, pitch: -59 },
@@ -18,13 +18,13 @@ var mapOptions = {
   layers: [
     {
       id: 1987,
-      name: "教学楼",
+      name: "Teaching Building",
       type: "3dtiles",
       url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
       position: { lng: 117.251229, lat: 31.844015, alt: 31.2 },
       maximumScreenSpaceError: 16,
       highlight: {
-        type: mars3d.EventType.click, // 默认为鼠标移入高亮，也可以指定click单击高亮
+        type: mars3d.EventType.click, // The default is to highlight when the mouse moves in, you can also specify click to highlight
         color: "#00FF00"
       },
       popup: "all",
@@ -34,23 +34,23 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // BIM模型处理
+  // BIM model processing
   const layerWorkBIM = map.getLayerById(1987)
 
-  // 单击事件
+  // click event
   layerWorkBIM.on(mars3d.EventType.click, function (event) {
-    console.log("单击了3dtiles图层", event)
+    console.log("3dtiles layer clicked", event)
   })
 
-  // 遍历取出所有的feature，并查询其属性
+  // Traverse to retrieve all features and query their attributes
   // layerWorkBIM.readyPromise.then(function (e) {
   //   const allTileObj = {}
   //   layerWorkBIM.tileset.tileVisible.addEventListener((tile) => {
@@ -61,34 +61,34 @@ function onMounted(mapInstance) {
   //       const attr = mars3d.Util.get3DTileFeatureAttr(feature)
   //       allTileObj[attr.id] = attr
   //     }
-  //     // 后续使用allTileObj即可
+  // // You can use allTileObj later
   //     console.log(allTileObj)
   //   })
   // })
 
-  // 键盘漫游
+  // keyboard roaming
   map.keyboardRoam.setOptions({
-    moveStep: 0.1, // 平移步长 (米)。
-    dirStep: 50, // 相机原地旋转步长，值越大步长越小。
-    rotateStep: 0.3, // 相机围绕目标点旋转速率，0.3-2.0
-    minPitch: 0.1, // 最小仰角  0-1
-    maxPitch: 0.95 // 最大仰角  0-1
+    moveStep: 0.1, // Translation step size (meters).
+    dirStep: 50, // The step size of the camera's original rotation. The larger the value, the smaller the step size.
+    rotateStep: 0.3, // Camera rotation rate around the target point, 0.3-2.0
+    minPitch: 0.1, // Minimum elevation angle 0-1
+    maxPitch: 0.95 // Maximum elevation angle 0-1
   })
-  map.keyboardRoam.enabled = true // 开启键盘漫游
+  map.keyboardRoam.enabled = true // Enable keyboard roaming
 
   addPlaneClipThing(layerWorkBIM)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addPlaneClipThing(layerWorkBIM) {
-  // 模型裁剪
+  //Model cropping
   tilesetPlanClip = new mars3d.thing.TilesetPlanClip({
     layer: layerWorkBIM,
     clipType: mars3d.ClipType.ZR,
@@ -99,7 +99,7 @@ function addPlaneClipThing(layerWorkBIM) {
   })
   map.addThing(tilesetPlanClip)
 
-  // 挖地区域---负一楼
+  // Excavation area --- negative first floor
   terrainPlanClip = new mars3d.thing.TerrainPlanClip({
     positions: [
       [117.251176, 31.843707, 28.24],
@@ -107,10 +107,10 @@ function addPlaneClipThing(layerWorkBIM) {
       [117.251877, 31.844216, 28.24],
       [117.251176, 31.844216, 28.24]
     ],
-    diffHeight: 10, // 高度
-    image: "./img/textures/poly-stone.jpg", // 边界墙材质
-    imageBottom: "./img/textures/poly-soil.jpg", // 底部区域材质
-    splitNum: 50 // wall边界插值数
+    diffHeight: 10, // height
+    image: "./img/textures/poly-stone.jpg", // Boundary wall material
+    imageBottom: "./img/textures/poly-soil.jpg", // Bottom area material
+    splitNum: 50 // wall boundary interpolation number
   })
   map.addThing(terrainPlanClip)
 }
@@ -127,13 +127,13 @@ function centerAtDX3() {
   map.setCameraView({ lat: 31.843789, lng: 117.251188, alt: 42, heading: 6, pitch: -31 })
 }
 
-// 通过控制distance的值  1~5以及全部显示
+// By controlling the distance value 1~5 and displaying all
 function showModel(num) {
   terrainPlanClip.show = false
   tilesetPlanClip.distance = num
 }
 
-// D1层显示
+//D1 layer display
 function showD1() {
   terrainPlanClip.show = true
   tilesetPlanClip.distance = -3.6

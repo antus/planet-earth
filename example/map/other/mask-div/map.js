@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.795863, lng: 117.212909, alt: 2113, heading: 25, pitch: -34 }
@@ -11,7 +11,7 @@ var mapOptions = {
     {
       pid: 2040,
       type: "3dtiles",
-      name: "合肥市区",
+      name: "Hefei City",
       url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
       maximumScreenSpaceError: 1,
       style: {
@@ -26,7 +26,7 @@ var mapOptions = {
     },
     {
       type: "geojson",
-      name: "道路线",
+      name: "Road Line",
       url: "//data.mars3d.cn/file/geojson/hefei-road.json",
       symbol: {
         styleOptions: {
@@ -44,18 +44,18 @@ var mapOptions = {
     },
     {
       type: "geojson",
-      name: "河流(面状)",
+      name: "River (surface)",
       url: "//data.mars3d.cn/file/geojson/hefei-water.json",
       symbol: {
         type: "waterC",
         styleOptions: {
-          normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
-          frequency: 5000.0, // 控制波数的数字。
-          animationSpeed: 0.05, // 控制水的动画速度的数字。
-          amplitude: 9.0, // 控制水波振幅的数字。
-          specularIntensity: 0.8, // 控制镜面反射强度的数字。
-          baseWaterColor: "#00baff", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-          blendColor: "#00baff" // 从水中混合到非水域时使用的rgba颜色对象。
+          normalMap: "img/textures/waterNormals.jpg", // Normal map of water normal disturbance
+          frequency: 5000.0, // Number that controls the wave number.
+          animationSpeed: 0.05, // Number that controls the animation speed of water.
+          amplitude: 9.0, // Number that controls the amplitude of the water wave.
+          specularIntensity: 0.8, // Number that controls the intensity of specular reflection.
+          baseWaterColor: "#00baff", // The base color of water in the rgba color object. #00ffff,#00baff,#006ab4
+          blendColor: "#00baff" // The rgba color object used when blending from water to non-water.
         }
       },
       popup: "{name}",
@@ -65,27 +65,27 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
   map = mapInstance
-  map.basemap = 2017 // 切换至蓝色底图
+  map.basemap = 2017 // switch to blue basemap
 
   maskDiv()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 添加蒙版
+//Add mask
 function maskDiv() {
   const maskDiv = document.createElement("div")
   maskDiv.style.cssText = `

@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 // import FloorGraphic from "./FloorGraphic"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let floorGraphic
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.832215, lng: 117.219965, alt: 195, heading: 31, pitch: -36 }
@@ -12,59 +12,59 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 该对象代码定义在：js/FloorGraphic.js
+  //The object code is defined in: js/FloorGraphic.js
 
   floorGraphic = new FloorGraphic({
-    position: [117.220897, 31.833569, 41.1], // 楼栋位置
+    position: [117.220897, 31.833569, 41.1], // Building location
     style: {
       url: "//data.mars3d.cn/gltf/mars/floor/floor.glb",
       heading: 100,
 
-      topUrl: "//data.mars3d.cn/gltf/mars/floor/top.glb", // 楼顶的模型
-      count: 9, // 总层数（不含楼顶）
-      spacing: 3 // 每层层高,单位:米
+      topUrl: "//data.mars3d.cn/gltf/mars/floor/top.glb", // Roof model
+      count: 9, //Total number of floors (excluding roof)
+      spacing: 3 //Height of each floor, unit: meters
     }
   })
   graphicLayer.addGraphic(floorGraphic)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 展开
+// expand
 function openFloorModel() {
-  const height = 5 // 展开的每层间隔高度，单位：米
+  const height = 5 // Height of each expanded layer, unit: meters
   floorGraphic.openAll(height)
 }
 
-// 合并
+// merge
 function mergeFloorModel() {
   floorGraphic.mergeAll()
 }
 
-// 还原
+// restore
 function resetModel() {
   floorGraphic.reset()
 }
 
-// 楼层显示
+//Floor display
 function showFloorModel(floorNum) {
   floorGraphic.showFloor(floorNum)
 }

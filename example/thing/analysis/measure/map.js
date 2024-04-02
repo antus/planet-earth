@@ -1,18 +1,18 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let measure
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 修改编辑点样式，比如大小
+  // Modify the edit point style, such as size
   mars3d.DrawUtil.setAllEditPointStyle({ pixelSize: 14 })
 
   measure = new mars3d.thing.Measure({
@@ -26,22 +26,22 @@ function onMounted(mapInstance) {
   map.addThing(measure)
 
   measure.on(mars3d.EventType.start, function (e) {
-    console.log("开始异步分析", e)
+    console.log("Start asynchronous analysis", e)
     showLoading()
   })
   measure.on(mars3d.EventType.end, function (e) {
-    console.log("完成异步分析", e)
+    console.log("Complete asynchronous analysis", e)
     hideLoading()
   })
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(measure.graphicLayer)
   addDemoGraphic2(measure.graphicLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -55,18 +55,18 @@ function removeAll() {
   measure.clear()
 }
 
-// 空间距离
+// spatial distance
 function measureLength() {
   measure.distance({
     showAddText: true,
     label: {
-      // 自定义显示label的graphic类型
+      // Customize the graphic type of display label
       type: "div",
       updateText: function (text, graphic) {
-        // updateText是必须，用于动态更新 text
+        // updateText is required and is used to dynamically update text
         graphic.html = `<div class="marsGreenGradientPnl" >${text}</div>`
       },
-      // 下面是graphic对应类型本身的参数
+      //The following are the parameters of the graphic corresponding type itself
       html: `<div class="marsGreenGradientPnl" ></div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
@@ -75,24 +75,24 @@ function measureLength() {
     // style: {
     //   color: '#ffff00',
     //   width: 3,
-    //   clampToGround: false //是否贴地
+    // clampToGround: false // Whether to stick to the ground
     // }
   })
 }
-// 贴地距离
+// ground distance
 function measureSurfaceLength() {
   measure.distanceSurface({
     showAddText: true,
-    exact: false // 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
-    // unit: 'm', //支持传入指定计量单位
+    exact: false // Whether to perform precise calculations. When false is passed, whether to use a quick rough calculation method. This method has lower calculation accuracy but fast calculation speed. It can only calculate the height of coordinates within the current field of view.
+    // unit: 'm', //Supports passing in the specified unit of measurement
     // style: {
     //   color: '#ffff00',
     //   width: 3,
-    //   clampToGround: true //是否贴地
+    // clampToGround: true // Whether to stick to the ground
     // }
   })
 }
-// 水平面积
+// horizontal area
 function measureArea() {
   measure
     .area({
@@ -102,7 +102,7 @@ function measureArea() {
       //   outline: true,
       //   outlineColor: '#fafa5a',
       //   outlineWidth: 1,
-      //   clampToGround: false //贴地
+      // clampToGround: false //ClampToGround
       // }
     })
     .then(async (graphic) => {
@@ -111,40 +111,40 @@ function measureArea() {
       graphic.positions = mars3d.PointUtil.setPositionsHeight(oldPositions, rang.maxHeight)
     })
 }
-// 贴地面积
+// Floor area
 function measureSurfaceeArea() {
   measure.areaSurface({
     style: {
       color: "#ffff00"
     },
-    splitNum: 10, // step插值分割的个数
-    exact: false // 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
+    splitNum: 10, //The number of step interpolation splits
+    exact: false // Whether to perform precise calculations. When false is passed, whether to use a quick rough calculation method. This method has lower calculation accuracy but fast calculation speed. It can only calculate the height of coordinates within the current field of view.
   })
 }
-// 高度差
+//height difference
 function measureHeight() {
   measure.height()
 }
 
-// 三角测量
+// triangulation
 function measureTriangleHeight() {
   measure.heightTriangle()
 }
 
-// 方位角
+// azimuth
 function measureAngle() {
   measure.angle()
 }
 
-// 坐标测量
+// coordinate measurement
 function measurePoint() {
   measure.point({
     // popup: function (point, graphic) {
-    //   return `<div class="mars3d-template-title">位置信息</div>
+    // return `<div class="mars3d-template-title">Location information</div>
     //   <div class="mars3d-template-content">
-    //       <div><label>经度</label>${point.lng}</div>
-    //       <div><label>纬度</label>${point.lat}</div>
-    //       <div><label>海拔</label>${point.alt}米</div>
+    // <div><label>Longitude</label>${point.lng}</div>
+    // <div><label>Latitude</label>${point.lat}</div>
+    // <div><label>Altitude</label>${point.alt} meters</div>
     //   </div>`
     // }
   })
@@ -167,18 +167,18 @@ function addDemoGraphic1(graphicLayer) {
     },
     showAddText: true,
     label: {
-      // 自定义显示label的graphic类型
+      // Customize the graphic type of display label
       type: "div",
       updateText: function (text, graphic) {
-        // updateText是必须，用于动态更新 text
+        // updateText is required and is used to dynamically update text
         graphic.html = `<div class="marsGreenGradientPnl" >${text}</div>`
       },
-      // 下面是graphic对应类型本身的参数
+      //The following are the parameters of the graphic corresponding type itself
       html: `<div class="marsGreenGradientPnl" ></div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -195,7 +195,7 @@ function addDemoGraphic2(graphicLayer) {
     style: {
       color: "#ff0000"
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "Example 2" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -211,7 +211,7 @@ function openJSON(file) {
     reader.readAsText(file, "UTF-8")
     reader.onloadend = function (e) {
       const geojson = JSON.parse(this.result)
-      console.log("打开了json文件", geojson)
+      console.log("json file opened", geojson)
 
       if (geojson.type === "graphic" && geojson.data) {
         measure.graphicLayer.addGraphic(geojson.data)
@@ -221,15 +221,15 @@ function openJSON(file) {
       }
     }
   } else {
-    globalMsg("暂不支持 " + fileType + " 文件类型的数据！")
+    globalMsg("Data of " + fileType + " file type is not supported yet!")
   }
 }
 
 function saveJSON() {
   if (measure.graphicLayer.length === 0) {
-    globalMsg("当前没有标注任何数据，无需保存！")
+    globalMsg("No data is currently marked, no need to save!")
     return
   }
   const geojson = measure.graphicLayer.toJSON()
-  mars3d.Util.downloadFile("测量结果.json", JSON.stringify(geojson))
+  mars3d.Util.downloadFile("Measurement results.json", JSON.stringify(geojson))
 }

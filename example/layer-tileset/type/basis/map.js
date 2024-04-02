@@ -2,7 +2,7 @@
 
 var map
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: {
@@ -14,7 +14,7 @@ var mapOptions = {
       roll: 359.8
     },
     fxaa: true,
-    requestRenderMode: true // 显式渲染
+    requestRenderMode: true // explicit rendering
   },
   control: {
     infoBox: false
@@ -23,21 +23,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  // 固定光照时间
+  // Fixed lighting time
   map.clock.currentTime = Cesium.JulianDate.fromDate(new Date("2022-11-01 12:00:00"))
   // map.clock.shouldAnimate = false
 
-  // 固定光照方向
+  // Fixed lighting direction
   map.scene.light = new Cesium.DirectionalLight({
     direction: map.scene.camera.direction
   })
@@ -46,29 +46,29 @@ function onMounted(mapInstance) {
     map.scene.light.direction = map.scene.camera.direction
   })
 
-  // 调试面板
+  //Debug panel
   map.viewer.extend(Cesium.viewerCesiumInspectorMixin)
   map.scene.globe.depthTestAgainstTerrain = false
 
-  // 针对不同终端的优化配置
+  // Optimized configuration for different terminals
   if (isPCBroswer()) {
-    // Cesium 1.61以后会默认关闭反走样，对于桌面端而言还是开启得好，
+    // Cesium 1.61 and later will turn off anti-aliasing by default. For desktops, it is better to turn it on.
     map.scene.postProcessStages.fxaa.enabled = true
 
-    // 鼠标滚轮放大的步长参数
+    // Step size parameter for mouse wheel magnification
     map.scene.screenSpaceCameraController._zoomFactor = 2.0
 
-    // IE浏览器优化
+    // IE browser optimization
     if (window.navigator.userAgent.toLowerCase().indexOf("msie") >= 0) {
-      map.viewer.targetFrameRate = 20 // 限制帧率
-      map.viewer.requestRenderMode = true // 取消实时渲染
+      map.viewer.targetFrameRate = 20 //Limit frame rate
+      map.viewer.requestRenderMode = true // Cancel real-time rendering
     }
   } else {
-    // 鼠标滚轮放大的步长参数
+    // Step size parameter for mouse wheel magnification
     map.scene.screenSpaceCameraController._zoomFactor = 5.0
 
-    // 移动设备上禁掉以下几个选项，可以相对更加流畅
-    map.viewer.requestRenderMode = true // 取消实时渲染
+    // Disable the following options on mobile devices, which can be relatively smoother
+    map.viewer.requestRenderMode = true // Cancel real-time rendering
     map.scene.fog.enabled = false
     map.scene.skyAtmosphere.show = false
     map.scene.globe.showGroundAtmosphere = false
@@ -104,15 +104,15 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 /**
- * 浏览器
+ * Browser
  *
  * @returns {void}
  */
@@ -134,32 +134,32 @@ function isPCBroswer() {
   }
 }
 
-// 绑定事件
+//Bind event
 function bindTestTerrain(val) {
   map.scene.globe.depthTestAgainstTerrain = val
 }
 function bindWireframe(val) {
-  // 三角网
+  // triangulation network
   tiles3dLayer.tileset.debugWireframe = val
 }
 function bindBoundbox(val) {
-  // 包围盒
+  // bounding box
   tiles3dLayer.tileset.debugShowBoundingVolume = val
 }
 function bindGfirstperson(val) {
-  // 键盘漫游
+  // keyboard roaming
   map.keyboardRoam.enabled = val
 }
 
 let tiles3dLayer
 /**
- * 移除图层
+ * Remove layer
  *
  * @returns {void}
  */
 function removeLayer() {
   if (tiles3dLayer) {
-    map.basemap = 2021 // 切换到默认影像底图
+    map.basemap = 2021 // Switch to the default image basemap
 
     map.removeLayer(tiles3dLayer, true)
     tiles3dLayer = null
@@ -167,16 +167,16 @@ function removeLayer() {
 }
 
 /**
- * 倾斜摄影 县城社区
+ * Oblique Photography County Community
  *
- * @showJzwHefeiDemo 倾斜摄影
+ * @showJzwHefeiDemo oblique photography
  * @returns {void}
  */
 function showQxShequDemo() {
   removeLayer()
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "县城社区",
+    name: "County Community",
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
@@ -188,10 +188,10 @@ function showQxShequDemo() {
     center: { lat: 28.439577, lng: 119.476925, alt: 229, heading: 57, pitch: -29 },
 
     queryParameters: {
-      // 可以传自定义url参数，如token等
+      // Custom url parameters can be passed, such as token, etc.
       token: "mars3d"
     },
-    enableDebugWireframe: true, // 是否可以进行三角网的切换显示
+    enableDebugWireframe: true, // Whether it is possible to switch the display of the triangle network
     flyTo: true
   })
   map.addLayer(tiles3dLayer)
@@ -205,41 +205,41 @@ function showQxShequDemo() {
   // })
 
   tiles3dLayer.readyPromise.then(function (layer) {
-    console.log("load完成", layer)
+    console.log("load completed", layer)
 
-    // tiles3dLayer.tileset 是 Cesium3DTileset，支持绑定所有Cesium原生事件
-    // 参考API http://mars3d.cn/api/cesium/Cesium3DTileset.html
+    // tiles3dLayer.tileset is a Cesium3DTileset that supports binding all Cesium native events
+    //Reference API http://mars3d.cn/api/cesium/Cesium3DTileset.html
     tiles3dLayer.tileset.loadProgress.addEventListener(function (numberOfPendingRequests, numberOfTilesProcessing) {
       if (numberOfPendingRequests === 0 && numberOfTilesProcessing === 0) {
-        console.log("Loading: 停止加载")
+        console.log("Loading: Stop loading")
         return
       }
-      console.log(`Loading: 待处理请求数: ${numberOfPendingRequests}, 处理数: ${numberOfTilesProcessing}`)
+      console.log(`Loading: Number of pending requests: ${numberOfPendingRequests}, Number of processing: ${numberOfTilesProcessing}`)
     })
   })
 
-  // 加载的事件 只执行一次
+  //The loaded event is only executed once
   tiles3dLayer.on(mars3d.EventType.initialTilesLoaded, function (event) {
-    console.log("触发initialTilesLoaded事件", event)
+    console.log("Trigger initialTilesLoaded event", event)
   })
 
-  // 会执行多次，重新加载一次完成后都会回调
+  // Will be executed multiple times, and will be called back after reloading.
   tiles3dLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
-    console.log("触发allTilesLoaded事件", event)
+    console.log("trigger allTilesLoaded event", event)
   })
 }
 
 /**
- * 倾斜摄影 景区文庙
+ * Oblique photography Scenic Confucian Temple
  *
- * @showJzwHefeiDemo 倾斜摄影
+ * @showJzwHefeiDemo oblique photography
  * @returns {void}
  */
 function showQxSimiaoDemo() {
   removeLayer()
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "文庙",
+    name: "Confucian Temple",
     url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
     position: { alt: 38.8 },
     maximumScreenSpaceError: 1,
@@ -251,12 +251,12 @@ function showQxSimiaoDemo() {
     // "dynamicScreenSpaceError": true,
     // "preloadWhenHidden": true,
     // highlight: {
-    //   all: true, //全部整体高亮，false时是构件高亮
-    //   type: mars3d.EventType.click, //默认为鼠标移入高亮，也可以指定click单击高亮
+    // all: true, //All the overall highlighting, false is the component highlighting
+    // type: mars3d.EventType.click, //The default is to highlight when the mouse moves in, you can also specify click to highlight
     //   color: "#00ffff",
     // },
     // distanceDisplayCondition_far: 3000,
-    enableDebugWireframe: true, // 是否可以进行三角网的切换显示
+    enableDebugWireframe: true, // Whether it is possible to switch the display of the triangle network
     center: {
       lat: 33.589536,
       lng: 119.032216,
@@ -269,30 +269,30 @@ function showQxSimiaoDemo() {
   })
   map.addLayer(tiles3dLayer)
 
-  // 加载的事件 只执行一次
+  //The loaded event is only executed once
   tiles3dLayer.on(mars3d.EventType.initialTilesLoaded, function (event) {
-    console.log("触发initialTilesLoaded事件", event)
+    console.log("Trigger initialTilesLoaded event", event)
   })
 }
 
 /**
- * 城市白膜建筑物 合肥市区
+ * Urban white film buildings Hefei urban area
  * @returns {void}
  */
 function showJzwHefeiDemo() {
   removeLayer()
 
-  map.basemap = 2017 // 切换到蓝色底图
+  map.basemap = 2017 // switch to blue basemap
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥市建筑物",
+    name: "Hefei City Building",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
-    // marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
+    // marsJzwStyle: true, // Turn on building special effects (built-in Shader code)
     marsJzwStyle: {
-      baseHeight: 0.0, // 物体的基础高度，需要修改成一个合适的建筑基础高度
-      heightRange: 280.0, // 高亮的范围  (baseHeight ~ baseHeight + heightRange)
-      glowRange: 300.0 // 光环的移动范围
+      baseHeight: 0.0, // The base height of the object needs to be modified to a suitable building base height.
+      heightRange: 280.0, // Highlight range (baseHeight ~ baseHeight + heightRange)
+      glowRange: 300.0 // The moving range of the halo
     },
     style: {
       color: {
@@ -300,34 +300,34 @@ function showJzwHefeiDemo() {
       }
     },
     popup: [
-      { field: "objectid", name: "编号" },
-      { field: "name", name: "名称" },
-      { field: "height", name: "楼高", unit: "米" }
+      { field: "objectid", name: "number" },
+      { field: "name", name: "name" },
+      { field: "height", name: "building height", unit: "meters" }
     ],
     center: { lat: 31.813812, lng: 117.223505, alt: 1047.7, heading: 0, pitch: -39 },
     highlight: {
-      type: mars3d.EventType.click, // 单击高亮
-      outlineEffect: true, // 采用OutlineEffect方式来高亮
+      type: mars3d.EventType.click, // Click highlight
+      outlineEffect: true, // Use OutlineEffect to highlight
       color: "#FFFF00",
       width: 4
     },
     flyTo: true,
-    enableDebugWireframe: true // 是否可以进行三角网的切换显示
+    enableDebugWireframe: true // Whether it is possible to switch the display of the triangle network
   })
   map.addLayer(tiles3dLayer)
 
-  // 单击事件
+  // click event
   tiles3dLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了3dtiles图层", event)
+    console.log("3dtiles layer clicked", event)
   })
 }
 
-// 示例：点云数据 塔杆
+// Example: point cloud data tower pole
 function showPntsGantaDemo() {
   removeLayer()
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "高压线塔杆",
+    name: "High voltage line tower pole",
     url: "//data.mars3d.cn/3dtiles/pnts-ganta/tileset.json",
     maximumScreenSpaceError: 1,
     position: { alt: 31 },
@@ -346,45 +346,45 @@ function showPntsGantaDemo() {
     },
     popup: "all",
     flyTo: true,
-    enableDebugWireframe: true // 是否可以进行三角网的切换显示
+    enableDebugWireframe: true // Whether it is possible to switch the display of the triangle network
   })
   map.addLayer(tiles3dLayer)
 
-  // 单击事件
+  // click event
   tiles3dLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了3dtiles图层", event)
+    console.log("3dtiles layer clicked", event)
   })
 }
 
 /**
- * 人工建模 石化工厂
+ * Manual modeling of petrochemical plants
  *
- * @showMaxShihuaDemo 石化工厂模型
+ * @showMaxShihuaDemo petrochemical plant model
  * @returns {void}
  */
 function showMaxShihuaDemo() {
   removeLayer()
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "石化工厂",
+    name: "Petrochemical Plant",
     url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
     // shadows: Cesium.ShadowMode.DISABLED,
-    // 以下参数可以参考用于3dtiles总数据大，清晰度过高情况下进行性能优化。这不是一个通用的解决方案，但可以以此为参考。
+    //The following parameters can be used as a reference for performance optimization when the total data of 3dtiles is large and the resolution is too high. This is not a universal solution, but it can be used as a reference.
     skipLevelOfDetail: true,
     loadSiblings: true,
     cullRequestsWhileMoving: true,
     cullRequestsWhileMovingMultiplier: 10,
     preferLeaves: true,
     preloadWhenHidden: true,
-    enableDebugWireframe: true, // 是否可以进行三角网的切换显示
-    // 以上为优化的参数
+    enableDebugWireframe: true, // Whether it is possible to switch the display of the triangle network
+    //The above are optimized parameters
 
     // popup: "all",
     highlight: {
-      type: mars3d.EventType.click, // 默认为鼠标移入高亮，也可以指定click单击高亮
-      outlineEffect: true, // 采用OutlineEffect方式来高亮
+      type: mars3d.EventType.click, // The default is to highlight when the mouse moves in, you can also specify click to highlight
+      outlineEffect: true, // Use OutlineEffect to highlight
       color: "#00FF00",
       width: 6
     },
@@ -393,50 +393,50 @@ function showMaxShihuaDemo() {
   })
   map.addLayer(tiles3dLayer)
 
-  // 可以绑定Popup弹窗，回调方法中任意处理
+  // You can bind the Popup window and handle it arbitrarily in the callback method.
   tiles3dLayer.bindPopup(function (event) {
     const attr = event.graphic.attr
-    // attr["视频"] = `<video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`;
-    return mars3d.Util.getTemplateHtml({ title: "石化工厂", template: "all", attr })
+    // attr["video"] = `<video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`;
+    return mars3d.Util.getTemplateHtml({ title: "Petrochemical Plant", template: "all", attr })
   })
 
-  // 单击事件
+  // click event
   tiles3dLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了3dtiles图层", event)
+    console.log("3dtiles layer clicked", event)
   })
 }
 
 /**
- * BIM 桥梁
+ * BIM bridge
  *
- * @showBimQiaoliangDemo 桥梁模型
+ * @showBimQiaoliangDemo bridge model
  * @returns {void}
  */
 function showBimQiaoliangDemo() {
   removeLayer()
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "桥梁",
+    name: "bridge",
     url: "//data.mars3d.cn/3dtiles/bim-qiaoliang/tileset.json",
 
-    // 以下参数可以参考用于3dtiles总数据大，清晰度过高情况下进行性能优化。这不是一个通用的解决方案，但可以以此为参考。
-    maximumScreenSpaceError: 16, // 【重要】数值加大，能让最终成像变模糊
+    //The following parameters can be used as a reference for performance optimization when the total data of 3dtiles is large and the resolution is too high. This is not a universal solution, but it can be used as a reference.
+    maximumScreenSpaceError: 16, // [Important] Increasing the value can make the final image blurry
 
-    skipLevelOfDetail: true, // 是Cesium在1.5x 引入的一个优化参数，这个参数在金字塔数据加载中，可以跳过一些级别，这样整体的效率会高一些，数据占用也会小一些。但是带来的异常是：1） 加载过程中闪烁，看起来像是透过去了，数据载入完成后正常。2，有些异常的面片，这个还是因为两级LOD之间数据差异较大，导致的。当这个参数设置false，两级之间的变化更平滑，不会跳跃穿透，但是清晰的数据需要更长，而且还有个致命问题，一旦某一个tile数据无法请求到或者失败，导致一直不清晰。所以我们建议：对于网络条件好，并且数据总量较小的情况下，可以设置false，提升数据显示质量。
-    loadSiblings: true, // 如果为true则不会在已加载完模型后，自动从中心开始超清化模型
+    skipLevelOfDetail: true, // is an optimization parameter introduced by Cesium in 1.5x. This parameter can skip some levels during pyramid data loading, so that the overall efficiency will be higher and the data usage will be smaller. However, the exceptions caused are: 1) It flickers during the loading process and looks like it is transparent. After the data is loaded, it is normal. 2. There are some abnormal patches. This is caused by the large data difference between the two levels of LOD. When this parameter is set to false, the changes between the two levels are smoother and will not jump through. However, clear data takes longer, and there is also a fatal problem. Once a certain tile data cannot be requested or fails, it will continue to be unavailable. clear. Therefore, we recommend that when the network conditions are good and the total amount of data is small, you can set false to improve the quality of data display.
+    loadSiblings: true, // If true, the model will not be automatically super-cleared from the center after the model is loaded.
     cullRequestsWhileMoving: true,
-    cullRequestsWhileMovingMultiplier: 10, // 【重要】 值越小能够更快的剔除
-    preferLeaves: true, // 【重要】这个参数默认是false，同等条件下，叶子节点会优先加载。但是Cesium的tile加载优先级有很多考虑条件，这个只是其中之一，如果skipLevelOfDetail=false，这个参数几乎无意义。所以要配合skipLevelOfDetail=true来使用，此时设置preferLeaves=true。这样我们就能最快的看见符合当前视觉精度的块，对于提升大数据以及网络环境不好的前提下有一点点改善意义。
-    progressiveResolutionHeightFraction: 0.5, // 【重要】 数值偏于0能够让初始加载变得模糊
-    dynamicScreenSpaceError: true, // true时会在真正的全屏加载完之后才清晰化模型
-    preloadWhenHidden: true, // tileset.show是false时，也去预加载数据
-    enableDebugWireframe: true, // 是否可以进行三角网的切换显示
-    // 以上为优化的参数
+    cullRequestsWhileMovingMultiplier: 10, // [Important] The smaller the value, the faster the culling will be.
+    preferLeaves: true, // [Important] This parameter defaults to false. Under the same conditions, leaf nodes will be loaded first. However, Cesium's tile loading priority has many considerations, and this is just one of them. If skipLevelOfDetail=false, this parameter is almost meaningless. Therefore, it must be used with skipLevelOfDetail=true, and set preferLeaves=true at this time. In this way, we can see the blocks that meet the current visual accuracy as quickly as possible, which has a little improvement significance for improving big data and the network environment is not good.
+    progressiveResolutionHeightFraction: 0.5, // [Important] Values ​​biased towards 0 can make the initial loading blurry
+    dynamicScreenSpaceError: true, // When true, the model will not be clear until the real full screen is loaded.
+    preloadWhenHidden: true, // When tileset.show is false, also preload data
+    enableDebugWireframe: true, // Whether it is possible to switch the display of the triangle network
+    //The above are optimized parameters
 
     position: { lng: 117.096906, lat: 31.851564, alt: 45 },
     rotation: { z: 17.5 },
     highlight: {
-      type: mars3d.EventType.click, // 默认为鼠标移入高亮，也可以指定click单击高亮
+      type: mars3d.EventType.click, // The default is to highlight when the mouse moves in, you can also specify click to highlight
       // all: true,
       color: "#00FF00"
     },
@@ -446,18 +446,18 @@ function showBimQiaoliangDemo() {
   })
   map.addLayer(tiles3dLayer)
 
-  // 可以绑定Popup弹窗，回调方法中任意处理
+  // You can bind the Popup window and handle it arbitrarily in the callback method.
   tiles3dLayer.bindPopup(function (event) {
     const attr = event.graphic.attr
-    return mars3d.Util.getTemplateHtml({ title: "桥梁", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "bridge", template: "all", attr })
   })
 
-  // 单击事件
+  // click event
   tiles3dLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了3dtiles图层", event)
+    console.log("3dtiles layer clicked", event)
   })
 
-  // 在指定时间范围显示对象 0-10，20-30,40-max
+  //Display objects in the specified time range 0-10, 20-30, 40-max
   const now = map.clock.currentTime
   tiles3dLayer.availability = [
     { start: now, stop: Cesium.JulianDate.addSeconds(now, 10, new Cesium.JulianDate()) },
@@ -467,16 +467,16 @@ function showBimQiaoliangDemo() {
 }
 
 /**
- * BIM 桥梁
+ * BIM bridge
  *
- * @showBimDitiezhanDemo 桥梁模型
+ * @showBimDitiezhanDemo bridge model
  * @returns {void}
  */
 function showBimDitiezhanDemo() {
   removeLayer()
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "轻轨地铁站",
+    name: "Light Rail Metro Station",
     url: "//data.mars3d.cn/3dtiles/bim-ditiezhan/tileset.json",
     maximumScreenSpaceError: 16,
     position: { lng: 117.203994, lat: 31.857999, alt: 28.9 },
@@ -489,12 +489,12 @@ function showBimDitiezhanDemo() {
     popup: "all",
     center: { lat: 31.856358, lng: 117.204451, alt: 148, heading: 350, pitch: -30 },
     flyTo: true,
-    enableDebugWireframe: true // 是否可以进行三角网的切换显示
+    enableDebugWireframe: true // Whether it is possible to switch the display of the triangle network
   })
   map.addLayer(tiles3dLayer)
 
-  // 单击事件
+  // click event
   tiles3dLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了3dtiles图层", event)
+    console.log("3dtiles layer clicked", event)
   })
 }

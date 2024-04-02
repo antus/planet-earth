@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var map // mars3d.Map three-dimensional map object
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.344715, lng: 115.783073, alt: 10056, heading: 158, pitch: -55 },
@@ -12,29 +12,29 @@ var mapOptions = {
     }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true // Whether to display the timeline control
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
   map.hasTerrain = false
 
-  globalNotify("已知问题提示", `不支持对地形的求交，目前仅对椭球体做投射。 `)
+  globalNotify("Known Issue Tips", `Does not support terrain intersection, currently only projects ellipsoids. `)
 
   addGraphicLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -43,12 +43,12 @@ function onUnmounted() {
 let fixedRoute
 
 function addGraphicLayer() {
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   fixedRoute = new mars3d.graphic.FixedRoute({
-    name: "飞机航线",
+    name: "Airplane route",
     speed: 200,
     positions: [
       [115.833866, 31.311451, 4000],
@@ -56,14 +56,14 @@ function addGraphicLayer() {
       [115.748115, 31.266263, 4000],
       [115.711031, 31.216472, 4000]
     ],
-    clockLoop: true, // 是否循环播放
+    clockLoop: true, // Whether to loop playback
     camera: {
       type: "zy",
       followedX: 50,
       followedZ: 10
     },
     label: {
-      text: "火星号",
+      text: "Mars",
       color: "#0081c2",
       font_size: 20,
       outline: true,
@@ -89,15 +89,15 @@ function addGraphicLayer() {
   })
   graphicLayer.addGraphic(fixedRoute)
 
-  // 绑定popup
+  //Bind popup
   bindPopup(fixedRoute)
 
-  // ui面板信息展示
+  //UI panel information display
   fixedRoute.on(mars3d.EventType.change, (event) => {
     throttled(eventTarget.fire("roamLineChange", event), 500)
   })
 
-  // 启动漫游
+  // Start roaming
   fixedRoute.start()
 
   testShading()
@@ -121,10 +121,10 @@ function clearGroundLayer() {
   groundLayer.clear()
 }
 
-let groundLayer // 地面投影图层
+let groundLayer // Ground projection layer
 
 function testShading() {
-  // 卫星朝向的中线地面点
+  // Centerline ground point of satellite orientation
   const line1 = new mars3d.graphic.PolylineEntity({
     positions: new Cesium.CallbackProperty(function (time) {
       const pt1 = fixedRoute.position
@@ -143,7 +143,7 @@ function testShading() {
   })
   map.graphicLayer.addGraphic(line1)
 
-  // 卫星边线2点
+  // Satellite edge 2 points
   const graphicTriangle = new mars3d.graphic.PolylineEntity({
     positions: new Cesium.CallbackProperty(function (time) {
       const positions = getFourShadingPosition({
@@ -160,7 +160,7 @@ function testShading() {
   })
   map.graphicLayer.addGraphic(graphicTriangle)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   groundLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(groundLayer)
 
@@ -172,13 +172,13 @@ function testShading() {
   }, 1500)
 }
 
-// 获取地面的四棱台投影面
+// Get the four-sided pyramid projection surface of the ground
 let thisPositions
 let centerPosion
 let lastPositions
 
 function getFourShadingPosition(opts) {
-  // 位置
+  // Location
   const pt1 = fixedRoute.position
   if (!pt1) {
     return
@@ -186,14 +186,14 @@ function getFourShadingPosition(opts) {
 
   const ellipsoid = map.scene.globe.ellipsoid
 
-  // 张角
+  // Zhang Jiao
   const angle1 = Cesium.Math.toRadians(opts.angle) / 2
 
   const heading = Cesium.Math.toRadians(Cesium.defaultValue(opts.heading, fixedRoute.model.heading))
   const pitch = Cesium.Math.toRadians(Cesium.defaultValue(opts.pitch, fixedRoute.model.pitch))
   const roll = Cesium.Math.toRadians(Cesium.defaultValue(opts.heading, fixedRoute.model.roll))
 
-  // 张角
+  // Zhang Jiao
   const angle2 = Cesium.Math.toRadians(opts.angle2) / 2
 
   const ptLeft1 = mars3d.PointUtil.getRayEarthPosition(pt1, new Cesium.HeadingPitchRoll(heading, pitch + angle2, roll + angle1), true, ellipsoid)
@@ -250,18 +250,18 @@ function addPolygon() {
 function bindPopup(fixedRoute) {
   fixedRoute.bindPopup(
     `<div style="width: 200px">
-      <div>总 距 离：<span id="lblAllLen"> </span></div>
-      <div>总 时 间：<span id="lblAllTime"> </span></div>
-      <div>开始时间：<span id="lblStartTime"> </span></div>
-      <div>剩余时间：<span id="lblRemainTime"> </span></div>
-      <div>剩余距离：<span id="lblRemainLen"> </span></div>
+      <div>Total distance: <span id="lblAllLen"> </span></div>
+      <div>Total time: <span id="lblAllTime"> </span></div>
+      <div>Start time: <span id="lblStartTime"> </span></div>
+      <div>Remaining time: <span id="lblRemainTime"> </span></div>
+      <div>Remaining distance: <span id="lblRemainLen"> </span></div>
     </div>`,
     { closeOnClick: false }
   )
 
-  // 刷新局部DOM,不影响popup面板的其他控件操作
+  // Refresh the local DOM without affecting the operations of other controls in the popup panel.
   fixedRoute.on(mars3d.EventType.popupRender, function (event) {
-    const container = event.container // popup对应的DOM
+    const container = event.container // DOM corresponding to popup
 
     const params = fixedRoute?.info
     if (!params) {
@@ -290,21 +290,21 @@ function bindPopup(fixedRoute) {
 
     const lblRemainLen = container.querySelector("#lblRemainLen")
     if (lblRemainLen) {
-      lblRemainLen.innerHTML = mars3d.MeasureUtil.formatDistance(params.distance_all - params.distance) || "完成"
+      lblRemainLen.innerHTML = mars3d.MeasureUtil.formatDistance(params.distance_all - params.distance) || "Complete"
     }
   })
 }
 
-// ui层使用
+//Used by ui layer
 var formatDistance = mars3d.MeasureUtil.formatDistance
 var formatTime = mars3d.Util.formatTime
 
-// 节流
+// Throttle
 function throttled(fn, delay) {
   let timer = null
   let starttime = Date.now()
   return function () {
-    const curTime = Date.now() // 当前时间
+    const curTime = Date.now() // current time
     const remaining = delay - (curTime - starttime)
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this

@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let weixin
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 12.845055, lng: 112.931363, alt: 24286797, heading: 3, pitch: -90 },
@@ -12,18 +12,18 @@ var mapOptions = {
       zoomFactor: 3.0,
       minimumZoomDistance: 1000,
       maximumZoomDistance: 300000000,
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
     compass: { top: "10px", left: "5px" }
   },
   terrain: false,
   layers: [
     {
-      name: "夜晚图片",
+      name: "Night Picture",
       icon: "img/basemaps/blackMarble.png",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/night2.jpg",
@@ -34,44 +34,44 @@ var mapOptions = {
     }
   ]
 }
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map  map.toolbar.style.bottom = "55px"// 修改toolbar控件的样式
+  map = mapInstance // Record map map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
   map.clock.shouldAnimate = true
-  map.clock.multiplier = 1 // 速度
+  map.clock.multiplier = 1 // speed
   addSatellite()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addSatellite() {
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了卫星", event)
+    console.log("Satellite clicked", event)
   })
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "卫星图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Satellite Layer", template: "all", attr })
   })
 
   weixin = new mars3d.graphic.Satellite({
@@ -89,37 +89,37 @@ function addSatellite() {
       rayEllipsoid: true,
       list: [
         {
-          name: "高分相机A",
-          angle1: 4.03, // 视场张角1(度)
-          angle2: 4.03, // 视场张角2(度)
-          pitchOffset: 3.7, // 安装偏转角(度)
+          name: "High Score Camera A",
+          angle1: 4.03, // Field of view angle 1 (degree)
+          angle2: 4.03, // Field of view angle 2 (degrees)
+          pitchOffset: 3.7, // Installation deflection angle (degrees)
           color: "#ff0000",
           opacity: 0.5,
           show: true
         },
         {
-          name: "高分相机B",
-          angle1: 3.1, // 视场张角1(度)
-          angle2: 3.1, // 视场张角2(度)
-          pitchOffset: -3.7, // 安装偏转角(度)
+          name: "High Score Camera B",
+          angle1: 3.1, // Field of view angle 1 (degree)
+          angle2: 3.1, // Field of view angle 2 (degrees)
+          pitchOffset: -3.7, // Installation deflection angle (degrees)
           color: "#0000ff",
           opacity: 0.5,
           show: true
         },
         {
-          name: "多光谱相机A",
-          angle1: 4.5, // 视场张角1(度)
-          angle2: 4.5, // 视场张角2(度)
-          pitchOffset: 4.35, // 安装偏转角(度)
+          name: "Multispectral Camera A",
+          angle1: 4.5, // Field of view angle 1 (degree)
+          angle2: 4.5, // Field of view angle 2 (degrees)
+          pitchOffset: 4.35, // Installation deflection angle (degrees)
           color: "#ffff00",
           opacity: 0.5,
           show: true
         },
         {
-          name: "多光谱相机B",
-          angle1: 4.5, // 视场张角1(度)
-          angle2: 4.5, // 视场张角2(度)
-          pitchOffset: -4.35, // 安装偏转角(度)
+          name: "Multispectral Camera B",
+          angle1: 4.5, // Field of view angle 1 (degree)
+          angle2: 4.5, // Field of view angle 2 (degrees)
+          pitchOffset: -4.35, // Installation deflection angle (degrees)
           color: "#00ffff",
           opacity: 0.5,
           show: true
@@ -134,7 +134,7 @@ function addSatellite() {
   weixinData.tle1 = weixin.options.tle1
   weixinData.tle2 = weixin.options.tle2
 
-  // 显示实时坐标和时间
+  //Display real-time coordinates and time
   weixin.on(mars3d.EventType.change, function (event) {
     const date = Cesium.JulianDate.toDate(map.clock.currentTime)
     weixinData.time = mars3d.Util.formatDate(date, "yyyy-MM-dd HH:mm:ss")
@@ -147,7 +147,7 @@ function addSatellite() {
     }
   })
 
-  // 动态扫描视锥体
+  //Dynamic scanning frustum
   const saomiaoSensor = new mars3d.graphic.SatelliteSensor({
     position: weixin.property,
     orientation: weixin.orientation,
@@ -161,7 +161,7 @@ function addSatellite() {
   })
   graphicLayer.addGraphic(saomiaoSensor)
 
-  // 动态pitch角
+  //Dynamic pitch angle
   const maxHeight = 9
   const step = 0.1
   let currPitch = maxHeight
@@ -181,12 +181,12 @@ function addSatellite() {
   }
 }
 
-// 定位至卫星
+// Position to satellite
 function locate() {
   weixin.flyTo()
 }
 
-// 参考轴系显示与隐藏
+// Display and hide reference axis system
 function chkShowModelMatrix(val) {
   weixin.debugAxis = val
 }

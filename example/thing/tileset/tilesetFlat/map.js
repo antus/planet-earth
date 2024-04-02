@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-let lineLayer // 矢量图层对象,用于graphic绑定展示
-let tilesetLayer // 3dtiles模型；添加模型选择
+let lineLayer // Vector layer object, used for graphic binding display
+let tilesetLayer // 3dtiles model; add model selection
 
 var mapOptions = {
   scene: {
@@ -11,21 +11,21 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map = mapInstance // record map
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  globalNotify("已知问题提示", `(1) 目前不支持所有类型3dtile数据，请替换url进行自测`)
+  globalNotify("Known Issue Tips", `(1) Currently all types of 3dtile data are not supported, please replace the url for self-test`)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   lineLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(lineLayer)
 
@@ -33,28 +33,28 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// true:  精确模式, 直接存储范围,但传入的范围顶点数量多时，就会造成一定程度的卡顿；
-// false: 掩膜模式，栅格化范围,效率与范围顶点数量无关,但放大后锯齿化严重
+// true: Precise mode, directly stores the range, but when the number of passed range vertices is large, it will cause a certain degree of lag;
+// false: Mask mode, rasterization range, efficiency has nothing to do with the number of range vertices, but aliasing is serious after zooming in
 const precise = false
 
 function showDytDemo() {
   removeLayer()
 
-  // 加模型
+  //Add model
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "大雁塔",
+    name: "Big Wild Goose Pagoda",
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
     maximumScreenSpaceError: 1,
 
-    // 可传入TilesetFlat构造参数，下面是演示压平区域
+    //TilesetFlat construction parameters can be passed in. The following is the demonstration flattening area.
     flat: {
       precise,
       area: [
@@ -67,23 +67,23 @@ function showDytDemo() {
           ]
         }
       ],
-      editHeight: -24, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+      editHeight: -24, // Relative height (unit: meters), based on the offset of the lowest point height of the flattened/submerged area
       enabled: true
     },
     flyTo: true
   })
   map.addLayer(tilesetLayer)
 
-  // tilesetLayer.flat是TilesetFlat对象，因为与模型是1对1关系，已经内置进去
+  // tilesetLayer.flat is a TilesetFlat object, because it has a 1-to-1 relationship with the model and has been built in
   tilesetLayer.flat.on(mars3d.EventType.addItem, onAddFlatArea)
 }
 
 function showTehDemo() {
   removeLayer()
 
-  // 以下数据为cesiumlab v3处理，目前其材质有做偏移处理，不知道内部逻辑及具体值，无法平整压平。
+  // The following data is processed by cesiumlab v3. Currently, its material has been offset. I don’t know the internal logic and specific values, so it cannot be flattened.
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥天鹅湖",
+    name: "Hefei Swan Lake",
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
     maximumScreenSpaceError: 16,
@@ -94,7 +94,7 @@ function showTehDemo() {
     preferLeaves: true,
     center: { lat: 31.795308, lng: 117.21948, alt: 1820, heading: 0, pitch: -39 },
 
-    editHeight: -140.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+    editHeight: -140.0, // Relative height (unit: meters), based on the offset of the lowest point height of the flattened/submerged area
     flat: {
       precise,
       enabled: true
@@ -104,14 +104,14 @@ function showTehDemo() {
   })
   map.addLayer(tilesetLayer)
 
-  // tilesetLayer.flat是TilesetFlat对象，因为与模型是1对1关系，已经内置进去
+  // tilesetLayer.flat is a TilesetFlat object, because it has a 1-to-1 relationship with the model and has been built in
   tilesetLayer.flat.on(mars3d.EventType.addItem, onAddFlatArea)
 }
 function showXianDemo() {
   removeLayer()
 
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "县城社区",
+    name: "County Community",
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
@@ -120,7 +120,7 @@ function showXianDemo() {
     cullWithChildrenBounds: false,
     center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
 
-    editHeight: -18.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+    editHeight: -18.0, // Relative height (unit: meters), based on the offset of the lowest point height of the flattened/submerged area
     flat: {
       precise,
       enabled: true
@@ -129,16 +129,16 @@ function showXianDemo() {
   })
   map.addLayer(tilesetLayer)
 
-  // tilesetLayer.flat是TilesetFlat对象，因为与模型是1对1关系，已经内置进去
+  // tilesetLayer.flat is a TilesetFlat object, because it has a 1-to-1 relationship with the model and has been built in
   tilesetLayer.flat.on(mars3d.EventType.addItem, onAddFlatArea)
 }
 
-// 添加了压平区域后的回调事件
+// Added callback event after flattening area
 function onAddFlatArea(event) {
   const areaObj = event.area
   areaObj.lineId = addTestLine(areaObj.positions)
 
-  // 触发自定义事件 addItem
+  // Trigger custom event addItem
   eventTarget.fire("addItem", event)
 }
 
@@ -149,7 +149,7 @@ function removeLayer() {
   }
 }
 
-// 添加矩形
+// add rectangle
 function btnDrawExtent(height) {
   map.graphicLayer.clear()
   map.graphicLayer.startDraw({
@@ -160,17 +160,17 @@ function btnDrawExtent(height) {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       tilesetLayer.flat.addArea(positions, { height })
     }
   })
 }
-// 绘制多边形
+// draw polygon
 function btnDraw(height) {
   map.graphicLayer.clear()
   map.graphicLayer.startDraw({
@@ -180,17 +180,17 @@ function btnDraw(height) {
       opacity: 0.5
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       tilesetLayer.flat.addArea(positions, { height })
     }
   })
 }
-// 清除
+// clear
 function removeAll() {
   tilesetLayer.flat.clear()
 
@@ -198,12 +198,12 @@ function removeAll() {
   lineLayer.clear()
 }
 
-// 改变压平的高度
+//Change the flattening height
 function changeFlatHeight(val) {
   tilesetLayer.flat.updateHeight(val)
 }
 
-// 是否显示测试边界线
+// Whether to display the test boundary line
 function chkShowLine(val) {
   lineLayer.show = val
 }
@@ -216,13 +216,13 @@ function showHideArea(id, selected) {
   }
 }
 
-// 定位至模型
+// Locate the model
 function flyToGraphic(item) {
   const graphic = tilesetLayer.flat.getAreaById(item)
   map.flyToPositions(graphic.positions)
 }
 
-// 删除模型
+//delete model
 function deletedGraphic(areaId, lineId) {
   tilesetLayer.flat.removeArea(areaId)
 
@@ -249,7 +249,7 @@ function addTestLine(positions) {
   //     materialType: mars3d.MaterialType.Image,
   //     materialOptions: {
   //       image: "img/textures/poly-soil.jpg",
-  //       opacity: 0.8 // 透明度
+  // opacity: 0.8 // transparency
   //     },
   //     clampToGround: true
   //   }

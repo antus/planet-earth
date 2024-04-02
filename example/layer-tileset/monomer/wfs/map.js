@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.838348, lng: 117.206494, alt: 752, heading: 359, pitch: -54 }
@@ -10,18 +10,18 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 三维模型【目前没有全合肥的模型，下面模型为了测试下】
+  // Three-dimensional model [Currently there is no model in Hefei, the following model is for testing]
   const tilesetLayer = new mars3d.layer.TilesetLayer({
     type: "3dtiles",
-    name: "合肥国家大学科技园",
+    name: "Hefei National University Science and Technology Park",
     url: "//data.mars3d.cn/3dtiles/qx-hfdxy/tileset.json",
     position: { alt: 43.7 },
     maximumScreenSpaceError: 1,
@@ -35,35 +35,35 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addWfsLayer() {
-  // 单体化图层【支持geoserver的wfs服务配置dth属性】
+  // Single layer [supports geoserver's wfs service configuration dth attribute]
   const wfsLayer = new mars3d.layer.WfsLayer({
-    name: "建筑物面",
+    name: "Building Floor",
     url: "//server.mars3d.cn/geoserver/mars/wfs",
     layer: "mars:hfjzw",
     parameters: {
-      // 支持所有wfs的参数
+      //Supports all wfs parameters
       maxFeatures: 500
     },
     minimumLevel: 15,
     debuggerTileInfo: false,
-    popup: "名称：{NAME}<br />层数：{floor}",
+    popup: "Name: {NAME}<br />Number of floors: {floor}",
     symbol: {
       type: "polygonP",
       styleOptions: {
-        // 单体化默认显示样式
+        //Single default display style
         color: "rgba(255, 255, 255, 0.01)",
         clampToGround: true,
         classification: true,
         buffer: 2,
-        // 单体化鼠标移入或单击后高亮的样式
+        // Singletify the style highlighted after the mouse is moved or clicked
         highlight: {
           // type: mars3d.EventType.click,
           color: "rgba(255,255,0,0.4)"
@@ -74,21 +74,21 @@ function addWfsLayer() {
   })
   map.addLayer(wfsLayer)
 
-  // 单体化图层【也支持arcgis的wfs服务配置dth属性】
+  // Single layer [also supports arcgis's wfs service configuration dth attribute]
   //  let wfsLayer = new mars3d.layer.ArcGisWfsLayer({
-  //   name: "建筑物面矢量图层",
+  // name: "Building Floor Vector Layer",
   //   url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/37",
   //   minimumLevel: 15,
   //   debuggerTileInfo: false,
-  //   popup: "名称：{NAME}<br />层数：{floor}",
+  // popup: "Name: {NAME}<br />Number of floors: {floor}",
   //   symbol: {
   //     type: "polygonP",
   //     styleOptions: {
-  //       // 单体化默认显示样式
+  // // Single default display style
   //       color: "rgba(255, 255, 255, 0.01)",
   //       clampToGround: true,
   //       classification: true,
-  //       // 单体化鼠标移入或单击后高亮的样式
+  // // Singletify the style highlighted after the mouse is moved or clicked
   //       highlight: {
   //         // type: mars3d.EventType.click,
   //         color: "rgba(255,255,0,0.4)"

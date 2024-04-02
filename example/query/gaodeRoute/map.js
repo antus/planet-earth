@@ -1,31 +1,31 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-let routeLayer // 矢量数据图层
-let gaodeRoute // 高德 路径规划
+var map // mars3d.Map three-dimensional map object
+let routeLayer // Vector data layer
+let gaodeRoute // Gaode path planning
 
-// 当前页面业务相关
+// Current page business related
 let startGraphic, endGraphic
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.797919, lng: 117.281329, alt: 36236, heading: 358, pitch: -81 }
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   routeLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(routeLayer)
 
@@ -33,23 +33,23 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 开始分析按钮
+//Start analysis button
 function btnAnalyse(type) {
   if (!startGraphic || !endGraphic) {
-    globalMsg("请设置起点和终点")
+    globalMsg("Please set the starting point and end point")
     return
   }
   queryRoute(type)
 }
 
-// 清除按钮
+// clear button
 function removeAll() {
   if (startGraphic) {
     startGraphic.remove()
@@ -64,10 +64,10 @@ function removeAll() {
 }
 
 /**
- * 起点按钮
+ * Start button
  *
  * @export
- * @param {number} type 不同方式路线查询
+ * @param {number} type Route query in different ways
  * @returns {string}
  */
 function startPoint(type) {
@@ -89,7 +89,7 @@ function startPoint(type) {
       startGraphic = graphic
       const point = graphic.point
       point.format()
-      // 触发自定义事件，改变输入框的值
+      // Trigger custom events and change the value of the input box
       queryRoute(type)
 
       return point.lng + "," + point.lat
@@ -97,10 +97,10 @@ function startPoint(type) {
 }
 
 /**
- * 终点按钮
+ * End button
  *
  * @export
- * @param {number} type 不同方式路线查询
+ * @param {number} type Route query in different ways
  * @returns {string}
  */
 function endPoint(type) {
@@ -149,7 +149,7 @@ function queryRoute(type) {
 
       const time = mars3d.Util.formatTime(firstItem.allDuration)
       const distance = mars3d.MeasureUtil.formatDistance(firstItem.allDistance)
-      const html = "<div>总距离：" + distance + "<br/>所需时间：" + time + "</div>"
+      const html = "<div>Total distance:" + distance + "<br/>Time required:" + time + "</div>"
 
       const graphic = new mars3d.graphic.PolylineEntity({
         positions: points,
@@ -180,12 +180,12 @@ function queryRoute(type) {
   })
 }
 
-// 点击保存GeoJSON
+// Click to save GeoJSON
 function saveGeoJSON() {
   if (routeLayer.length === 0) {
-    globalMsg("当前没有标注任何数据，无需保存！")
+    globalMsg("No data is currently marked, no need to save!")
     return
   }
   const geojson = routeLayer.toGeoJSON()
-  mars3d.Util.downloadFile("导航路径.json", JSON.stringify(geojson))
+  mars3d.Util.downloadFile("Navigation path.json", JSON.stringify(geojson))
 }

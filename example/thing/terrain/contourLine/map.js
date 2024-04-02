@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let contourLine
 
 var mapOptions = {
@@ -21,20 +21,20 @@ var mapOptions = {
 var eventTabel = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   addContourLine()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -47,9 +47,9 @@ function addContourLine() {
     color: "rgba(255,0,0,0.8)",
     minHeight: -414.0,
     maxHeight: 8777.0,
-    shadingAlpha: 0.6, /// 地表渲染的透明度
+    shadingAlpha: 0.6, /// Transparency of surface rendering
     colorScheme: {
-      // 地表渲染的配色方案
+      // Color scheme for surface rendering
       elevation: {
         step: [0.0, 0.045, 0.1, 0.15, 0.37, 0.54, 1.0],
         color: ["#000000", "#2747E0", "#D33B7D", "#D33038", "#FF9742", "#FF9742", "#ffd700"]
@@ -66,7 +66,7 @@ function addContourLine() {
   })
   map.addThing(contourLine)
 
-  // 演示的示例区域
+  // Sample area for demonstration
   const areaItem = contourLine.addArea([
     [116.003125, 30.948354, 1103.66],
     [116.23964, 30.946376, 563.02],
@@ -76,7 +76,7 @@ function addContourLine() {
   addTableItem(areaItem)
 }
 
-// 添加矩形
+// add rectangle
 function btnDrawExtent() {
   map.graphicLayer.startDraw({
     type: "rectangle",
@@ -86,11 +86,11 @@ function btnDrawExtent() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       let positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       positions = mars3d.PointUtil.setPositionsHeight(positions, 0)
       const areaItem = contourLine.addArea(positions)
@@ -99,7 +99,7 @@ function btnDrawExtent() {
   })
 }
 
-// 添加多边形
+//Add polygon
 function btnDraw() {
   map.graphicLayer.startDraw({
     type: "polygon",
@@ -109,11 +109,11 @@ function btnDraw() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       let positions = graphic.positionsShow
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       positions = mars3d.PointUtil.setPositionsHeight(positions, 0)
       const areaItem = contourLine.addArea(positions)
@@ -122,13 +122,13 @@ function btnDraw() {
   })
 }
 
-// 清除
+// clear
 function clearAll() {
   contourLine.clear()
   table = []
 }
 
-// 滑动条控制
+// Slider control
 function changeWidth(val) {
   if (val) {
     contourLine.width = val
@@ -141,30 +141,30 @@ function changeSpacing(val) {
   }
 }
 
-// 改变颜色
+// change color
 function changeColor(val) {
   contourLine.color = Cesium.Color.fromCssColorString(val)
 }
 
-// 等高线控制
+//Contour control
 function showDengGX(val) {
   contourLine.contourShow = val
 }
 
-// 状态控制
+// state control
 function chkClippingPlanes(val) {
   contourLine.showElseArea = val
 }
 
-// 阴影控制
+//Shadow control
 function changeShadingType(val) {
   contourLine.shadingType = val
 }
 
 let table = []
-// 区域表格添加一行记录
+//Add a row of records to the area table
 function addTableItem(item) {
-  table.push({ key: item.id, name: "区域" + item.id })
+  table.push({ key: item.id, name: "area" + item.id })
   const tableItem = { key: item.id, table }
   eventTabel.fire("tableObject", { tableItem })
 }
@@ -172,7 +172,7 @@ function changeTable(data) {
   table = data
 }
 
-// 表格操作
+// table operations
 function flyToGraphic(item) {
   const graphic = contourLine.getAreaById(item)
   map.flyToPositions(graphic.positions)

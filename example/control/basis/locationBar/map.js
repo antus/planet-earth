@@ -1,53 +1,53 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = function (option) {
   option.control = {
-    locationBar: false // 当前演示的示例控件-比例尺控件
+    locationBar: false // Currently demonstrated sample control - scale bar control
   }
   return option
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件)
+  // Method 2: After creating the earth, call addControl on demand (directly new the control corresponding to the type type)
   const locationBar = new mars3d.control.LocationBar({
     template:
-      "<div>经度:{lng}</div><div>纬度:{lat}</div> <div>海拔：{alt}米</div> <div>层级：{level}</div><div>方向：{heading}度</div> <div>俯仰角：{pitch}度</div><div>视高：{cameraHeight}米</div><div>帧率：{fps} FPS</div>"
+      "<div>Longitude: {lng}</div><div>Latitude: {lat}</div> <div>Altitude: {alt} meters</div> <div>Level: {level}</div> <div>Direction: {heading} degrees</div> <div>Pitch angle: {pitch} degrees</div><div>View height: {cameraHeight} meters</div><div>Frame rate: {fps} FPS</div>"
     // template: function (locationData) {
     //   let pitch
     //   if (locationData.pitch < 0) {
-    //     pitch = "俯视:" + -locationData.pitch
+    // pitch = "Looking down:" + -locationData.pitch
     //   } else {
-    //     pitch = "仰视:" + locationData.pitch
+    // pitch = "Looking up:" + locationData.pitch
     //   }
 
     //   const dfmX = mars3d.PointTrans.degree2dms(locationData.lng).str
     //   const dfmY = mars3d.PointTrans.degree2dms(locationData.lat).str
 
-    //   return ` <div>经度:${locationData.lat} , ${dfmY}</div>
-    //           <div>纬度:${locationData.lng} , ${dfmX}</div>
-    //           <div>海拔：${locationData.alt}米</div>
-    //           <div>方向：${locationData.heading}度</div>
-    //           <div>${pitch}度</div>
-    //           <div>视高：${locationData.cameraHeight}米</div>`
+    // return ` <div>Longitude:${locationData.lat} , ${dfmY}</div>
+    // <div>Latitude:${locationData.lng}, ${dfmX}</div>
+    // <div>Altitude: ${locationData.alt} meters</div>
+    // <div>Direction: ${locationData.heading} degrees</div>
+    // <div>${pitch}degree</div>
+    // <div>View height: ${locationData.cameraHeight} meters</div>`
     // }
   })
   map.addControl(locationBar)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

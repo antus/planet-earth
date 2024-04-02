@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   control: {
     homeButton: {
@@ -19,53 +19,53 @@ var mapOptions = {
     vrButton: true,
     geocoder: "gaode",
     baseLayerPicker: true,
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
     distanceLegend: { left: "100px", bottom: "25px" },
     compass: { top: "10px", left: "5px" }
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map = mapInstance // record map
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
   const control = map.getControl("navigationHelpButton", "type")
   control.on(mars3d.EventType.click, function (event) {
-    console.log("您单击了帮助按钮", event)
+    console.log("You clicked the help button", event)
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 按钮
+// button
 function bindPOI(val) {
   map.controls.geocoder.show = val
 }
 
-// 视角复位
+//Reset angle of view
 function bindView(val) {
   map.controls.homeButton.show = val
 }
 
-// 基础的地图切换
+//Basic map switching
 function bindBaseLayerPicker(val) {
   map.controls.baseLayerPicker.show = val
 }
 
-// 全屏切换
+// switch to full screen
 function bindFullScreen(val) {
   map.controls.fullscreenButton.show = val
 }
@@ -75,12 +75,12 @@ function bindVR(val) {
   map.controls.vrButton.show = val
 }
 
-// 帮助按钮
+// help button
 function bindHelpButton(val) {
   map.controls.navigationHelpButton.show = val
 }
 
-// 二三维切换
+// Switch between 2D and 3D
 function bindSceneModePicker(val) {
   map.controls.sceneModePicker.show = val
 }
@@ -89,33 +89,33 @@ function bindZoom(val) {
   map.controls.zoom.show = val
 }
 
-// 面板：
-// 信息状态栏
+//Panel:
+//Information status bar
 function bindLocation(val) {
   map.controls.locationBar.show = val
 }
 
-// 时钟
+// clock
 function bindClock(val) {
   map.controls.clockAnimate.show = val
 }
 
-// 时间刻度线
+// time tick mark
 function bindTimeLine(val) {
   map.controls.timeline.show = val
 }
 
-// 导航球
+// Navigation ball
 function bindNav(val) {
   map.controls.compass.show = val
 }
 
-// 比例尺
+//scale
 function bindLegend(val) {
   map.controls.distanceLegend.show = val
 }
 
-// 图层
+//Layer
 function bindLayer(val) {
   document.getElementById("mars-manage-layer-btn").style.display = val ? "inline-block" : "none"
 }

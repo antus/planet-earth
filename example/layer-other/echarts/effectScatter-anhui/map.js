@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 28.348014, lng: 118.789746, alt: 840941, heading: 350, pitch: -66 }
@@ -10,21 +10,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  // 创建Echarts图层
+  // Create Echarts layer
   createEchartsLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -32,111 +32,111 @@ function onUnmounted() {
 
 function createEchartsLayer() {
   const options = getEchartsOption()
-  options.clampToGround = true // 计算贴地高度
+  options.clampToGround = true // Calculate the ground height
   const echartsLayer = new mars3d.layer.EchartsLayer(options)
   map.addLayer(echartsLayer)
 
-  // 图表自适应
+  //Chart adaptive
   window.addEventListener("resize", function () {
     echartsLayer.resize()
   })
 }
 
 /**
- *echart图层
+ *echart layer
  *
- * @return {option} echart图表的数据
+ * @return {option} echart chart data
  */
 function getEchartsOption() {
   const data = [
     {
-      name: "六安市",
+      name: "Lu'an City",
       value: 112,
       location: [116.3123, 31.8329]
     },
     {
-      name: "安庆市",
+      name: "Anqing City",
       value: 424,
       location: [116.7517, 30.5255]
     },
     {
-      name: "滁州市",
+      name: "Chuzhou City",
       value: 76,
       location: [118.1909, 32.536]
     },
     {
-      name: "宣城市",
+      name: "Xuancheng City",
       value: 45,
       location: [118.8062, 30.6244]
     },
     {
-      name: "阜阳市",
+      name: "Fuyang City",
       value: 234,
       location: [115.7629, 32.9919]
     },
     {
-      name: "宿州市",
+      name: "Suzhou City",
       value: 110,
       location: [117.5208, 33.6841]
     },
     {
-      name: "黄山市",
+      name: "Huangshan City",
       value: 98,
       location: [118.0481, 29.9542]
     },
     {
-      name: "巢湖市",
+      name: "Chaohu City",
       value: 71,
       location: [117.7734, 31.4978]
     },
     {
-      name: "亳州市",
+      name: "Bozhou City",
       value: 165,
       location: [116.1914, 33.4698]
     },
     {
-      name: "池州市",
+      name: "Chizhou City",
       value: 12,
       location: [117.3889, 30.2014]
     },
     {
-      name: "合肥市",
+      name: "Hefei City",
       value: 232,
       location: [117.29, 32.0581]
     },
     {
-      name: "蚌埠市",
+      name: "Bengbu City",
       value: 123,
       location: [117.4109, 33.1073]
     },
     {
-      name: "芜湖市",
+      name: "Wuhu City",
       value: 73,
       location: [118.3557, 31.0858]
     },
     {
-      name: "淮北市",
+      name: "Huaibei City",
       value: 16,
       location: [116.6968, 33.6896]
     },
     {
-      name: "淮南市",
+      name: "Huainan City",
       value: 75,
       location: [116.7847, 32.7722]
     },
     {
-      name: "马鞍山市",
+      name: "Ma'anshan City",
       value: 45,
       location: [118.6304, 31.5363]
     },
     {
-      name: "铜陵市",
+      name: "Tongling City",
       value: 93,
       location: [117.9382, 30.9375]
     }
   ]
 
-  // 纬度做偏移处理,避免重叠
+  //Offset latitude to avoid overlap
   if (data.length > 1) {
     data.sort(function (a, b) {
       return b.location[1] - a.location[1]
@@ -156,7 +156,7 @@ function getEchartsOption() {
       }
 
       if (ispy) {
-        thisItem[1] -= 0.006 // 偏移纬度
+        thisItem[1] -= 0.006 // Offset latitude
       }
     }
   }

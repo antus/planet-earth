@@ -1,11 +1,11 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 事件对象，用于抛出事件给面板
+//Event object, used to throw events to the panel
 var eventTarget = new mars3d.BaseClass()
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = function (option) {
   option.control = {
     timeline: true,
@@ -16,15 +16,15 @@ var mapOptions = function (option) {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 时钟控制（可替代cesium本身的animation）
+  // Clock control (can replace cesium's own animation)
   const clockAnimate = new mars3d.control.ClockAnimate({
     format: "yyyy-MM-dd HH:mm:ss"
   })
@@ -32,7 +32,7 @@ function onMounted(mapInstance) {
 
   clockAnimate.on(mars3d.EventType.click, function (event) {
     if (event.targetType === "label") {
-      console.log("单击了时间文本区域", event)
+      console.log("Clicked the time text area", event)
       const startTime = Cesium.JulianDate.toDate(map.clock.startTime)
       const stopTime = Cesium.JulianDate.toDate(map.clock.stopTime)
       const currentTime = Cesium.JulianDate.toDate(map.clock.currentTime)
@@ -43,8 +43,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

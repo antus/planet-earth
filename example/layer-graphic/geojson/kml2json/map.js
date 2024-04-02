@@ -1,16 +1,16 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.614035, lng: 117.292184, alt: 25686, heading: 0, pitch: -44 }
   },
   layers: [
     {
-      name: "国境线",
+      name: "Borderline",
       type: "kml2json",
       url: "//data.mars3d.cn/file/kml/countryboundary.kml",
       symbol: {
@@ -23,7 +23,7 @@ var mapOptions = {
       show: true
     },
     {
-      name: "省界线",
+      name: "Provincial Boundary Line",
       type: "kml2json",
       url: "//data.mars3d.cn/file/kml/province.kml",
       symbol: {
@@ -41,25 +41,25 @@ var mapOptions = {
 var treeEvent = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
   shoRailway()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// flyTo至目标
+// flyTo to target
 function flyToEntity(entity) {
   map.flyTo(entity)
 }
@@ -72,7 +72,7 @@ function removeLayer() {
   }
 }
 
-// 示例：
+// Example:
 function shoRailway() {
   removeLayer()
 
@@ -85,7 +85,7 @@ function shoRailway() {
         width: 3,
         arcType: Cesium.ArcType.GEODESIC,
         clampToGround: true,
-        // 标记文字
+        // mark text
         label: {
           text: "{name}",
           opacity: 1,
@@ -112,46 +112,46 @@ function shoRailway() {
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
 
     const data = event.list
     treeEvent.fire("tree", { treeData: data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 示例：
+// Example:
 function showExpressway() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.Kml2JsonLayer({
-    name: "路线",
+    name: "route",
     url: "//data.mars3d.cn/file/kml/bslx.kmz",
     popup: "all",
     flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
     const data = event.list
     treeEvent.fire("tree", { treeData: data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 示例：
+// Example:
 function showSafetyNotice() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.Kml2JsonLayer({
-    name: "海上安全警告",
+    name: "Maritime Safety Warning",
     url: "//data.mars3d.cn/file/kml/NAVWARN.kmz",
     symbol: function (attr, style, featue) {
       const geoType = featue.geometry?.type
@@ -182,23 +182,23 @@ function showSafetyNotice() {
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
     const data = event.list
     treeEvent.fire("tree", { treeData: data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 示例：
+// Example:
 function showMeteorological() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.Kml2JsonLayer({
-    name: "气象数据",
+    name: "Weather data",
     url: "//data.mars3d.cn/file/kml/dg8.kml",
     opacity: 0.7,
     popup: "all",
@@ -206,29 +206,29 @@ function showMeteorological() {
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
     const data = event.list
     treeEvent.fire("tree", { treeData: data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 示例：
+// Example:
 function showGDP() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.Kml2JsonLayer({
-    name: "全球各国GDP",
+    name: "GDP of all countries around the world",
     url: "//data.mars3d.cn/file/kml/gdpPerCapita2008.kmz",
     symbol: function (attr, style, featue) {
       const geoType = featue.geometry?.type
       if (geoType === "Point") {
         return {
-          type: "label", // 指定用label渲染。
+          type: "label", // Specify label rendering.
           text: attr.name,
           font_size: 18,
           color: "#ffffff",
@@ -248,13 +248,13 @@ function showGDP() {
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (event) {
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
     const data = event.list
     treeEvent.fire("tree", { treeData: data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }

@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport"
     content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-  <meta name="author" content="火星科技 http://mars3d.cn " />
+  <meta name="author" content="Mars Technology http://mars3d.cn " />
   <meta name="apple-touch-fullscreen" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -13,15 +13,15 @@
   <meta name="x5-fullscreen" content="true" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <!-- Title and search keywords -->
+  <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
   <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework three-dimensional earth model gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming Geographic Information System Cloud GIS 3D GIS GIS Platform WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
-  <title>立体建筑物GeoJson图层 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+  <title>Three-dimensional building GeoJson layer | Mars3D | 3D map | Mars Technology | Hefei Mars Technology Co., Ltd.</title>
 
-  <!--第三方lib-->
+  <!--Third-party lib-->
   <script type="text/javascript" src="/lib/include-lib.js" libpath="/lib/"
     include="jquery,layer,toastr,web-icons,bootstrap,layer,toastr,nprogress,haoutil,echarts,mars3d"></script>
 
@@ -35,25 +35,25 @@
 <body class="dark">
   <div id="mars3dContainer" class="mars3d-container"></div>
 
-  <!-- 右侧图表面板-->
+  <!-- Chart panel on the right-->
   <div class="achart_container">
     <div class="right_item">
       <div class="_item_top">
-        <div class="_item_title">接入建筑栋数</div>
+        <div class="_item_title">Number of connected buildings</div>
       </div>
       <div class="_item_row _item_full_box_width justify-between">
         <div class="row1 flex-1">
-          <img src="./img/icon/监测建筑.png" alt="" class="icon" />
+          <img src="./img/icon/monitoring building.png" alt="" class="icon" />
           <div class="row1_right">
             <div class="right_title">87</div>
-            <div class="right_sub_title">监测建筑</div>
+            <div class="right_sub_title">Monitoring buildings</div>
           </div>
         </div>
         <div class="row1 flex-1 ml">
-          <img src="./img/icon/监测面积.png" alt="" class="icon" />
+          <img src="./img/icon/monitoring area.png" alt="" class="icon" />
           <div class="row1_right">
             <div class="right_title">2021</div>
-            <div class="right_sub_title">监测面积(万m²)</div>
+            <div class="right_sub_title">Monitoring area (10,000 m²)</div>
           </div>
         </div>
       </div>
@@ -67,12 +67,12 @@
         </div>
         <div class="row2 flex items-center">
           <div class="_item_row_box2">
-            <div class="box2_item" count="64">办公建筑</div>
-            <div class="box2_item1" count="1">综合建筑</div>
-            <div class="box2_item2" count="4">商场建筑</div>
-            <div class="box2_item3" count="10">宾馆饭店</div>
-            <div class="box2_item4" count="1">医疗卫生</div>
-            <div class="box2_item5" count="1">文化教育</div>
+            <div class="box2_item" count="64">Office building</div>
+            <div class="box2_item1" count="1">Comprehensive building</div>
+            <div class="box2_item2" count="4">Shopping mall building</div>
+            <div class="box2_item3" count="10">Hotels</div>
+            <div class="box2_item4" count="1">Medical and health</div>
+            <div class="box2_item5" count="1">Cultural education</div>
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@
     <div class="right_item bg">
       <div class="right_item">
         <div class="_item_top">
-          <div class="_item_title">各类建筑接入情况</div>
+          <div class="_item_title">Access status of various buildings</div>
         </div>
         <div class="_item_full_box">
           <div class="bar">
@@ -92,7 +92,7 @@
     <div class="right_item bg">
       <div class="right_item">
         <div class="_item_top">
-          <div class="_item_title">能耗趋势</div>
+          <div class="_item_title">Energy consumption trends</div>
         </div>
         <div class="_item_full_box">
           <div class="bar">
@@ -106,7 +106,7 @@
   <script src="/js/common.js"></script>
   <script src="./map.js"></script>
   <script type="text/javascript">
-    "use script" //开发环境建议开启严格模式
+    "use script" //It is recommended to turn on strict mode in the development environment
 
     function initUI() {
       initEcharts()

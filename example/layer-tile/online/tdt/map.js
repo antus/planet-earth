@@ -1,20 +1,20 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-const creditHtml = `自然资源部 - <span>审图号：GS(2023)336号</span>
- - 甲测资字1100471 - <a href="https://www.tianditu.gov.cn/about/contact.html?type=2" target="_blank" trace="tos">服务条款</a> `
+const creditHtml = `Ministry of Natural Resources - <span>Plan Approval Number: GS(2023) No. 336</span>
+ - A test qualification number 1100471 - <a href="https://www.tianditu.gov.cn/about/contact.html?type=2" target="_blank" trace="tos">Terms of Service</a > `
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.675177, lng: 117.323257, alt: 81193, heading: 359, pitch: -79 },
     highDynamicRange: false
   },
-  // 方式1：在创建地球前的参数中配置
+  // Method 1: Configure in the parameters before creating the earth
   basemaps: [
     {
-      name: "天地图影像(EPSG:3857)",
+      name: "Heaven Map Image(EPSG:3857)",
       icon: "img/basemaps/tdt_img.png",
       type: "tdt",
       layer: "img_d",
@@ -23,27 +23,27 @@ var mapOptions = {
       credit: creditHtml
     },
     {
-      name: "天地图电子(EPSG:3857)",
+      name: "Tiantu Electronics (EPSG:3857)",
       icon: "img/basemaps/tdt_vec.png",
       type: "group",
       layers: [
-        { name: "底图", type: "tdt", layer: "vec_d", key: mars3d.Token.tiandituArr },
-        { name: "注记", type: "tdt", layer: "vec_z", key: mars3d.Token.tiandituArr }
+        { name: "basemap", type: "tdt", layer: "vec_d", key: mars3d.Token.tiandituArr },
+        { name: "note", type: "tdt", layer: "vec_z", key: mars3d.Token.tiandituArr }
       ],
       credit: creditHtml
     },
     {
-      name: "天地图地形(EPSG:3857)",
+      name: "Tiantu Terrain (EPSG:3857)",
       icon: "img/basemaps/tdt_ter.png",
       type: "group",
       layers: [
-        { name: "底图", type: "tdt", layer: "ter_d", key: mars3d.Token.tiandituArr },
+        { name: "basemap", type: "tdt", layer: "ter_d", key: mars3d.Token.tiandituArr },
         {
-          name: "注记",
+          name: "note",
           type: "tdt",
           layer: "ter_z",
           key: mars3d.Token.tiandituArr,
-          // 表示缩小和放大瓦片数据的过滤方式。默认值为LINEAR线性结构，大部分地图调整为最近方式过滤能够有效提升地图清晰度。
+          // Represents the filtering method for reducing and enlarging tile data. The default value is LINEAR linear structure. Adjusting most maps to nearest filtering can effectively improve map clarity.
           minificationFilter: Cesium.TextureMinificationFilter.NEAREST,
           magnificationFilter: Cesium.TextureMinificationFilter.NEAREST
         }
@@ -51,19 +51,19 @@ var mapOptions = {
       credit: creditHtml
     },
     {
-      name: "天地图影像(EPSG:4326)",
+      name: "Heaven Map Image(EPSG:4326)",
       icon: "img/basemaps/tdt_img.png",
       type: "group",
       layers: [
         {
-          name: "底图",
+          name: "basemap",
           type: "tdt",
           layer: "img_d",
           crs: "EPSG:4326",
           key: mars3d.Token.tiandituArr
         },
         {
-          name: "注记",
+          name: "note",
           type: "tdt",
           layer: "img_z",
           crs: "EPSG:4326",
@@ -73,19 +73,19 @@ var mapOptions = {
       credit: creditHtml
     },
     {
-      name: "天地图电子(EPSG:4326)",
+      name: "Tiantu Electronics (EPSG:4326)",
       icon: "img/basemaps/tdt_vec.png",
       type: "group",
       layers: [
         {
-          name: "底图",
+          name: "basemap",
           type: "tdt",
           layer: "vec_d",
           crs: "EPSG:4326",
           key: mars3d.Token.tiandituArr
         },
         {
-          name: "注记",
+          name: "note",
           type: "tdt",
           layer: "vec_z",
           crs: "EPSG:4326",
@@ -95,19 +95,19 @@ var mapOptions = {
       credit: creditHtml
     },
     {
-      name: "天地图地形(EPSG:4326)",
+      name: "Topography of the sky (EPSG:4326)",
       icon: "img/basemaps/tdt_ter.png",
       type: "group",
       layers: [
         {
-          name: "底图",
+          name: "basemap",
           type: "tdt",
           layer: "ter_d",
           crs: "EPSG:4326",
           key: mars3d.Token.tiandituArr
         },
         {
-          name: "注记",
+          name: "note",
           type: "tdt",
           layer: "ter_z",
           crs: "EPSG:4326",
@@ -118,64 +118,64 @@ var mapOptions = {
     },
 
     {
-      name: "天地图影像(英文)",
+      name: "Heavenly Map Image (English)",
       icon: "img/basemaps/tdt_img.png",
       type: "group",
       layers: [
-        { name: "底图", type: "tdt", layer: "img_d", key: mars3d.Token.tiandituArr },
-        { name: "底图", type: "tdt", layer: "img_e", key: mars3d.Token.tiandituArr }
+        { name: "basemap", type: "tdt", layer: "img_d", key: mars3d.Token.tiandituArr },
+        { name: "basemap", type: "tdt", layer: "img_e", key: mars3d.Token.tiandituArr }
       ],
       credit: creditHtml
     },
     {
-      name: "天地图电子(英文)",
+      name: "Tiantu Electronics (English)",
       icon: "img/basemaps/tdt_vec.png",
       type: "group",
       layers: [
-        { name: "底图", type: "tdt", layer: "vec_d", key: mars3d.Token.tiandituArr },
-        { name: "底图", type: "tdt", layer: "vec_e", key: mars3d.Token.tiandituArr }
+        { name: "basemap", type: "tdt", layer: "vec_d", key: mars3d.Token.tiandituArr },
+        { name: "basemap", type: "tdt", layer: "vec_e", key: mars3d.Token.tiandituArr }
       ],
       credit: creditHtml
     }
   ]
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
   addCreditDOM()
 
-  // 三维文字注记不清晰的原因：https://zhuanlan.zhihu.com/p/389945647
+  //The reason why the three-dimensional text annotation is not clear: https://zhuanlan.zhihu.com/p/389945647
 
-  // 数值越高，性能越好，但视觉质量越差。默认值为2。
-  // 针对不同的地图数据源，该值在 0.66~1.33 之间地图清晰度最高。
+  // The higher the number, the better the performance, but the worse the visual quality. The default value is 2.
+  // For different map data sources, the value between 0.66~1.33 has the highest map clarity.
   map.scene.globe.maximumScreenSpaceError = 4 / 3
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   removeCreditDOM()
   map = null
 }
 
-// 叠加的图层
+// overlaid layers
 let tileLayer
 function addTileLayer() {
   removeTileLayer()
 
-  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  // Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
   tileLayer = new mars3d.layer.TdtLayer({
-    name: "天地图影像注记",
+    name: "Tiantu Image Annotation",
     layer: "img_z",
     key: mars3d.Token.tiandituArr
   })
@@ -189,7 +189,7 @@ function removeTileLayer() {
   }
 }
 
-// 在下侧状态栏增加一个额外div展示图层版权信息
+//Add an additional div to the lower status bar to display layer copyright information
 let creditDOM
 function addCreditDOM() {
   const locationBar = map.controls.locationBar?.container

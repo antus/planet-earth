@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 20.71756, lng: 111.57217, alt: 5902792, heading: 354, pitch: -78 }
@@ -10,21 +10,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  // 创建Echarts图层
+  // Create Echarts layer
   createEchartsLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -32,974 +32,974 @@ function onUnmounted() {
 
 function createEchartsLayer() {
   const options = getEchartsOption()
-  options.clampToGround = true // 计算贴地高度
+  options.clampToGround = true // Calculate the ground height
   const echartsLayer = new mars3d.layer.EchartsLayer(options)
   map.addLayer(echartsLayer)
 
-  // 图表自适应
+  //Chart adaptive
   window.addEventListener("resize", function () {
     echartsLayer.resize()
   })
 }
 
 /**
- *echart图层
+ *echart layer
  *
- * @return {option} echart图表的数据
+ * @return {option} echart chart data
  */
 function getEchartsOption() {
   const geoCoordMap = {
-    海门: [121.15, 31.89],
-    鄂尔多斯: [109.781327, 39.608266],
-    招远: [120.38, 37.35],
-    舟山: [122.207216, 29.985295],
-    齐齐哈尔: [123.97, 47.33],
-    盐城: [120.13, 33.38],
-    赤峰: [118.87, 42.28],
-    青岛: [120.33, 36.07],
-    乳山: [121.52, 36.89],
-    金昌: [102.188043, 38.520089],
-    泉州: [118.58, 24.93],
-    莱西: [120.53, 36.86],
-    日照: [119.46, 35.42],
-    胶南: [119.97, 35.88],
-    南通: [121.05, 32.08],
-    拉萨: [91.11, 29.97],
-    云浮: [112.02, 22.93],
-    梅州: [116.1, 24.55],
-    文登: [122.05, 37.2],
-    上海: [121.48, 31.22],
-    攀枝花: [101.718637, 26.582347],
-    威海: [122.1, 37.5],
-    承德: [117.93, 40.97],
-    厦门: [118.1, 24.46],
-    汕尾: [115.375279, 22.786211],
-    潮州: [116.63, 23.68],
-    丹东: [124.37, 40.13],
-    太仓: [121.1, 31.45],
-    曲靖: [103.79, 25.51],
-    烟台: [121.39, 37.52],
-    福州: [119.3, 26.08],
-    瓦房店: [121.979603, 39.627114],
-    即墨: [120.45, 36.38],
-    抚顺: [123.97, 41.97],
-    玉溪: [102.52, 24.35],
-    张家口: [114.87, 40.82],
-    阳泉: [113.57, 37.85],
-    莱州: [119.942327, 37.177017],
-    湖州: [120.1, 30.86],
-    汕头: [116.69, 23.39],
-    昆山: [120.95, 31.39],
-    宁波: [121.56, 29.86],
-    湛江: [110.359377, 21.270708],
-    揭阳: [116.35, 23.55],
-    荣成: [122.41, 37.16],
-    连云港: [119.16, 34.59],
-    葫芦岛: [120.836932, 40.711052],
-    常熟: [120.74, 31.64],
-    东莞: [113.75, 23.04],
-    河源: [114.68, 23.73],
-    淮安: [119.15, 33.5],
-    泰州: [119.9, 32.49],
-    南宁: [108.33, 22.84],
-    营口: [122.18, 40.65],
-    惠州: [114.4, 23.09],
-    江阴: [120.26, 31.91],
-    蓬莱: [120.75, 37.8],
-    韶关: [113.62, 24.84],
-    嘉峪关: [98.289152, 39.77313],
-    广州: [113.23, 23.16],
-    延安: [109.47, 36.6],
-    太原: [112.53, 37.87],
-    清远: [113.01, 23.7],
-    中山: [113.38, 22.52],
-    昆明: [102.73, 25.04],
-    寿光: [118.73, 36.86],
-    盘锦: [122.070714, 41.119997],
-    长治: [113.08, 36.18],
-    深圳: [114.07, 22.62],
-    珠海: [113.52, 22.3],
-    宿迁: [118.3, 33.96],
-    咸阳: [108.72, 34.36],
-    铜川: [109.11, 35.09],
-    平度: [119.97, 36.77],
-    佛山: [113.11, 23.05],
-    海口: [110.35, 20.02],
-    江门: [113.06, 22.61],
-    章丘: [117.53, 36.72],
-    肇庆: [112.44, 23.05],
-    大连: [121.62, 38.92],
-    临汾: [111.5, 36.08],
-    吴江: [120.63, 31.16],
-    石嘴山: [106.39, 39.04],
-    沈阳: [123.38, 41.8],
-    苏州: [120.62, 31.32],
-    茂名: [110.88, 21.68],
-    嘉兴: [120.76, 30.77],
-    长春: [125.35, 43.88],
-    胶州: [120.03336, 36.264622],
-    银川: [106.27, 38.47],
-    张家港: [120.555821, 31.875428],
-    三门峡: [111.19, 34.76],
-    锦州: [121.15, 41.13],
-    南昌: [115.89, 28.68],
-    柳州: [109.4, 24.33],
-    三亚: [109.511909, 18.252847],
-    自贡: [104.778442, 29.33903],
-    吉林: [126.57, 43.87],
-    阳江: [111.95, 21.85],
-    泸州: [105.39, 28.91],
-    西宁: [101.74, 36.56],
-    宜宾: [104.56, 29.77],
-    呼和浩特: [111.65, 40.82],
-    成都: [104.06, 30.67],
-    大同: [113.3, 40.12],
-    镇江: [119.44, 32.2],
-    桂林: [110.28, 25.29],
-    张家界: [110.479191, 29.117096],
-    宜兴: [119.82, 31.36],
-    北海: [109.12, 21.49],
-    西安: [108.95, 34.27],
-    金坛: [119.56, 31.74],
-    东营: [118.49, 37.46],
-    牡丹江: [129.58, 44.6],
-    遵义: [106.9, 27.7],
-    绍兴: [120.58, 30.01],
-    扬州: [119.42, 32.39],
-    常州: [119.95, 31.79],
-    潍坊: [119.1, 36.62],
-    重庆: [106.54, 29.59],
-    台州: [121.420757, 28.656386],
-    南京: [118.78, 32.04],
-    滨州: [118.03, 37.36],
-    贵阳: [106.71, 26.57],
-    无锡: [120.29, 31.59],
-    本溪: [123.73, 41.3],
-    克拉玛依: [84.77, 45.59],
-    渭南: [109.5, 34.52],
-    马鞍山: [118.48, 31.56],
-    宝鸡: [107.15, 34.38],
-    焦作: [113.21, 35.24],
-    句容: [119.16, 31.95],
-    北京: [116.46, 39.92],
-    徐州: [117.2, 34.26],
-    衡水: [115.72, 37.72],
-    包头: [110, 40.58],
-    绵阳: [104.73, 31.48],
-    乌鲁木齐: [87.68, 43.77],
-    枣庄: [117.57, 34.86],
-    杭州: [120.19, 30.26],
-    淄博: [118.05, 36.78],
-    鞍山: [122.85, 41.12],
-    溧阳: [119.48, 31.43],
-    库尔勒: [86.06, 41.68],
-    安阳: [114.35, 36.1],
-    开封: [114.35, 34.79],
-    济南: [117, 36.65],
-    德阳: [104.37, 31.13],
-    温州: [120.65, 28.01],
-    九江: [115.97, 29.71],
-    邯郸: [114.47, 36.6],
-    临安: [119.72, 30.23],
-    兰州: [103.73, 36.03],
-    沧州: [116.83, 38.33],
-    临沂: [118.35, 35.05],
-    南充: [106.110698, 30.837793],
-    天津: [117.2, 39.13],
-    富阳: [119.95, 30.07],
-    泰安: [117.13, 36.18],
-    诸暨: [120.23, 29.71],
-    郑州: [113.65, 34.76],
-    哈尔滨: [126.63, 45.75],
-    聊城: [115.97, 36.45],
-    芜湖: [118.38, 31.33],
-    唐山: [118.02, 39.63],
-    平顶山: [113.29, 33.75],
-    邢台: [114.48, 37.05],
-    德州: [116.29, 37.45],
-    济宁: [116.59, 35.38],
-    荆州: [112.239741, 30.335165],
-    宜昌: [111.3, 30.7],
-    义乌: [120.06, 29.32],
-    丽水: [119.92, 28.45],
-    洛阳: [112.44, 34.7],
-    秦皇岛: [119.57, 39.95],
-    株洲: [113.16, 27.83],
-    石家庄: [114.48, 38.03],
-    莱芜: [117.67, 36.19],
-    常德: [111.69, 29.05],
-    保定: [115.48, 38.85],
-    湘潭: [112.91, 27.87],
-    金华: [119.64, 29.12],
-    岳阳: [113.09, 29.37],
-    长沙: [113, 28.21],
-    衢州: [118.88, 28.97],
-    廊坊: [116.7, 39.53],
-    菏泽: [115.480656, 35.23375],
-    合肥: [117.27, 31.86],
-    武汉: [114.31, 30.52],
-    大庆: [125.03, 46.58]
+    Haimen: [121.15, 31.89],
+    Ordos: [109.781327, 39.608266],
+    Zhaoyuan: [120.38, 37.35],
+    Zhoushan: [122.207216, 29.985295],
+    Qiqihar: [123.97, 47.33],
+    Yancheng: [120.13, 33.38],
+    Chifeng: [118.87, 42.28],
+    Qingdao: [120.33, 36.07],
+    Rushan: [121.52, 36.89],
+    Jinchang: [102.188043, 38.520089],
+    Quanzhou: [118.58, 24.93],
+    Lacey: [120.53, 36.86],
+    Rizhao: [119.46, 35.42],
+    Jiaonan: [119.97, 35.88],
+    Nantong: [121.05, 32.08],
+    Lhasa: [91.11, 29.97],
+    Yunfu: [112.02, 22.93],
+    Meizhou: [116.1, 24.55],
+    Wen Deng: [122.05, 37.2],
+    Shanghai: [121.48, 31.22],
+    Panzhihua: [101.718637, 26.582347],
+    Weihai: [122.1, 37.5],
+    Chengde: [117.93, 40.97],
+    Xiamen: [118.1, 24.46],
+    Shanwei: [115.375279, 22.786211],
+    Chaozhou: [116.63, 23.68],
+    Dandong: [124.37, 40.13],
+    Taicang: [121.1, 31.45],
+    Qujing: [103.79, 25.51],
+    Yantai: [121.39, 37.52],
+    Fuzhou: [119.3, 26.08],
+    Wafangdian: [121.979603, 39.627114],
+    Jimo: [120.45, 36.38],
+    Fushun: [123.97, 41.97],
+    Yuxi: [102.52, 24.35],
+    Zhangjiakou: [114.87, 40.82],
+    Yangquan: [113.57, 37.85],
+    Laizhou: [119.942327, 37.177017],
+    Huzhou: [120.1, 30.86],
+    Shantou: [116.69, 23.39],
+    Kunshan: [120.95, 31.39],
+    Ningbo: [121.56, 29.86],
+    Zhanjiang: [110.359377, 21.270708],
+    Jieyang: [116.35, 23.55],
+    Rongcheng: [122.41, 37.16],
+    Lianyungang: [119.16, 34.59],
+    Huludao: [120.836932, 40.711052],
+    Changshu: [120.74, 31.64],
+    Dongguan: [113.75, 23.04],
+    Heyuan: [114.68, 23.73],
+    Huai'an: [119.15, 33.5],
+    Taizhou: [119.9, 32.49],
+    Nanning: [108.33, 22.84],
+    Yingkou: [122.18, 40.65],
+    Huizhou: [114.4, 23.09],
+    Jiangyin: [120.26, 31.91],
+    Penglai: [120.75, 37.8],
+    Shaoguan: [113.62, 24.84],
+    Jiayuguan: [98.289152, 39.77313],
+    Guangzhou: [113.23, 23.16],
+    Yan'an: [109.47, 36.6],
+    Taiyuan: [112.53, 37.87],
+    Qingyuan: [113.01, 23.7],
+    Zhongshan: [113.38, 22.52],
+    Kunming: [102.73, 25.04],
+    Shouguang: [118.73, 36.86],
+    Panjin: [122.070714, 41.119997],
+    Changzhi: [113.08, 36.18],
+    Shenzhen: [114.07, 22.62],
+    Zhuhai: [113.52, 22.3],
+    Suqian: [118.3, 33.96],
+    Xianyang: [108.72, 34.36],
+    Tongchuan: [109.11, 35.09],
+    Flatness: [119.97, 36.77],
+    Foshan: [113.11, 23.05],
+    Haikou: [110.35, 20.02],
+    Jiangmen: [113.06, 22.61],
+    Zhangqiu: [117.53, 36.72],
+    Zhaoqing: [112.44, 23.05],
+    Dalian: [121.62, 38.92],
+    Linfen: [111.5, 36.08],
+    Wujiang: [120.63, 31.16],
+    Shizuishan: [106.39, 39.04],
+    Shenyang: [123.38, 41.8],
+    Suzhou: [120.62, 31.32],
+    Maoming: [110.88, 21.68],
+    Jiaxing: [120.76, 30.77],
+    Changchun: [125.35, 43.88],
+    Jiaozhou: [120.03336, 36.264622],
+    Yinchuan: [106.27, 38.47],
+    Zhangjiagang: [120.555821, 31.875428],
+    Sanmenxia: [111.19, 34.76],
+    Jinzhou: [121.15, 41.13],
+    Nanchang: [115.89, 28.68],
+    Liuzhou: [109.4, 24.33],
+    Sanya: [109.511909, 18.252847],
+    Zigong: [104.778442, 29.33903],
+    Jilin: [126.57, 43.87],
+    Yangjiang: [111.95, 21.85],
+    Luzhou: [105.39, 28.91],
+    Xining: [101.74, 36.56],
+    Yibin: [104.56, 29.77],
+    Hohhot: [111.65, 40.82],
+    Chengdu: [104.06, 30.67],
+    Datong: [113.3, 40.12],
+    Zhenjiang: [119.44, 32.2],
+    Guilin: [110.28, 25.29],
+    Zhangjiajie: [110.479191, 29.117096],
+    Yixing: [119.82, 31.36],
+    Beihai: [109.12, 21.49],
+    Xi'an: [108.95, 34.27],
+    Jintan: [119.56, 31.74],
+    Dongying: [118.49, 37.46],
+    Mudanjiang: [129.58, 44.6],
+    Zunyi: [106.9, 27.7],
+    Shaoxing: [120.58, 30.01],
+    Yangzhou: [119.42, 32.39],
+    Changzhou: [119.95, 31.79],
+    Weifang: [119.1, 36.62],
+    Chongqing: [106.54, 29.59],
+    Taizhou: [121.420757, 28.656386],
+    Nanjing: [118.78, 32.04],
+    Binzhou: [118.03, 37.36],
+    Guiyang: [106.71, 26.57],
+    Wuxi: [120.29, 31.59],
+    Benxi: [123.73, 41.3],
+    Karamay: [84.77, 45.59],
+    Weinan: [109.5, 34.52],
+    Ma'anshan: [118.48, 31.56],
+    Baoji: [107.15, 34.38],
+    Jiaozuo: [113.21, 35.24],
+    Jurong: [119.16, 31.95],
+    Beijing: [116.46, 39.92],
+    Xuzhou: [117.2, 34.26],
+    Hengshui: [115.72, 37.72],
+    Baotou: [110, 40.58],
+    Mianyang: [104.73, 31.48],
+    Urumqi: [87.68, 43.77],
+    Zaozhuang: [117.57, 34.86],
+    Hangzhou: [120.19, 30.26],
+    Zibo: [118.05, 36.78],
+    Anshan: [122.85, 41.12],
+    Liyang: [119.48, 31.43],
+    Korla: [86.06, 41.68],
+    Anyang: [114.35, 36.1],
+    Kaifeng: [114.35, 34.79],
+    Jinan: [117, 36.65],
+    Deyang: [104.37, 31.13],
+    Wenzhou: [120.65, 28.01],
+    Jiujiang: [115.97, 29.71],
+    Handan: [114.47, 36.6],
+    Lin'an: [119.72, 30.23],
+    Lanzhou: [103.73, 36.03],
+    Cangzhou: [116.83, 38.33],
+    Linyi: [118.35, 35.05],
+    Nanchong: [106.110698, 30.837793],
+    Tianjin: [117.2, 39.13],
+    Fuyang: [119.95, 30.07],
+    Tai'an: [117.13, 36.18],
+    Zhuji: [120.23, 29.71],
+    Zhengzhou: [113.65, 34.76],
+    Harbin: [126.63, 45.75],
+    Liaocheng: [115.97, 36.45],
+    Wuhu: [118.38, 31.33],
+    Tangshan: [118.02, 39.63],
+    Pingdingshan: [113.29, 33.75],
+    Xingtai: [114.48, 37.05],
+    Texas: [116.29, 37.45],
+    Jining: [116.59, 35.38],
+    Jingzhou: [112.239741, 30.335165],
+    Yichang: [111.3, 30.7],
+    Yiwu: [120.06, 29.32],
+    Lishui: [119.92, 28.45],
+    Luoyang: [112.44, 34.7],
+    Qinhuangdao: [119.57, 39.95],
+    Zhuzhou: [113.16, 27.83],
+    Shijiazhuang: [114.48, 38.03],
+    Laiwu: [117.67, 36.19],
+    Changde: [111.69, 29.05],
+    Baoding: [115.48, 38.85],
+    Xiangtan: [112.91, 27.87],
+    Jinhua: [119.64, 29.12],
+    Yueyang: [113.09, 29.37],
+    Changsha: [113, 28.21],
+    Quzhou: [118.88, 28.97],
+    Langfang: [116.7, 39.53],
+    Heze: [115.480656, 35.23375],
+    Hefei: [117.27, 31.86],
+    Wuhan: [114.31, 30.52],
+    Daqing: [125.03, 46.58]
   }
 
   const datapoint = [
     {
-      name: "海门",
+      name: "Haimen",
       value: 9
     },
     {
-      name: "鄂尔多斯",
+      name: "Ordos",
       value: 12
     },
     {
-      name: "招远",
+      name: "Zhaoyuan",
       value: 12
     },
     {
-      name: "舟山",
+      name: "Zhoushan",
       value: 12
     },
     {
-      name: "齐齐哈尔",
+      name: "Qiqihar",
       value: 14
     },
     {
-      name: "盐城",
+      name: "Yancheng",
       value: 15
     },
     {
-      name: "赤峰",
+      name: "Chifeng",
       value: 16
     },
     {
-      name: "青岛",
+      name: "Qingdao",
       value: 18
     },
     {
-      name: "乳山",
+      name: "Rushan",
       value: 18
     },
     {
-      name: "金昌",
+      name: "Jinchang",
       value: 19
     },
     {
-      name: "泉州",
+      name: "Quanzhou",
       value: 21
     },
     {
-      name: "莱西",
+      name: "Lacey",
       value: 21
     },
     {
-      name: "日照",
+      name: "Rizhao",
       value: 21
     },
     {
-      name: "胶南",
+      name: "Jiaonan",
       value: 22
     },
     {
-      name: "南通",
+      name: "Nantong",
       value: 23
     },
     {
-      name: "拉萨",
+      name: "Lhasa",
       value: 24
     },
     {
-      name: "云浮",
+      name: "Yunfu",
       value: 24
     },
     {
-      name: "梅州",
+      name: "Meizhou",
       value: 25
     },
     {
-      name: "文登",
+      name: "Wendeng",
       value: 25
     },
     {
-      name: "上海",
+      name: "Shanghai",
       value: 25
     },
     {
-      name: "攀枝花",
+      name: "Panzhihua",
       value: 25
     },
     {
-      name: "威海",
+      name: "Weihai",
       value: 25
     },
     {
-      name: "承德",
+      name: "Chengde",
       value: 25
     },
     {
-      name: "厦门",
+      name: "Xiamen",
       value: 26
     },
     {
-      name: "汕尾",
+      name: "Shantou",
       value: 26
     },
     {
-      name: "潮州",
+      name: "Chaozhou",
       value: 26
     },
     {
-      name: "丹东",
+      name: "Dandong",
       value: 27
     },
     {
-      name: "太仓",
+      name: "Taicang",
       value: 27
     },
     {
-      name: "曲靖",
+      name: "Qujing",
       value: 27
     },
     {
-      name: "烟台",
+      name: "Yantai",
       value: 28
     },
     {
-      name: "福州",
+      name: "Fuzhou",
       value: 29
     },
     {
-      name: "瓦房店",
+      name: "Wafangdian",
       value: 30
     },
     {
-      name: "即墨",
+      name: "Jimo",
       value: 30
     },
     {
-      name: "抚顺",
+      name: "Fushun",
       value: 31
     },
     {
-      name: "玉溪",
+      name: "Yuxi",
       value: 31
     },
     {
-      name: "张家口",
+      name: "Zhangjiakou",
       value: 31
     },
     {
-      name: "阳泉",
+      name: "Yangquan",
       value: 31
     },
     {
-      name: "莱州",
+      name: "Laizhou",
       value: 32
     },
     {
-      name: "湖州",
+      name: "Huzhou",
       value: 32
     },
     {
-      name: "汕头",
+      name: "Shantou",
       value: 32
     },
     {
-      name: "昆山",
+      name: "Kunshan",
       value: 33
     },
     {
-      name: "宁波",
+      name: "Ningbo",
       value: 33
     },
     {
-      name: "湛江",
+      name: "Zhanjiang",
       value: 33
     },
     {
-      name: "揭阳",
+      name: "Jieyang",
       value: 34
     },
     {
-      name: "荣成",
+      name: "Rongcheng",
       value: 34
     },
     {
-      name: "连云港",
+      name: "Lianyungang",
       value: 35
     },
     {
-      name: "葫芦岛",
+      name: "Huludao",
       value: 35
     },
     {
-      name: "常熟",
+      name: "Changshu",
       value: 36
     },
     {
-      name: "东莞",
+      name: "Dongguan",
       value: 36
     },
     {
-      name: "河源",
+      name: "Heyuan",
       value: 36
     },
     {
-      name: "淮安",
+      name: "Huai'an",
       value: 36
     },
     {
-      name: "泰州",
+      name: "Taizhou",
       value: 36
     },
     {
-      name: "南宁",
+      name: "Nanning",
       value: 37
     },
     {
-      name: "营口",
+      name: "Yingkou",
       value: 37
     },
     {
-      name: "惠州",
+      name: "Huizhou",
       value: 37
     },
     {
-      name: "江阴",
+      name: "Jiangyin",
       value: 37
     },
     {
-      name: "蓬莱",
+      name: "Penglai",
       value: 37
     },
     {
-      name: "韶关",
+      name: "Shaoguan",
       value: 38
     },
     {
-      name: "嘉峪关",
+      name: "Jiayuguan",
       value: 38
     },
     {
-      name: "广州",
+      name: "Guangzhou",
       value: 38
     },
     {
-      name: "延安",
+      name: "Yan'an",
       value: 38
     },
     {
-      name: "太原",
+      name: "Taiyuan",
       value: 39
     },
     {
-      name: "清远",
+      name: "Qingyuan",
       value: 39
     },
     {
-      name: "中山",
+      name: "Zhongshan",
       value: 39
     },
     {
-      name: "昆明",
+      name: "Kunming",
       value: 39
     },
     {
-      name: "寿光",
+      name: "Shouguang",
       value: 40
     },
     {
-      name: "盘锦",
+      name: "Panjin",
       value: 40
     },
     {
-      name: "长治",
+      name: "Changzhi",
       value: 41
     },
     {
-      name: "深圳",
+      name: "Shenzhen",
       value: 41
     },
     {
-      name: "珠海",
+      name: "Zhuhai",
       value: 42
     },
     {
-      name: "宿迁",
+      name: "Suqian",
       value: 43
     },
     {
-      name: "咸阳",
+      name: "Xianyang",
       value: 43
     },
     {
-      name: "铜川",
+      name: "Tongchuan",
       value: 44
     },
     {
-      name: "平度",
+      name: "Pingdu",
       value: 44
     },
     {
-      name: "佛山",
+      name: "Foshan",
       value: 44
     },
     {
-      name: "海口",
+      name: "Haikou",
       value: 44
     },
     {
-      name: "江门",
+      name: "Jiangmen",
       value: 45
     },
     {
-      name: "章丘",
+      name: "Zhangqiu",
       value: 45
     },
     {
-      name: "肇庆",
+      name: "Zhaoqing",
       value: 46
     },
     {
-      name: "大连",
+      name: "Dalian",
       value: 47
     },
     {
-      name: "临汾",
+      name: "Linfen",
       value: 47
     },
     {
-      name: "吴江",
+      name: "Wujiang",
       value: 47
     },
     {
-      name: "石嘴山",
+      name: "Shizuishan",
       value: 49
     },
     {
-      name: "沈阳",
+      name: "Shenyang",
       value: 50
     },
     {
-      name: "苏州",
+      name: "Suzhou",
       value: 50
     },
     {
-      name: "茂名",
+      name: "Maoming",
       value: 50
     },
     {
-      name: "嘉兴",
+      name: "Jiaxing",
       value: 51
     },
     {
-      name: "长春",
+      name: "Changchun",
       value: 51
     },
     {
-      name: "胶州",
+      name: "Jiaozhou",
       value: 52
     },
     {
-      name: "银川",
+      name: "Yinchuan",
       value: 52
     },
     {
-      name: "张家港",
+      name: "Zhangjiagang",
       value: 52
     },
     {
-      name: "三门峡",
+      name: "Sanmenxia",
       value: 53
     },
     {
-      name: "锦州",
+      name: "Jinzhou",
       value: 54
     },
     {
-      name: "南昌",
+      name: "Nanchang",
       value: 54
     },
     {
-      name: "柳州",
+      name: "Liuzhou",
       value: 54
     },
     {
-      name: "三亚",
+      name: "Sanya",
       value: 54
     },
     {
-      name: "自贡",
+      name: "Zigong",
       value: 56
     },
     {
-      name: "吉林",
+      name: "Jilin",
       value: 56
     },
     {
-      name: "阳江",
+      name: "Yangjiang",
       value: 57
     },
     {
-      name: "泸州",
+      name: "Luzhou",
       value: 57
     },
     {
-      name: "西宁",
+      name: "Xining",
       value: 57
     },
     {
-      name: "宜宾",
+      name: "Yibin",
       value: 58
     },
     {
-      name: "呼和浩特",
+      name: "Hohhot",
       value: 58
     },
     {
-      name: "成都",
+      name: "Chengdu",
       value: 58
     },
     {
-      name: "大同",
+      name: "Datong",
       value: 58
     },
     {
-      name: "镇江",
+      name: "Zhenjiang",
       value: 59
     },
     {
-      name: "桂林",
+      name: "Guilin",
       value: 59
     },
     {
-      name: "张家界",
+      name: "Zhangjiajie",
       value: 59
     },
     {
-      name: "宜兴",
+      name: "Yixing",
       value: 59
     },
     {
-      name: "北海",
+      name: "Beihai",
       value: 60
     },
     {
-      name: "西安",
+      name: "Xi'an",
       value: 61
     },
     {
-      name: "金坛",
+      name: "Jintan",
       value: 62
     },
     {
-      name: "东营",
+      name: "Dongying",
       value: 62
     },
     {
-      name: "牡丹江",
+      name: "Mudanjiang",
       value: 63
     },
     {
-      name: "遵义",
+      name: "Zunyi",
       value: 63
     },
     {
-      name: "绍兴",
+      name: "Shaoxing",
       value: 63
     },
     {
-      name: "扬州",
+      name: "Yangzhou",
       value: 64
     },
     {
-      name: "常州",
+      name: "Changzhou",
       value: 64
     },
     {
-      name: "潍坊",
+      name: "Weifang",
       value: 65
     },
     {
-      name: "重庆",
+      name: "Chongqing",
       value: 66
     },
     {
-      name: "台州",
+      name: "Taizhou",
       value: 67
     },
     {
-      name: "南京",
+      name: "Nanjing",
       value: 67
     },
     {
-      name: "滨州",
+      name: "Binzhou",
       value: 70
     },
     {
-      name: "贵阳",
+      name: "Guiyang",
       value: 71
     },
     {
-      name: "无锡",
+      name: "Wuxi",
       value: 71
     },
     {
-      name: "本溪",
+      name: "Benxi",
       value: 71
     },
     {
-      name: "克拉玛依",
+      name: "Karamay",
       value: 72
     },
     {
-      name: "渭南",
+      name: "Weinan",
       value: 72
     },
     {
-      name: "马鞍山",
+      name: "Ma'anshan",
       value: 72
     },
     {
-      name: "宝鸡",
+      name: "Baoji",
       value: 72
     },
     {
-      name: "焦作",
+      name: "Jiaozuo",
       value: 75
     },
     {
-      name: "句容",
+      name: "Jurong",
       value: 75
     },
     {
-      name: "北京",
+      name: "Beijing",
       value: 79
     },
     {
-      name: "徐州",
+      name: "Xuzhou",
       value: 79
     },
     {
-      name: "衡水",
+      name: "Hengshui",
       value: 80
     },
     {
-      name: "包头",
+      name: "Baotou",
       value: 80
     },
     {
-      name: "绵阳",
+      name: "Mianyang",
       value: 80
     },
     {
-      name: "乌鲁木齐",
+      name: "Urumqi",
       value: 84
     },
     {
-      name: "枣庄",
+      name: "Zaozhuang",
       value: 84
     },
     {
-      name: "杭州",
+      name: "Hangzhou",
       value: 84
     },
     {
-      name: "淄博",
+      name: "Zibo",
       value: 85
     },
     {
-      name: "鞍山",
+      name: "Anshan",
       value: 86
     },
     {
-      name: "溧阳",
+      name: "Liyang",
       value: 86
     },
     {
-      name: "库尔勒",
+      name: "Korla",
       value: 86
     },
     {
-      name: "安阳",
+      name: "Anyang",
       value: 90
     },
     {
-      name: "开封",
+      name: "Kaifeng",
       value: 90
     },
     {
-      name: "济南",
+      name: "Jinan",
       value: 92
     },
     {
-      name: "德阳",
+      name: "Deyang",
       value: 93
     },
     {
-      name: "温州",
+      name: "Wenzhou",
       value: 95
     },
     {
-      name: "九江",
+      name: "Jiujiang",
       value: 96
     },
     {
-      name: "邯郸",
+      name: "Handan",
       value: 98
     },
     {
-      name: "临安",
+      name: "Lin'an",
       value: 99
     },
     {
-      name: "兰州",
+      name: "Lanzhou",
       value: 99
     },
     {
-      name: "沧州",
+      name: "Cangzhou",
       value: 100
     },
     {
-      name: "临沂",
+      name: "Linyi",
       value: 103
     },
     {
-      name: "南充",
+      name: "Nanchong",
       value: 104
     },
     {
-      name: "天津",
+      name: "Tianjin",
       value: 105
     },
     {
-      name: "富阳",
+      name: "Fuyang",
       value: 106
     },
     {
-      name: "泰安",
+      name: "Taian",
       value: 112
     },
     {
-      name: "诸暨",
+      name: "Zhuji",
       value: 112
     },
     {
-      name: "郑州",
+      name: "Zhengzhou",
       value: 113
     },
     {
-      name: "哈尔滨",
+      name: "Harbin",
       value: 114
     },
     {
-      name: "聊城",
+      name: "Liaocheng",
       value: 116
     },
     {
-      name: "芜湖",
+      name: "Wuhu",
       value: 117
     },
     {
-      name: "唐山",
+      name: "Tangshan",
       value: 119
     },
     {
-      name: "平顶山",
+      name: "Pingdingshan",
       value: 119
     },
     {
-      name: "邢台",
+      name: "Xingtai",
       value: 119
     },
     {
-      name: "德州",
+      name: "Texas",
       value: 120
     },
     {
-      name: "济宁",
+      name: "Jining",
       value: 120
     },
     {
-      name: "荆州",
+      name: "Jingzhou",
       value: 127
     },
     {
-      name: "宜昌",
+      name: "Yichang",
       value: 130
     },
     {
-      name: "义乌",
+      name: "Yiwu",
       value: 132
     },
     {
-      name: "丽水",
+      name: "Lishui",
       value: 133
     },
     {
-      name: "洛阳",
+      name: "Luoyang",
       value: 134
     },
     {
-      name: "秦皇岛",
+      name: "Qinhuangdao",
       value: 136
     },
     {
-      name: "株洲",
+      name: "Zhuzhou",
       value: 143
     },
     {
-      name: "石家庄",
+      name: "Shijiazhuang",
       value: 147
     },
     {
-      name: "莱芜",
+      name: "Laiwu",
       value: 148
     },
     {
-      name: "常德",
+      name: "Changde",
       value: 152
     },
     {
-      name: "保定",
+      name: "Baoding",
       value: 153
     },
     {
-      name: "湘潭",
+      name: "Xiangtan",
       value: 154
     },
     {
-      name: "金华",
+      name: "Jinhua",
       value: 157
     },
     {
-      name: "岳阳",
+      name: "Yueyang",
       value: 169
     },
     {
-      name: "长沙",
+      name: "Changsha",
       value: 175
     },
     {
-      name: "衢州",
+      name: "Quzhou",
       value: 177
     },
     {
-      name: "廊坊",
+      name: "Langfang",
       value: 193
     },
     {
-      name: "菏泽",
+      name: "Heze",
       value: 194
     },
     {
-      name: "合肥",
+      name: "Hefei",
       value: 229
     },
     {
-      name: "武汉",
+      name: "Wuhan",
       value: 273
     },
     {
-      name: "大庆",
+      name: "Daqing",
       value: 279
     }
   ]
@@ -1022,7 +1022,7 @@ function getEchartsOption() {
     animation: false,
     backgroundColor: "rgba(17, 19, 42, 0.4)",
     title: {
-      text: "全国主要城市空气质量",
+      text: "Air quality in major cities across the country",
       subtext: "data from PM25.in",
       x: "center",
       textStyle: {

@@ -1,18 +1,18 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let slope
 let contourLine
 let graphicLayer
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -21,20 +21,20 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addSlope() {
-  // 坡度坡向
+  // slope aspect
   slope = new mars3d.thing.Slope({
     arrow: {
-      scale: 0.3, // 箭头长度的比例（范围0.1-0.9）
+      scale: 0.3, // Ratio of arrow length (range 0.1-0.9)
       color: Cesium.Color.YELLOW,
-      width: 15, // 箭头宽度
+      width: 15, // Arrow width
       // materialType: mars3d.MaterialType.LineFlow,
       // materialOptions: {
       //   color: "#1a9850",
@@ -46,28 +46,28 @@ function addSlope() {
     },
     tooltip: function (event) {
       const attr = event.graphic?.attr
-      return `坡度: ${attr.slopeStr1}  (${attr.slopeStr2})<br />坡向: ${attr.direction}°`
+      return `Slope: ${attr.slopeStr1} (${attr.slopeStr2})<br />Slope direction: ${attr.direction}°`
     }
   })
   map.addThing(slope)
 
   slope.on(mars3d.EventType.end, function (event) {
-    console.log("分析完成", event)
+    console.log("Analysis completed", event)
 
-    // event.data[0] 数组内返回值说明： {
-    //     position:position,  //坐标位置
-    //     slope: slopeValDou, //度数法值，α(坡度)=arc tan (高程差/水平距离)
-    //     slopeStr1: text1,   //度数法值字符串
-    //     slopeStr2: text2,   //百分比法值字符串，坡度 = (高程差/水平距离)x100%
-    //     direction: slopeAngle //坡向值（0-360度）
+    // event.data[0] Return value description in the array: {
+    // position:position, // coordinate position
+    // slope: slopeValDou, //degree method value, α (slope) = arc tan (elevation difference/horizontal distance)
+    // slopeStr1: text1, //degree value string
+    // slopeStr2: text2, //Percentage value string, slope = (elevation difference/horizontal distance)x100%
+    // direction: slopeAngle //Slope value (0-360 degrees)
     // }
   })
 
-  // 渲染效果
+  //Rendering effect
   contourLine = new mars3d.thing.ContourLine({
-    contourShow: false, // 是否显示等高线
-    shadingType: "none", // 地表渲染效果类型:无nono, 高程 elevation, 坡度slope, 坡向aspect
-    shadingAlpha: 0.6 /// 地表渲染的透明度
+    contourShow: false, // Whether to display contour lines
+    shadingType: "none", // Surface rendering effect type: none, elevation, slope, aspect
+    shadingAlpha: 0.6 /// Transparency of surface rendering
   })
   map.addThing(contourLine)
 }
@@ -76,14 +76,14 @@ function addSlope() {
 //   const result = await mars3d.thing.Slope.getSlope({
 //     map,
 //     positions,
-//     splitNum: 1, // splitNum插值分割的个数
-//     radius: 1, // 缓冲半径（影响坡度坡向的精度）
-//     count: 4 // 缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
+// splitNum: 1, // The number of splitNum interpolation divisions
+// radius: 1, // Buffer radius (affects the accuracy of slope aspect)
+// count: 4 // The number of buffers (affecting the accuracy of slope and aspect) will calculate the surrounding (count*4) points
 //   })
-//   console.log("分析完成", result)
+// console.log("Analysis completed", result)
 // }
 
-// 添加矩形
+// add rectangle
 function btnDrawExtent(splitNum) {
   clearAll()
   graphicLayer.startDraw({
@@ -94,23 +94,23 @@ function btnDrawExtent(splitNum) {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       contourLine.positions = positions
       slope.add(positions, {
-        splitNum, // splitNum插值分割的个数
-        radius: 1, // 缓冲半径（影响坡度坡向的精度）
-        count: 4 // 缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
+        splitNum, //The number of splitNum interpolation divisions
+        radius: 1, // Buffer radius (affects the accuracy of slope aspect)
+        count: 4 //The number of buffers (affecting the accuracy of slope and aspect) will find surrounding (count*4) points
       })
     }
   })
 }
 
-// 绘制多边形
+// draw polygon
 function btnDraw(splitNum) {
   clearAll()
   graphicLayer.startDraw({
@@ -123,23 +123,23 @@ function btnDraw(splitNum) {
       clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
       contourLine.positions = positions
       slope.add(positions, {
-        splitNum, // splitNum插值分割的个数
-        radius: 1, // 缓冲半径（影响坡度坡向的精度）
-        count: 4 // 缓冲的数量（影响坡度坡向的精度）会求周边(count*4)个点
+        splitNum, //The number of splitNum interpolation divisions
+        radius: 1, // Buffer radius (affects the accuracy of slope aspect)
+        count: 4 //The number of buffers (affecting the accuracy of slope and aspect) will find surrounding (count*4) points
       })
     }
   })
 }
 
-// 添加点
+// add points
 function btnDrawPoint() {
   clearAll()
 
@@ -156,7 +156,7 @@ function btnDrawPoint() {
     }
   })
 }
-// 改变阴影
+// change shadow
 function changeShadingType(val) {
   contourLine.shadingType = val
 }

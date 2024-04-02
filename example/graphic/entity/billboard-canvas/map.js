@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 // import { CanvasBillboard } from "CanvasBillboard.js"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
 var mapOptions = {
   scene: {
@@ -11,19 +11,19 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 加载油田联合站模型
+  //Load the oilfield joint station model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     pid: 2020,
     type: "3dtiles",
-    name: "油田联合站",
+    name: "Oilfield Union Station",
     url: "//data.mars3d.cn/3dtiles/max-ytlhz/tileset.json",
     position: { lng: 117.094224, lat: 31.815859, alt: 26.4 },
     rotation: { z: 116.2 },
@@ -32,14 +32,14 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建DIV数据图层
+  //Create DIV data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 随机更新文本
+  // Randomly update text
   setInterval(() => {
     graphicLayer.eachGraphic((graphic) => {
-      graphic.text = random(0, 100) // 更新文本
+      graphic.text = random(0, 100) // update text
     })
   }, 2000)
 
@@ -47,8 +47,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -59,13 +59,13 @@ function onUnmounted() {
 
 function addDemoGraphic1(graphicLayer) {
   const arrData = [
-    { name: "油罐一", position: [117.09521, 31.814404, 47.3] },
-    { name: "油罐二", position: [117.095206, 31.814878, 47.3] },
-    { name: "油罐三", position: [117.094653, 31.814428, 47.3] },
-    { name: "发电机", position: [117.093428, 31.816959, 31.8] },
-    { name: "指挥室", position: [117.093953, 31.814397, 36] },
-    { name: "加热罐", position: [117.09385, 31.815837, 36.9] },
-    { name: "冷却室", position: [117.094662, 31.816403, 32.9] }
+    { name: "Oil Tank One", position: [117.09521, 31.814404, 47.3] },
+    { name: "Oil Tank Two", position: [117.095206, 31.814878, 47.3] },
+    { name: "Oil Tank Three", position: [117.094653, 31.814428, 47.3] },
+    { name: "Generator", position: [117.093428, 31.816959, 31.8] },
+    { name: "Command Room", position: [117.093953, 31.814397, 36] },
+    { name: "Heating tank", position: [117.09385, 31.815837, 36.9] },
+    { name: "Cooling Room", position: [117.094662, 31.816403, 32.9] }
   ]
   for (let i = 0; i < arrData.length; i++) {
     const item = arrData[i]
@@ -84,14 +84,14 @@ function addDemoGraphic1(graphicLayer) {
   }
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -111,11 +111,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "canvasBillboard",

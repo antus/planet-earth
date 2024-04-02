@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let limitHeight
 
 var mapOptions = {
@@ -10,22 +10,22 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map = mapInstance // record map
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  // // 创建矢量数据图层
+  // // Create vector data layer
   // const graphicLayer = new mars3d.layer.GraphicLayer()
   // map.addLayer(graphicLayer)
 
-  // // 加gltf模型
+  // // Add gltf model
   // const graphic = new mars3d.graphic.ModelPrimitive({
-  //   name: "风机",
+  // name: "Fan",
   //   position: [117.221189, 31.814105, 30],
   //   style: {
   //     url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
@@ -35,9 +35,9 @@ function onMounted(mapInstance) {
   // })
   // graphicLayer.addGraphic(graphic)
 
-  // 加3dtiles模型
+  //Add 3dtiles model
   const tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥天鹅湖",
+    name: "Hefei Swan Lake",
     type: "3dtiles",
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
@@ -50,11 +50,11 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tilesetLayer)
 
-  // 限高分析类
+  //Height limit analysis class
   limitHeight = new mars3d.thing.LimitHeight({
     color: "rgba(255,0,0,0.5)",
-    height: 80, // 限高
-    bottomHeight: 32, // 模型地面的海拔高度（单位：米）
+    height: 80, // height limit
+    bottomHeight: 32, //The altitude of the model ground (unit: meters)
     positions: [
       [117.210446, 31.829032, 0],
       [117.226334, 31.826662, 0],
@@ -65,26 +65,26 @@ function onMounted(mapInstance) {
   })
   map.addThing(limitHeight)
 
-  // 自动读取模型的高度，但不一定准确。
+  // Automatically read the height of the model, but it may not be accurate.
   // tilesetLayer.on(mars3d.EventType.load, function (event) {
   //   limitHeight.bottomHeight = mars3d.LngLatPoint.fromCartesian(tilesetLayer.boundingSphere.center).alt
   // })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 滑动条
+// slider
 function currHeight(value) {
   limitHeight.height = value
 }
 
-// 绘制矩形
+// draw rectangle
 function drawExtent() {
   map.graphicLayer.clear()
   map.graphicLayer.startDraw({
@@ -95,7 +95,7 @@ function drawExtent() {
       clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       limitHeight.positions = positions
 
@@ -104,7 +104,7 @@ function drawExtent() {
   })
 }
 
-// 绘制面
+// Draw the surface
 function drawPolygon() {
   map.graphicLayer.clear()
   map.graphicLayer.startDraw({
@@ -115,12 +115,12 @@ function drawPolygon() {
       clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       limitHeight.positions = positions
 
       map.graphicLayer.clear()
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
     }
   })
 }

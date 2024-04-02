@@ -1,9 +1,9 @@
-// 仅mars3d v3.4 + cesium1.95之前版本支持超图图层
+// Only mars3d v3.4 + versions before cesium1.95 support hypergraph layers
 // // import * as mars3d from "mars3d"
 
 var map
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: {
@@ -15,9 +15,9 @@ var mapOptions = {
       roll: 359.8
     },
     fxaa: true,
-    requestRenderMode: true, // 显式渲染
+    requestRenderMode: true, // explicit rendering
     contextOptions: {
-      requestWebgl1: true // 超图 不支持webgl2
+      requestWebgl1: true // Hypergraph does not support webgl2
     }
   },
   control: {
@@ -27,24 +27,24 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map = mapInstance //Record the first created map
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  globalNotify("已知问题提示", `当前使用的是原生Cesium+SuperMap3D插件方式，很多API不支持，完整方式需要参考Github开源代码切换Cesium到超图版Cesium。`)
+  globalNotify("Known Issue Tips", `Currently using the native Cesium+SuperMap3D plug-in method, many APIs are not supported. For the complete method, you need to refer to the Github open source code to switch Cesium to the super map version of Cesium.`)
 
   // showMaxNiaochaoDemo()
   showQxSuofeiyaDemo()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   removeLayer()
@@ -54,65 +54,65 @@ let s3mLayer
 
 function removeLayer() {
   if (s3mLayer) {
-    map.basemap = 2021 // 切换到默认影像底图
+    map.basemap = 2021 // Switch to the default image basemap
 
     map.removeLayer(s3mLayer, true)
     s3mLayer = null
   }
 }
 
-// 示例：人工建模 鸟巢
+// Example: Artificial Modeling Bird's Nest
 function showMaxNiaochaoDemo() {
   removeLayer()
 
   s3mLayer = new mars3d.layer.S3MLayer({
-    name: "鸟巢",
+    name: "Bird's Nest",
     url: "http://www.supermapol.com/realspace/services/3D-OlympicGreen/rest/realspace",
     flyTo: true
   })
   map.addLayer(s3mLayer)
 
-  // 可以绑定Popup弹窗，回调方法中任意处理
+  // You can bind the Popup window and handle it arbitrarily in the callback method.
   // s3mLayer.bindPopup(function (event) {
   //   var attr = event.graphic.attr;
-  //   // attr["视频"] = `<video src='//data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`;
-  //   return mars3d.Util.getTemplateHtml({ title: "石化工厂", template: "all", attr: attr });
+  // // attr["video"] = `<video src='//data.mars3d.cn/file/video/lukou.mp4' controls autoplay style="width: 300px;" ></video>`;
+  // return mars3d.Util.getTemplateHtml({ title: "Petrochemical Plant", template: "all", attr: attr });
   // });
 
-  // 单击事件
+  // click event
   // s3mLayer.on(mars3d.EventType.click, function (event) {
-  //   console.log("单击了3dtiles图层", event);
+  // console.log("3dtiles layer clicked", event);
   // });
 }
 
-// 示例：人工建模 CBD
+// Example: Artificial Modeling CBD
 function showMaxCBDDemo() {
   removeLayer()
 
   s3mLayer = new mars3d.layer.S3MLayer({
-    name: "人工建模CBD",
+    name: "Artificially modeled CBD",
     url: "http://www.supermapol.com/realspace/services/3D-CBD/rest/realspace",
     flyTo: true
   })
   map.addLayer(s3mLayer)
 }
 
-// 示例：  地下管网
+// Example: Underground pipe network
 function showMaxPipeDemo() {
   removeLayer()
-  globalMsg("插件版暂不支持 “fillForeColor” 参数的修改")
+  globalMsg("The plug-in version does not currently support modification of the "fillForeColor" parameter")
 
   s3mLayer = new mars3d.layer.S3MLayer({
-    name: "地下管网",
+    name: "Underground Pipe Network",
     url: "http://www.supermapol.com/realspace/services/3D-pipe/rest/realspace",
     center: { lat: 45.768407, lng: 126.621981, alt: 101, heading: 162, pitch: -38 },
     flyTo: true
   })
   map.addLayer(s3mLayer)
 
-  // 加载完成Promise
+  // Loading completed Promise
   s3mLayer.readyPromise.then(function (s3mLayer) {
-    console.log("s3m模型加载完成", s3mLayer)
+    console.log("s3m model loading completed", s3mLayer)
 
     const layers = s3mLayer.layer
 
@@ -122,21 +122,21 @@ function showMaxPipeDemo() {
     // for (var i = 0; i < layers.length; i++) {
     //   var layerName = layers[i].name;
     //   if (
-    //     layerName === "雨水井盖" ||
-    //     layerName === "消防水井盖" ||
-    //     layerName === "中水井盖" ||
-    //     layerName === "生活水井盖" ||
-    //     layerName === "路灯井盖"
+    // layerName === "Rainwater Manhole Cover" ||
+    // layerName === "Fire Manhole Cover" ||
+    // layerName === "Remote water manhole cover" ||
+    // layerName === "Domestic water manhole cover" ||
+    // layerName === "Street Lamp Manhole Cover"
     //   ) {
     //     layers[i].setPBRMaterialFromJSON("./data/pbr/showUnderGround/jing2/UnityUDBJG2.json");
     //   }
 
     //   if (
-    //     layerName === "中水管线" ||
-    //     layerName === "雨水管线" ||
-    //     layerName === "消防水管线" ||
-    //     layerName === "生活水管线" ||
-    //     layerName === "路灯管线"
+    // layerName === "Gray water pipeline" ||
+    // layerName === "Rainwater Pipeline" ||
+    // layerName === "Fire water pipeline" ||
+    // layerName === "Domestic water pipeline" ||
+    // layerName === "Street Light Pipeline"
     //   ) {
     //     layers[i].setPBRMaterialFromJSON("./data/pbr/showUnderGround/piple.json");
     //   }
@@ -144,25 +144,25 @@ function showMaxPipeDemo() {
   })
 }
 
-// 示例：BIM
+// Example: BIM
 function showBIMQiaoDemo() {
   removeLayer()
 
   s3mLayer = new mars3d.layer.S3MLayer({
-    name: "BIM桥梁",
+    name: "BIM Bridge",
     url: "http://www.supermapol.com/realspace/services/3D-BIMMoXing/rest/realspace",
     center: { lat: 40.234379, lng: 116.148777, alt: 223, heading: 331, pitch: -19 },
     flyTo: true
   })
   map.addLayer(s3mLayer)
 
-  // 加载完成Promise
+  // Loading completed Promise
   s3mLayer.readyPromise.then(function (s3mLayer) {
-    console.log("s3m模型加载完成", s3mLayer)
+    console.log("s3m model loading completed", s3mLayer)
 
     const layers = s3mLayer.layer
     for (const layer of layers) {
-      // 设置边框线
+      //Set border line
       layer.style3D.lineWidth = 0.5
       layer.style3D.lineColor = new Cesium.Color(60 / 255, 60 / 255, 60 / 255, 1)
       layer.style3D.fillStyle = Cesium.FillStyle.Fill_And_WireFrame
@@ -171,12 +171,12 @@ function showBIMQiaoDemo() {
   })
 }
 
-// 示例：倾斜摄影 哈尔滨索菲亚教堂
+// Example: Oblique Photography Harbin Sophia Church
 function showQxSuofeiyaDemo() {
   removeLayer()
 
   s3mLayer = new mars3d.layer.S3MLayer({
-    name: "哈尔滨索菲亚教堂",
+    name: "Harbin Sophia Church",
     type: "supermap_s3m",
     url: "http://www.supermapol.com/realspace/services/3D-suofeiya_church/rest/realspace",
     s3mOptions: {
@@ -188,18 +188,18 @@ function showQxSuofeiyaDemo() {
   })
   map.addLayer(s3mLayer)
 
-  // 事件
+  // event
   s3mLayer.on(mars3d.EventType.load, function (event) {
-    console.log("s3m模型加载完成", event)
+    console.log("s3m model loading completed", event)
   })
 }
 
-// 示例：倾斜摄影 萨尔茨堡
+// Example: Oblique Photography Salzburg
 function showQxSrsbDemo() {
   removeLayer()
 
   s3mLayer = new mars3d.layer.S3MLayer({
-    name: "萨尔茨堡",
+    name: "Salzburg",
     url: "http://www.supermapol.com/realspace/services/3D-srsb/rest/realspace",
     // position: { alt: 400 },
     center: { lat: 47.803782, lng: 13.04465, alt: 582, heading: 0, pitch: -40 },
@@ -207,14 +207,14 @@ function showQxSrsbDemo() {
   })
   map.addLayer(s3mLayer)
 
-  // 加载完成Promise
+  // Loading completed Promise
   s3mLayer.readyPromise.then(function (s3mLayer) {
-    console.log("s3m模型加载完成", s3mLayer)
+    console.log("s3m model loading completed", s3mLayer)
 
-    // 查找水面图层
+    // Find the water layer
     // var waterLayer = s3mLayer.layer[1];
     // var style = new Cesium.Style3D();
-    // style.bottomAltitude = 5; //设置水面图层的底部高程，确保水面与模型贴合
+    // style.bottomAltitude = 5; //Set the bottom elevation of the water surface layer to ensure that the water surface fits the model
     // waterLayer.style3D = style;
   })
 }

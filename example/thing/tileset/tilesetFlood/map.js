@@ -1,7 +1,7 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var map // mars3d.Map three-dimensional map object
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 var mapOptions = {
   scene: {
     center: { lat: 31.797067, lng: 117.21963, alt: 1512, heading: 360, pitch: -36 }
@@ -11,70 +11,70 @@ var mapOptions = {
 var tilesetLayer
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map = mapInstance // record map
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  globalNotify("已知问题提示", `(1) 目前不支持所有类型3dtile数据，请替换url进行自测 `)
+  globalNotify("Known Problem Tips", `(1) Currently not all types of 3dtile data are supported, please replace the url for self-test `)
 
   showDytDemo()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// true:  精确模式, 直接存储范围,但传入的范围顶点数量多时，就会造成一定程度的卡顿；
-// false: 掩膜模式，栅格化范围,效率与范围顶点数量无关,但放大后锯齿化严重
+// true: Precise mode, directly stores the range, but when the number of passed range vertices is large, it will cause a certain degree of lag;
+// false: Mask mode, rasterization range, efficiency has nothing to do with the number of range vertices, but aliasing is serious after zooming in
 const precise = false
 
 function showDytDemo() {
   removeLayer()
 
-  // 加模型
+  //Add model
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "大雁塔",
+    name: "Big Wild Goose Pagoda",
     url: "//data.mars3d.cn/3dtiles/qx-dyt/tileset.json",
     position: { alt: -27 },
     maximumScreenSpaceError: 1,
     flood: {
       precise,
-      editHeight: -24, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+      editHeight: -24, // Relative height (unit: meters), based on the offset of the lowest point height of the flattened/submerged area
       enabled: true
     },
     flyTo: true
   })
   map.addLayer(tilesetLayer)
 
-  // 模型淹没处理类
+  // Model flooding processing class
   const tilesetFlood = tilesetLayer.flood
   tilesetFlood.on(mars3d.EventType.start, function (e) {
-    console.log("开始分析", e)
+    console.log("Start analysis", e)
   })
   tilesetFlood.on(mars3d.EventType.change, function (e) {
     const height = e.height
     eventTarget.fire("heightChange", { height })
   })
   tilesetFlood.on(mars3d.EventType.end, function (e) {
-    console.log("结束分析", e)
+    console.log("end analysis", e)
   })
 }
 
 function showTehDemo() {
   removeLayer()
 
-  // 加模型
+  //Add model
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥天鹅湖",
+    name: "Hefei Swan Lake",
     type: "3dtiles",
     url: "//data.mars3d.cn/3dtiles/qx-teh/tileset.json",
     position: { lng: 117.218434, lat: 31.81807, alt: 163 },
@@ -85,7 +85,7 @@ function showTehDemo() {
     skipLevelOfDetail: true,
     preferLeaves: true,
 
-    editHeight: -140.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+    editHeight: -140.0, // Relative height (unit: meters), based on the offset of the lowest point height of the flattened/submerged area
     flood: {
       precise,
       enabled: true
@@ -95,23 +95,23 @@ function showTehDemo() {
   })
   map.addLayer(tilesetLayer)
 
-  // 会执行多次，重新加载一次完成后都会回调
+  // Will be executed multiple times, and will be called back after reloading.
   // tilesetLayer.on(mars3d.EventType.allTilesLoaded, function (event) {
-  //   console.log("触发allTilesLoaded事件", event)
+  // console.log("Trigger allTilesLoaded event", event)
   // })
 
-  // 模型淹没处理类
+  // Model flooding processing class
   const tilesetFlood = tilesetLayer.flood
 
   tilesetFlood.on(mars3d.EventType.start, function (e) {
-    console.log("开始分析", e)
+    console.log("Start analysis", e)
   })
   tilesetFlood.on(mars3d.EventType.change, function (e) {
     const height = e.height
     eventTarget.fire("heightChange", { height })
   })
   tilesetFlood.on(mars3d.EventType.end, function (e) {
-    console.log("结束分析", e)
+    console.log("end analysis", e)
   })
 }
 
@@ -119,7 +119,7 @@ function showXianDemo() {
   removeLayer()
 
   tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "县城社区",
+    name: "County Community",
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
@@ -128,7 +128,7 @@ function showXianDemo() {
     cullWithChildrenBounds: false,
     center: { lat: 28.440675, lng: 119.487735, alt: 639, heading: 269, pitch: -38 },
 
-    editHeight: -18.0, // 相对高度 (单位：米)，基于 压平/淹没区域 最低点高度的偏移量
+    editHeight: -18.0, // Relative height (unit: meters), based on the offset of the lowest point height of the flattened/submerged area
     flood: {
       precise,
       enabled: true
@@ -137,17 +137,17 @@ function showXianDemo() {
   })
   map.addLayer(tilesetLayer)
 
-  // 模型淹没处理类
+  // Model flooding processing class
   const tilesetFlood = tilesetLayer.flood
   tilesetFlood.on(mars3d.EventType.start, function (e) {
-    console.log("开始分析", e)
+    console.log("Start analysis", e)
   })
   tilesetFlood.on(mars3d.EventType.change, function (e) {
     const height = e.height
     eventTarget.fire("heightChange", { height })
   })
   tilesetFlood.on(mars3d.EventType.end, function (e) {
-    console.log("结束分析", e)
+    console.log("end analysis", e)
   })
 }
 
@@ -158,12 +158,12 @@ function removeLayer() {
   }
 }
 
-// 高度选择
+// height selection
 function onChangeHeight(height) {
   tilesetLayer.flood.height = height
 }
 
-// 修改分析方式
+//Modify analysis method
 function changeFloodType(val) {
   if (val === "1") {
     tilesetLayer.flood.floodAll = true
@@ -172,7 +172,7 @@ function changeFloodType(val) {
   }
 }
 
-// 绘制矩形
+// draw rectangle
 function btnDrawExtent() {
   stop()
   map.graphicLayer.clear()
@@ -184,14 +184,14 @@ function btnDrawExtent() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
 
       tilesetLayer.flood.addArea(positions)
     }
   })
 }
-// 绘制多边形
+// draw polygon
 function btnDraw() {
   stop()
   map.graphicLayer.clear()
@@ -203,20 +203,20 @@ function btnDraw() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
 
       tilesetLayer.flood.addArea(positions)
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
     }
   })
 }
 
-// 开始分析
+// Start analysis
 function begin(data) {
   if (!tilesetLayer.flood.floodAll && tilesetLayer.flood.length === 0) {
-    globalMsg("请首先绘制分析区域！")
+    globalMsg("Please draw the analysis area first!")
     return false
   }
   map.graphicLayer.clear()
@@ -225,14 +225,14 @@ function begin(data) {
   const maxValue = Number(data.maxHeight)
   const speed = Number(data.speed)
   if (minValue <= 27) {
-    globalMsg("最低海拔过低，请耐心等候几秒")
+    globalMsg("The minimum altitude is too low, please wait patiently for a few seconds")
   }
   if (minValue > maxValue) {
-    globalMsg("当前最低海拔高于最高海拔")
+    globalMsg("The current lowest altitude is higher than the highest altitude")
     return false
   }
 
-  console.log("当前参数", { minHeight: minValue, maxHeight: maxValue })
+  console.log("Current parameters", { minHeight: minValue, maxHeight: maxValue })
 
   tilesetLayer.flood.setOptions({
     minHeight: minValue,

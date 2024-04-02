@@ -1,10 +1,10 @@
 // import * as Cesium from "mars3d-cesium"
 // import { PolyWood } from "../../const/MaterialType"
 
-// 自定义材质的命名
+// Custom material naming
 const Circle3WaveType = "Circle3Wave"
 
-// 注册至材质，用于Primitive
+// Register to material, used for Primitive
 mars3d.MaterialUtil.register(Circle3WaveType, {
   fabric: {
     uniforms: {
@@ -42,15 +42,15 @@ mars3d.MaterialUtil.register(Circle3WaveType, {
 })
 
 /**
- * 自定义属性材质，用于Entity对象
+ * Custom attribute material, used for Entity objects
  */
 class Circle3WaveMaterialProperty extends mars3d.material.BaseMaterialProperty {
-  // 材质名称
+  //Material name
   getType(time) {
     return Circle3WaveType
   }
 
-  // 更新属性
+  //Update properties
   getValue(time, result) {
     if (!Cesium.defined(result)) {
       result = {}

@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-let graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+let graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = function (option) {
   option.scene.center = { lat: 31.265081, lng: 116.103599, alt: 6178, heading: 348, pitch: -54 }
   delete option.terrain
@@ -11,19 +11,19 @@ var mapOptions = function (option) {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 飞行区域边界线
+  //Flight area boundary line
   const graphic = new mars3d.graphic.PolygonEntity({
     positions: [
       [116.069898, 31.303655],
@@ -42,9 +42,9 @@ function onMounted(mapInstance) {
   graphicLayer.addGraphic(graphic)
 
   graphic.startFlicker({
-    time: 3, // 闪烁时长（秒）
+    time: 3, // Flashing duration (seconds)
     onEnd: function () {
-      // 结束后自动移除
+      // Automatically remove after completion
       graphic.style = { fill: false }
       startRoam()
     }
@@ -52,8 +52,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -62,7 +62,7 @@ function onUnmounted() {
 const arrColor = [new Cesium.Color(1.0, 0.0, 0.0, 0.3), new Cesium.Color(0.0, 1.0, 0, 0.3), new Cesium.Color(0.0, 0.0, 1, 0.3)]
 
 function startRoam() {
-  // 视角切换（分步执行）
+  // Perspective switching (step-by-step execution)
   map.setCameraViewList([
     {
       lat: 31.261244,
@@ -92,9 +92,9 @@ function startRoam() {
     }
   ])
 
-  // 飞行路线
+  // flight route
   const fixedRoute = new mars3d.graphic.FixedRoute({
-    name: "无人机航拍",
+    name: "Drone aerial photography",
     speed: 600,
     positions: [
       [116.077374, 31.294215, 1000],
@@ -128,13 +128,13 @@ function startRoam() {
       return
     }
 
-    // 当前的路线中的点位
+    //Points in the current route
     const currIndex = fixedRoute.currIndex
     if (currIndex % 2 === 1) {
       return
     }
 
-    frameNum = ++frameNum % 100 // 调整间隔多少拍一次
+    frameNum = ++frameNum % 100 //Adjust the interval between shots
     if (frameNum !== 0) {
       if (frameNum === 10 && graphicFrustum) {
         graphicLayer.removeGraphic(graphicFrustum)
@@ -143,14 +143,14 @@ function startRoam() {
       return
     }
 
-    // 添加四棱锥体线
+    //Add a four-sided pyramid line
     graphicFrustum = new mars3d.graphic.FrustumPrimitive({
       position: fixedRoute.position,
       style: {
         angle: 15,
         angle2: 12,
         heading: fixedRoute.heading,
-        pitch: -180, // 俯视
+        pitch: -180, // top view
 
         length: Cesium.Cartographic.fromCartesian(fixedRoute.position).height,
         fill: false,
@@ -163,10 +163,10 @@ function startRoam() {
     })
     graphicLayer.addGraphic(graphicFrustum)
 
-    // 地面的4个顶点坐标
+    // 4 vertex coordinates of the ground
     const positions = graphicFrustum.getRayEarthPositions()
 
-    // 添加地面矩形
+    //Add ground rectangle
     const graphic = new mars3d.graphic.PolygonPrimitive({
       positions,
       style: {

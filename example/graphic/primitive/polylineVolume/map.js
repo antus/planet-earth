@@ -1,11 +1,11 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
 var eventTarget = new mars3d.BaseClass()
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.650716, lng: 117.311638, alt: 16199, heading: 2, pitch: -44 }
@@ -13,34 +13,34 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   globalNotify(
-    "已知问题提示",
-    `(1)管线的绘制时容易报“Invalid array length”的未知错误，极不稳定，项目中慎用；
-     (2)管线编辑时无法调整高度值,赋予高度后Cesium底层又改回去了；
-     (3)可在后端绘制和编辑时使用Polyline，前端渲染用PolylineVolume。
+    "Known Issue Tips",
+    `(1) When drawing pipelines, it is easy to report an unknown error of "Invalid array length", which is extremely unstable and should be used with caution in projects;
+     (2) The height value cannot be adjusted when editing the pipeline. After assigning the height, the bottom layer of Cesium is changed back;
+     (3) Polyline can be used in back-end drawing and editing, and PolylineVolume can be used in front-end rendering.
     `
   )
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
@@ -50,8 +50,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -77,42 +77,42 @@ function addDemoGraphic1(graphicLayer) {
       radius: 50,
       thicknes: 10,
       startAngle: 0,
-      endAngle: 180, // 拱形半圆管道
+      endAngle: 180, // Arched semicircular pipe
       color: "#3388ff",
       opacity: 0.6
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 
   initGraphicManager(graphic)
 }
 
-// 也可以在单个Graphic上做个性化管理及绑定操作
+// You can also perform personalized management and binding operations on a single Graphic
 function initGraphicManager(graphic) {
-  // 3.在graphic上绑定监听事件
+  // 3. Bind the listening event to the graphic
   // graphic.on(mars3d.EventType.click, function (event) {
-  //   console.log("监听graphic，单击了矢量对象", event)
+  // console.log("Listening to graphic, clicked vector object", event)
   // })
-  // 绑定Tooltip
-  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
+  // Bind Tooltip
+  // graphic.bindTooltip('I am the Tooltip bound to graphic') //.openTooltip()
 
-  // 绑定Popup
+  // Bind Popup
   const inthtml = `<table style="width: auto;">
             <tr>
-              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
+              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">I am a Popup bound to the graphic </th>
             </tr>
             <tr>
-              <td>提示：</td>
-              <td>这只是测试信息，可以任意html</td>
+              <td>Tips:</td>
+              <td>This is just test information, you can use any html</td>
             </tr>
           </table>`
   graphic.bindPopup(inthtml).openPopup()
 
-  // 绑定右键菜单
+  //Bind right-click menu
   graphic.bindContextMenu([
     {
-      text: "删除对象[graphic绑定的]",
+      text: "Delete object [graphic-bound]",
       icon: "fa fa-trash-o",
       callback: (e) => {
         const graphic = e.graphic
@@ -136,7 +136,7 @@ function addDemoGraphic2(graphicLayer) {
       color: "#00ffff",
       opacity: 0.9,
       label: {
-        text: "我是原始的",
+        text: "I am original",
         font_size: 18,
         color: "#ffffff",
         distanceDisplayCondition: true,
@@ -144,27 +144,27 @@ function addDemoGraphic2(graphicLayer) {
         distanceDisplayCondition_near: 0
       }
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "Example 2" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 
-  // graphic转geojson
+  // graphic to geojson
   const geojson = graphic.toGeoJSON()
-  console.log("转换后的geojson", geojson)
+  console.log("Converted geojson", geojson)
   addGeoJson(geojson, graphicLayer)
 }
 
-// 添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+// Add a single geojson as graphic, use graphicLayer.loadGeoJSON directly for multiple
 function addGeoJson(geojson, graphicLayer) {
   const graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
   delete graphicCopy.attr
-  // 新的坐标
+  // new coordinates
   graphicCopy.positions = [
     [117.172852, 31.872736, 33.69],
     [117.251461, 31.866011, 26.44]
   ]
   graphicCopy.style.label = graphicCopy.style.label || {}
-  graphicCopy.style.label.text = "我是转换后生成的"
+  graphicCopy.style.label.text = "I generated it after conversion"
   graphicLayer.addGraphic(graphicCopy)
 }
 
@@ -186,9 +186,9 @@ function addDemoGraphic3(graphicLayer) {
         repeat_x: 6
       }
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "Example 3" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic4(graphicLayer) {
@@ -200,14 +200,14 @@ function addDemoGraphic4(graphicLayer) {
     style: {
       shape: "star",
       radius: 80,
-      slices: 5, // 角的个数
+      slices: 5, // number of corners
       cornerType: Cesium.CornerType.MITERED,
       color: "#ffff00",
       opacity: 0.4
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "Example 4" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic5(graphicLayer) {
@@ -220,16 +220,16 @@ function addDemoGraphic5(graphicLayer) {
     style: {
       shape: "pipeline",
       radius: 80,
-      slices: 4, // 方形管道
+      slices: 4, // square pipe
       startAngle: 45,
-      vscale: 1.5, // 垂直缩放
+      vscale: 1.5, // vertical scaling
       color: "#989898",
       outline: true,
       outlineColor: "#D7D7D7"
     },
-    attr: { remark: "示例5" }
+    attr: { remark: "Example 5" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic6(graphicLayer) {
@@ -243,26 +243,26 @@ function addDemoGraphic6(graphicLayer) {
     style: {
       shape: "pipeline",
       radius: 80,
-      slices: 4, // 方形管道
+      slices: 4, // square pipe
       startAngle: 45,
-      hscale: 1.5, // 垂直缩放
+      hscale: 1.5, // vertical scaling
       color: "#989898",
       outline: true,
       outlineColor: "#D7D7D7"
     },
-    attr: { remark: "示例6" }
+    attr: { remark: "Example 6" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   const volumeRadius = result.radius * 0.1
 
@@ -285,16 +285,16 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 按钮事件
+//Button event
 function startDrawGraphic() {
-  // 开始绘制
+  // Start drawing
   graphicLayer.startDraw({
     type: "polylineVolumeP",
-    // maxPointNum: 2, //可以限定最大点数，2个点绘制后自动结束
+    // maxPointNum: 2, //The maximum number of points can be limited, and it will automatically end after drawing 2 points
     style: {
       shape: "pipeline",
       radius: 80,
@@ -304,23 +304,23 @@ function startDrawGraphic() {
   })
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -340,7 +340,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -360,7 +360,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -375,7 +375,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -383,12 +383,12 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "计算长度",
+      text: "Calculate length",
       icon: "fa fa-medium",
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
-        globalAlert("该对象的长度为:" + strDis)
+        globalAlert("The length of this object is:" + strDis)
       }
     }
   ])

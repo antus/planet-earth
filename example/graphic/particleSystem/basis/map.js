@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.81456, lng: 117.231868, alt: 275.7, heading: 268.2, pitch: -12.5 }
@@ -12,19 +12,19 @@ var mapOptions = {
 var graphicLayer
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
@@ -32,67 +32,67 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 喷泉效果
+// fountain effect
 function addDemoGraphic1(graphicLayer) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
-    position: Cesium.Cartesian3.fromDegrees(117.224855, 31.815135, 28.05), // 位置
+    position: Cesium.Cartesian3.fromDegrees(117.224855, 31.815135, 28.05), // position
     style: {
       image: "./img/particle/penquan.png",
-      particleSize: 8, // 粒子大小（单位：像素）
-      emissionRate: 100.0, // 发射速率 （单位：次/秒）
-      heading: 290, // 方向角
-      pitch: 40, // 俯仰角
-      gravity: -3.5, // 重力因子，会修改速度矢量以改变方向或速度（基于物理的效果）
-      transZ: 5, // 离地高度（单位：米）
-      maxHeight: 5000, // 超出该高度后不显示粒子效果
+      particleSize: 8, // particle size (unit: pixel)
+      emissionRate: 100.0, // Emission rate (unit: times/second)
+      heading: 290, // heading angle
+      pitch: 40, // pitch angle
+      gravity: -3.5, // Gravity factor, which modifies the velocity vector to change direction or speed (physics-based effect)
+      transZ: 5, // Height above the ground (unit: meters)
+      maxHeight: 5000, // No particle effect will be displayed after exceeding this height
 
-      startColor: new Cesium.Color(1, 1, 1, 0.6), //  开始颜色
-      endColor: new Cesium.Color(0.8, 0.86, 1, 0.4), // 结束颜色
-      startScale: 1.0, //  开始比例（单位：相对于imageSize大小的倍数）
-      endScale: 4.0, // 结束比例（单位：相对于imageSize大小的倍数）
-      minimumParticleLife: 6, // 最小寿命时间（秒）
-      maximumParticleLife: 7, // 最大寿命时间（秒）
-      minimumSpeed: 9.0, // 最小速度(米/秒)
-      maximumSpeed: 9.5 // 最大速度(米/秒)
+      startColor: new Cesium.Color(1, 1, 1, 0.6), // start color
+      endColor: new Cesium.Color(0.8, 0.86, 1, 0.4), // End color
+      startScale: 1.0, //Start scale (unit: multiple of imageSize size)
+      endScale: 4.0, // End scale (unit: multiple of imageSize size)
+      minimumParticleLife: 6, // Minimum life time (seconds)
+      maximumParticleLife: 7, // Maximum life time (seconds)
+      minimumSpeed: 9.0, // minimum speed (m/s)
+      maximumSpeed: 9.5 // Maximum speed (m/s)
     },
-    attr: { remark: "水柱粒子效果" }
+    attr: { remark: "Water column particle effect" }
   })
 
   graphicLayer.addGraphic(particleSystem)
 }
 
-// 火炬效果
+//Torch effect
 function addDemoGraphic2(graphicLayer) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
-    position: Cesium.Cartesian3.fromDegrees(117.225518, 31.815549, 28.28), // 位置
+    position: Cesium.Cartesian3.fromDegrees(117.225518, 31.815549, 28.28), // position
     style: {
       image: "./img/particle/fire2.png",
-      particleSize: 5, // 粒子大小（单位：像素）
-      emissionRate: 100, // 发射速率 （单位：次/秒）
-      maxHeight: 5000, // 超出该高度后不显示粒子效果
+      particleSize: 5, // particle size (unit: pixel)
+      emissionRate: 100, // Emission rate (unit: times/second)
+      maxHeight: 5000, // No particle effect will be displayed after exceeding this height
 
-      startColor: new Cesium.Color(1, 1, 1, 1), // 开始颜色
-      endColor: new Cesium.Color(0.5, 0, 0, 0), // 结束颜色
-      startScale: 3.0, // 开始比例（单位：相对于imageSize大小的倍数）
-      endScale: 1.5, // 结束比例（单位：相对于imageSize大小的倍数）
-      minimumSpeed: 7.0, // 最小速度（单位：米/秒）
-      maximumSpeed: 9.0 // 最大速度（单位：米/秒）
+      startColor: new Cesium.Color(1, 1, 1, 1), // start color
+      endColor: new Cesium.Color(0.5, 0, 0, 0), // End color
+      startScale: 3.0, //Start scale (unit: multiple of imageSize size)
+      endScale: 1.5, // End scale (unit: multiple of imageSize size)
+      minimumSpeed: 7.0, // Minimum speed (unit: meters/second)
+      maximumSpeed: 9.0 // Maximum speed (unit: meters/second)
     },
-    attr: { remark: "火焰粒子效果" }
+    attr: { remark: "Fire particle effect" }
   })
   graphicLayer.addGraphic(particleSystem)
 }
 
-// 烟花效果
+// Fireworks effect
 function addDemoGraphic3(graphicLayer) {
-  const position = Cesium.Cartesian3.fromDegrees(117.22104, 31.813759, 80) // 位置
+  const position = Cesium.Cartesian3.fromDegrees(117.22104, 31.813759, 80) // position
 
   const minimumExplosionSize = 30.0
   const maximumExplosionSize = 100.0
@@ -156,7 +156,7 @@ function addDemoGraphic3(graphicLayer) {
         bursts,
         lifetime
       },
-      attr: { remark: "烟花粒子效果" }
+      attr: { remark: "Firework particle effect" }
     })
     graphicLayer.addGraphic(particleSystem)
   }
@@ -217,7 +217,7 @@ function addDemoGraphic3(graphicLayer) {
   }
 }
 
-// 动态运行车辆的尾气粒子效果
+// Exhaust particle effects of dynamically running vehicles
 function addDemoGraphic4(graphicLayer) {
   const fixedRoute = new mars3d.graphic.FixedRoute({
     speed: 120,
@@ -225,7 +225,7 @@ function addDemoGraphic4(graphicLayer) {
       [117.226585, 31.818437, 32.41],
       [117.226838, 31.811681, 28.23]
     ],
-    clockLoop: true, // 是否循环播放
+    clockLoop: true, // Whether to loop playback
     model: {
       url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
       scale: 0.2
@@ -233,39 +233,39 @@ function addDemoGraphic4(graphicLayer) {
   })
   graphicLayer.addGraphic(fixedRoute)
 
-  fixedRoute.start() // 启动漫游
+  fixedRoute.start() // Start roaming
 
   const particleSystem = new mars3d.graphic.ParticleSystem({
     position: fixedRoute.property,
     style: {
       image: "./img/particle/smoke.png",
-      particleSize: 12, // 粒子大小（单位：像素）
-      emissionRate: 20.0, // 发射速率 （单位：次/秒）
-      pitch: 40, // 俯仰角
-      // gravity: -1, // 重力因子，会修改速度矢量以改变方向或速度（基于物理的效果）
-      // transY: 8.0, // 偏移值Y，尾气在车辆后面一些
-      maxHeight: 1000, // 超出该高度后不显示粒子效果
+      particleSize: 12, // particle size (unit: pixel)
+      emissionRate: 20.0, // Emission rate (unit: times/second)
+      pitch: 40, // pitch angle
+      // gravity: -1, // Gravity factor, which modifies the velocity vector to change direction or speed (physics-based effect)
+      // transY: 8.0, // Offset value Y, exhaust gas is behind the vehicle
+      maxHeight: 1000, // No particle effect will be displayed after exceeding this height
 
-      startColor: Cesium.Color.GREY.withAlpha(0.7), // 开始颜色
-      endColor: Cesium.Color.WHITE.withAlpha(0.0), // 结束颜色
-      startScale: 1.0, //  开始比例（单位：相对于imageSize大小的倍数）
-      endScale: 5.0, // 结束比例（单位：相对于imageSize大小的倍数）
-      minimumSpeed: 1.0, // 最小速度(米/秒)
-      maximumSpeed: 4.0 // 最大速度(米/秒)
+      startColor: Cesium.Color.GREY.withAlpha(0.7), // start color
+      endColor: Cesium.Color.WHITE.withAlpha(0.0), //End color
+      startScale: 1.0, //Start scale (unit: multiple of imageSize size)
+      endScale: 5.0, // End scale (unit: multiple of imageSize size)
+      minimumSpeed: 1.0, // minimum speed (m/s)
+      maximumSpeed: 4.0 // Maximum speed (m/s)
     },
-    attr: { remark: "车辆尾气" }
+    attr: { remark: "Vehicle exhaust" }
   })
   graphicLayer.addGraphic(particleSystem)
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -275,44 +275,44 @@ function addRandomGraphicByCount(count) {
       position,
       style: {
         image: "./img/particle/fire2.png",
-        particleSize: 5, // 粒子大小（单位：像素）
-        emissionRate: 200, // 粒子发射器的发射速率 （单位：次/秒）
+        particleSize: 5, // particle size (unit: pixel)
+        emissionRate: 200, // The emission rate of the particle emitter (unit: times/second)
 
-        startColor: new Cesium.Color(1, 1, 1, 1), // 粒子出生时的颜色
-        endColor: new Cesium.Color(0.5, 0, 0, 0), // 当粒子死亡时的颜色
-        startScale: 3.0, // 开始比例（单位：相对于imageSize大小的倍数）
-        endScale: 1.5, // 结束比例（单位：相对于imageSize大小的倍数）
-        minimumSpeed: 7.0, // 最小速度（单位：米/秒）
-        maximumSpeed: 9.0 // 最大速度（单位：米/秒）
+        startColor: new Cesium.Color(1, 1, 1, 1), // The color of the particle when it is born
+        endColor: new Cesium.Color(0.5, 0, 0, 0), // Color when the particle dies
+        startScale: 3.0, //Start scale (unit: multiple of imageSize size)
+        endScale: 1.5, // End scale (unit: multiple of imageSize size)
+        minimumSpeed: 7.0, // Minimum speed (unit: meters/second)
+        maximumSpeed: 9.0 // Maximum speed (unit: meters/second)
       },
       attr: { index }
     })
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "particleSystem",
     style: {
       image: "./img/particle/smoke.png",
-      particleSize: 8, // 粒子大小（单位：像素）
-      emissionRate: 100.0, // 发射速率 （单位：次/秒）
-      heading: 290, // 方向角
-      pitch: 40, // 俯仰角
-      gravity: -3.5, // 重力因子，会修改速度矢量以改变方向或速度（基于物理的效果）
-      transZ: 5, // 离地高度（单位：米）
+      particleSize: 8, // particle size (unit: pixel)
+      emissionRate: 100.0, // Emission rate (unit: times/second)
+      heading: 290, // heading angle
+      pitch: 40, // pitch angle
+      gravity: -3.5, // Gravity factor, which modifies the velocity vector to change direction or speed (physics-based effect)
+      transZ: 5, // Height above the ground (unit: meters)
 
-      startColor: Cesium.Color.LIGHTCYAN.withAlpha(0.3), // 开始颜色
-      endColor: Cesium.Color.WHITE.withAlpha(0.0), // 结束颜色
-      startScale: 2.0, // 开始比例（单位：相对于imageSize大小的倍数）
-      endScale: 4.0, // 结束比例（单位：相对于imageSize大小的倍数）
-      minimumParticleLife: 1.0, // 最小寿命时间（秒）
-      maximumParticleLife: 3.0 // 最大寿命时间（秒）
+      startColor: Cesium.Color.LIGHTCYAN.withAlpha(0.3), // start color
+      endColor: Cesium.Color.WHITE.withAlpha(0.0), //End color
+      startScale: 2.0, //Start scale (unit: multiple of imageSize size)
+      endScale: 4.0, // End scale (unit: multiple of imageSize size)
+      minimumParticleLife: 1.0, // Minimum life time (seconds)
+      maximumParticleLife: 3.0 // Maximum life time (seconds)
     }
   })
 }
@@ -322,17 +322,17 @@ function startDrawGraphic2() {
     type: "particleSystem",
     style: {
       image: "./img/particle/fire2.png",
-      particleSize: 5, // 粒子大小（单位：像素）
-      emissionRate: 200, //  发射速率 （单位：次/秒）
+      particleSize: 5, // particle size (unit: pixel)
+      emissionRate: 200, // Emission rate (unit: times/second)
 
-      startColor: new Cesium.Color(1, 1, 1, 1), // 粒子出生时的颜色
-      endColor: new Cesium.Color(0.5, 0, 0, 0), // 当粒子死亡时的颜色
-      startScale: 3.0, // 开始比例（单位：相对于imageSize大小的倍数）
-      endScale: 1.5, // 结束比例（单位：相对于imageSize大小的倍数）
-      minimumParticleLife: 1.5, // 最小寿命时间（秒）
-      maximumParticleLife: 1.8, // 最大寿命时间（秒）
-      minimumSpeed: 7.0, // 最小速度（单位：米/秒）
-      maximumSpeed: 9.0 // 最大速度（单位：米/秒）
+      startColor: new Cesium.Color(1, 1, 1, 1), // The color of the particle when it is born
+      endColor: new Cesium.Color(0.5, 0, 0, 0), // Color when the particle dies
+      startScale: 3.0, //Start scale (unit: multiple of imageSize size)
+      endScale: 1.5, // End scale (unit: multiple of imageSize size)
+      minimumParticleLife: 1.5, // Minimum life time (seconds)
+      maximumParticleLife: 1.8, // Maximum life time (seconds)
+      minimumSpeed: 7.0, // Minimum speed (unit: meters/second)
+      maximumSpeed: 9.0 // Maximum speed (unit: meters/second)
     }
   })
 }
@@ -343,18 +343,18 @@ function getGraphic(graphicId) {
   return particleGraphic
 }
 
-// 修改样式
+//Modify style
 function setStylyToGraphic(style) {
   particleGraphic.setStyle(style)
 }
 
-// 修改位置
+//Modify position
 let particlePosition
 function btnSelectPosition() {
   map.graphicLayer.startDraw({
     type: "point",
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       particlePosition = positions[0]
       map.graphicLayer.clear()

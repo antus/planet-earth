@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 21.373802, lng: 105.112505, alt: 12964001, heading: 2, pitch: -85 },
@@ -15,16 +15,16 @@ var mapOptions = {
   control: {
     terrainProviderViewModels: []
   },
-  // 方式1：在创建地球前的参数中配置
+  // Method 1: Configure in the parameters before creating the earth
   basemaps: [
     {
-      name: "单张图片",
+      name: "Single picture",
       icon: "img/basemaps/bingmap.png",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/world.jpg"
     },
     {
-      name: "夜晚图片",
+      name: "Night Picture",
       icon: "img/basemaps/blackMarble.png",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/night.jpg",
@@ -33,7 +33,7 @@ var mapOptions = {
       brightness: 3.5
     },
     {
-      name: "蓝色底图",
+      name: "Blue Basemap",
       icon: "img/basemaps/bd-c-midnight.png",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/blue.jpg",
@@ -43,30 +43,30 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 叠加的图层
+// overlaid layers
 let tileLayer
 
 function addTileLayer() {
   removeTileLayer()
 
-  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  // Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
   tileLayer = new mars3d.layer.ImageLayer({
     url: "//data.mars3d.cn//file/img/radar/201906211112.PNG",
     rectangle: { xmin: 73.16895, xmax: 134.86816, ymin: 12.2023, ymax: 54.11485 },
@@ -74,9 +74,9 @@ function addTileLayer() {
   })
   map.addLayer(tileLayer)
 
-  // 图片加载完成事件
+  // Image loading completion event
   tileLayer.readyPromise.then((layer) => {
-    console.log("图片加载完成", layer.image)
+    console.log("Image loading completed", layer.image)
   })
 }
 

@@ -1,30 +1,30 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
 
-// 事件对象，用于抛出事件给面板
+//Event object, used to throw events to the panel
 var eventTarget = new mars3d.BaseClass()
 
 var mapOptions = {
   scene: {
     center: { lat: 28.44134, lng: 119.482389, alt: 265, heading: 231.5, pitch: -46.7 },
     globe: {
-      depthTestAgainstTerrain: true // 不加无法投射到地形上
+      depthTestAgainstTerrain: true // Cannot be projected onto the terrain without adding
     }
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 添加参考三维模型
+  //Add reference 3D model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
@@ -34,19 +34,19 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1()
   addDemoGraphic2()
   addDemoGraphic3()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -103,9 +103,9 @@ function addDemoGraphic3() {
   })
 }
 
-// 添加
+// Add to
 function startDrawGraphic() {
-  // 开始绘制
+  // Start drawing
   graphicLayer.startDraw({
     type: "spotLight",
     style: {
@@ -116,14 +116,14 @@ function startDrawGraphic() {
   })
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [119.474745, 28.436478, 119.484204, 28.444144]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 160)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -140,7 +140,7 @@ function addRandomGraphicByCount(count) {
     })
     graphicLayer.addGraphic(graphic)
 
-    // 测试位置的
+    // test position
     // map.viewer.entities.add({
     //   position: graphic.position,
     //   point: {
@@ -149,7 +149,7 @@ function addRandomGraphicByCount(count) {
     // })
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 

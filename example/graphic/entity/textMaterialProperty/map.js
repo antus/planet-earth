@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 var eventTarget = new mars3d.BaseClass()
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 29.792325, lng: 121.480055, alt: 146, heading: 198, pitch: -54 }
@@ -12,36 +12,36 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 加个模型
+  //Add a model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "水利闸门",
+    name: "Water Conservancy Gate",
     url: "//data.mars3d.cn/3dtiles/max-fsdzm/tileset.json",
     position: { alt: 15.2 },
     maximumScreenSpaceError: 1
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
 
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
@@ -49,15 +49,15 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
   graphicLayer.clear()
 }
 
-// wall文字 entity方式
+// wall text entity mode
 function addDemoGraphic1(graphicLayer) {
   const graphic = new mars3d.graphic.WallEntity({
     positions: [
@@ -68,18 +68,18 @@ function addDemoGraphic1(graphicLayer) {
       diffHeight: 5,
       materialType: mars3d.MaterialType.Text,
       materialOptions: {
-        text: "水利闸门",
+        text: "Water Conservancy Gate",
         font_family: "楷体",
         color: "#00ffff"
       }
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
 
   graphicLayer.addGraphic(graphic)
 }
 
-//  wall文字  primitive方式添加
+// wall text added in primitive way
 function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.WallEntity({
     positions: [
@@ -90,7 +90,7 @@ function addDemoGraphic2(graphicLayer) {
       diffHeight: 5,
       materialType: mars3d.MaterialType.Text,
       materialOptions: {
-        text: "火星科技",
+        text: "Mars Technology",
         font_size: 70,
         fill: true,
         color: "#00FFFF",
@@ -99,15 +99,15 @@ function addDemoGraphic2(graphicLayer) {
         // strokeWidth: 3,
         outline: true,
         outlineWidth: 4,
-        onCustomCanvas // 对Canvas做自定义处理
+        onCustomCanvas // Customize Canvas
       }
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "Example 2" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
-// 对Canvas做自定义处理,需要返回Promise
+// To do custom processing on Canvas, you need to return Promise
 function onCustomCanvas(canvas, material) {
   const context = canvas.getContext("2d")
   return Cesium.Resource.createIfNeeded("./img/country/zg.png")
@@ -118,7 +118,7 @@ function onCustomCanvas(canvas, material) {
     })
 }
 
-// rectangle贴地矩形  3dtiles路面文字
+// rectangle ground-mounted rectangle 3dtiles road text
 function addDemoGraphic3(graphicLayer) {
   const rectangleEntity = new mars3d.graphic.RectangleEntity({
     positions: [
@@ -131,16 +131,16 @@ function addDemoGraphic3(graphicLayer) {
       clampToGround: true,
       materialType: mars3d.MaterialType.Text,
       materialOptions: {
-        text: "火星路",
+        text: "Mars Road",
         font_size: 50,
         font_family: "楷体",
         color: "#00ff00",
         stroke: true,
         strokeWidth: 2,
         strokeColor: "#ffffff",
-        speed: 10 // 滚动文字速度，0时不滚动
+        speed: 10 //Scroll text speed, no scrolling when 0
       },
-      // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+      // The style when highlighting (default is mouse move in, you can also specify type:'click' to click to highlight). After construction, you can also manually call the openHighlight and closeHighlight methods.
       highlight: {
         type: mars3d.EventType.click,
         materialOptions: {
@@ -150,7 +150,7 @@ function addDemoGraphic3(graphicLayer) {
         }
       }
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "Example 3" }
   })
   graphicLayer.addGraphic(rectangleEntity)
 }
@@ -170,7 +170,7 @@ function addDemoGraphic4(graphicLayer) {
     style: {
       materialType: mars3d.MaterialType.Text,
       materialOptions: {
-        text: "火星科技Mars3D平台",
+        text: "Mars Technology Mars3D Platform",
         font_size: 70,
         color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
         stroke: true,
@@ -180,19 +180,19 @@ function addDemoGraphic4(graphicLayer) {
       rotation: new Cesium.CallbackProperty(getRotationValue, false),
       stRotation: new Cesium.CallbackProperty(getRotationValue, false)
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "Example 4" }
   })
   graphicLayer.addGraphic(rectangleEntity)
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   const diffHeight = result.radius * 0.5
 
@@ -209,7 +209,7 @@ function addRandomGraphicByCount(count) {
         diffHeight,
         materialType: mars3d.MaterialType.Text,
         materialOptions: {
-          text: "Mars3D三维可视化平台",
+          text: "Mars3D three-dimensional visualization platform",
           font_family: "楷体",
           color: "#00ffff"
         }
@@ -219,11 +219,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "wall",
@@ -233,7 +233,7 @@ function startDrawGraphic() {
       outline: false,
       materialType: mars3d.MaterialType.Text,
       materialOptions: {
-        text: "Mars3D三维可视化平台",
+        text: "Mars3D three-dimensional visualization platform",
         font_size: 50,
         color: "#ffff00"
       }
@@ -241,21 +241,21 @@ function startDrawGraphic() {
   })
 }
 
-// 绘制贴地矩形
+//Draw a rectangle that touches the ground
 function startDrawGraphic2() {
   graphicLayer.startDraw({
     type: "rectangle",
     style: {
       materialType: mars3d.MaterialType.Text,
       materialOptions: {
-        text: "Mars3D三维可视化平台"
+        text: "Mars3D three-dimensional visualization platform"
       },
       clampToGround: true
     }
   })
 }
 
-// 根据中心点来计算矩形
+// Calculate the rectangle based on the center point
 function onClickDrawPoint() {
   graphicLayer.startDraw({
     type: "point",
@@ -277,7 +277,7 @@ function onClickDrawPoint() {
         style: {
           materialType: mars3d.MaterialType.Text,
           materialOptions: {
-            text: "Mars3D三维可视化平台"
+            text: "Mars3D three-dimensional visualization platform"
           },
           clampToGround: true
         }
@@ -293,23 +293,23 @@ function onClickDrawPoint() {
   })
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -329,7 +329,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -349,7 +349,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -364,7 +364,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -372,12 +372,12 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "计算长度",
+      text: "Calculate length",
       icon: "fa fa-medium",
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
-        globalAlert("该对象的长度为:" + strDis)
+        globalAlert("The length of this object is:" + strDis)
       }
     }
   ])

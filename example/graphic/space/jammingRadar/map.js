@@ -1,12 +1,12 @@
 // import * as mars3d from "mars3d"
 // // import { FeRadarJamming } from "./FeRadarJamming"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
 var graphicLayer
-var radarJamming // 雷达primitive
+var radarJamming // radar primitive
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.27994, lng: 117.241137, alt: 92227, heading: 0, pitch: -53 }
@@ -14,15 +14,15 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -30,8 +30,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -42,16 +42,16 @@ function addDemoGraphic1(graphicLayer) {
     position: [117.271756, 31.863786, 16.6],
     vertexs: getVertexs(),
     style: {
-      // color: new mars3d.Cesium.Color(1, 0, 0, 1.0), // 设置雷达颜色，默认是过渡色
-      outline: true // 是否显示线框
-      // outlineColor: new mars3d.Cesium.Color(1, 1, 0, 1.0), // 设置线框颜色，默认是过渡色
+      // color: new mars3d.Cesium.Color(1, 0, 0, 1.0), // Set the radar color, the default is the transition color
+      outline: true // Whether to display the wireframe
+      // outlineColor: new mars3d.Cesium.Color(1, 1, 0, 1.0), // Set the wireframe color, the default is the transition color
     }
   })
   graphicLayer.addGraphic(radarJamming)
 }
 
 function getVertexs() {
-  const vertexs = [] // 二维数组，第1层为平面一圈，第2层为竖直方向各圈
+  const vertexs = [] // Two-dimensional array, the first layer is a circle in the plane, and the second layer is each circle in the vertical direction
   for (let pitch = 0; pitch <= 90; pitch += 10) {
     const arrHeadingPt = []
     let radius = 0
@@ -78,9 +78,9 @@ function getVertexs() {
     }
     for (let horizontal = 0; horizontal <= 360; horizontal += 10) {
       arrHeadingPt.push({
-        heading: horizontal, // 平面上的方向，角度值
-        pitch: pitch, // 垂直上的方向，角度值
-        radius: radius // 半径
+        heading: horizontal, // Direction on the plane, angle value
+        pitch: pitch, // vertical direction, angle value
+        radius: radius // radius
       })
     }
     vertexs.push(arrHeadingPt)
@@ -88,14 +88,14 @@ function getVertexs() {
   return vertexs
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -116,11 +116,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "jammingRadar",

@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let canvasWindLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 24.677182, lng: 107.044123, alt: 20407002, heading: 0, pitch: -90 }
@@ -11,27 +11,27 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.basemap = 2017 // 蓝色底图
+  map = mapInstance // record map
+  map.basemap = 2017 // blue basemap
   map.hasTerrain = false
 
-  // 风场
+  // wind farm
   canvasWindLayer = new mars3d.layer.CanvasWindLayer({
-    worker: window.currentPath + "windWorker.js", // 启用多线程模式，注释后是单线程模式(非必须)
-    frameRate: 20, // 每秒刷新次数
-    speedRate: 60, // 风前进速率
+    worker: window.currentPath + "windWorker.js", // Enable multi-threaded mode, single-threaded mode after comment (not required)
+    frameRate: 20, //Number of refreshes per second
+    speedRate: 60, // wind forward speed
     particlesNumber: 10000,
     maxAge: 120,
     lineWidth: 2,
-    // 单颜色
+    // single color
     color: "#ffffff"
-    // 多颜色
+    // Multi-color
     // colors: ["rgb(0, 228, 0)", "rgb(256, 256, 0)", "rgb(256, 126, 0)", "rgb(256, 0, 0)", "rgb(153, 0, 76)", "rgb(126, 0, 35)"],
     // steps: [1.0, 2.0, 5.4, 7.9, 10.7, 13.8]
   })
@@ -41,56 +41,56 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 滑动条事件
-// 修改粒子数量
+//Slider event
+//Modify the number of particles
 function changeCount(val) {
   if (val) {
     canvasWindLayer.particlesNumber = val
   }
 }
 
-// 修改存活时间
+//Modify survival time
 function changeAge(val) {
   if (val) {
     canvasWindLayer.maxAge = val
   }
 }
 
-// 修改移动速率
+//Modify movement speed
 function changeSpeed(val) {
   if (val) {
     canvasWindLayer.speedRate = val
   }
 }
 
-// 修改线宽
+//Modify line width
 function changeLinewidth(val) {
   if (val) {
     canvasWindLayer.lineWidth = val
   }
 }
 
-// 改变颜色
+// change color
 function changeColor(color) {
   canvasWindLayer.color = color
 }
 
-// 加载全球数据
+//Load global data
 let earthWindData
-// 加载气象
+//Load weather
 let dongnanWindData
 function loadEarthData() {
   map.flyHome()
 
   canvasWindLayer.speedRate = 50
-  canvasWindLayer.reverseY = false // false时表示 纬度顺序从大到小
+  canvasWindLayer.reverseY = false // false indicates that the latitude order is from large to small
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/windyuv.json" })
     .then(function (res) {
@@ -102,17 +102,17 @@ function loadEarthData() {
       canvasWindLayer.data = earthWindData
     })
     .catch(function (err) {
-      console.log("请求数据失败!", err)
+      console.log("Request data failed!", err)
     })
 }
-// 加载局部数据
+//Load local data
 function loadDongnanData() {
   map.setCameraView({ lat: 30.484229, lng: 116.627601, alt: 1719951, heading: 0, pitch: -90, roll: 0 })
 
   canvasWindLayer.speedRate = 85
-  canvasWindLayer.reverseY = true // true时表示 纬度顺序从小到到大
+  canvasWindLayer.reverseY = true // When true, it means that the latitude order is from small to large
 
-  // 访问windpoint.json后端接口，取数据
+  //Access the windpoint.json backend interface and get data
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/windpoint.json" })
     .then(function (res) {
       if (dongnanWindData) {
@@ -123,11 +123,11 @@ function loadDongnanData() {
       canvasWindLayer.data = dongnanWindData
     })
     .catch(function () {
-      globalMsg("实时查询气象信息失败，请稍候再试")
+      globalMsg("Real-time query of weather information failed, please try again later")
     })
 }
 
-// 将数据转换为需要的格式:风向转UV
+//Convert the data to the required format: wind direction to UV
 function convertWindData(arr) {
   const arrU = []
   const arrV = []
@@ -137,9 +137,9 @@ function convertWindData(arr) {
   let ymin = arr[0].y
   let ymax = arr[0].y
 
-  // 风向是以y轴正方向为零度顺时针转，0度表示北风。90度表示东风。
-  // u表示经度方向上的风，u为正，表示西风，从西边吹来的风。
-  // v表示纬度方向上的风，v为正，表示南风，从南边吹来的风。
+  //The wind direction is clockwise with the positive direction of the y-axis as zero degrees, and 0 degrees means north wind. 90 degrees means east wind.
+  // u represents the wind in the longitude direction. If u is positive, it represents west wind, the wind blowing from the west.
+  // v represents the wind in the latitude direction, v is positive, indicating south wind, wind blowing from the south.
   for (let i = 0, len = arr.length; i < len; i++) {
     const item = arr[i]
 
@@ -163,8 +163,8 @@ function convertWindData(arr) {
     arrV.push(v)
   }
 
-  const rows = getKeyNumCount(arr, "y") // 计算 行数
-  const cols = getKeyNumCount(arr, "x") // 计算 列数
+  const rows = getKeyNumCount(arr, "y") // Calculate the number of rows
+  const cols = getKeyNumCount(arr, "x") // Calculate the number of columns
 
   return {
     xmin,
@@ -173,8 +173,8 @@ function convertWindData(arr) {
     ymin,
     rows,
     cols,
-    udata: arrU, // 横向风速
-    vdata: arrV // 纵向风速
+    udata: arrU, // cross wind speed
+    vdata: arrV // Longitudinal wind speed
   }
 }
 

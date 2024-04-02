@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tileLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 24.336939, lng: 108.949729, alt: 14990362, heading: 0, pitch: -90 }
@@ -14,7 +14,7 @@ var mapOptions = {
   },
   layers: [
     {
-      name: "瓦片测试信息",
+      name: "Tile test information",
       type: "tileinfo",
       color: "rgba(255,255,0,0.6)",
       show: true
@@ -23,74 +23,74 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  map.basemap = "单张图片 (本地离线)"
+  map.basemap = "Single image (local offline)"
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
-// 加载图层
+//Load layer
 function createTileLayer(options) {
   const params = {
-    type: options.type, // 类型
-    url: options.url, // 图层url
-    // subdomains: $("#txtSubdomains").val(), // url子域
-    layer: options.txtLayer, // 图层名
+    type: options.type, // type
+    url: options.url, // layer url
+    // subdomains: $("#txtSubdomains").val(), // url subdomain
+    layer: options.txtLayer, // layer name
 
-    crs: options.CRS, // 坐标系信息
-    chinaCRS: options.chinaCRS, // 国内坐标系
+    crs: options.CRS, //Coordinate system information
+    chinaCRS: options.chinaCRS, // Domestic coordinate system
 
-    minimumLevel: options.minLoadLevel, // 最低层级
-    maximumLevel: options.maxLoadLevel, // 最高层级
-    minimumTerrainLevel: options.minShowLevel, // 展示影像图层的最小地形细节级别
-    maximumTerrainLevel: options.maxShowLevel, // 展示影像图层的最大地形细节级别
-    brightness: options.brightness, // 亮度
-    opacity: options.opacity // 透明度
+    minimumLevel: options.minLoadLevel, // lowest level
+    maximumLevel: options.maxLoadLevel, //The highest level
+    minimumTerrainLevel: options.minShowLevel, // Display the minimum terrain detail level of the image layer
+    maximumTerrainLevel: options.maxShowLevel, // Display the maximum terrain detail level of the image layer
+    brightness: options.brightness, // brightness
+    opacity: options.opacity // transparency
   }
-  // 新增图层
+  //Add new layer
   if (params.error) {
     globalMsg(params.msg)
     return
   }
   if (params.minimumLevel > params.maximumLevel) {
-    return { error: true, msg: "最低层级的值不得高于最高层级" }
+    return { error: true, msg: "The value of the lowest level must not be higher than the highest level" }
   }
   if (params.minimumTerrainLevel > params.maximumTerrainLevel) {
-    return { error: true, msg: "最小细节的值不得高于最大细节" }
+    return { error: true, msg: "The minimum detail must not be higher than the maximum detail" }
   }
 
-  // 移除原有图层
+  //Remove the original layer
   removeLayer()
 
-  // 绘制区域
+  // draw area
   const rectangle = options.rectangle
   if (rectangle) {
     params.rectangle = rectangle
   }
 
-  // 代理被选中
+  //Agent is selected
   if (params.chkProxy) {
     params.proxy = "//server.mars3d.cn/proxy/"
   } else {
     params.proxy = null
   }
 
-  console.log("图层参数为", params)
+  console.log("Layer parameters are", params)
 
   tileLayer = mars3d.LayerUtil.create({
     ...params,
@@ -110,7 +110,7 @@ function createTileLayer(options) {
   map.addLayer(tileLayer)
 }
 
-// 移除并销毁图层
+// Remove and destroy the layer
 function removeLayer() {
   if (tileLayer) {
     map.removeLayer(tileLayer, true)
@@ -118,7 +118,7 @@ function removeLayer() {
   }
 }
 
-// 数据更新
+// Data Update
 function dataUpdate(params) {
   if (tileLayer) {
     params.flyTo = false
@@ -126,7 +126,7 @@ function dataUpdate(params) {
   }
 }
 
-// 绘制和清除区域
+// Draw and clear areas
 function btnDrawExtent(options) {
   if (tileLayer) {
     tileLayer.rectangle = null
@@ -157,7 +157,7 @@ function btnClearExtent() {
   }
 }
 
-// 修改图层的部分值
+// Modify some values ​​of the layer
 function changeOpacity(val) {
   if (tileLayer) {
     tileLayer.opacity = val
@@ -186,7 +186,7 @@ function creatHRectangleEntity(item) {
 }
 
 var saveParams = (updateValue) => {
-  mars3d.Util.downloadFile("瓦片图层参数.json", JSON.stringify({ ...updateValue, center: map.getCameraView() }))
+  mars3d.Util.downloadFile("Tile layer parameters.json", JSON.stringify({ ...updateValue, center: map.getCameraView() }))
 }
 
 function removeTileLayer() {

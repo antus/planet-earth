@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.653865, lng: 116.262622, alt: 54556, heading: 0, pitch: -60 }
@@ -11,26 +11,26 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
@@ -44,8 +44,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -60,7 +60,7 @@ function addDemoGraphic1(graphicLayer) {
     position: [116.1, 31.0, 1000],
     style: {
       radii: new Cesium.Cartesian3(2500.0, 2500.0, 1000.0),
-      maximumConeDegree: 90, // 半球
+      maximumConeDegree: 90, // hemisphere
       fill: false,
       subdivisions: 64,
       stackPartitions: 32,
@@ -68,51 +68,51 @@ function addDemoGraphic1(graphicLayer) {
       outline: true,
       outlineColor: "#ffff00",
 
-      // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+      // The style when highlighting (default is mouse move in, you can also specify type:'click' to click to highlight). After construction, you can also manually call the openHighlight and closeHighlight methods.
       highlight: {
         outlineColor: "#ff0000"
       }
     },
-    attr: { remark: "示例1" },
-    // 添加扫描面
+    attr: { remark: "Example 1" },
+    //Add scanning surface
     scanPlane: {
-      step: 0.5, // 步长
+      step: 0.5, // step size
       style: {
         color: "#ffff00",
         opacity: 0.4
       }
     }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 
-  // 演示个性化处理graphic
+  // Demonstrate personalized processing graphic
   initGraphicManager(graphic)
 }
-// 也可以在单个Graphic上做个性化管理及绑定操作
+// You can also perform personalized management and binding operations on a single Graphic
 function initGraphicManager(graphic) {
-  // 3.在graphic上绑定监听事件
+  // 3. Bind the listening event to the graphic
   // graphic.on(mars3d.EventType.click, function (event) {
-  //   console.log("监听graphic，单击了矢量对象", event)
+  // console.log("Listening to graphic, clicked vector object", event)
   // })
-  // 绑定Tooltip
-  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
+  // Bind Tooltip
+  // graphic.bindTooltip('I am the Tooltip bound to graphic') //.openTooltip()
 
-  // 绑定Popup
+  // Bind Popup
   const inthtml = `<table style="width: auto;">
             <tr>
-              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
+              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">I am a Popup bound to the graphic </th>
             </tr>
             <tr>
-              <td>提示：</td>
-              <td>这只是测试信息，可以任意html</td>
+              <td>Tips:</td>
+              <td>This is just test information, you can use any html</td>
             </tr>
           </table>`
   graphic.bindPopup(inthtml).openPopup()
 
-  // 绑定右键菜单
+  //Bind right-click menu
   graphic.bindContextMenu([
     {
-      text: "删除对象[graphic绑定的]",
+      text: "Delete object [graphic-bound]",
       icon: "fa fa-trash-o",
       callback: (e) => {
         const graphic = e.graphic
@@ -123,14 +123,14 @@ function initGraphicManager(graphic) {
     }
   ])
 
-  // 测试 颜色闪烁
+  //Test color flash
   if (graphic.startFlicker) {
     graphic.startFlicker({
-      time: 20, // 闪烁时长（秒）
+      time: 20, // Flashing duration (seconds)
       maxAlpha: 0.5,
       color: Cesium.Color.YELLOW,
       onEnd: function () {
-        // 结束后回调
+        // Callback after completion
       }
     })
   }
@@ -142,7 +142,7 @@ function addDemoGraphic2(graphicLayer) {
     position: new mars3d.LngLatPoint(116.2, 31.0, 1000),
     style: {
       radii: new Cesium.Cartesian3(2500.0, 2500.0, 1000.0),
-      maximumConeDegree: 90, // 半球
+      maximumConeDegree: 90, // hemisphere
       color: Cesium.Color.RED.withAlpha(0.3),
       subdivisions: 128,
       stackPartitions: 32,
@@ -150,15 +150,15 @@ function addDemoGraphic2(graphicLayer) {
       outline: true,
       outlineColor: Cesium.Color.RED.withAlpha(0.7)
     },
-    attr: { remark: "示例2" },
-    // 添加扫描面
+    attr: { remark: "Example 2" },
+    //Add scanning surface
     scanPlane: [
       { step: 0.9, style: { color: "#ffff00", minimumConeDegree: 70.0, maximumConeDegree: 90.0 } },
       { step: 0.9, style: { heading: 120, color: "#ffff00", minimumConeDegree: 70.0, maximumConeDegree: 90.0 } },
       { step: 0.9, style: { heading: 240, color: "#ffff00", minimumConeDegree: 70.0, maximumConeDegree: 90.0 } }
     ]
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic3(graphicLayer) {
@@ -174,9 +174,9 @@ function addDemoGraphic3(graphicLayer) {
       },
       outline: false
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "Example 3" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
 //
@@ -193,7 +193,7 @@ function addDemoGraphic4(graphicLayer) {
       },
       outline: false
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "Example 4" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -205,7 +205,7 @@ function addDemoGraphic5(graphicLayer) {
     style: {
       radii: 2500,
       innerRadii: 1500,
-      maximumConeDegree: 90, // 半球
+      maximumConeDegree: 90, // hemisphere
       materialType: mars3d.MaterialType.WallScroll,
       materialOptions: {
         image: "img/textures/line-color-azure.png",
@@ -223,14 +223,14 @@ function addDemoGraphic5(graphicLayer) {
       outlineColor: "#00ffff"
     },
     hasEdit: false,
-    attr: { remark: "示例5" }
+    attr: { remark: "Example 5" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 
-  // 添加扫描面
+  //Add scanning surface
   // graphic.addScanPlane({
-  //   type: "roll", // 扫描类型
-  //   step: 0.5, // 步长
+  // type: "roll", // Scan type
+  // step: 0.5, // step size
   //   style: {
   //     minimumConeDegree: -90.0,
   //     maximumConeDegree: 90.0
@@ -238,7 +238,7 @@ function addDemoGraphic5(graphicLayer) {
   // })
 }
 
-// 半圆顶球体
+// half dome sphere
 function addDemoGraphic6(graphicLayer) {
   const graphic = new mars3d.graphic.EllipsoidEntity({
     position: new mars3d.LngLatPoint(116.2, 30.9, 1000),
@@ -259,10 +259,10 @@ function addDemoGraphic6(graphicLayer) {
       // outlineColor: Cesium.Color.BLUE.withAlpha(0.6)
     },
     hasEdit: false,
-    // 添加扫描面
+    //Add scanning surface
     scanPlane: {
       innerRadii: 2500,
-      step: 0.5, // 步长
+      step: 0.5, // step size
       style: {
         color: "#00ffff",
         opacity: 0.2,
@@ -273,14 +273,14 @@ function addDemoGraphic6(graphicLayer) {
         maximumConeDegree: 70.0
       }
     },
-    attr: { remark: "示例6" }
+    attr: { remark: "Example 6" }
   })
   graphicLayer.addGraphic(graphic)
 
-  // // 添加扫描面
+  // //Add scanning surface
   // graphic.addScanPlane({
-  //   type: "pitch", // 扫描类型
-  //   step: 0.5, // 步长
+  // type: "pitch", // Scan type
+  // step: 0.5, // step size
   //   style: {
   //     roll: 90,
   //     minimumConeDegree: 0.0,
@@ -289,7 +289,7 @@ function addDemoGraphic6(graphicLayer) {
   // })
 }
 
-// 含内半径 半圆顶球体
+//Including inner radius semi-dome sphere
 function addDemoGraphic7(graphicLayer) {
   const graphic = new mars3d.graphic.EllipsoidEntity({
     position: new mars3d.LngLatPoint(116.3, 30.9, 1000),
@@ -300,20 +300,20 @@ function addDemoGraphic7(graphicLayer) {
       color: "rgba(253,2,0,0.3)",
       outline: true
     },
-    attr: { remark: "示例7" }
+    attr: { remark: "Example 7" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 
-  // 添加扫描面
+  //Add scanning surface
   graphic.addScanPlane({
-    step: 1.5, // 步长
+    step: 1.5, // step size
     style: {
       innerRadii: 1000
     }
   })
 }
 
-// 被切开的含内半径 半圆顶球体
+// The cut inner radius of the semi-dome sphere
 function addDemoGraphic8(graphicLayer) {
   const graphic = new mars3d.graphic.EllipsoidEntity({
     position: new mars3d.LngLatPoint(116.4, 30.9, 1000),
@@ -325,13 +325,13 @@ function addDemoGraphic8(graphicLayer) {
       color: "rgba(253,200,0,0.3)",
       outline: true
     },
-    attr: { remark: "示例8" }
+    attr: { remark: "Example 8" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 
-  // 添加扫描面
+  //Add scanning surface
   graphic.addScanPlane({
-    step: 0.8, // 步长
+    step: 0.8, // step size
     style: {
       innerRadii: 1000
     }
@@ -349,15 +349,15 @@ function addDemoGraphic9(graphicLayer) {
       maximumConeDegree: 90.0,
       fill: false,
       outline: true,
-      outlineColor: "rgba(0, 204, 0, 0.4)", // 绿色
-      stackPartitions: 30, // 竖向
-      slicePartitions: 30 // 横向
+      outlineColor: "rgba(0, 204, 0, 0.4)", // green
+      stackPartitions: 30, // vertical
+      slicePartitions: 30 // horizontal
     },
-    // 添加扫描面
+    //Add scanning surface
     scanPlane: {
-      step: 1.0, // 步长
-      min: -90.0, // 最小值
-      max: 180.0, // 最大值
+      step: 1.0, // step size
+      min: -90.0, // minimum value
+      max: 180.0, // maximum value
       style: {
         innerRadii: 1000,
         outline: true,
@@ -383,7 +383,7 @@ function addDemoGraphic10(graphicLayer) {
       maximumConeDegree: 90,
       color: "rgba(231,6,16,0.2)",
       label: {
-        text: "最小半径",
+        text: "minimum radius",
         color: "blue",
         background: true,
         backgroundColor: "rgba(255,255,255,0.4)",
@@ -404,7 +404,7 @@ function addDemoGraphic10(graphicLayer) {
       maximumConeDegree: 90,
       color: "rgba(26,144,255,0.2)",
       label: {
-        text: "中间半径",
+        text: "middle radius",
         color: "blue",
         background: true,
         backgroundColor: "rgba(255,255,255,0.4)",
@@ -425,7 +425,7 @@ function addDemoGraphic10(graphicLayer) {
       maximumConeDegree: 90,
       color: "rgba(82,196,26,0.2)",
       label: {
-        text: "最大半径",
+        text: "maximum radius",
         color: "blue",
         background: true,
         backgroundColor: "rgba(255,255,255,0.4)",
@@ -436,13 +436,13 @@ function addDemoGraphic10(graphicLayer) {
       }
     },
     hasEditRadii: false,
-    linkage: [graphicN, graphicZ] // 联动的对象
+    linkage: [graphicN, graphicZ] // Linkage object
   })
   graphicLayer.addGraphic(graphicW)
 
-  // 绑定事件
+  //Bind event
   graphicW.on(mars3d.EventType.editMouseMove, (event) => {
-    const linkage = event.graphic?.options?.linkage // 联动的对象
+    const linkage = event.graphic?.options?.linkage // Linked object
     if (linkage) {
       const position = event.graphic.position
       linkage.forEach((element) => {
@@ -452,14 +452,14 @@ function addDemoGraphic10(graphicLayer) {
   })
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   const radius = result.radius
 
@@ -479,11 +479,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "ellipsoid",
@@ -494,23 +494,23 @@ function startDrawGraphic() {
   })
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -530,7 +530,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -550,7 +550,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -565,7 +565,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)

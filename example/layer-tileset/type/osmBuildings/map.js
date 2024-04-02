@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tiles3dLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.2322, lng: 121.44363, alt: 1989, heading: 87, pitch: -25 }
@@ -15,19 +15,19 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.basemap = 2017 // 切换到蓝色底图
+  map = mapInstance // record map
+  map.basemap = 2017 // switch to blue basemap
 
   globalNotify(
-    "已知问题提示",
-    `如图层未显示或服务URL访问超时，是因为目前国家测绘主管部门对未经审核批准的国外地图服务做了屏蔽封锁。
-     您可以需翻墙使用 或 参考示例代码替换本地服务地址使用。`
+    "Known Issue Tips",
+    `For example, if the layer is not displayed or the service URL access times out, it is because the national surveying and mapping authorities currently block foreign map services that have not been reviewed and approved.
+     You can use it if you need to circumvent the firewall or refer to the sample code to replace the local service address. `
   )
 
   tiles3dLayer = new mars3d.layer.OsmBuildingsLayer({
@@ -43,8 +43,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -61,21 +61,21 @@ function setStyle2() {
     fragmentShaderText: `
     void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material)
     {
-      vec4 position = czm_inverseModelView * vec4(fsInput.attributes.positionEC,1); // 位置
+      vec4 position = czm_inverseModelView * vec4(fsInput.attributes.positionEC,1); // position
 
-      // 注意shader中写浮点数是，一定要带小数点，否则会报错，比如0需要写成0.0，1要写成1.0
-      float _baseHeight = 50.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-      float _heightRange = 380.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-      float _glowRange = 400.0; // 光环的移动范围(高度)
+      // Note that when writing floating point numbers in the shader, they must have a decimal point, otherwise an error will be reported. For example, 0 needs to be written as 0.0, and 1 needs to be written as 1.0.
+      float _baseHeight = 50.0; // The base height of the object needs to be modified to a suitable building base height.
+      float _heightRange = 380.0; // Highlight range (_baseHeight ~ _baseHeight + _heightRange)
+      float _glowRange = 400.0; // The movement range (height) of the halo
 
-      // 建筑基础色
+      //Building base color
       float mars_height = position.z - _baseHeight;
       float mars_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
       float mars_a12 = mars_height / _heightRange + sin(mars_a11) * 0.1;
-      material.diffuse = vec3(0.0, 0.0, 1.0); // 颜色
-      material.diffuse *= vec3(mars_a12);// 渐变
+      material.diffuse = vec3(0.0, 0.0, 1.0); // color
+      material.diffuse *= vec3(mars_a12);//gradient
 
-      // 动态光环
+      // dynamic halo
       float time = fract(czm_frameNumber / 360.0);
       time = abs(time - 0.5) * 2.0;
       float mars_h = clamp(mars_height / _glowRange, 0.0, 1.0);
@@ -108,10 +108,10 @@ function setStyle3() {
     void fragmentMain(FragmentInput fsInput, inout czm_modelMaterial material) {
       vec3 positionMC = fsInput.attributes.positionMC;
       if (dot(vec3(0.0, 0.0, 1.0), v_mars3d_normalMC) > 0.95) {
-        //处理楼顶:统一处理成深色。
+        //Processing the roof: uniformly process it into dark color.
         material.diffuse = vec3(0.079, 0.107, 0.111);
       } else {
-        //处理四个侧面: 贴一样的图
+        //Process four sides: paste the same picture
         float mars3d_width = 100.0;
         float mars3d_height = 100.0;
         float mars3d_textureX = 0.0;
@@ -173,18 +173,18 @@ function setStyle4() {
                 vec4 darkRefColor = texture(u_envTexture2, vec2(coord.x, (coord.z - coord.y) / 2.0));
                 material.diffuse = mix(mix(vec3(0.3), vec3(0.1,0.2,0.4),clamp(positionMC.z / 200., 0.0, 1.0)) , darkRefColor.rgb ,0.3);
                 material.diffuse *= 0.2;
-                // 注意shader中写浮点数是 一定要带小数点 否则会报错 比如0需要写成0.0 1要写成1.0
-                float _baseHeight = 0.0; // 物体的基础高度，需要修改成一个合适的建筑基础高度
-                float _heightRange = 20.0; // 高亮的范围(_baseHeight ~ _baseHeight + _heightRange)
-                float _glowRange = 300.0; // 光环的移动范围(高度)
-                // 建筑基础色
+                // Note that floating point numbers written in the shader must have a decimal point, otherwise an error will be reported. For example, 0 needs to be written as 0.0 and 1 needs to be written as 1.0.
+                float _baseHeight = 0.0; // The base height of the object needs to be modified to a suitable building base height.
+                float _heightRange = 20.0; // Highlight range (_baseHeight ~ _baseHeight + _heightRange)
+                float _glowRange = 300.0; // The movement range (height) of the halo
+                //Building base color
                 float czm_height = positionMC.z - _baseHeight;
                 float czm_a11 = fract(czm_frameNumber / 120.0) * 3.14159265 * 2.0;
                 float czm_a12 = czm_height / _heightRange + sin(czm_a11) * 0.1;
 
                 float times = czm_frameNumber / 60.0;
-                material.diffuse *= vec3(czm_a12);// 渐变
-                // 动态光环
+                material.diffuse *= vec3(czm_a12);//gradient
+                // dynamic halo
                 float time = fract(czm_frameNumber / 360.0);
                 time = abs(time - 0.5) * 2.0;
                 float czm_h = clamp(czm_height / _glowRange, 0.0, 1.0);

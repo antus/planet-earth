@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 27.390195, lng: 117.386057, alt: 550488, heading: 0, pitch: -49 }
@@ -11,29 +11,29 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   const center = Cesium.Cartesian3.fromDegrees(117.257436, 31.838742, 1)
 
   const graphic = new mars3d.graphic.CircleEntity({
-    name: "合肥市",
+    name: "Hefei City",
     position: center,
     style: {
       radius: 50000.0,
       materialType: mars3d.MaterialType.CircleWave,
       materialOptions: {
         color: "#ff0000",
-        count: 1, // 单个圆圈
+        count: 1, // single circle
         speed: 20
       }
     }
@@ -41,22 +41,22 @@ function onMounted(mapInstance) {
   graphicLayer.addGraphic(graphic)
 
   const cities = [
-    { name: "六安市", lon: 116.3123, lat: 31.8329 },
-    { name: "安庆市", lon: 116.7517, lat: 30.5255 },
-    { name: "滁州市", lon: 118.1909, lat: 32.536 },
-    { name: "宣城市", lon: 118.8062, lat: 30.6244 },
-    { name: "阜阳市", lon: 115.7629, lat: 32.9919 },
-    { name: "宿州市", lon: 117.5208, lat: 33.6841 },
-    { name: "黄山市", lon: 118.0481, lat: 29.9542 },
-    { name: "巢湖市", lon: 117.7734, lat: 31.4978 },
-    { name: "亳州市", lon: 116.1914, lat: 33.4698 },
-    { name: "池州市", lon: 117.3889, lat: 30.2014 },
-    { name: "蚌埠市", lon: 117.4109, lat: 33.1073 },
-    { name: "芜湖市", lon: 118.3557, lat: 31.0858 },
-    { name: "淮北市", lon: 116.6968, lat: 33.6896 },
-    { name: "淮南市", lon: 116.7847, lat: 32.7722 },
-    { name: "马鞍山市", lon: 118.6304, lat: 31.5363 },
-    { name: "铜陵市", lon: 117.9382, lat: 30.9375 }
+    { name: "Lu'an City", lon: 116.3123, lat: 31.8329 },
+    { name: "Anqing City", lon: 116.7517, lat: 30.5255 },
+    { name: "Chuzhou City", lon: 118.1909, lat: 32.536 },
+    { name: "Xuancheng City", lon: 118.8062, lat: 30.6244 },
+    { name: "Fuyang City", lon: 115.7629, lat: 32.9919 },
+    { name: "Suzhou City", lon: 117.5208, lat: 33.6841 },
+    { name: "Huangshan City", lon: 118.0481, lat: 29.9542 },
+    { name: "Chaohu City", lon: 117.7734, lat: 31.4978 },
+    { name: "Bozhou City", lon: 116.1914, lat: 33.4698 },
+    { name: "Chizhou City", lon: 117.3889, lat: 30.2014 },
+    { name: "Bengbu City", lon: 117.4109, lat: 33.1073 },
+    { name: "Wuhu City", lon: 118.3557, lat: 31.0858 },
+    { name: "Huaibei City", lon: 116.6968, lat: 33.6896 },
+    { name: "Huainan City", lon: 116.7847, lat: 32.7722 },
+    { name: "Ma'anshan City", lon: 118.6304, lat: 31.5363 },
+    { name: "Tongling City", lon: 117.9382, lat: 30.9375 }
   ]
 
   const lineMaterial = mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
@@ -67,34 +67,34 @@ function onMounted(mapInstance) {
   for (let i = 0; i < cities.length; i++) {
     const item = cities[i]
     const thisPoint = Cesium.Cartesian3.fromDegrees(item.lon, item.lat, 1)
-    const positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) // 计算曲线点
+    const positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) // Calculate curve points
     const graphic = new mars3d.graphic.PolylinePrimitive({
       positions,
       style: {
         width: 2,
-        material: lineMaterial // 动画线材质
+        material: lineMaterial // animation line material
       }
     })
-    graphic.bindPopup(`合肥 - ${item.name}`)
+    graphic.bindPopup(`Hefei - ${item.name}`)
     graphicLayer.addGraphic(graphic)
   }
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 /**
- * 改变迁移的速度
+ * Change the speed of migration
  *
- * @param {number} val 滑动条的数值
- * @returns {void} 无
+ * @param {number} val value of the slider
+ * @returns {void} None
  * @example
- * 更新material
+ * Update material
  * graphic.setStyle({
  *   material: mars3d.MaterialUtil.createMaterial(mars3d.MaterialType.LineFlow, {
  *     image: "img/textures/line-color-yellow.png",
@@ -110,7 +110,7 @@ function changeSlide(val) {
 
   graphicLayer.eachGraphic((graphic) => {
     if (graphic instanceof mars3d.graphic.PolylinePrimitive) {
-      graphic.uniforms.speed = val // 只更新速度（平滑过度）
+      graphic.uniforms.speed = val // Only update speed (smooth transition)
     } else {
       // graphic.setStyle({})
     }

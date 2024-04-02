@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let measure
 let measureVolume
 
@@ -11,22 +11,22 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
   addMeasure()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -43,14 +43,14 @@ function addMeasure() {
   map.addThing(measure)
 
   measure.on(mars3d.EventType.start, function (event) {
-    console.log("开始分析", event)
+    console.log("Start analysis", event)
     clearInterResult()
     showLoading()
-    console.log("坐标为", JSON.stringify(mars3d.LngLatArray.toArray(event.positions))) // 方便测试拷贝坐标
+    console.log("The coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(event.positions))) // Convenient for testing copy coordinates
   })
 
   measure.on(mars3d.EventType.end, function (event) {
-    console.log("分析完成", event)
+    console.log("Analysis completed", event)
     hideLoading()
 
     // const resultInter = event.graphic.interPolygonObj
@@ -72,14 +72,14 @@ function addMeasure() {
     // console.log(totalArea, mars3d.MeasureUtil.formatArea(totalArea))
   })
 
-  // 加一些演示数据
+  //Add some demo data
   setTimeout(() => {
     addDemoGraphic1(measure.graphicLayer)
   }, 3000)
 
-  // 有模型时
+  //When there is a model
   // tiles3dLayer.readyPromise.then((layer) => {
-  //   // 关键代码,等模型readyPromise加载后执行volume
+  // // Key code, execute volume after the model readyPromise is loaded.
   //   addDemoGraphic1(measure.graphicLayer)
   // })
 }
@@ -102,7 +102,7 @@ function addDemoGraphic1(graphicLayer) {
       width: 5,
       color: "#3388ff"
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
   graphic.on(mars3d.EventType.end, function () {
     showHeightVal()
@@ -112,13 +112,13 @@ function addDemoGraphic1(graphicLayer) {
   measureVolume = graphic
 }
 
-// 点选高度
+//Click height
 function showHeightVal() {
   const baseHeight = measureVolume.height.toFixed(1)
   const minHeight = measureVolume.minHeight.toFixed(1)
   const maxHeight = getFixedNum(measureVolume.maxHeight)
 
-  // 触发自定义事件 heightVal ，改变组件面板中的值
+  // Trigger the custom event heightVal and change the value in the component panel
   eventTarget.fire("heightVal", { baseHeight, minHeight, maxHeight })
 }
 
@@ -126,14 +126,14 @@ function getFixedNum(val) {
   return Math.ceil(val * 10) / 10
 }
 
-// 方量分析
+// Square quantity analysis
 function analysisMeasure() {
-  // 手动绘制的方式分析
+  // Analysis of manual drawing methods
   measure
     .volume({
-      splitNum: 6, // 面内插值次数，控制精度[注意精度越大，分析时间越长]
-      // minHeight: 50 , //可以设置一个固定的最低高度
-      exact: false // 是否进行精确计算， 传false时是否快速概略计算方式，该方式计算精度较低，但计算速度快，仅能计算在当前视域内坐标的高度
+      splitNum: 6, // Number of in-plane interpolations to control accuracy [note that the greater the accuracy, the longer the analysis time]
+      // minHeight: 50, //You can set a fixed minimum height
+      exact: false // Whether to perform precise calculations. When false is passed, whether to use a quick rough calculation method. This method has lower calculation accuracy but fast calculation speed. It can only calculate the height of coordinates within the current field of view.
     })
     .then((e) => {
       measureVolume = e
@@ -141,7 +141,7 @@ function analysisMeasure() {
     })
 }
 
-// 清除
+// clear
 function clear() {
   measure.clear()
   measureVolume = null
@@ -158,31 +158,31 @@ function showResult(reslut) {
   }
 }
 
-// 修改基础高度
+//Modify base height
 function baseHeight(num) {
   measureVolume.height = num
   showHeightVal()
 }
 
-// 修改底高
+//Modify bottom height
 function txtMinHeight(num) {
   if (num > measureVolume.height) {
-    globalMsg("墙底部高度不能高于基准面高")
+    globalMsg("The bottom height of the wall cannot be higher than the height of the base plane")
     return
   }
   measureVolume.minHeight = num
 }
 
-// 修改顶高
+//Modify top height
 function txtMaxHeight(num) {
   const maxHeight = getFixedNum(measureVolume.polygonMaxHeight)
   if (num < maxHeight) {
-    globalMsg("墙顶部高度不能低于区域内的地表高" + maxHeight)
+    globalMsg("The height of the top of the wall cannot be lower than the surface height in the area" + maxHeight)
     measureVolume.maxHeight = Number(maxHeight)
     return
   }
   if (num < measureVolume.height) {
-    globalMsg("墙顶部高度不能低于基准面高")
+    globalMsg("The height of the top of the wall cannot be lower than the height of the base plane")
     return
   }
   measureVolume.maxHeight = num
@@ -190,11 +190,11 @@ function txtMaxHeight(num) {
 
 function selHeight() {
   if (!measureVolume || !measure) {
-    globalMsg("请先开始方量分析")
+    globalMsg("Please start the square analysis first")
     return
   }
 
-  // 拾取高度
+  // Pick up height
   map.graphicLayer.startDraw({
     type: "point",
     style: {
@@ -215,9 +215,9 @@ function selHeight() {
   })
 }
 
-// 显示mars3d.polygon.interPolygon处理后的面内插值分析结果，主要用于测试对比
+// Display the in-plane interpolation analysis results after mars3d.polygon.interPolygon processing, mainly used for testing and comparison
 
-// 显示面的插值计算结果，方便比较分析
+//Display the interpolation calculation results of the surface to facilitate comparison and analysis.
 let interGraphicLayer
 
 function clearInterResult() {
@@ -230,7 +230,7 @@ function clearInterResult() {
 }
 
 function showInterResult(list) {
-  // 分析结果用于测试分析的，不做太多处理，直接清除之前的，只保留一个
+  //The analysis results are used for test analysis. Without much processing, the previous ones are directly cleared and only one is retained.
   clearInterResult()
 
   let pt1, pt2, pt3
@@ -242,7 +242,7 @@ function showInterResult(list) {
     pt2 = item.point2.pointDM
     pt3 = item.point3.pointDM
 
-    // 点
+    // point
     for (const pt of [item.point1, item.point2, item.point3]) {
       const graphic = new mars3d.graphic.PointPrimitive({
         position: pt.pointDM,
@@ -253,16 +253,16 @@ function showInterResult(list) {
       })
       interGraphicLayer.addGraphic(graphic)
 
-      graphic.bindTooltip("点高度:" + mars3d.MeasureUtil.formatDistance(pt.height))
+      graphic.bindTooltip("Point height:" + mars3d.MeasureUtil.formatDistance(pt.height))
     }
 
-    // 横截面面积
+    // cross-sectional area
     item.area = item.area || mars3d.MeasureUtil.getTriangleArea(pt1, pt2, pt3)
 
-    // 三角网及边线
+    //Triangle network and edges
     const positions = [pt1, pt2, pt3, pt1]
 
-    // 三角网面（单击用）
+    //Triangular mesh (for click)
     const primitivePoly = new mars3d.graphic.PolygonPrimitive({
       positions,
       style: {
@@ -270,9 +270,9 @@ function showInterResult(list) {
       }
     })
     interGraphicLayer.addGraphic(primitivePoly)
-    primitivePoly.bindTooltip("三角面积:" + mars3d.MeasureUtil.formatArea(item.area) + "(第" + i + "个)")
+    primitivePoly.bindTooltip("Triangle area:" + mars3d.MeasureUtil.formatArea(item.area) + "(th" + i + "number)")
 
-    // 三角网边线
+    // Triangle network edges
     const primitiveLine = new mars3d.graphic.PolylinePrimitive({
       positions,
       style: {

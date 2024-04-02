@@ -1,44 +1,44 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var map // mars3d.Map three-dimensional map object
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 let graphicLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.836861, lng: 116.044673, alt: 1395, heading: 14, pitch: -42 }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
     compass: { top: "10px", left: "5px" }
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map = mapInstance // record map
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 加载完成在加载小车，否则地形未加载完成，小车会处于地下
+  // Load the car after loading is complete, otherwise the terrain has not been loaded and the car will be underground
   map.on(mars3d.EventType.load, function (event) {
     addGraphicLayer()
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -46,7 +46,7 @@ function onUnmounted() {
 
 function addGraphicLayer() {
   const fixedRoute = new mars3d.graphic.FixedRoute({
-    name: "贴地表表面漫游",
+    name: "Roaming on the surface of the earth",
     speed: 160,
     positions: [
       [116.043233, 30.845286, 392.48],
@@ -57,7 +57,7 @@ function addGraphicLayer() {
       [116.18739, 30.854441, 244.53],
       [116.205214, 30.859332, 300.96]
     ],
-    clockLoop: false, // 是否循环播放
+    clockLoop: false, // Whether to loop playback
     camera: {
       type: "gs",
       pitch: -30,
@@ -72,7 +72,7 @@ function addGraphicLayer() {
     model: {
       url: "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
       heading: 90,
-      mergeOrientation: true, // 用于设置模型不是标准的方向时的纠偏处理,在orientation基础的方式值上加上设置是heading值
+      mergeOrientation: true, // Used to set the correction process when the model is not in a standard orientation. Add the setting to the orientation-based mode value to be the heading value.
       minimumPixelSize: 50
     },
     polyline: {
@@ -82,26 +82,26 @@ function addGraphicLayer() {
   })
   graphicLayer.addGraphic(fixedRoute)
 
-  // 绑定popup
+  //Bind popup
   bindPopup(fixedRoute)
 
   fixedRoute.on(mars3d.EventType.start, function (event) {
-    console.log("漫游开始start")
+    console.log("Roaming starts")
   })
   fixedRoute.on(mars3d.EventType.end, function (event) {
-    console.log("漫游结束end")
+    console.log("Roaming ends")
   })
-  // ui面板信息展示
+  //UI panel information display
   fixedRoute.on(mars3d.EventType.change, (event) => {
     // const popup = event.graphic.getPopup()
-    // const container = popup?.container // popup对应的DOM
+    // const container = popup?.container // DOM corresponding to popup
 
-    // console.log("漫游change", event)
+    // console.log("Roaming change", event)
     throttled(eventTarget.fire("roamLineChange", event), 500)
   })
 
   map.on(mars3d.EventType.keydown, function (event) {
-    // 空格 切换暂停/继续
+    // Space switches pause/continue
     if (event.keyCode === 32) {
       if (fixedRoute.isPause) {
         fixedRoute.proceed()
@@ -111,10 +111,10 @@ function addGraphicLayer() {
     }
   })
 
-  // 不贴地时，直接开始
+  // When not touching the ground, start directly
   // startFly(fixedRoute)
 
-  // 需要计算贴地点时，异步计算完成贴地后再启动
+  // When it is necessary to calculate the placement location, the asynchronous calculation will be started after the placement is completed.
   showLoading()
   fixedRoute.autoSurfaceHeight().then(function (e) {
     hideLoading()
@@ -124,7 +124,7 @@ function addGraphicLayer() {
 
 function startFly(fixedRoute) {
   fixedRoute.start()
-  fixedRoute.openPopup() // 显示popup
+  fixedRoute.openPopup() // Display popup
 
   addParticleSystem(fixedRoute.property)
 }
@@ -132,18 +132,18 @@ function startFly(fixedRoute) {
 function bindPopup(fixedRoute) {
   fixedRoute.bindPopup(
     `<div style="width: 200px">
-      <div>总 距 离：<span id="lblAllLen"> </span></div>
-      <div>总 时 间：<span id="lblAllTime"> </span></div>
-      <div>开始时间：<span id="lblStartTime"> </span></div>
-      <div>剩余时间：<span id="lblRemainTime"> </span></div>
-      <div>剩余距离：<span id="lblRemainLen"> </span></div>
+      <div>Total distance: <span id="lblAllLen"> </span></div>
+      <div>Total time: <span id="lblAllTime"> </span></div>
+      <div>Start time: <span id="lblStartTime"> </span></div>
+      <div>Remaining time: <span id="lblRemainTime"> </span></div>
+      <div>Remaining distance: <span id="lblRemainLen"> </span></div>
     </div>`,
     { closeOnClick: false }
   )
 
-  // 刷新局部DOM,不影响popup面板的其他控件操作
+  // Refresh the local DOM without affecting the operations of other controls in the popup panel.
   fixedRoute.on(mars3d.EventType.popupRender, function (event) {
-    const container = event.container // popup对应的DOM
+    const container = event.container // DOM corresponding to popup
 
     const params = fixedRoute?.info
     if (!params) {
@@ -172,44 +172,44 @@ function bindPopup(fixedRoute) {
 
     const lblRemainLen = container.querySelector("#lblRemainLen")
     if (lblRemainLen) {
-      lblRemainLen.innerHTML = mars3d.MeasureUtil.formatDistance(params.distance_all - params.distance) || "完成"
+      lblRemainLen.innerHTML = mars3d.MeasureUtil.formatDistance(params.distance_all - params.distance) || "Complete"
     }
   })
 }
 
-//  添加尾气粒子效果
+//Add exhaust particle effect
 function addParticleSystem(property) {
   const particleSystem = new mars3d.graphic.ParticleSystem({
     position: property,
     style: {
       image: "./img/particle/smoke.png",
-      particleSize: 12, // 粒子大小（单位：像素）
-      emissionRate: 20.0, // 发射速率 （单位：次/秒）
-      pitch: 40, // 俯仰角
-      maxHeight: 1000, // 超出该高度后不显示粒子效果
+      particleSize: 12, // particle size (unit: pixel)
+      emissionRate: 20.0, // Emission rate (unit: times/second)
+      pitch: 40, // pitch angle
+      maxHeight: 1000, // No particle effect will be displayed after exceeding this height
 
-      startColor: Cesium.Color.GREY.withAlpha(0.7), // 开始颜色
-      endColor: Cesium.Color.WHITE.withAlpha(0.0), // 结束颜色
-      startScale: 1.0, //  开始比例（单位：相对于imageSize大小的倍数）
-      endScale: 5.0, // 结束比例（单位：相对于imageSize大小的倍数）
-      minimumSpeed: 1.0, // 最小速度(米/秒)
-      maximumSpeed: 4.0 // 最大速度(米/秒)
+      startColor: Cesium.Color.GREY.withAlpha(0.7), // start color
+      endColor: Cesium.Color.WHITE.withAlpha(0.0), //End color
+      startScale: 1.0, //Start scale (unit: multiple of imageSize size)
+      endScale: 5.0, // End scale (unit: multiple of imageSize size)
+      minimumSpeed: 1.0, // minimum speed (m/s)
+      maximumSpeed: 4.0 // Maximum speed (m/s)
     },
-    attr: { remark: "车辆尾气" }
+    attr: { remark: "Vehicle exhaust" }
   })
   graphicLayer.addGraphic(particleSystem)
 }
 
-// ui层使用
+//Used by ui layer
 var formatDistance = mars3d.MeasureUtil.formatDistance
 var formatTime = mars3d.Util.formatTime
 
-// 节流
+// Throttle
 function throttled(fn, delay) {
   let timer = null
   let starttime = Date.now()
   return function () {
-    const curTime = Date.now() // 当前时间
+    const curTime = Date.now() // current time
     const remaining = delay - (curTime - starttime)
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this

@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let floodByMaterial
 
 var mapOptions = {
@@ -17,25 +17,25 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 基于地球材质，可以多个区域
+  // Based on the earth material, multiple areas can be used
   floodByMaterial = new mars3d.thing.FloodByMaterial({
-    color: "rgba(0, 123, 230, 0.5)" // 淹没颜色
+    color: "rgba(0, 123, 230, 0.5)" // flood color
   })
   map.addThing(floodByMaterial)
 
   floodByMaterial.on(mars3d.EventType.start, function (e) {
-    console.log("开始分析", e)
+    console.log("Start analysis", e)
   })
 
   floodByMaterial.on(mars3d.EventType.change, function (e) {
@@ -44,20 +44,20 @@ function onMounted(mapInstance) {
   })
 
   floodByMaterial.on(mars3d.EventType.end, function (e) {
-    console.log("结束分析", e)
+    console.log("end analysis", e)
     eventTarget.fire("floodEnd")
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 绘制矩形
+// draw rectangle
 function btnDrawExtent(callback, floodColor) {
   clearDraw()
 
@@ -68,19 +68,19 @@ function btnDrawExtent(callback, floodColor) {
       // clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
 
-      // 更新最大、最小高度值
+      //Update the maximum and minimum height values
       updateHeightRange(graphic, positions, callback)
 
-      // 区域
+      // area
       floodByMaterial.addArea(positions)
     }
   })
 }
 
-// 绘制多边形
+// draw polygon
 function btnDraw(callback, floodColor) {
   clearDraw()
 
@@ -94,21 +94,21 @@ function btnDraw(callback, floodColor) {
     success: function (graphic) {
       const positions = graphic.positionsShow
 
-      // 更新最大、最小高度值
+      //Update the maximum and minimum height values
       updateHeightRange(graphic, positions, callback)
       floodByMaterial.addArea(positions)
     }
   })
 }
 
-// 求最大、最小高度值
+// Find the maximum and minimum height values
 function updateHeightRange(graphic, positions, callback) {
   showLoading()
 
-  // 求最大、最小高度值
-  graphic.show = false // 会遮挡深度图，所以需要隐藏
+  // Find the maximum and minimum height values
+  graphic.show = false // Will block the depth map, so it needs to be hidden
   mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions }).then((result) => {
-    graphic.show = true // 恢复显示
+    graphic.show = true //restore display
     const minHeight = Math.ceil(result.minHeight)
     const maxHeight = Math.floor(result.maxHeight)
 
@@ -117,10 +117,10 @@ function updateHeightRange(graphic, positions, callback) {
   })
 }
 
-// 开始分析
+// Start analysis
 function begin(data) {
   if (floodByMaterial.length === 0) {
-    globalMsg("请首先绘制分析区域！")
+    globalMsg("Please draw the analysis area first!")
     return
   }
   map.graphicLayer.clear()
@@ -137,17 +137,17 @@ function begin(data) {
   floodByMaterial.start()
 }
 
-// 高度选择
+// height selection
 function onChangeHeight(height) {
   floodByMaterial.height = height
 }
 
-// 颜色发生改变
+// color changes
 function onChangeColor(color) {
   floodByMaterial.color = color
 }
 
-// 自动播放
+// Autoplay
 function startPlay() {
   if (floodByMaterial.isStart) {
     floodByMaterial.stop()
@@ -156,7 +156,7 @@ function startPlay() {
   }
 }
 
-// 是否显示非淹没区域
+// Whether to display non-flooded areas
 function onChangeElse(val) {
   floodByMaterial.showElseArea = val
 }

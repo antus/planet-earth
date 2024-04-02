@@ -1,4 +1,4 @@
-<!-- 2017-12-7 14:56:03 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!-- 2017-12-7 14:56:03 | Modification Mu Yao (WeChat: http://marsgis.cn/weixin.html ) -->
 <!DOCTYPE html>
 <html>
 
@@ -12,13 +12,13 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="x5-fullscreen" content="true" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <!-- Title and search keywords -->
+  <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
   <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework three-dimensional earth model gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming Geographic Information System Cloud GIS 3D GIS GIS Platform WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
-  <title>飞行路线 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+  <title>Flight route | Mars3D | 3D map | Mars Technology | Hefei Mars Technology Co., Ltd.</title>
 
   <script type="text/javascript" src="/lib/include-lib.js" libpath="/lib/"
     include="jquery,layer,toastr,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,layer,haoutil,mars3d"></script>
@@ -110,108 +110,108 @@
 <body class="dark">
   <div id="mars3dContainer" class="mars3d-container"></div>
 
-  <!-- 控制 面板 -->
+  <!-- Control Panel -->
   <div class="infoview">
-    <input id="btnStart" type="button" class="btn btn-primary" value="开始" />
-    <input id="btnPause" type="button" class="btn btn-primary" value="暂停" />
-    <input id="btnStop" type="button" class="btn btn-primary" value="停止" />
+    <input id="btnStart" type="button" class="btn btn-primary" value="Start" />
+    <input id="btnPause" type="button" class="btn btn-primary" value="Pause" />
+    <input id="btnStop" type="button" class="btn btn-primary" value="Stop" />
 
     <table class="mp_table">
       <tr>
-        <td class="nametd">漫游视角</td>
+        <td class="nametd">Roaming perspective</td>
         <td>
           <select id="cameraType" class="mp_select" data-value="gs">
-            <option value="">自由视角</option>
-            <option value="gs">跟随视角</option>
-            <option value="dy">锁定第一视角</option>
-            <option value="sd">锁定上帝视角</option>
+            <option value="">Free perspective</option>
+            <option value="gs">Follow the perspective</option>
+            <option value="dy">Lock the first perspective</option>
+            <option value="sd">Lock God's perspective</option>
           </select>
         </td>
       </tr>
-      <tr id="tr_followedX" title="距离漫游对象的水平距离，单位：米">
-        <td class="nametd">视角距离</td>
+      <tr id="tr_followedX" title="Horizontal distance from the roaming object, unit: meters">
+        <td class="nametd">Viewing distance</td>
         <td>
           <input id="followedX" type="number" min="0" max="99999" value="1" class="mp_input" />
         </td>
       </tr>
-      <tr id="tr_followedZ" title="距离漫游对象的高度，单位：米">
-        <td class="nametd">视角高度</td>
+      <tr id="tr_followedZ" title="Height from roaming object, unit: meters">
+        <td class="nametd">View height</td>
         <td>
           <input id="followedZ" type="number" min="0" max="99999" value="0" class="mp_input" />
         </td>
       </tr>
 
-      <tr id="tr_offsetZ" title="偏离漫游对象的高度，单位：米">
-        <td class="nametd">高度偏移值</td>
+      <tr id="tr_offsetZ" title="Height of deviation from roaming object, unit: meters">
+        <td class="nametd">Height offset value</td>
         <td>
           <input id="offsetZ" type="number" min="-9999" max="9999" value="0" step="0.1" class="mp_input" />
         </td>
       </tr>
-      <tr id="tr_offsetY" title="偏离漫游对象的横向值，单位：米">
-        <td class="nametd">横向偏移值</td>
+      <tr id="tr_offsetY" title="The lateral value of the deviation from the roaming object, unit: meters">
+        <td class="nametd">Lateral offset value</td>
         <td>
           <input id="offsetY" type="number" min="-9999" max="9999" value="0" step="0.1" class="mp_input" />
         </td>
       </tr>
-      <tr id="tr_offsetX" title="偏离漫游对象的前后值，单位：米">
-        <td class="nametd">前后偏移值</td>
+      <tr id="tr_offsetX" title="The deviation before and after the roaming object, unit: meters">
+        <td class="nametd">Front and rear offset values</td>
         <td>
           <input id="offsetX" type="number" min="-9999" max="9999" value="0" step="0.1" class="mp_input" />
         </td>
       </tr>
 
       <!-- <tr>
-          <td class="nametd">模型角度</td>
+          <td class="nametd">Model angle</td>
           <td style="min-width: 130px">
             <div class="radio radio-info radio-inline">
               <input type="radio" id="jiaodu_1" value="1" name="jiaodu" checked />
-              <label for="jiaodu_1">自动</label>
+              <label for="jiaodu_1">Automatic</label>
             </div>
             <div class="radio radio-info radio-inline">
               <input type="radio" id="jiaodu_2" value="2" name="jiaodu" />
-              <label for="jiaodu_2">手动</label>
+              <label for="jiaodu_2">Manual</label>
             </div>
           </td>
         </tr> -->
       <tr class="jiaodu_2_angele">
-        <td class="nametd">heading值</td>
+        <td class="nametd">heading value</td>
         <td>
           <div class="checkbox checkbox-primary checkbox-inline">
             <input id="headingChecked" class="styled" type="checkbox" onclick="clickHeading()" />
-            <label id="headingLabel" for="headingChecked"> 根据路线自动计算 </label>
+            <label id="headingLabel" for="headingChecked"> Automatically calculated based on route </label>
           </div>
           <div id="model_heading_wrap">
             <div id="model_heading_new">
-              <input type="text" min="0" max="360" step="0.01" value="10" title="方向">
+              <input type="text" min="0" max="360" step="0.01" value="10" title="Direction">
             </div>
           </div>
         </td>
       </tr>
       <tr class="jiaodu_2_angele">
-        <td class="nametd">pitch值</td>
+        <td class="nametd">pitch value</td>
         <td>
           <div class="checkbox checkbox-primary checkbox-inline">
             <input id="pitchChecked" class="styled" type="checkbox" defaultChecked="false" onclick="clickPitch()" />
-            <label id="pitchLabel" for="pitchChecked"> 根据路线自动计算 </label>
+            <label id="pitchLabel" for="pitchChecked"> Automatically calculated based on route </label>
           </div>
           <div id="model_pitch_wrap">
             <div id="model_pitch_new">
               <input type="text" data-slider-min="0" data-slider-max="360" data-slider-step="0.01"
-                data-slider-value="10" title="倾角pitch">
+                data-slider-value="10" title="pitch">
             </div>
           </div>
         </td>
       </tr>
       <tr class="jiaodu_2_angele">
-        <td class="nametd">roll值</td>
+        <td class="nametd">roll value</td>
         <td>
           <div class="checkbox checkbox-primary checkbox-inline">
             <input id="rollChecked" class="styled" type="checkbox" onclick="clickRoll()" />
-            <label id="rollLabel" for="rollChecked"> 根据路线自动计算 </label>
+            <label id="rollLabel" for="rollChecked"> Automatically calculated based on route </label>
           </div>
           <div id="model_roll_wrap">
             <div id="model_roll_new">
-              <input type="text" min="0" max="360" step="0.01" value="10" title="滚动角roll" />
+              <input type="text" min="0" max="360" step="0.01" value="10" title="roll angle roll" />
             </div>
           </div>
         </td>
@@ -222,28 +222,28 @@
   <script src="/js/common.js"></script>
   <script src="./map.js"></script>
 
-  <!-- 漫游的面板的代码，注意顺序 -->
+  <!-- The code of the roaming panel, pay attention to the order -->
   <script type="text/javascript" src="/js/fixedRoute_info.js"></script>
   <script type="text/javascript">
-    "use script" //开发环境建议开启严格模式
+    "use script" //It is recommended to turn on strict mode in the development environment
 
     function initUI(options) {
       $("#btnPause").hide()
 
       $("#btnStart").click(function () {
-        fixedRoute.start() // 启动漫游
+        fixedRoute.start() // Start roaming
 
         $("#btnPause").show()
-        $("#btnPause").val("暂停")
+        $("#btnPause").val("Pause")
       })
 
       $("#btnPause").click(function () {
         if (fixedRoute.isStart) {
           if (!fixedRoute.isPause) {
-            $("#btnPause").val("继续")
+            $("#btnPause").val("Continue")
             fixedRoute.pause()
           } else {
-            $("#btnPause").val("暂停")
+            $("#btnPause").val("Pause")
             fixedRoute.proceed()
           }
         }
@@ -274,15 +274,15 @@
       let pitch = Number($("#model_pitch").val())
       let roll = Number($("#model_roll").val())
       fixedRoute.model.setStyle({
-        noPitchRoll: true, // 不使用路线自动的角度
+        noPitchRoll: true, // Do not use the automatic angle of the route
         pitch,
         roll
       })
     }
 
     function init() {
-      //改变视角模式
-      $("#cameraType").select() //绑定样式
+      //Change perspective mode
+      $("#cameraType").select() //Binding style
 
       $("#cameraType").change(function () {
         $("#tr_followedX").hide()
@@ -301,7 +301,7 @@
             $("#model_heading_wrap").hide()
             $("#model_roll_wrap").hide()
             break
-          case "dy": //锁定第一视角
+          case "dy": //Lock the first perspective
             $("#tr_followedX").show()
             $("#tr_followedZ").show()
 
@@ -315,7 +315,7 @@
             $("#offsetX").val(0)
 
             break
-          case "sd": //锁定上帝视角
+          case "sd": //Lock God's perspective
             {
               $("#tr_followedZ").show()
 
@@ -336,7 +336,7 @@
       })
       $("#cameraType").change()
 
-      //第一视角
+      //First Perspective
       $("#followedX").change(function () {
         updateCameraSet()
       })
@@ -353,7 +353,7 @@
         updateCameraSet()
       })
 
-      //模型方向
+      //Model direction
       // $(".jiaodu_2_angele").hide()
       $('input:radio[name="jiaodu"]').change(function () {
         let isAuto = $(this).val() === "1"
@@ -385,7 +385,7 @@
         })
     }
 
-    //改变视角模式
+    //Change perspective mode
     function updateCameraSet() {
       let cameraType = $("#cameraType").attr("data-value")
       let followedX = Number($("#followedX").val())
@@ -410,7 +410,7 @@
         $("#headingLabel").text("")
       } else {
         $("#model_heading_wrap").hide()
-        $("#headingLabel").text("根据路线自动计算")
+        $("#headingLabel").text("Automatically calculated based on route")
       }
     }
     const clickPitch = () => {
@@ -419,7 +419,7 @@
         $("#pitchLabel").text("")
       } else {
         $("#model_pitch_wrap").hide()
-        $("#pitchLabel").text("根据路线自动计算")
+        $("#pitchLabel").text("Automatically calculated based on route")
       }
     }
     const clickRoll = () => {
@@ -428,7 +428,7 @@
         $("#rollLabel").text("")
       } else {
         $("#model_roll_wrap").hide()
-        $("#rollLabel").text("根据路线自动计算")
+        $("#rollLabel").text("Automatically calculated based on route")
       }
     }
   </script>

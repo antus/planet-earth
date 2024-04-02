@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 20.706855, lng: 116.642847, alt: 4849553, heading: 350, pitch: -75 }
@@ -10,21 +10,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  // 创建Echarts图层
+  // Create Echarts layer
   createEchartsLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -35,22 +35,22 @@ function createEchartsLayer() {
   const echartsLayer = new mars3d.layer.EchartsLayer(options)
   map.addLayer(echartsLayer)
 
-  // 图表自适应
+  //Chart adaptive
   window.addEventListener("resize", function () {
     echartsLayer.resize()
   })
 }
 
 /**
- * echart图层
+ * echart layer
  *
- * @return {option} echart图表的数据
+ * @return {option} echart chart data
  */
 function getEchartsOption() {
   const allData = {
     citys: [
       {
-        name: "延寿",
+        name: "Extension of life",
         value: [128.331644, 45.451897, 2],
         symbolSize: 2,
         itemStyle: {
@@ -60,7 +60,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "临江",
+        name: "Linjiang",
         value: [126.918087, 41.811979, 2],
         symbolSize: 2,
         itemStyle: {
@@ -70,7 +70,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "嘉兴",
+        name: "Jiaxing",
         value: [120.755486, 30.746129, 4],
         symbolSize: 2,
         itemStyle: {
@@ -80,7 +80,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "四平",
+        name: "Siping",
         value: [124.350398, 43.16642, 1],
         symbolSize: 2,
         itemStyle: {
@@ -90,7 +90,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "营口",
+        name: "Yingkou",
         value: [122.235418, 40.667012, 1],
         symbolSize: 2,
         itemStyle: {
@@ -100,7 +100,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "密云",
+        name: "Miyun",
         value: [116.801346, 40.35874, 1],
         symbolSize: 2,
         itemStyle: {
@@ -110,7 +110,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "威海",
+        name: "Weihai",
         value: [122.12042, 37.513068, 32],
         symbolSize: 3,
         itemStyle: {
@@ -120,7 +120,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "杭州",
+        name: "Hangzhou",
         value: [120.15507, 30.274085, 10],
         symbolSize: 2,
         itemStyle: {
@@ -130,7 +130,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "集安",
+        name: "Ji'an",
         value: [126.194031, 41.125307, 1],
         symbolSize: 2,
         itemStyle: {
@@ -140,7 +140,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "贵阳",
+        name: "Guiyang",
         value: [106.630154, 26.647661, 2],
         symbolSize: 2,
         itemStyle: {
@@ -150,7 +150,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "抚顺",
+        name: "Fushun",
         value: [123.957208, 41.880872, 3],
         symbolSize: 2,
         itemStyle: {
@@ -160,7 +160,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "海门",
+        name: "Haimen",
         value: [121.181615, 31.871173, 2],
         symbolSize: 2,
         itemStyle: {
@@ -170,7 +170,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "珠海",
+        name: "Zhuhai",
         value: [113.576726, 22.270715, 9],
         symbolSize: 2,
         itemStyle: {
@@ -180,7 +180,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "河北",
+        name: "Hebei",
         value: [114.475704, 38.584854, -19],
         symbolSize: 2,
         itemStyle: {
@@ -190,7 +190,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "深圳",
+        name: "Shenzhen",
         value: [114.057868, 22.543099, 14],
         symbolSize: 2,
         itemStyle: {
@@ -200,7 +200,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "黄浦",
+        name: "Huangpu",
         value: [121.484443, 31.231763, 1],
         symbolSize: 2,
         itemStyle: {
@@ -210,7 +210,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "蓬莱",
+        name: "Penglai",
         value: [120.758848, 37.810661, 1],
         symbolSize: 2,
         itemStyle: {
@@ -220,7 +220,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "吉林",
+        name: "Jilin",
         value: [126.549572, 43.837883, -364],
         symbolSize: 14,
         itemStyle: {
@@ -230,7 +230,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "甘肃",
+        name: "Gansu",
         value: [103.826308, 36.059421, -2],
         symbolSize: 2,
         itemStyle: {
@@ -240,7 +240,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "龙井",
+        name: "Longjing",
         value: [129.427066, 42.766311, 1],
         symbolSize: 2,
         itemStyle: {
@@ -250,7 +250,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "茂名",
+        name: "Maoming",
         value: [110.925456, 21.662999, 1],
         symbolSize: 2,
         itemStyle: {
@@ -260,7 +260,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "丹东",
+        name: "Dandong",
         value: [124.354707, 40.0005, 2],
         symbolSize: 2,
         itemStyle: {
@@ -270,7 +270,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "晋中",
+        name: "Jinzhong",
         value: [112.752695, 37.687024, 1],
         symbolSize: 2,
         itemStyle: {
@@ -280,7 +280,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "浙江",
+        name: "Zhejiang",
         value: [120.152792, 30.267447, -2],
         symbolSize: 2,
         itemStyle: {
@@ -290,7 +290,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "海城",
+        name: "Haicheng",
         value: [122.685217, 40.882377, 2],
         symbolSize: 2,
         itemStyle: {
@@ -300,7 +300,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "溆浦",
+        name: "Xupu",
         value: [110.594921, 27.908281, 1],
         symbolSize: 2,
         itemStyle: {
@@ -310,7 +310,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "北京",
+        name: "Beijing",
         value: [116.407526, 39.90403, -14],
         symbolSize: 2,
         itemStyle: {
@@ -320,7 +320,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "铁岭",
+        name: "Tieling",
         value: [123.726166, 42.223769, 2],
         symbolSize: 2,
         itemStyle: {
@@ -330,7 +330,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "大同",
+        name: "Datong",
         value: [113.61244, 40.040295, 1],
         symbolSize: 2,
         itemStyle: {
@@ -340,7 +340,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "金坛",
+        name: "Jintan",
         value: [119.597897, 31.723247, 1],
         symbolSize: 2,
         itemStyle: {
@@ -350,7 +350,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "齐齐哈尔",
+        name: "Qiqihar",
         value: [126.661669, 45.742347, 1],
         symbolSize: 2,
         itemStyle: {
@@ -360,7 +360,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "咸阳",
+        name: "Xianyang",
         value: [108.708991, 34.329605, 1],
         symbolSize: 2,
         itemStyle: {
@@ -370,7 +370,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "四川",
+        name: "Sichuan",
         value: [104.075931, 30.651652, -5],
         symbolSize: 2,
         itemStyle: {
@@ -390,7 +390,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "盘锦",
+        name: "Panjin",
         value: [122.070714, 41.119997, 3],
         symbolSize: 2,
         itemStyle: {
@@ -400,7 +400,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "中山",
+        name: "Zhongshan",
         value: [113.392782, 22.517646, 4],
         symbolSize: 2,
         itemStyle: {
@@ -410,7 +410,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "福建",
+        name: "Fujian",
         value: [119.295144, 26.10078, -1],
         symbolSize: 2,
         itemStyle: {
@@ -420,7 +420,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "泰顺",
+        name: "Taishun",
         value: [119.717649, 27.556884, 1],
         symbolSize: 2,
         itemStyle: {
@@ -430,7 +430,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "宝山",
+        name: "Baoshan",
         value: [131.401589, 46.577167, 1],
         symbolSize: 2,
         itemStyle: {
@@ -440,7 +440,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "庆安",
+        name: "Qing'an",
         value: [127.507825, 46.880102, 1],
         symbolSize: 2,
         itemStyle: {
@@ -450,7 +450,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "海淀",
+        name: "Haidian",
         value: [116.298056, 39.959912, 32],
         symbolSize: 3,
         itemStyle: {
@@ -460,7 +460,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "大兴",
+        name: "Daxing",
         value: [116.341395, 39.726929, 3],
         symbolSize: 2,
         itemStyle: {
@@ -470,7 +470,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "桦川",
+        name: "Huachuan",
         value: [130.719081, 47.023001, 1],
         symbolSize: 2,
         itemStyle: {
@@ -480,7 +480,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "惠州",
+        name: "Huizhou",
         value: [114.416196, 23.111847, 1],
         symbolSize: 2,
         itemStyle: {
@@ -490,7 +490,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "青岛",
+        name: "Qingdao",
         value: [120.38264, 36.067082, 52],
         symbolSize: 3,
         itemStyle: {
@@ -500,7 +500,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "朝阳",
+        name: "Chaoyang",
         value: [116.443108, 39.92147, 17],
         symbolSize: 2,
         itemStyle: {
@@ -510,7 +510,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "沈阳",
+        name: "Shenyang",
         value: [123.431475, 41.805698, 41],
         symbolSize: 3,
         itemStyle: {
@@ -520,7 +520,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "菏泽",
+        name: "Heze",
         value: [115.480656, 35.23375, 1],
         symbolSize: 2,
         itemStyle: {
@@ -530,7 +530,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "南通",
+        name: "Nantong",
         value: [120.894291, 31.980172, 1],
         symbolSize: 2,
         itemStyle: {
@@ -540,7 +540,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "南充",
+        name: "Nanchong",
         value: [106.110698, 30.837793, 1],
         symbolSize: 2,
         itemStyle: {
@@ -550,7 +550,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "双城",
+        name: "Two Cities",
         value: [126.312745, 45.383263, 1],
         symbolSize: 2,
         itemStyle: {
@@ -560,7 +560,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "南京",
+        name: "Nanjing",
         value: [118.796877, 32.060255, 17],
         symbolSize: 2,
         itemStyle: {
@@ -570,7 +570,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "新疆",
+        name: "Xinjiang",
         value: [87.627704, 43.793026, -2],
         symbolSize: 2,
         itemStyle: {
@@ -580,7 +580,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "成都",
+        name: "Chengdu",
         value: [104.066541, 30.572269, 1],
         symbolSize: 2,
         itemStyle: {
@@ -590,7 +590,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "陕西",
+        name: "Shaanxi",
         value: [108.954239, 34.265472, -2],
         symbolSize: 2,
         itemStyle: {
@@ -600,7 +600,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "黄岛",
+        name: "Huangdao",
         value: [120.04619, 35.872664, 2],
         symbolSize: 2,
         itemStyle: {
@@ -610,7 +610,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "温州",
+        name: "Wenzhou",
         value: [120.699367, 27.994267, 1],
         symbolSize: 2,
         itemStyle: {
@@ -620,7 +620,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "石家庄",
+        name: "Shijiazhuang",
         value: [114.51486, 38.042307, 4],
         symbolSize: 2,
         itemStyle: {
@@ -630,7 +630,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "邢台",
+        name: "Xingtai",
         value: [114.504844, 37.070589, 1],
         symbolSize: 2,
         itemStyle: {
@@ -640,7 +640,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "赣州",
+        name: "Ganzhou",
         value: [114.93503, 25.831829, 1],
         symbolSize: 2,
         itemStyle: {
@@ -650,7 +650,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "义乌",
+        name: "Yiwu",
         value: [120.075058, 29.306841, 3],
         symbolSize: 2,
         itemStyle: {
@@ -660,7 +660,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "南昌",
+        name: "Nanchang",
         value: [115.858198, 28.682892, 2],
         symbolSize: 2,
         itemStyle: {
@@ -670,7 +670,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "闵行",
+        name: "Minhang",
         value: [121.381709, 31.112813, 18],
         symbolSize: 2,
         itemStyle: {
@@ -680,7 +680,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "长宁",
+        name: "Changning",
         value: [121.424624, 31.220367, 7],
         symbolSize: 2,
         itemStyle: {
@@ -700,7 +700,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "乳山",
+        name: "Rushan",
         value: [121.539765, 36.919816, 1],
         symbolSize: 2,
         itemStyle: {
@@ -710,7 +710,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "双流",
+        name: "Double stream",
         value: [103.923648, 30.574473, 1],
         symbolSize: 2,
         itemStyle: {
@@ -720,7 +720,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "广州",
+        name: "Guangzhou",
         value: [113.264435, 23.129163, 13],
         symbolSize: 2,
         itemStyle: {
@@ -740,7 +740,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "佳木斯",
+        name: "Jiamusi",
         value: [130.318917, 46.799923, 2],
         symbolSize: 2,
         itemStyle: {
@@ -750,7 +750,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "皇姑",
+        name: "Huang Gu",
         value: [123.44197, 41.824796, 1],
         symbolSize: 2,
         itemStyle: {
@@ -760,7 +760,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "榆树",
+        name: "Elm",
         value: [126.533146, 44.840288, 1],
         symbolSize: 2,
         itemStyle: {
@@ -770,7 +770,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "临汾",
+        name: "Linfen",
         value: [111.518976, 36.088005, 1],
         symbolSize: 2,
         itemStyle: {
@@ -780,7 +780,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "上海",
+        name: "Shanghai",
         value: [121.473701, 31.230416, 44],
         symbolSize: 3,
         itemStyle: {
@@ -790,7 +790,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "内蒙古",
+        name: "Inner Mongolia",
         value: [111.765618, 40.817498, -23],
         symbolSize: 2,
         itemStyle: {
@@ -800,7 +800,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "尚志",
+        name: "Shangzhi",
         value: [128.009895, 45.209586, 1],
         symbolSize: 2,
         itemStyle: {
@@ -810,7 +810,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "湖里",
+        name: "Huli",
         value: [118.146769, 24.512905, 1],
         symbolSize: 2,
         itemStyle: {
@@ -820,7 +820,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "台州",
+        name: "Taizhou",
         value: [121.420757, 28.656386, 1],
         symbolSize: 2,
         itemStyle: {
@@ -830,7 +830,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "潍坊",
+        name: "Weifang",
         value: [119.161756, 36.706774, 1],
         symbolSize: 2,
         itemStyle: {
@@ -840,7 +840,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "苏州",
+        name: "Suzhou",
         value: [120.585316, 31.298886, 14],
         symbolSize: 2,
         itemStyle: {
@@ -850,7 +850,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "房山",
+        name: "Fangshan",
         value: [116.143267, 39.749144, 1],
         symbolSize: 2,
         itemStyle: {
@@ -860,7 +860,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "即墨",
+        name: "Jimo",
         value: [120.447128, 36.389639, 15],
         symbolSize: 2,
         itemStyle: {
@@ -870,7 +870,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "舒兰",
+        name: "Shulan",
         value: [126.965607, 44.406106, 1],
         symbolSize: 2,
         itemStyle: {
@@ -880,7 +880,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "延吉",
+        name: "Yanji",
         value: [129.508946, 42.891255, 3],
         symbolSize: 2,
         itemStyle: {
@@ -900,7 +900,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "大连",
+        name: "Dalian",
         value: [121.614682, 38.914003, 40],
         symbolSize: 3,
         itemStyle: {
@@ -910,7 +910,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "辉南",
+        name: "Huinan",
         value: [126.046912, 42.684993, 1],
         symbolSize: 2,
         itemStyle: {
@@ -920,7 +920,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "无锡",
+        name: "Wuxi",
         value: [120.31191, 31.49117, 14],
         symbolSize: 2,
         itemStyle: {
@@ -930,7 +930,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "常州",
+        name: "Changzhou",
         value: [119.973987, 31.810689, 4],
         symbolSize: 2,
         itemStyle: {
@@ -940,7 +940,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "广西",
+        name: "Guangxi",
         value: [108.327546, 22.815478, -1],
         symbolSize: 2,
         itemStyle: {
@@ -950,7 +950,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "泉州",
+        name: "Quanzhou",
         value: [118.675676, 24.874132, 1],
         symbolSize: 2,
         itemStyle: {
@@ -960,7 +960,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "昌平",
+        name: "Changping",
         value: [116.231204, 40.22066, 4],
         symbolSize: 2,
         itemStyle: {
@@ -970,7 +970,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "海阳",
+        name: "Haiyang",
         value: [121.158434, 36.776378, 1],
         symbolSize: 2,
         itemStyle: {
@@ -980,7 +980,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "郑州",
+        name: "Zhengzhou",
         value: [113.625368, 34.7466, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1000,7 +1000,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "黄骅",
+        name: "黄华",
         value: [117.330048, 38.371383, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1010,7 +1010,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "武侯",
+        name: "Marquis Wu",
         value: [104.04339, 30.641982, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1020,7 +1020,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "鸡东",
+        name: "Chicken",
         value: [131.12408, 45.260412, 2],
         symbolSize: 2,
         itemStyle: {
@@ -1030,7 +1030,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "龙口",
+        name: "Longkou",
         value: [120.477813, 37.646108, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1040,7 +1040,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "汤原",
+        name: "Tang Yuan",
         value: [129.905072, 46.730706, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1050,7 +1050,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "湖北",
+        name: "Hubei",
         value: [114.341862, 30.546498, -4],
         symbolSize: 2,
         itemStyle: {
@@ -1060,7 +1060,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "克拉玛依",
+        name: "Karamay",
         value: [84.889207, 45.579889, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1070,7 +1070,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "厦门",
+        name: "Xiamen",
         value: [118.089425, 24.479834, 3],
         symbolSize: 2,
         itemStyle: {
@@ -1080,7 +1080,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "哈尔滨",
+        name: "Harbin",
         value: [126.534967, 45.803775, 8],
         symbolSize: 2,
         itemStyle: {
@@ -1090,7 +1090,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "秦皇岛",
+        name: "Qinhuangdao",
         value: [119.600493, 39.935385, 7],
         symbolSize: 2,
         itemStyle: {
@@ -1100,7 +1100,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "江苏",
+        name: "Jiangsu",
         value: [118.763232, 32.061707, -1],
         symbolSize: 2,
         itemStyle: {
@@ -1110,7 +1110,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "常熟",
+        name: "Changshu",
         value: [120.752481, 31.654376, 4],
         symbolSize: 2,
         itemStyle: {
@@ -1120,7 +1120,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "烟台",
+        name: "Yantai",
         value: [121.447935, 37.463822, 24],
         symbolSize: 2,
         itemStyle: {
@@ -1130,7 +1130,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "和平",
+        name: "Peace",
         value: [117.21451, 39.116949, 4],
         symbolSize: 2,
         itemStyle: {
@@ -1140,7 +1140,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "环翠",
+        name: "Huancui",
         value: [122.123444, 37.501991, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1150,7 +1150,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "宣武门外东大街",
+        name: "Xuanwumenwai East Street",
         value: [116.378888, 39.899332, 3],
         symbolSize: 2,
         itemStyle: {
@@ -1160,7 +1160,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "张家港",
+        name: "Zhangjiagang",
         value: [120.553284, 31.870367, 4],
         symbolSize: 2,
         itemStyle: {
@@ -1170,7 +1170,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "临安",
+        name: "Lin'an",
         value: [119.724733, 30.233873, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1180,7 +1180,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "延安",
+        name: "Yan'an",
         value: [109.489727, 36.585455, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1190,7 +1190,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "天津",
+        name: "Tianjin",
         value: [117.200983, 39.084158, 28],
         symbolSize: 2,
         itemStyle: {
@@ -1200,7 +1200,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "城阳",
+        name: "Chengyang",
         value: [120.39631, 36.307064, 15],
         symbolSize: 2,
         itemStyle: {
@@ -1210,7 +1210,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "石景山",
+        name: "Shijingshan",
         value: [116.222982, 39.906611, 3],
         symbolSize: 2,
         itemStyle: {
@@ -1220,7 +1220,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "长沙",
+        name: "Changsha",
         value: [112.938814, 28.228209, 5],
         symbolSize: 2,
         itemStyle: {
@@ -1230,7 +1230,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "安徽",
+        name: "Anhui",
         value: [117.284923, 31.861184, -1],
         symbolSize: 2,
         itemStyle: {
@@ -1240,7 +1240,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "昆山",
+        name: "Kunshan",
         value: [120.980737, 31.385598, 4],
         symbolSize: 2,
         itemStyle: {
@@ -1250,7 +1250,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "徐汇",
+        name: "Xuhui",
         value: [121.436525, 31.188523, 2],
         symbolSize: 2,
         itemStyle: {
@@ -1260,7 +1260,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "东港",
+        name: "Donggang",
         value: [124.152705, 39.863008, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1270,7 +1270,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "廊坊",
+        name: "Langfang",
         value: [116.683752, 39.538047, 4],
         symbolSize: 2,
         itemStyle: {
@@ -1280,7 +1280,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "鞍山",
+        name: "Anshan",
         value: [122.994329, 41.108647, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1290,7 +1290,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "海陵",
+        name: "Hailing",
         value: [119.919425, 32.491016, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1300,7 +1300,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "黑龙江",
+        name: "Heilongjiang",
         value: [126.661669, 45.742347, -198],
         symbolSize: 8,
         itemStyle: {
@@ -1310,7 +1310,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "西藏",
+        name: "Tibet",
         value: [91.117212, 29.646923, -1],
         symbolSize: 2,
         itemStyle: {
@@ -1320,7 +1320,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "河南",
+        name: "Henan",
         value: [113.274379, 34.445122, 0],
         symbolSize: 2,
         itemStyle: {
@@ -1330,7 +1330,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "湖南",
+        name: "Hunan",
         value: [112.98381, 28.112444, -1],
         symbolSize: 2,
         itemStyle: {
@@ -1340,7 +1340,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "佛山",
+        name: "Foshan",
         value: [113.121416, 23.021548, 2],
         symbolSize: 2,
         itemStyle: {
@@ -1350,7 +1350,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "珲春",
+        name: "Hunchun",
         value: [130.366036, 42.862821, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1360,7 +1360,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "扬州",
+        name: "Yangzhou",
         value: [119.412966, 32.39421, 5],
         symbolSize: 2,
         itemStyle: {
@@ -1370,7 +1370,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "日照",
+        name: "Rizhao",
         value: [119.526888, 35.416377, 2],
         symbolSize: 2,
         itemStyle: {
@@ -1380,7 +1380,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "唐山",
+        name: "Tangshan",
         value: [118.180194, 39.630867, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1390,7 +1390,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "同江",
+        name: "Tongjiang",
         value: [132.510919, 47.642707, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1400,7 +1400,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "荣成",
+        name: "Rongcheng",
         value: [122.486658, 37.16516, 4],
         symbolSize: 2,
         itemStyle: {
@@ -1410,7 +1410,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "虎林",
+        name: "HuLin",
         value: [132.93721, 45.762686, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1420,7 +1420,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "武汉",
+        name: "Wuhan",
         value: [114.305393, 30.593099, 2],
         symbolSize: 2,
         itemStyle: {
@@ -1430,7 +1430,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "合肥",
+        name: "Hefei",
         value: [117.227239, 31.820587, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1440,7 +1440,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "荆州",
+        name: "Jingzhou",
         value: [112.239741, 30.335165, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1450,7 +1450,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "丰台",
+        name: "Fengtai",
         value: [116.287149, 39.858427, 3],
         symbolSize: 2,
         itemStyle: {
@@ -1460,7 +1460,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "山东",
+        name: "Shandong",
         value: [117.020359, 36.66853, -6],
         symbolSize: 2,
         itemStyle: {
@@ -1470,7 +1470,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "舟山",
+        name: "Zhoushan",
         value: [122.207216, 29.985295, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1480,7 +1480,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "连云港",
+        name: "Lianyungang",
         value: [119.221611, 34.596653, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1490,7 +1490,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "西安",
+        name: "Xi'an",
         value: [108.940175, 34.341568, 3],
         symbolSize: 2,
         itemStyle: {
@@ -1500,7 +1500,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "济南",
+        name: "Jinan",
         value: [117.12, 36.651216, 4],
         symbolSize: 2,
         itemStyle: {
@@ -1510,7 +1510,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "绵阳",
+        name: "Mianyang",
         value: [104.679114, 31.46745, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1520,7 +1520,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "辽宁",
+        name: "Liaoning",
         value: [123.42944, 41.835441, -58],
         symbolSize: 3,
         itemStyle: {
@@ -1530,7 +1530,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "山西",
+        name: "Shanxi",
         value: [112.562398, 37.873532, -3],
         symbolSize: 2,
         itemStyle: {
@@ -1540,7 +1540,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "呼和浩特",
+        name: "Hohhot",
         value: [111.749181, 40.842585, 2],
         symbolSize: 2,
         itemStyle: {
@@ -1550,7 +1550,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "河西",
+        name: "Hexi",
         value: [117.223372, 39.109563, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1560,7 +1560,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "兴和",
+        name: "Xinghe",
         value: [113.834173, 40.872301, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1570,7 +1570,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "重庆",
+        name: "Chongqing",
         value: [106.551557, 29.56301, 2],
         symbolSize: 2,
         itemStyle: {
@@ -1580,7 +1580,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "胶州",
+        name: "Jiaozhou",
         value: [120.033382, 36.26468, 5],
         symbolSize: 2,
         itemStyle: {
@@ -1590,7 +1590,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "宁波",
+        name: "Ningbo",
         value: [121.550357, 29.874557, 10],
         symbolSize: 2,
         itemStyle: {
@@ -1600,7 +1600,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "滨海",
+        name: "Binhai",
         value: [119.820831, 33.990334, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1610,7 +1610,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "太原",
+        name: "Taiyuan",
         value: [112.548879, 37.87059, 2],
         symbolSize: 2,
         itemStyle: {
@@ -1620,7 +1620,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "鸡西",
+        name: "Jixi",
         value: [130.969333, 45.295075, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1630,7 +1630,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "兰山",
+        name: "Lanshan",
         value: [118.347707, 35.051729, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1640,7 +1640,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "阳泉",
+        name: "Yangquan",
         value: [113.580519, 37.856972, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1650,7 +1650,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "勃利",
+        name: "Boli",
         value: [130.592171, 45.755063, 1],
         symbolSize: 2,
         itemStyle: {
@@ -1660,7 +1660,7 @@ function getEchartsOption() {
         }
       },
       {
-        name: "长春",
+        name: "Changchun",
         value: [125.323544, 43.817072, 8],
         symbolSize: 2,
         itemStyle: {
@@ -1672,351 +1672,351 @@ function getEchartsOption() {
     ],
     moveLines: [
       {
-        fromName: "黑龙江",
-        toName: "珠海",
+        fromName: "Heilongjiang",
+        toName: "Zhuhai",
         coords: [
           [126.661669, 45.742347],
           [113.576726, 22.270715]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "舒兰",
+        fromName: "Heilongjiang",
+        toName: "Shu Lan",
         coords: [
           [126.661669, 45.742347],
           [126.965607, 44.406106]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "大连",
+        fromName: "Heilongjiang",
+        toName: "Dalian",
         coords: [
           [126.661669, 45.742347],
           [121.614682, 38.914003]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "集安",
+        fromName: "Liaoning",
+        toName: "Ji'an",
         coords: [
           [123.42944, 41.835441],
           [126.194031, 41.125307]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "抚顺",
+        fromName: "Jilin",
+        toName: "Fushun",
         coords: [
           [126.549572, 43.837883],
           [123.957208, 41.880872]
         ]
       },
       {
-        fromName: "山东",
-        toName: "南京",
+        fromName: "Shandong",
+        toName: "Nanjing",
         coords: [
           [117.020359, 36.66853],
           [118.796877, 32.060255]
         ]
       },
       {
-        fromName: "北京",
-        toName: "沈阳",
+        fromName: "Beijing",
+        toName: "Shenyang",
         coords: [
           [116.407526, 39.90403],
           [123.431475, 41.805698]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "环翠",
+        fromName: "Heilongjiang",
+        toName: "Huancui",
         coords: [
           [126.661669, 45.742347],
           [122.123444, 37.501991]
         ]
       },
       {
-        fromName: "天津",
-        toName: "大连",
+        fromName: "Tianjin",
+        toName: "Dalian",
         coords: [
           [117.200983, 39.084158],
           [121.614682, 38.914003]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "兴和",
+        fromName: "Jilin",
+        toName: "Xinghe",
         coords: [
           [126.549572, 43.837883],
           [113.834173, 40.872301]
         ]
       },
       {
-        fromName: "河北",
-        toName: "勃利",
+        fromName: "Hebei",
+        toName: "Boli",
         coords: [
           [114.475704, 38.584854],
           [130.592171, 45.755063]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "大连",
+        fromName: "Jilin",
+        toName: "Dalian",
         coords: [
           [126.549572, 43.837883],
           [121.614682, 38.914003]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "沈阳",
+        fromName: "Jilin",
+        toName: "Shenyang",
         coords: [
           [126.549572, 43.837883],
           [123.431475, 41.805698]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "闵行",
+        fromName: "Heilongjiang",
+        toName: "Minhang",
         coords: [
           [126.661669, 45.742347],
           [121.381709, 31.112813]
         ]
       },
       {
-        fromName: "天津",
-        toName: "朝阳",
+        fromName: "Tianjin",
+        toName: "Chaoyang",
         coords: [
           [117.200983, 39.084158],
           [116.443108, 39.92147]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "黄岛",
+        fromName: "Jilin",
+        toName: "Huangdao",
         coords: [
           [126.549572, 43.837883],
           [120.04619, 35.872664]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "上海",
+        fromName: "Inner Mongolia",
+        toName: "Shanghai",
         coords: [
           [111.765618, 40.817498],
           [121.473701, 31.230416]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "南京",
+        fromName: "Inner Mongolia",
+        toName: "Nanjing",
         coords: [
           [111.765618, 40.817498],
           [118.796877, 32.060255]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "杭州",
+        fromName: "Liaoning",
+        toName: "Hangzhou",
         coords: [
           [123.42944, 41.835441],
           [120.15507, 30.274085]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "海城",
+        fromName: "Heilongjiang",
+        toName: "Haicheng",
         coords: [
           [126.661669, 45.742347],
           [122.685217, 40.882377]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "西城",
+        fromName: "Jilin",
+        toName: "Xicheng",
         coords: [
           [126.549572, 43.837883],
           [116.365868, 39.912289]
         ]
       },
       {
-        fromName: "四川",
-        toName: "上海",
+        fromName: "Sichuan",
+        toName: "Shanghai",
         coords: [
           [104.075931, 30.651652],
           [121.473701, 31.230416]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "西城",
+        fromName: "Heilongjiang",
+        toName: "Xicheng",
         coords: [
           [126.661669, 45.742347],
           [116.365868, 39.912289]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "丹东",
+        fromName: "Jilin",
+        toName: "Dandong",
         coords: [
           [126.549572, 43.837883],
           [124.354707, 40.0005]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "宁波",
+        fromName: "Jilin",
+        toName: "Ningbo",
         coords: [
           [126.549572, 43.837883],
           [121.550357, 29.874557]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "海淀",
+        fromName: "Liaoning",
+        toName: "Haidian",
         coords: [
           [123.42944, 41.835441],
           [116.298056, 39.959912]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "青岛",
+        fromName: "Liaoning",
+        toName: "Qingdao",
         coords: [
           [123.42944, 41.835441],
           [120.38264, 36.067082]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "苏州",
+        fromName: "Jilin",
+        toName: "Suzhou",
         coords: [
           [126.549572, 43.837883],
           [120.585316, 31.298886]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "抚顺",
+        fromName: "Heilongjiang",
+        toName: "Fushun",
         coords: [
           [126.661669, 45.742347],
           [123.957208, 41.880872]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "临安",
+        fromName: "Jilin",
+        toName: "Lin'an",
         coords: [
           [126.549572, 43.837883],
           [119.724733, 30.233873]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "烟台",
+        fromName: "Liaoning",
+        toName: "Yantai",
         coords: [
           [123.42944, 41.835441],
           [121.447935, 37.463822]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "海淀",
+        fromName: "Heilongjiang",
+        toName: "Haidian",
         coords: [
           [126.661669, 45.742347],
           [116.298056, 39.959912]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "南昌",
+        fromName: "Heilongjiang",
+        toName: "Nanchang",
         coords: [
           [126.661669, 45.742347],
           [115.858198, 28.682892]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "沈阳",
+        fromName: "Inner Mongolia",
+        toName: "Shenyang",
         coords: [
           [111.765618, 40.817498],
           [123.431475, 41.805698]
         ]
       },
       {
-        fromName: "山西",
-        toName: "城阳",
+        fromName: "Shanxi",
+        toName: "Chengyang",
         coords: [
           [112.562398, 37.873532],
           [120.39631, 36.307064]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "广州",
+        fromName: "Jilin",
+        toName: "Guangzhou",
         coords: [
           [126.549572, 43.837883],
           [113.264435, 23.129163]
         ]
       },
       {
-        fromName: "上海",
-        toName: "沈阳",
+        fromName: "Shanghai",
+        toName: "Shenyang",
         coords: [
           [121.473701, 31.230416],
           [123.431475, 41.805698]
         ]
       },
       {
-        fromName: "四川",
-        toName: "阳泉",
+        fromName: "Sichuan",
+        toName: "Yangquan",
         coords: [
           [104.075931, 30.651652],
           [113.580519, 37.856972]
         ]
       },
       {
-        fromName: "河北",
-        toName: "桦川",
+        fromName: "Hebei",
+        toName: "Huachuan",
         coords: [
           [114.475704, 38.584854],
           [130.719081, 47.023001]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "海淀",
+        fromName: "Inner Mongolia",
+        toName: "Haidian",
         coords: [
           [111.765618, 40.817498],
           [116.298056, 39.959912]
         ]
       },
       {
-        fromName: "安徽",
-        toName: "河北",
+        fromName: "Anhui",
+        toName: "Hebei",
         coords: [
           [117.284923, 31.861184],
           [114.475704, 38.584854]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "呼和浩特",
+        fromName: "Liaoning",
+        toName: "Hohhot",
         coords: [
           [123.42944, 41.835441],
           [111.749181, 40.842585]
         ]
       },
       {
-        fromName: "广西",
-        toName: "茂名",
+        fromName: "Guangxi",
+        toName: "Maoming",
         coords: [
           [108.327546, 22.815478],
           [110.925456, 21.662999]
         ]
       },
       {
-        fromName: "吉林",
+        fromName: "Jilin",
         toName: "东城",
         coords: [
           [126.549572, 43.837883],
@@ -2024,431 +2024,431 @@ function getEchartsOption() {
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "盘锦",
+        fromName: "Inner Mongolia",
+        toName: "Panjin",
         coords: [
           [111.765618, 40.817498],
           [122.070714, 41.119997]
         ]
       },
       {
-        fromName: "山东",
-        toName: "哈尔滨",
+        fromName: "Shandong",
+        toName: "Harbin",
         coords: [
           [117.020359, 36.66853],
           [126.534967, 45.803775]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "沈阳",
+        fromName: "Heilongjiang",
+        toName: "Shenyang",
         coords: [
           [126.661669, 45.742347],
           [123.431475, 41.805698]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "丰台",
+        fromName: "Heilongjiang",
+        toName: "Fengtai",
         coords: [
           [126.661669, 45.742347],
           [116.287149, 39.858427]
         ]
       },
       {
-        fromName: "四川",
-        toName: "盘锦",
+        fromName: "Sichuan",
+        toName: "Panjin",
         coords: [
           [104.075931, 30.651652],
           [122.070714, 41.119997]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "皇姑",
+        fromName: "Heilongjiang",
+        toName: "Huang Gu",
         coords: [
           [126.661669, 45.742347],
           [123.44197, 41.824796]
         ]
       },
       {
-        fromName: "河北",
-        toName: "虎林",
+        fromName: "Hebei",
+        toName: "HuLin",
         coords: [
           [114.475704, 38.584854],
           [132.93721, 45.762686]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "宝山",
+        fromName: "Liaoning",
+        toName: "Baoshan",
         coords: [
           [123.42944, 41.835441],
           [131.401589, 46.577167]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "吉林",
+        fromName: "Heilongjiang",
+        toName: "Jilin",
         coords: [
           [126.661669, 45.742347],
           [126.549572, 43.837883]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "青岛",
+        fromName: "Heilongjiang",
+        toName: "Qingdao",
         coords: [
           [126.661669, 45.742347],
           [120.38264, 36.067082]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "烟台",
+        fromName: "Jilin",
+        toName: "Yantai",
         coords: [
           [126.549572, 43.837883],
           [121.447935, 37.463822]
         ]
       },
       {
-        fromName: "山东",
-        toName: "临江",
+        fromName: "Shandong",
+        toName: "Linjiang",
         coords: [
           [117.020359, 36.66853],
           [126.918087, 41.811979]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "黄岛",
+        fromName: "Heilongjiang",
+        toName: "Huangdao",
         coords: [
           [126.661669, 45.742347],
           [120.04619, 35.872664]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "石家庄",
+        fromName: "Jilin",
+        toName: "Shijiazhuang",
         coords: [
           [126.549572, 43.837883],
           [114.51486, 38.042307]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "汤原",
+        fromName: "Jilin",
+        toName: "Tang Yuan",
         coords: [
           [126.549572, 43.837883],
           [129.905072, 46.730706]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "临江",
+        fromName: "Heilongjiang",
+        toName: "Linjiang",
         coords: [
           [126.661669, 45.742347],
           [126.918087, 41.811979]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "济南",
+        fromName: "Jilin",
+        toName: "Jinan",
         coords: [
           [126.549572, 43.837883],
           [117.12, 36.651216]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "太原",
+        fromName: "Jilin",
+        toName: "Taiyuan",
         coords: [
           [126.549572, 43.837883],
           [112.548879, 37.87059]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "威海",
+        fromName: "Jilin",
+        toName: "Weihai",
         coords: [
           [126.549572, 43.837883],
           [122.12042, 37.513068]
         ]
       },
       {
-        fromName: "湖北",
-        toName: "深圳",
+        fromName: "Hubei",
+        toName: "Shenzhen",
         coords: [
           [114.341862, 30.546498],
           [114.057868, 22.543099]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "荣成",
+        fromName: "Inner Mongolia",
+        toName: "Rongcheng",
         coords: [
           [111.765618, 40.817498],
           [122.486658, 37.16516]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "郑州",
+        fromName: "Liaoning",
+        toName: "Zhengzhou",
         coords: [
           [123.42944, 41.835441],
           [113.625368, 34.7466]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "朝阳",
+        fromName: "Heilongjiang",
+        toName: "Chaoyang",
         coords: [
           [126.661669, 45.742347],
           [116.443108, 39.92147]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "昆山",
+        fromName: "Jilin",
+        toName: "Kunshan",
         coords: [
           [126.549572, 43.837883],
           [120.980737, 31.385598]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "双城",
+        fromName: "Jilin",
+        toName: "Two Cities",
         coords: [
           [126.549572, 43.837883],
           [126.312745, 45.383263]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "克拉玛依",
+        fromName: "Heilongjiang",
+        toName: "Karamay",
         coords: [
           [126.661669, 45.742347],
           [84.889207, 45.579889]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "上海",
+        fromName: "Liaoning",
+        toName: "Shanghai",
         coords: [
           [123.42944, 41.835441],
           [121.473701, 31.230416]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "海阳",
+        fromName: "Jilin",
+        toName: "Haiyang",
         coords: [
           [126.549572, 43.837883],
           [121.158434, 36.776378]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "宣武门外东大街",
+        fromName: "Jilin",
+        toName: "Xuanwumenwai East Street",
         coords: [
           [126.549572, 43.837883],
           [116.378888, 39.899332]
         ]
       },
       {
-        fromName: "山东",
-        toName: "海淀",
+        fromName: "Shandong",
+        toName: "Haidian",
         coords: [
           [117.020359, 36.66853],
           [116.298056, 39.959912]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "威海",
+        fromName: "Inner Mongolia",
+        toName: "Weihai",
         coords: [
           [111.765618, 40.817498],
           [122.12042, 37.513068]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "晋中",
+        fromName: "Heilongjiang",
+        toName: "Jinzhong",
         coords: [
           [126.661669, 45.742347],
           [112.752695, 37.687024]
         ]
       },
       {
-        fromName: "西藏",
-        toName: "广州",
+        fromName: "Tibet",
+        toName: "Guangzhou",
         coords: [
           [91.117212, 29.646923],
           [113.264435, 23.129163]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "无锡",
+        fromName: "Liaoning",
+        toName: "Wuxi",
         coords: [
           [123.42944, 41.835441],
           [120.31191, 31.49117]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "城阳",
+        fromName: "Heilongjiang",
+        toName: "Chengyang",
         coords: [
           [126.661669, 45.742347],
           [120.39631, 36.307064]
         ]
       },
       {
-        fromName: "河北",
-        toName: "丰台",
+        fromName: "Hebei",
+        toName: "Fengtai",
         coords: [
           [114.475704, 38.584854],
           [116.287149, 39.858427]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "扬州",
+        fromName: "Heilongjiang",
+        toName: "Yangzhou",
         coords: [
           [126.661669, 45.742347],
           [119.412966, 32.39421]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "天津",
+        fromName: "Liaoning",
+        toName: "Tianjin",
         coords: [
           [123.42944, 41.835441],
           [117.200983, 39.084158]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "扬州",
+        fromName: "Jilin",
+        toName: "Yangzhou",
         coords: [
           [126.549572, 43.837883],
           [119.412966, 32.39421]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "嘉兴",
+        fromName: "Jilin",
+        toName: "Jiaxing",
         coords: [
           [126.549572, 43.837883],
           [120.755486, 30.746129]
         ]
       },
       {
-        fromName: "河北",
-        toName: "延寿",
+        fromName: "Hebei",
+        toName: "Extension of life",
         coords: [
           [114.475704, 38.584854],
           [128.331644, 45.451897]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "义乌",
+        fromName: "Jilin",
+        toName: "Yiwu",
         coords: [
           [126.549572, 43.837883],
           [120.075058, 29.306841]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "张家港",
+        fromName: "Jilin",
+        toName: "Zhangjiagang",
         coords: [
           [126.549572, 43.837883],
           [120.553284, 31.870367]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "贵阳",
+        fromName: "Liaoning",
+        toName: "Guiyang",
         coords: [
           [123.42944, 41.835441],
           [106.630154, 26.647661]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "辽宁",
+        fromName: "Jilin",
+        toName: "Liaoning",
         coords: [
           [126.549572, 43.837883],
           [123.42944, 41.835441]
         ]
       },
       {
-        fromName: "河南",
-        toName: "营口",
+        fromName: "Henan",
+        toName: "Yingkou",
         coords: [
           [113.274379, 34.445122],
           [122.235418, 40.667012]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "合肥",
+        fromName: "Jilin",
+        toName: "Hefei",
         coords: [
           [126.549572, 43.837883],
           [117.227239, 31.820587]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "苏州",
+        fromName: "Heilongjiang",
+        toName: "Suzhou",
         coords: [
           [126.661669, 45.742347],
           [120.585316, 31.298886]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "榆树",
+        fromName: "Heilongjiang",
+        toName: "Elm",
         coords: [
           [126.661669, 45.742347],
           [126.533146, 44.840288]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "常熟",
+        fromName: "Jilin",
+        toName: "Changshu",
         coords: [
           [126.549572, 43.837883],
           [120.752481, 31.654376]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "乳山",
+        fromName: "Jilin",
+        toName: "Rushan",
         coords: [
           [126.549572, 43.837883],
           [121.539765, 36.919816]
         ]
       },
       {
-        fromName: "四川",
-        toName: "青岛",
+        fromName: "Sichuan",
+        toName: "Qingdao",
         coords: [
           [104.075931, 30.651652],
           [120.38264, 36.067082]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "深圳",
+        fromName: "Heilongjiang",
+        toName: "Shenzhen",
         coords: [
           [126.661669, 45.742347],
           [114.057868, 22.543099]
         ]
       },
       {
-        fromName: "天津",
+        fromName: "Tianjin",
         toName: "东城",
         coords: [
           [117.200983, 39.084158],
@@ -2456,247 +2456,247 @@ function getEchartsOption() {
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "上海",
+        fromName: "Heilongjiang",
+        toName: "Shanghai",
         coords: [
           [126.661669, 45.742347],
           [121.473701, 31.230416]
         ]
       },
       {
-        fromName: "天津",
-        toName: "宁波",
+        fromName: "Tianjin",
+        toName: "Ningbo",
         coords: [
           [117.200983, 39.084158],
           [121.550357, 29.874557]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "海门",
+        fromName: "Jilin",
+        toName: "Haimen",
         coords: [
           [126.549572, 43.837883],
           [121.181615, 31.871173]
         ]
       },
       {
-        fromName: "山西",
-        toName: "沈阳",
+        fromName: "Shanxi",
+        toName: "Shenyang",
         coords: [
           [112.562398, 37.873532],
           [123.431475, 41.805698]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "成都",
+        fromName: "Jilin",
+        toName: "Chengdu",
         coords: [
           [126.549572, 43.837883],
           [104.066541, 30.572269]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "南昌",
+        fromName: "Jilin",
+        toName: "Nanchang",
         coords: [
           [126.549572, 43.837883],
           [115.858198, 28.682892]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "常州",
+        fromName: "Heilongjiang",
+        toName: "Changzhou",
         coords: [
           [126.661669, 45.742347],
           [119.973987, 31.810689]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "兰山",
+        fromName: "Inner Mongolia",
+        toName: "Lanshan",
         coords: [
           [111.765618, 40.817498],
           [118.347707, 35.051729]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "河南",
+        fromName: "Jilin",
+        toName: "Henan",
         coords: [
           [126.549572, 43.837883],
           [113.274379, 34.445122]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "福田",
+        fromName: "Heilongjiang",
+        toName: "Futian",
         coords: [
           [126.661669, 45.742347],
           [114.055036, 22.52153]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "常州",
+        fromName: "Jilin",
+        toName: "Changzhou",
         coords: [
           [126.549572, 43.837883],
           [119.973987, 31.810689]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "双流",
+        fromName: "Jilin",
+        toName: "Shuangliu",
         coords: [
           [126.549572, 43.837883],
           [103.923648, 30.574473]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "潍坊",
+        fromName: "Jilin",
+        toName: "Weifang",
         coords: [
           [126.549572, 43.837883],
           [119.161756, 36.706774]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "延安",
+        fromName: "Jilin",
+        toName: "Yan'an",
         coords: [
           [126.549572, 43.837883],
           [109.489727, 36.585455]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "长春",
+        fromName: "Liaoning",
+        toName: "Changchun",
         coords: [
           [123.42944, 41.835441],
           [125.323544, 43.817072]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "南京",
+        fromName: "Heilongjiang",
+        toName: "Nanjing",
         coords: [
           [126.661669, 45.742347],
           [118.796877, 32.060255]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "和平",
+        fromName: "Liaoning",
+        toName: "Peace",
         coords: [
           [123.42944, 41.835441],
           [117.21451, 39.116949]
         ]
       },
       {
-        fromName: "北京",
-        toName: "哈尔滨",
+        fromName: "Beijing",
+        toName: "Harbin",
         coords: [
           [116.407526, 39.90403],
           [126.534967, 45.803775]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "武汉",
+        fromName: "Jilin",
+        toName: "Wuhan",
         coords: [
           [126.549572, 43.837883],
           [114.305393, 30.593099]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "海陵",
+        fromName: "Jilin",
+        toName: "Hailing",
         coords: [
           [126.549572, 43.837883],
           [119.919425, 32.491016]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "日照",
+        fromName: "Jilin",
+        toName: "Rizhao",
         coords: [
           [126.549572, 43.837883],
           [119.526888, 35.416377]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "台州",
+        fromName: "Jilin",
+        toName: "Taizhou",
         coords: [
           [126.549572, 43.837883],
           [121.420757, 28.656386]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "厦门",
+        fromName: "Liaoning",
+        toName: "Xiamen",
         coords: [
           [123.42944, 41.835441],
           [118.089425, 24.479834]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "贵阳",
+        fromName: "Heilongjiang",
+        toName: "Guiyang",
         coords: [
           [126.661669, 45.742347],
           [106.630154, 26.647661]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "鞍山",
+        fromName: "Jilin",
+        toName: "Anshan",
         coords: [
           [126.549572, 43.837883],
           [122.994329, 41.108647]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "荣成",
+        fromName: "Liaoning",
+        toName: "Rongcheng",
         coords: [
           [123.42944, 41.835441],
           [122.486658, 37.16516]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "天津",
+        fromName: "Heilongjiang",
+        toName: "Tianjin",
         coords: [
           [126.661669, 45.742347],
           [117.200983, 39.084158]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "河西",
+        fromName: "Heilongjiang",
+        toName: "Hexi",
         coords: [
           [126.661669, 45.742347],
           [117.223372, 39.109563]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "秦皇岛",
+        fromName: "Heilongjiang",
+        toName: "Qinhuangdao",
         coords: [
           [126.661669, 45.742347],
           [119.600493, 39.935385]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "荆州",
+        fromName: "Jilin",
+        toName: "Jingzhou",
         coords: [
           [126.549572, 43.837883],
           [112.239741, 30.335165]
         ]
       },
       {
-        fromName: "黑龙江",
+        fromName: "Heilongjiang",
         toName: "东城",
         coords: [
           [126.661669, 45.742347],
@@ -2704,231 +2704,231 @@ function getEchartsOption() {
         ]
       },
       {
-        fromName: "吉林",
-        toName: "即墨",
+        fromName: "Jilin",
+        toName: "Jimo",
         coords: [
           [126.549572, 43.837883],
           [120.447128, 36.389639]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "西城",
+        fromName: "Liaoning",
+        toName: "Xicheng",
         coords: [
           [123.42944, 41.835441],
           [116.365868, 39.912289]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "大兴",
+        fromName: "Heilongjiang",
+        toName: "Daxing",
         coords: [
           [126.661669, 45.742347],
           [116.341395, 39.726929]
         ]
       },
       {
-        fromName: "河北",
-        toName: "哈尔滨",
+        fromName: "Hebei",
+        toName: "Harbin",
         coords: [
           [114.475704, 38.584854],
           [126.534967, 45.803775]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "江苏",
+        fromName: "Heilongjiang",
+        toName: "Jiangsu",
         coords: [
           [126.661669, 45.742347],
           [118.763232, 32.061707]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "和平",
+        fromName: "Jilin",
+        toName: "Peace",
         coords: [
           [126.549572, 43.837883],
           [117.21451, 39.116949]
         ]
       },
       {
-        fromName: "江苏",
-        toName: "鸡东",
+        fromName: "Jiangsu",
+        toName: "Chicken East",
         coords: [
           [118.763232, 32.061707],
           [131.12408, 45.260412]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "辉南",
+        fromName: "Liaoning",
+        toName: "Huinan",
         coords: [
           [123.42944, 41.835441],
           [126.046912, 42.684993]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "深圳",
+        fromName: "Jilin",
+        toName: "Shenzhen",
         coords: [
           [126.549572, 43.837883],
           [114.057868, 22.543099]
         ]
       },
       {
-        fromName: "福建",
-        toName: "泰顺",
+        fromName: "Fujian",
+        toName: "Taishun",
         coords: [
           [119.295144, 26.10078],
           [119.717649, 27.556884]
         ]
       },
       {
-        fromName: "上海",
-        toName: "深圳",
+        fromName: "Shanghai",
+        toName: "Shenzhen",
         coords: [
           [121.473701, 31.230416],
           [114.057868, 22.543099]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "秦皇岛",
+        fromName: "Jilin",
+        toName: "Qinhuangdao",
         coords: [
           [126.549572, 43.837883],
           [119.600493, 39.935385]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "徐汇",
+        fromName: "Jilin",
+        toName: "Xuhui",
         coords: [
           [126.549572, 43.837883],
           [121.436525, 31.188523]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "石景山",
+        fromName: "Jilin",
+        toName: "Shijingshan",
         coords: [
           [126.549572, 43.837883],
           [116.222982, 39.906611]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "城阳",
+        fromName: "Liaoning",
+        toName: "Chengyang",
         coords: [
           [123.42944, 41.835441],
           [120.39631, 36.307064]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "威海",
+        fromName: "Heilongjiang",
+        toName: "Weihai",
         coords: [
           [126.661669, 45.742347],
           [122.12042, 37.513068]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "惠州",
+        fromName: "Heilongjiang",
+        toName: "Huizhou",
         coords: [
           [126.661669, 45.742347],
           [114.416196, 23.111847]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "龙口",
+        fromName: "Jilin",
+        toName: "Longkou",
         coords: [
           [126.549572, 43.837883],
           [120.477813, 37.646108]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "四平",
+        fromName: "Heilongjiang",
+        toName: "Siping",
         coords: [
           [126.661669, 45.742347],
           [124.350398, 43.16642]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "南充",
+        fromName: "Jilin",
+        toName: "Nanchong",
         coords: [
           [126.549572, 43.837883],
           [106.110698, 30.837793]
         ]
       },
       {
-        fromName: "河北",
-        toName: "东港",
+        fromName: "Hebei",
+        toName: "Donggang",
         coords: [
           [114.475704, 38.584854],
           [124.152705, 39.863008]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "西安",
+        fromName: "Liaoning",
+        toName: "Xi'an",
         coords: [
           [123.42944, 41.835441],
           [108.940175, 34.341568]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "滨海",
+        fromName: "Inner Mongolia",
+        toName: "Binhai",
         coords: [
           [111.765618, 40.817498],
           [119.820831, 33.990334]
         ]
       },
       {
-        fromName: "河南",
-        toName: "青岛",
+        fromName: "Henan",
+        toName: "Qingdao",
         coords: [
           [113.274379, 34.445122],
           [120.38264, 36.067082]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "昆山",
+        fromName: "Heilongjiang",
+        toName: "Kunshan",
         coords: [
           [126.661669, 45.742347],
           [120.980737, 31.385598]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "长沙",
+        fromName: "Liaoning",
+        toName: "Changsha",
         coords: [
           [123.42944, 41.835441],
           [112.938814, 28.228209]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "哈尔滨",
+        fromName: "Jilin",
+        toName: "Harbin",
         coords: [
           [126.549572, 43.837883],
           [126.534967, 45.803775]
         ]
       },
       {
-        fromName: "河北",
-        toName: "尚志",
+        fromName: "Hebei",
+        toName: "Shangzhi",
         coords: [
           [114.475704, 38.584854],
           [128.009895, 45.209586]
         ]
       },
       {
-        fromName: "辽宁",
+        fromName: "Liaoning",
         toName: "东城",
         coords: [
           [123.42944, 41.835441],
@@ -2936,519 +2936,519 @@ function getEchartsOption() {
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "珠海",
+        fromName: "Liaoning",
+        toName: "Zhuhai",
         coords: [
           [123.42944, 41.835441],
           [113.576726, 22.270715]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "铁岭",
+        fromName: "Heilongjiang",
+        toName: "Tieling",
         coords: [
           [126.661669, 45.742347],
           [123.726166, 42.223769]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "蓬莱",
+        fromName: "Heilongjiang",
+        toName: "Penglai",
         coords: [
           [126.661669, 45.742347],
           [120.758848, 37.810661]
         ]
       },
       {
-        fromName: "北京",
-        toName: "天津",
+        fromName: "Beijing",
+        toName: "Tianjin",
         coords: [
           [116.407526, 39.90403],
           [117.200983, 39.084158]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "天津",
+        fromName: "Inner Mongolia",
+        toName: "Tianjin",
         coords: [
           [111.765618, 40.817498],
           [117.200983, 39.084158]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "宁波",
+        fromName: "Heilongjiang",
+        toName: "Ningbo",
         coords: [
           [126.661669, 45.742347],
           [121.550357, 29.874557]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "上海",
+        fromName: "Jilin",
+        toName: "Shanghai",
         coords: [
           [126.549572, 43.837883],
           [121.473701, 31.230416]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "佛山",
+        fromName: "Liaoning",
+        toName: "Foshan",
         coords: [
           [123.42944, 41.835441],
           [113.121416, 23.021548]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "长宁",
+        fromName: "Jilin",
+        toName: "Changning",
         coords: [
           [126.549572, 43.837883],
           [121.424624, 31.220367]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "珲春",
+        fromName: "Heilongjiang",
+        toName: "Hunchun",
         coords: [
           [126.661669, 45.742347],
           [130.366036, 42.862821]
         ]
       },
       {
-        fromName: "山东",
-        toName: "黄浦",
+        fromName: "Shandong",
+        toName: "Huangpu",
         coords: [
           [117.020359, 36.66853],
           [121.484443, 31.231763]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "威海",
+        fromName: "Liaoning",
+        toName: "Weihai",
         coords: [
           [123.42944, 41.835441],
           [122.12042, 37.513068]
         ]
       },
       {
-        fromName: "天津",
-        toName: "长春",
+        fromName: "Tianjin",
+        toName: "Changchun",
         coords: [
           [117.200983, 39.084158],
           [125.323544, 43.817072]
         ]
       },
       {
-        fromName: "新疆",
-        toName: "上海",
+        fromName: "Xinjiang",
+        toName: "Shanghai",
         coords: [
           [87.627704, 43.793026],
           [121.473701, 31.230416]
         ]
       },
       {
-        fromName: "河北",
-        toName: "鸡西",
+        fromName: "Hebei",
+        toName: "Jixi",
         coords: [
           [114.475704, 38.584854],
           [130.969333, 45.295075]
         ]
       },
       {
-        fromName: "陕西",
-        toName: "呼和浩特",
+        fromName: "Shaanxi",
+        toName: "Hohhot",
         coords: [
           [108.954239, 34.265472],
           [111.749181, 40.842585]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "连云港",
+        fromName: "Jilin",
+        toName: "Lianyungang",
         coords: [
           [126.549572, 43.837883],
           [119.221611, 34.596653]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "杭州",
+        fromName: "Heilongjiang",
+        toName: "Hangzhou",
         coords: [
           [126.661669, 45.742347],
           [120.15507, 30.274085]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "嘉兴",
+        fromName: "Heilongjiang",
+        toName: "Jiaxing",
         coords: [
           [126.661669, 45.742347],
           [120.755486, 30.746129]
         ]
       },
       {
-        fromName: "陕西",
-        toName: "盘锦",
+        fromName: "Shaanxi",
+        toName: "Panjin",
         coords: [
           [108.954239, 34.265472],
           [122.070714, 41.119997]
         ]
       },
       {
-        fromName: "河北",
-        toName: "同江",
+        fromName: "Hebei",
+        toName: "Tongjiang",
         coords: [
           [114.475704, 38.584854],
           [132.510919, 47.642707]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "杭州",
+        fromName: "Jilin",
+        toName: "Hangzhou",
         coords: [
           [126.549572, 43.837883],
           [120.15507, 30.274085]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "舟山",
+        fromName: "Heilongjiang",
+        toName: "Zhoushan",
         coords: [
           [126.661669, 45.742347],
           [122.207216, 29.985295]
         ]
       },
       {
-        fromName: "河南",
-        toName: "大连",
+        fromName: "Henan",
+        toName: "Dalian",
         coords: [
           [113.274379, 34.445122],
           [121.614682, 38.914003]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "绵阳",
+        fromName: "Liaoning",
+        toName: "Mianyang",
         coords: [
           [123.42944, 41.835441],
           [104.679114, 31.46745]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "溆浦",
+        fromName: "Jilin",
+        toName: "Xupu",
         coords: [
           [126.549572, 43.837883],
           [110.594921, 27.908281]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "朝阳",
+        fromName: "Jilin",
+        toName: "Chaoyang",
         coords: [
           [126.549572, 43.837883],
           [116.443108, 39.92147]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "无锡",
+        fromName: "Jilin",
+        toName: "Wuxi",
         coords: [
           [126.549572, 43.837883],
           [120.31191, 31.49117]
         ]
       },
       {
-        fromName: "浙江",
-        toName: "沈阳",
+        fromName: "Zhejiang",
+        toName: "Shenyang",
         coords: [
           [120.152792, 30.267447],
           [123.431475, 41.805698]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "湖里",
+        fromName: "Jilin",
+        toName: "Huli",
         coords: [
           [126.549572, 43.837883],
           [118.146769, 24.512905]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "无锡",
+        fromName: "Heilongjiang",
+        toName: "Wuxi",
         coords: [
           [126.661669, 45.742347],
           [120.31191, 31.49117]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "长宁",
+        fromName: "Heilongjiang",
+        toName: "Changning",
         coords: [
           [126.661669, 45.742347],
           [121.424624, 31.220367]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "胶州",
+        fromName: "Liaoning",
+        toName: "Jiaozhou",
         coords: [
           [123.42944, 41.835441],
           [120.033382, 36.26468]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "青岛",
+        fromName: "Jilin",
+        toName: "Qingdao",
         coords: [
           [126.549572, 43.837883],
           [120.38264, 36.067082]
         ]
       },
       {
-        fromName: "河北",
-        toName: "海淀",
+        fromName: "Hebei",
+        toName: "Haidian",
         coords: [
           [114.475704, 38.584854],
           [116.298056, 39.959912]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "厦门",
+        fromName: "Heilongjiang",
+        toName: "Xiamen",
         coords: [
           [126.661669, 45.742347],
           [118.089425, 24.479834]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "中山",
+        fromName: "Heilongjiang",
+        toName: "Zhongshan",
         coords: [
           [126.661669, 45.742347],
           [113.392782, 22.517646]
         ]
       },
       {
-        fromName: "河北",
-        toName: "太原",
+        fromName: "Hebei",
+        toName: "Taiyuan",
         coords: [
           [114.475704, 38.584854],
           [112.548879, 37.87059]
         ]
       },
       {
-        fromName: "新疆",
-        toName: "吉林",
+        fromName: "Xinjiang",
+        toName: "Jilin",
         coords: [
           [87.627704, 43.793026],
           [126.549572, 43.837883]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "武侯",
+        fromName: "Jilin",
+        toName: "Marquis Wu",
         coords: [
           [126.549572, 43.837883],
           [104.04339, 30.641982]
         ]
       },
       {
-        fromName: "北京",
-        toName: "廊坊",
+        fromName: "Beijing",
+        toName: "Langfang",
         coords: [
           [116.407526, 39.90403],
           [116.683752, 39.538047]
         ]
       },
       {
-        fromName: "浙江",
-        toName: "临汾",
+        fromName: "Zhejiang",
+        toName: "Linfen",
         coords: [
           [120.152792, 30.267447],
           [111.518976, 36.088005]
         ]
       },
       {
-        fromName: "湖北",
-        toName: "天津",
+        fromName: "Hubei",
+        toName: "Tianjin",
         coords: [
           [114.341862, 30.546498],
           [117.200983, 39.084158]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "泉州",
+        fromName: "Heilongjiang",
+        toName: "Quanzhou",
         coords: [
           [126.661669, 45.742347],
           [118.675676, 24.874132]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "温州",
+        fromName: "Heilongjiang",
+        toName: "Wenzhou",
         coords: [
           [126.661669, 45.742347],
           [120.699367, 27.994267]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "唐山",
+        fromName: "Heilongjiang",
+        toName: "Tangshan",
         coords: [
           [126.661669, 45.742347],
           [118.180194, 39.630867]
         ]
       },
       {
-        fromName: "北京",
-        toName: "铁岭",
+        fromName: "Beijing",
+        toName: "Tieling",
         coords: [
           [116.407526, 39.90403],
           [123.726166, 42.223769]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "即墨",
+        fromName: "Liaoning",
+        toName: "Jimo",
         coords: [
           [123.42944, 41.835441],
           [120.447128, 36.389639]
         ]
       },
       {
-        fromName: "北京",
-        toName: "上海",
+        fromName: "Beijing",
+        toName: "Shanghai",
         coords: [
           [116.407526, 39.90403],
           [121.473701, 31.230416]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "广州",
+        fromName: "Heilongjiang",
+        toName: "Guangzhou",
         coords: [
           [126.661669, 45.742347],
           [113.264435, 23.129163]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "廊坊",
+        fromName: "Jilin",
+        toName: "Langfang",
         coords: [
           [126.549572, 43.837883],
           [116.683752, 39.538047]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "荣成",
+        fromName: "Heilongjiang",
+        toName: "Rongcheng",
         coords: [
           [126.661669, 45.742347],
           [122.486658, 37.16516]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "海城",
+        fromName: "Jilin",
+        toName: "Haicheng",
         coords: [
           [126.549572, 43.837883],
           [122.685217, 40.882377]
         ]
       },
       {
-        fromName: "湖南",
-        toName: "沈阳",
+        fromName: "Hunan",
+        toName: "Shenyang",
         coords: [
           [112.98381, 28.112444],
           [123.431475, 41.805698]
         ]
       },
       {
-        fromName: "北京",
-        toName: "青岛",
+        fromName: "Beijing",
+        toName: "Qingdao",
         coords: [
           [116.407526, 39.90403],
           [120.38264, 36.067082]
         ]
       },
       {
-        fromName: "河北",
-        toName: "大连",
+        fromName: "Hebei",
+        toName: "Dalian",
         coords: [
           [114.475704, 38.584854],
           [121.614682, 38.914003]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "珠海",
+        fromName: "Inner Mongolia",
+        toName: "Zhuhai",
         coords: [
           [111.765618, 40.817498],
           [113.576726, 22.270715]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "房山",
+        fromName: "Heilongjiang",
+        toName: "Fangshan",
         coords: [
           [126.661669, 45.742347],
           [116.143267, 39.749144]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "金坛",
+        fromName: "Heilongjiang",
+        toName: "Jintan",
         coords: [
           [126.661669, 45.742347],
           [119.597897, 31.723247]
         ]
       },
       {
-        fromName: "河北",
-        toName: "齐齐哈尔",
+        fromName: "Hebei",
+        toName: "Qiqihar",
         coords: [
           [114.475704, 38.584854],
           [126.661669, 45.742347]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "大兴",
+        fromName: "Jilin",
+        toName: "Daxing",
         coords: [
           [126.549572, 43.837883],
           [116.341395, 39.726929]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "密云",
+        fromName: "Jilin",
+        toName: "Miyun",
         coords: [
           [126.549572, 43.837883],
           [116.801346, 40.35874]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "和平",
+        fromName: "Heilongjiang",
+        toName: "Peace",
         coords: [
           [126.661669, 45.742347],
           [117.21451, 39.116949]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "龙井",
+        fromName: "Inner Mongolia",
+        toName: "Longjing",
         coords: [
           [111.765618, 40.817498],
           [129.427066, 42.766311]
         ]
       },
       {
-        fromName: "吉林",
+        fromName: "Jilin",
         toName: "道里",
         coords: [
           [126.549572, 43.837883],
@@ -3456,87 +3456,87 @@ function getEchartsOption() {
         ]
       },
       {
-        fromName: "山东",
-        toName: "武汉",
+        fromName: "Shandong",
+        toName: "Wuhan",
         coords: [
           [117.020359, 36.66853],
           [114.305393, 30.593099]
         ]
       },
       {
-        fromName: "甘肃",
-        toName: "常熟",
+        fromName: "Gansu",
+        toName: "Changshu",
         coords: [
           [103.826308, 36.059421],
           [120.752481, 31.654376]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "烟台",
+        fromName: "Heilongjiang",
+        toName: "Yantai",
         coords: [
           [126.661669, 45.742347],
           [121.447935, 37.463822]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "海淀",
+        fromName: "Jilin",
+        toName: "Haidian",
         coords: [
           [126.549572, 43.837883],
           [116.298056, 39.959912]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "长沙",
+        fromName: "Heilongjiang",
+        toName: "Changsha",
         coords: [
           [126.661669, 45.742347],
           [112.938814, 28.228209]
         ]
       },
       {
-        fromName: "天津",
-        toName: "石家庄",
+        fromName: "Tianjin",
+        toName: "Shijiazhuang",
         coords: [
           [117.200983, 39.084158],
           [114.51486, 38.042307]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "佛山",
+        fromName: "Jilin",
+        toName: "Foshan",
         coords: [
           [126.549572, 43.837883],
           [113.121416, 23.021548]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "黄骅",
+        fromName: "Liaoning",
+        toName: "黄华",
         coords: [
           [123.42944, 41.835441],
           [117.330048, 38.371383]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "中山",
+        fromName: "Inner Mongolia",
+        toName: "Zhongshan",
         coords: [
           [111.765618, 40.817498],
           [113.392782, 22.517646]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "北京",
+        fromName: "Heilongjiang",
+        toName: "Beijing",
         coords: [
           [126.661669, 45.742347],
           [116.407526, 39.90403]
         ]
       },
       {
-        fromName: "黑龙江",
+        fromName: "Heilongjiang",
         toName: "三河",
         coords: [
           [126.661669, 45.742347],
@@ -3544,271 +3544,271 @@ function getEchartsOption() {
         ]
       },
       {
-        fromName: "河北",
-        toName: "庆安",
+        fromName: "Hebei",
+        toName: "Qing'an",
         coords: [
           [114.475704, 38.584854],
           [127.507825, 46.880102]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "长沙",
+        fromName: "Jilin",
+        toName: "Changsha",
         coords: [
           [126.549572, 43.837883],
           [112.938814, 28.228209]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "西安",
+        fromName: "Heilongjiang",
+        toName: "Xi'an",
         coords: [
           [126.661669, 45.742347],
           [108.940175, 34.341568]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "朝阳",
+        fromName: "Inner Mongolia",
+        toName: "Chaoyang",
         coords: [
           [111.765618, 40.817498],
           [116.443108, 39.92147]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "丰台",
+        fromName: "Liaoning",
+        toName: "Fengtai",
         coords: [
           [123.42944, 41.835441],
           [116.287149, 39.858427]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "延吉",
+        fromName: "Heilongjiang",
+        toName: "Yanji",
         coords: [
           [126.661669, 45.742347],
           [129.508946, 42.891255]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "长春",
+        fromName: "Heilongjiang",
+        toName: "Changchun",
         coords: [
           [126.661669, 45.742347],
           [125.323544, 43.817072]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "天津",
+        fromName: "Jilin",
+        toName: "Tianjin",
         coords: [
           [126.549572, 43.837883],
           [117.200983, 39.084158]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "昌平",
+        fromName: "Jilin",
+        toName: "Changping",
         coords: [
           [126.549572, 43.837883],
           [116.231204, 40.22066]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "赣州",
+        fromName: "Jilin",
+        toName: "Ganzhou",
         coords: [
           [126.549572, 43.837883],
           [114.93503, 25.831829]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "厦门",
+        fromName: "Jilin",
+        toName: "Xiamen",
         coords: [
           [126.549572, 43.837883],
           [118.089425, 24.479834]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "秦皇岛",
+        fromName: "Inner Mongolia",
+        toName: "Qinhuangdao",
         coords: [
           [111.765618, 40.817498],
           [119.600493, 39.935385]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "菏泽",
+        fromName: "Inner Mongolia",
+        toName: "Heze",
         coords: [
           [111.765618, 40.817498],
           [115.480656, 35.23375]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "闵行",
+        fromName: "Jilin",
+        toName: "Minhang",
         coords: [
           [126.549572, 43.837883],
           [121.381709, 31.112813]
         ]
       },
       {
-        fromName: "辽宁",
-        toName: "石景山",
+        fromName: "Liaoning",
+        toName: "Shijingshan",
         coords: [
           [123.42944, 41.835441],
           [116.222982, 39.906611]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "珠海",
+        fromName: "Jilin",
+        toName: "Zhuhai",
         coords: [
           [126.549572, 43.837883],
           [113.576726, 22.270715]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "青岛",
+        fromName: "Inner Mongolia",
+        toName: "Qingdao",
         coords: [
           [111.765618, 40.817498],
           [120.38264, 36.067082]
         ]
       },
       {
-        fromName: "北京",
-        toName: "海门",
+        fromName: "Beijing",
+        toName: "Haimen",
         coords: [
           [116.407526, 39.90403],
           [121.181615, 31.871173]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "长春",
+        fromName: "Inner Mongolia",
+        toName: "Changchun",
         coords: [
           [111.765618, 40.817498],
           [125.323544, 43.817072]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "城阳",
+        fromName: "Jilin",
+        toName: "Chengyang",
         coords: [
           [126.549572, 43.837883],
           [120.39631, 36.307064]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "大同",
+        fromName: "Jilin",
+        toName: "Datong",
         coords: [
           [126.549572, 43.837883],
           [113.61244, 40.040295]
         ]
       },
       {
-        fromName: "湖北",
-        toName: "邢台",
+        fromName: "Hubei",
+        toName: "Xingtai",
         coords: [
           [114.341862, 30.546498],
           [114.504844, 37.070589]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "胶州",
+        fromName: "Jilin",
+        toName: "Jiaozhou",
         coords: [
           [126.549572, 43.837883],
           [120.033382, 36.26468]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "重庆",
+        fromName: "Jilin",
+        toName: "Chongqing",
         coords: [
           [126.549572, 43.837883],
           [106.551557, 29.56301]
         ]
       },
       {
-        fromName: "河北",
-        toName: "佳木斯",
+        fromName: "Hebei",
+        toName: "Jiamusi",
         coords: [
           [114.475704, 38.584854],
           [130.318917, 46.799923]
         ]
       },
       {
-        fromName: "甘肃",
-        toName: "大连",
+        fromName: "Gansu",
+        toName: "Dalian",
         coords: [
           [103.826308, 36.059421],
           [121.614682, 38.914003]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "南京",
+        fromName: "Jilin",
+        toName: "Nanjing",
         coords: [
           [126.549572, 43.837883],
           [118.796877, 32.060255]
         ]
       },
       {
-        fromName: "内蒙古",
-        toName: "日照",
+        fromName: "Inner Mongolia",
+        toName: "Rizhao",
         coords: [
           [111.765618, 40.817498],
           [119.526888, 35.416377]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "鸡东",
+        fromName: "Jilin",
+        toName: "Chicken East",
         coords: [
           [126.549572, 43.837883],
           [131.12408, 45.260412]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "即墨",
+        fromName: "Heilongjiang",
+        toName: "Jimo",
         coords: [
           [126.661669, 45.742347],
           [120.447128, 36.389639]
         ]
       },
       {
-        fromName: "江苏",
-        toName: "朝阳",
+        fromName: "Jiangsu",
+        toName: "Chaoyang",
         coords: [
           [118.763232, 32.061707],
           [116.443108, 39.92147]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "南通",
+        fromName: "Jilin",
+        toName: "Nantong",
         coords: [
           [126.549572, 43.837883],
           [120.894291, 31.980172]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "张家港",
+        fromName: "Heilongjiang",
+        toName: "Zhangjiagang",
         coords: [
           [126.661669, 45.742347],
           [120.553284, 31.870367]
         ]
       },
       {
-        fromName: "吉林",
+        fromName: "Jilin",
         toName: "三河",
         coords: [
           [126.549572, 43.837883],
@@ -3816,24 +3816,24 @@ function getEchartsOption() {
         ]
       },
       {
-        fromName: "吉林",
-        toName: "咸阳",
+        fromName: "Jilin",
+        toName: "Xianyang",
         coords: [
           [126.549572, 43.837883],
           [108.708991, 34.329605]
         ]
       },
       {
-        fromName: "吉林",
-        toName: "中山",
+        fromName: "Jilin",
+        toName: "Zhongshan",
         coords: [
           [126.549572, 43.837883],
           [113.392782, 22.517646]
         ]
       },
       {
-        fromName: "黑龙江",
-        toName: "胶州",
+        fromName: "Heilongjiang",
+        toName: "Jiaozhou",
         coords: [
           [126.661669, 45.742347],
           [120.033382, 36.26468]
@@ -3846,7 +3846,7 @@ function getEchartsOption() {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
 
     title: {
-      text: "人口迁徙图",
+      text: "Population migration map",
       left: "center",
       textStyle: {
         color: "#fff"
@@ -3857,14 +3857,14 @@ function getEchartsOption() {
       orient: "vertical",
       top: "bottom",
       left: "right",
-      data: ["地点", "线路"],
+      data: ["location", "route"],
       textStyle: {
         color: "#fff"
       }
     },
     series: [
       {
-        name: "地点",
+        name: "location",
         type: "effectScatter",
         coordinateSystem: "mars3dMap",
         zlevel: 2,
@@ -3888,7 +3888,7 @@ function getEchartsOption() {
         data: allData.citys
       },
       {
-        name: "线路",
+        name: "Line",
         type: "lines",
         coordinateSystem: "mars3dMap",
         zlevel: 2,

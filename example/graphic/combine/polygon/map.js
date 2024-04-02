@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.805326, lng: 117.241767, alt: 2281, heading: 357, pitch: -42 }
@@ -14,29 +14,29 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map // 创建矢量数据图层
+  map = mapInstance // record map // create vector data layer
 
   graphicLayer = new mars3d.layer.GraphicLayer()
-  map.addLayer(graphicLayer) // 在layer上绑定监听事件
+  map.addLayer(graphicLayer) // Bind listening events on the layer
 
   graphicLayer.on(mars3d.EventType.click, function (event) {
     const pickedItem = event.pickedObject?.data
-    console.log("单击了合并对象中的单个值为", pickedItem)
+    console.log("The single value in the merged object was clicked", pickedItem)
   })
 
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效 // 加一些演示数据
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer // Add some demonstration data
   addDemoGraphic1()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -48,7 +48,7 @@ function addDemoGraphic1() {
 
   const url = "//data.mars3d.cn/file/geojson/buildings-hf.json"
   mars3d.Util.fetchJson({ url }).then((data) => {
-    console.log("1.geojson数据请求完成", data)
+    console.log("1.geojson data request completed", data)
 
     const arr = mars3d.Util.geoJsonToGraphics(data, {
       symbol: {
@@ -58,22 +58,22 @@ function addDemoGraphic1() {
           return {
             height: 0,
             diffHeight,
-            color: Cesium.Color.fromRandom({ alpha: 0.4 }) // 随机色
+            color: Cesium.Color.fromRandom({ alpha: 0.4 }) // Random color
           }
         }
       }
     })
 
-    console.log("2.开始渲染PolygonCombine对象", arr)
+    console.log("2. Start rendering PolygonCombine object", arr)
 
     const graphic = new mars3d.graphic.PolygonCombine({
-      instances: arr, // 公共样式
+      instances: arr, // public style
       style: {
         outline: true,
         outlineColor: "#ffffff",
         flat: true
       },
-      // 高亮时的样式
+      // Style when highlighted
       highlight: {
         type: mars3d.EventType.click,
         color: Cesium.Color.YELLOW.withAlpha(0.9)
@@ -82,23 +82,23 @@ function addDemoGraphic1() {
     graphicLayer.addGraphic(graphic)
 
     graphic.readyPromise.then(() => {
-      console.log("3.PolygonCombine渲染完成")
+      console.log("3.PolygonCombine rendering completed")
 
       const endTime = new Date().getTime()
-      const usedTime = (endTime - startTime) / 1000 // 两个时间戳相差的毫秒数
-      globalMsg(`生成${arr.length}条数据，共耗时${usedTime.toFixed(2)}秒`) // 多个面对象的合并渲染。
+      const usedTime = (endTime - startTime) / 1000 // The number of milliseconds between the two timestamps
+      globalMsg(`Generating ${arr.length} pieces of data, taking a total of ${usedTime.toFixed(2)} seconds`) // Combined rendering of multiple area objects.
     })
   })
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   const arrData = []
   for (let j = 0; j < result.points.length; ++j) {
@@ -117,10 +117,10 @@ function addRandomGraphicByCount(count) {
       },
       attr: { index }
     })
-  } // 多个面对象的合并渲染。
+  } // Combined rendering of multiple area objects.
 
   const graphic = new mars3d.graphic.PolygonCombine({
-    instances: arrData, // 高亮时的样式
+    instances: arrData, // style when highlighted
     highlight: {
       type: mars3d.EventType.click,
       color: Cesium.Color.YELLOW.withAlpha(0.9)
@@ -128,7 +128,7 @@ function addRandomGraphicByCount(count) {
   })
   graphicLayer.addGraphic(graphic)
 
-  // 演示：平滑移动高度
+  // Demo: Smoothly move height
   // let height = 0
   // setInterval(() => {
   //   if (height > 10000 || graphic.isDestroy) {
@@ -138,23 +138,23 @@ function addRandomGraphicByCount(count) {
   //   graphic.offsetHeight = height
   // }, 10)
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 取区域内的随机点
+// Get random points in the area
 function randomPoint() {
   const jd = random(115.955684 * 1000, 117.474003 * 1000) / 1000
   const wd = random(30.7576 * 1000, 32.008782 * 1000) / 1000

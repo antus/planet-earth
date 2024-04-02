@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 14.986428, lng: 113.87451, alt: 3519007, heading: 353, pitch: -69 }
@@ -10,21 +10,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  // 创建Echarts图层
+  // Create Echarts layer
   createEchartsLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -35,16 +35,16 @@ function createEchartsLayer() {
   const echartsLayer = new mars3d.layer.EchartsLayer(options)
   map.addLayer(echartsLayer)
 
-  // 图表自适应
+  //Chart adaptive
   window.addEventListener("resize", function () {
     echartsLayer.resize()
   })
 }
 
 /**
- *echart图层
+ *echart layer
  *
- * @return {option} echart图表的数据
+ * @return {option} echart chart data
  */
 function getEchartsOption() {
   const allData = {
@@ -308,7 +308,7 @@ function getEchartsOption() {
 
     backgroundColor: "rgba(17, 19, 42, 0.4)",
     title: {
-      text: "火星科技物流运输图",
+      text: "Mars Technology Logistics and Transportation Map",
       left: "center",
       textStyle: {
         color: "#fff"
@@ -319,14 +319,14 @@ function getEchartsOption() {
       orient: "vertical",
       top: "bottom",
       left: "right",
-      data: ["地点", "线路"],
+      data: ["location", "route"],
       textStyle: {
         color: "#fff"
       }
     },
     series: [
       {
-        name: "地点",
+        name: "location",
         type: "effectScatter",
         coordinateSystem: "mars3dMap",
         zlevel: 2,
@@ -350,7 +350,7 @@ function getEchartsOption() {
         data: allData.citys
       },
       {
-        name: "线路",
+        name: "Line",
         type: "lines",
         coordinateSystem: "mars3dMap",
         zlevel: 2,

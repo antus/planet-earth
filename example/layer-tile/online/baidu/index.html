@@ -1,4 +1,4 @@
-<!-- 2017-12-4 14:24:10 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!-- 2017-12-4 14:24:10 | Modified Mu Yao (WeChat: http://marsgis.cn/weixin.html ) -->
 <!DOCTYPE html>
 <html>
 
@@ -13,13 +13,13 @@
   <meta name="x5-fullscreen" content="true" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
 
-  <!-- 标题及搜索关键字 -->
-  <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+  <!-- Title and search keywords -->
+  <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
   <meta name="description"
-    content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS" />
+    content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework three-dimensional earth model gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming Geographic Information System Cloud GIS 3D GIS GIS Platform WebGIS" />
 
   <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
-  <title>百度 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+  <title>Baidu | Mars3D | 3D Map | Mars Technology | Hefei Mars Technology Co., Ltd.</title>
 
   <script type="text/javascript" src="/lib/include-lib.js" libpath="/lib/"
     include="jquery,layer,toastr,font-awesome,bootstrap,bootstrap-slider,layer,haoutil,mars3d,localforage,es5-widget"></script>
@@ -47,65 +47,65 @@
   <div id="mars3dContainer" class="mars3d-container"></div>
 
   <div class="infoview">
-    <input id="btnAddLayer" type="button" class="btn btn-primary" value="叠加图层" onclick="addTileLayer()" />
-    <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="移除图层" onclick="removeTileLayer()" />
+    <input id="btnAddLayer" type="button" class="btn btn-primary" value="Overlay layer" onclick="addTileLayer()" />
+    <input id="btnRemoveLayer" type="button" class="btn btn-primary" value="Remove layer" onclick="removeTileLayer()" />
 
-    <input id="showTable" class="styled" type="checkbox" checked value="显示列表">显示列表</input>
+    <input id="showTable" class="styled" type="checkbox" checked value="show list">show list</input>
 
-    <!-- 操作单个记录 -->
+    <!-- Manipulate a single record -->
     <div id="layerTable">
       <table class="mars-table flatTable">
         <thead>
-          <th>名称</th>
-          <th>编辑</th>
+          <th>Name</th>
+          <th>Edit</th>
         </thead>
         <tbody id="tbPoly"></tbody>
       </table>
 
       <div id="showEditor">
-        <h4 class="title" id="layerName">底图参数</h4>
+        <h4 class="title" id="layerName">Basemap parameters</h4>
         <table class="mars-table">
           <tbody>
             <tr>
-              <td>状态</td>
+              <td>Status</td>
               <td>
-                <input id="show" class="styled" type="checkbox" checked value="显示">显示</input>
+                <input id="show" class="styled" type="checkbox" checked value="show">show</input>
               </td>
             </tr>
             <tr>
-              <td>亮度</td>
+              <td>Brightness</td>
               <td>
-                <input id="brightness" title="亮度" />
+                <input id="brightness" title="Brightness" />
               </td>
             </tr>
             <tr>
-              <td>对比度</td>
+              <td>Contrast</td>
               <td>
-                <input id="contrast" title="对比度" />
+                <input id="contrast" title="Contrast" />
               </td>
             </tr>
             <tr>
-              <td>色彩</td>
+              <td>Color</td>
               <td>
-                <input id="hue" title="色彩" />
+                <input id="hue" title="Color" />
               </td>
             </tr>
             <tr>
-              <td>饱和度</td>
+              <td>Saturation</td>
               <td>
-                <input id="saturation" title="饱和度" />
+                <input id="saturation" title="Saturation" />
               </td>
             </tr>
             <tr>
-              <td>伽马值</td>
+              <td>Gamma value</td>
               <td>
-                <input id="gamma" title="伽马值" />
+                <input id="gamma" title="Gamma value" />
               </td>
             </tr>
             <tr>
-              <td>透明度</td>
+              <td>Transparency</td>
               <td>
-                <input id="opacity" title="透明度" />
+                <input id="opacity" title="Transparency" />
               </td>
             </tr>
           </tbody>
@@ -119,17 +119,17 @@
   <script src="/js/tile_layer_state.js"></script>
 
   <script type="text/javascript">
-    "use script" //开发环境建议开启严格模式
+    "use script" //It is recommended to turn on strict mode in the development environment
 
     let $table
     const tileLayerList = []
-    let thisLayer = null // 选中的图层
+    let thisLayer = null // selected layer
 
     function initUI() {
-      // 是否显示表格
+      // Whether to display the table
       $("#showTable").change(function () {
         let val = $(this).is(":checked")
-        // 隐藏显示表格
+        //Hide the display table
         if (val) {
           $("#layerTable").show()
         } else {
@@ -141,11 +141,11 @@
       activatePOIQuery(map)
     }
 
-    //附加：激活POI查询widget，用于在底图上叠加显示数据
+    //Additional: Activate the POI query widget, which is used to overlay and display data on the base map.
     function activatePOIQuery(map) {
       es5widget.activate({
         map: map,
-        name: "POI查询",
+        name: "POI Query",
         uri: "widgets/queryBaiduPOI/widget.js"
       })
     }

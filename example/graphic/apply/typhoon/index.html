@@ -3,24 +3,24 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="author" content="Mars Technology http://mars3d.cn " />
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="x5-fullscreen" content="true" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-    <!-- 标题及搜索关键字 -->
-    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <!-- Title and search keywords -->
+    <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
     <meta
       name="description"
-      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+      content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework three-dimensional earth model gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming Geographic Information System Cloud GIS 3D GIS GIS Platform WebGIS"
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
-    <title>台风轨迹(综合案例) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>Typhoon trajectory (comprehensive case) | Mars3D | 3D map | Mars Technology | Hefei Mars Technology Co., Ltd.</title>
 
-    <!--第三方lib-->
+    <!--Third-party lib-->
     <script
       type="text/javascript"
       src="/lib/include-lib.js"
@@ -64,7 +64,7 @@
         background-color: #3f4854a9;
       }
 
-      /**以下为图上tooltip信息面板样式*/
+      /**The following is the tooltip information panel style in the picture*/
       .tipBox {
         position: absolute;
         top: 0;
@@ -147,15 +147,15 @@
   <body class="dark">
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <!-- 台风列表 -->
+    <!-- Typhoon list -->
     <div class="infoview">
       <table id="listTable"></table>
     </div>
 
     <div id="typhoonPath" class="messagetable">
       <div class="path">
-        <p><span id="lblName"></span> 路径信息</p>
-        <button id="btnPlay" type="button" class="btn btn-primary"><span class="fa fa-play" aria-hidden="true"></span> 播放</button>
+        <p><span id="lblName"></span> Path information</p>
+        <button id="btnPlay" type="button" class="btn btn-primary"><span class="fa fa-play" aria-hidden="true"></span> Play</button>
       </div>
 
       <table id="pathTable"></table>
@@ -163,12 +163,12 @@
 
     <div class="legendContent">
       <ul>
-        <li><span class="round" style="background-color: #eed139"></span>热带低压</li>
-        <li><span class="round" style="background-color: #0000ff"></span>热带风暴</li>
-        <li><span class="round" style="background-color: #0f8000"></span>强热带风暴</li>
-        <li><span class="round" style="background-color: #fe9c45"></span>台风</li>
-        <li><span class="round" style="background-color: #fe00fe"></span>强台风</li>
-        <li><span class="round" style="background-color: #fe0000"></span>超强台风</li>
+        <li><span class="round" style="background-color: #eed139"></span>Tropical Depression</li>
+        <li><span class="round" style="background-color: #0000ff"></span>Tropical Storm</li>
+        <li><span class="round" style="background-color: #0f8000"></span>Severe Tropical Storm</li>
+        <li><span class="round" style="background-color: #fe9c45"></span>Typhoon</li>
+        <li><span class="round" style="background-color: #fe00fe"></span>Strong Typhoon</li>
+        <li><span class="round" style="background-color: #fe0000"></span>Super Typhoon</li>
       </ul>
     </div>
 
@@ -178,13 +178,13 @@
     <script src="./map.js"></script>
 
     <script type="text/javascript">
-      "use script" //开发环境建议开启严格模式
+      "use script" //It is recommended to turn on strict mode in the development environment
 
       function initUI(options) {
-        //绘制24/48小时警戒线
+        //Draw 24/48 hour warning line
         drawWarningLine()
 
-        //获取台风列表
+        //Get the typhoon list
         mars3d.Util.fetchJson({
           url: "//data.mars3d.cn/file/apidemo/typhoon/list_2020.json",
           data: {
@@ -193,7 +193,7 @@
         })
           .then(function (res) {
             const arr = typhoon_jsons_list_default(res)
-            //启动正在发送的台风
+            //Start the Typhoon being sent
             arr.forEach((item) => {
               if (item.state == "start") {
                 item.show = true
@@ -203,11 +203,11 @@
             showTyphoonTable(arr)
           })
           .catch(function (error) {
-            console.log("加载JSON出错", error)
+            console.log("Error loading JSON", error)
           })
       }
 
-      //显示台风列表
+      //Display typhoon list
       function showTyphoonTable(data) {
         $("#listTable").bootstrapTable({
           data: data,
@@ -217,24 +217,24 @@
           checkboxHeader: false,
           columns: [
             {
-              title: "是否显示",
+              title: "Whether to display",
               field: "show",
               align: "center",
               checkbox: true,
               with: 50
             },
             {
-              title: "台风编号",
+              title: "Typhoon number",
               field: "typnumber",
               align: "center"
             },
             {
-              title: "台风名（中文）",
+              title: "Typhoon name (Chinese)",
               field: "name_cn",
               align: "center"
             },
             {
-              title: "台风名（英文）",
+              title: "Typhoon name (English)",
               field: "name_en",
               align: "center"
             }
@@ -260,18 +260,18 @@
           if (selectTF.isStart) {
             stopPlay()
             selectTF.isStart = false
-            $("#btnPlay").html('<span class="fa fa-play" aria-hidden="true"></span> 播放')
+            $("#btnPlay").html('<span class="fa fa-play" aria-hidden="true"></span> Play')
           } else {
             startPlay()
             selectTF.isStart = true
-            $("#btnPlay").html('<span class="fa fa-stop" aria-hidden="true"></span> 停止')
+            $("#btnPlay").html('<span class="fa fa-stop" aria-hidden="true"></span> Stop')
           }
         })
       }
 
       let typhoonListObj = {}
 
-      //勾选了台风
+      //Typhoon is checked
       function selectOneTyphoon2(row) {
         $("#typhoonPath").show()
         $("#lblName").html("[" + row.typnumber + "]" + "" + row.name_cn)
@@ -294,14 +294,14 @@
             t: new Date().getTime()
           }
         }).then(function (res) {
-          const newData = conversionPathData(res.typhoon) // 在Typhoon.js中
+          const newData = conversionPathData(res.typhoon) // in Typhoon.js
           return newData
         })
       }
 
       let selectTF
 
-      //台风路径表格的显示
+      //Display of typhoon path table
       function showPathTable(typhoon) {
         selectTF = typhoon
 
@@ -313,13 +313,13 @@
           data: typhoon.path,
           columns: [
             {
-              title: "时间",
+              title: "Time",
               field: "time_str",
               align: "center"
             },
 
             {
-              title: "风速",
+              title: "Wind Speed",
               field: "centerSpeed",
               align: "center",
               formatter: function (value, row, index) {
@@ -327,12 +327,12 @@
               }
             },
             {
-              title: "移向",
+              title: "Move to",
               field: "moveTo_str",
               align: "center"
             },
             {
-              title: "强度",
+              title: "Strength",
               field: "level_str",
               align: "center"
             }
@@ -362,12 +362,12 @@
       }
 
       function typhoon_jsons_view(res) {
-        let newData = conversionPathData(res.typhoon) //在Typhoon.js中
-        // console.log('台风数据==>', newData)
+        let newData = conversionPathData(res.typhoon) //In Typhoon.js
+        // console.log('Typhoon data==>', newData)
         return newData
       }
 
-      //转换数据,将后端接口数据转换为需要的格式
+      //Convert data, convert the back-end interface data into the required format
       function conversionPathData(oldData) {
         let path = []
         oldData[8].forEach((message) => {
@@ -390,80 +390,80 @@
             } else if (level[0] == "64KTS") {
               circle12 = radiusObj
             } else {
-              console.log("未处理风圈", radiusObj)
+              console.log("Unprocessed wind circle", radiusObj)
             }
           })
 
-          //预测路径
+          //Predict path
           let babj = message[11]?.BABJ
           let arrForecast
           if (babj) {
             arrForecast = []
             babj.forEach((element) => {
               let newArr = {
-                time: element[0], //几小时预报
+                time: element[0], //hourly forecast
                 time_str: element[1],
-                lon: element[2], //预报经度
-                lat: element[3], //预报纬度
-                strength: element[4], //中心气压
-                centerSpeed: element[5], //最大风速  m/s
-                level: element[7], //预报台风等级, 代码
-                color: getColor(element[7]) //对应等级的颜色
+                lon: element[2], //Forecast longitude
+                lat: element[3], //Forecast latitude
+                strength: element[4], //Central air pressure
+                centerSpeed: element[5], //maximum wind speed m/s
+                level: element[7], //Forecast typhoon level, code
+                color: getColor(element[7]) //Color corresponding to the level
               }
               arrForecast.push(newArr)
             })
           }
 
-          let time = new Date(message[2]) //时间
+          let time = new Date(message[2]) //Time
 
           path.push({
-            id: message[0], //唯一标识
-            time: new Date(message[2]), //时间
-            time_str: time.format("MM-dd HH:mm"), //时间格式化字符串
+            id: message[0], //unique identification
+            time: new Date(message[2]), //time
+            time_str: time.format("MM-dd HH:mm"), //Time format string
 
-            level: message[3], //台风等级, 代码
+            level: message[3], //Typhoon level, code
             level_str: getLevelStr(message[3]),
-            color: getColor(message[3]), //对应等级的颜色
-            lon: message[4], //经度
-            lat: message[5], //纬度
-            strength: message[6], //中心气压,百帕
-            centerSpeed: message[7], //最大风速,米/秒
-            moveTo: message[8], //移动方向, 代码
+            color: getColor(message[3]), //Color corresponding to the level
+            lon: message[4], //longitude
+            lat: message[5], //Latitude
+            strength: message[6], //Central air pressure, hPa
+            centerSpeed: message[7], //Maximum wind speed, meters/second
+            moveTo: message[8], //Moving direction, code
             moveTo_str: getMoveToStr(message[8]),
-            windSpeed: message[9], //移动速度,公里/小时
+            windSpeed: message[9], //Moving speed, kilometers/hour
 
-            circle7: circle7, //7级风圈, 对象
-            circle10: circle10, //10级风圈, 对象
-            circle12: circle12, //12级风圈, 对象
-            forecast: arrForecast //预测路径, 数组
+            circle7: circle7, //Level 7 wind circle, object
+            circle10: circle10, //Level 10 wind circle, object
+            circle12: circle12, //12th level wind circle, object
+            forecast: arrForecast //Forecast path, array
           })
         })
 
         return {
           id: oldData[0],
-          name_en: oldData[1], //台风名字,英文
-          name_cn: oldData[2], //台风名字
-          typnumber: oldData[3], //台风编号
+          name_en: oldData[1], //Typhoon name, English
+          name_cn: oldData[2], //Typhoon name
+          typnumber: oldData[3], //Typhoon number
           state: oldData[7],
           path: path
         }
       }
 
-      //不同等级的台风对应不同的颜色
+      //Typhoons of different levels correspond to different colors
       function getColor(level) {
         switch (level) {
           default:
-          case "TD": //热带低压
+          case "TD": //tropical depression
             return "rgb(238,209,57)"
-          case "TS": //热带风暴
+          case "TS": //tropical storm
             return "rgb(0,0,255)"
-          case "STS": //强热带风暴
+          case "STS": //Severe Tropical Storm
             return "rgb(15,128,0)"
-          case "TY": //台风
+          case "TY": //Typhoon
             return "rgb(254,156,69)"
-          case "STY": //强台风
+          case "STY": //Strong typhoon
             return "rgb(254,0,254)"
-          case "SuperTY": //超强台风
+          case "SuperTY": //Super Typhoon
             return "rgb(254,0,0)"
         }
       }
@@ -472,17 +472,17 @@
         switch (value) {
           default:
           case "TD":
-            return "热带低压"
+            return "tropical depression"
           case "TS":
-            return "热带风暴"
+            return "tropical storm"
           case "STS":
-            return "强热带风暴"
+            return "Severe Tropical Storm"
           case "TY":
-            return "台风"
+            return "Typhoon"
           case "STY":
-            return "强台风"
+            return "strong typhoon"
           case "SuperTY":
-            return "超强台风"
+            return "Super Typhoon"
         }
       }
 
@@ -490,37 +490,37 @@
         switch (value) {
           default:
           case "N":
-            return "北"
+            return "North"
           case "NNE":
-            return "北东北"
+            return "Northeast"
           case "NE":
-            return "东北"
+            return "Northeast"
           case "ENE":
-            return "东东北"
+            return "东北"
           case "E":
             return "东"
           case "ESE":
-            return "东东南"
+            return "East Southeast"
           case "ES":
-            return "东南"
+            return "southeast"
           case "SSE":
-            return "南东南"
+            return "South Southeast"
           case "S":
             return "南"
           case "SSW":
-            return "南西南"
+            return "Southwest"
           case "SW":
-            return "西南"
+            return "Southwest"
           case "WSW":
-            return "西西南"
+            return "西 Southwest"
           case "W":
             return "西"
           case "WNW":
-            return "西北西"
+            return "Northwest West"
           case "NW":
-            return "北西"
+            return "Northwest"
           case "NNW":
-            return "北西北"
+            return "North Northwest"
         }
       }
     </script>

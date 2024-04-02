@@ -1,14 +1,14 @@
 /**
- * 单个台风对象
+ * Single typhoon object
  * @class Typhoon
  */
 class Typhoon {
-  //= ========= 构造方法 ==========
+  //= ========= Constructor ==========
   constructor(options, map) {
     this.options = options
     this.map = map
 
-    // 创建台风相关矢量图层
+    //Create typhoon-related vector layers
     this.typhoonLayer = new mars3d.layer.GraphicLayer()
     map.addLayer(this.typhoonLayer)
 
@@ -17,8 +17,8 @@ class Typhoon {
     this.showTyphoonToMap(options.path)
   }
 
-  //= ========= 对外属性 ==========
-  // 显示隐藏
+  //= ========= External properties ==========
+  // show hide
   get show() {
     return this.options.show
   }
@@ -45,17 +45,17 @@ class Typhoon {
 
     let ybHtml = ""
     if (isYB) {
-      ybHtml = `<p>预报机构：&nbsp;&nbsp;中央气象台</p>`
+      ybHtml = `<p>Forecasting agency: Central Meteorological Observatory</p>`
     }
 
     let fqHtml = '<table style="width:100%">'
     if (item.circle7) {
-      fqHtml += `<tr><th>风圈半径</th>   <th>东北</th>  <th>东南</th>  <th>西南</th>  <th>西北</th></tr>
-                <tr><td>七级</td>  <td>${item.circle7.radius1}</td>   <td>${item.circle7.radius2}</td>   <td>${item.circle7.radius3}</td>   <td>${item.circle7.radius4}&nbsp;(KM)</td></tr> `
+      fqHtml += `<tr><th>Wind circle radius</th> <th>Northeast</th> <th>Southeast</th> <th>Southwest</th> <th>Northwest</th>< /tr>
+                <tr><td>Level 7</td> <td>${item.circle7.radius1}</td> <td>${item.circle7.radius2}</td> <td>${item.circle7 .radius3}</td> <td>${item.circle7.radius4} (KM)</td></tr> `
       if (item.circle10) {
-        fqHtml += ` <tr><td>十级</td>  <td>${item.circle10.radius1}</td>   <td>${item.circle10.radius2}</td>   <td>${item.circle10.radius3}</td>   <td>${item.circle10.radius4}&nbsp;(KM)</td></tr>`
+        fqHtml += ` <tr><td>Level Ten</td> <td>${item.circle10.radius1}</td> <td>${item.circle10.radius2}</td> <td>$ {item.circle10.radius3}</td> <td>${item.circle10.radius4} (KM)</td></tr>`
         if (item.circle12) {
-          fqHtml += `<tr><td>十二级</td>  <td>${item.circle12.radius1}</td>   <td>${item.circle12.radius2}</td>   <td>${item.circle12.radius3}</td>   <td>${item.circle12.radius4}&nbsp;(KM)</td></tr>`
+          fqHtml += `<tr><td>Level 12</td> <td>${item.circle12.radius1}</td> <td>${item.circle12.radius2}</td> <td> ${item.circle12.radius3}</td> <td>${item.circle12.radius4} (KM)</td></tr>`
         }
       }
     }
@@ -68,19 +68,19 @@ class Typhoon {
               </div>
                 <div class="tipBodyFirstPart">
                   ${ybHtml}
-                  <p>过去时间：&nbsp;&nbsp;${item.time_str}</p>
-                  <p>中心位置：&nbsp;&nbsp;${item.lat}N/${item.lon}E</p>
-                  <p>最大风速：&nbsp;&nbsp;${item.centerSpeed}米/秒</p>
-                  <p>中心气压：&nbsp;&nbsp;${item.strength}百帕</p>
-                  <p>移动方向：&nbsp;&nbsp;${item.moveTo_str}</p>
-                  <p>移动速度：&nbsp;&nbsp;${item.windSpeed}公里/小时</p>
+                  <p>Past time: ${item.time_str}</p>
+                  <p>Center position: ${item.lat}N/${item.lon}E</p>
+                  <p>Maximum wind speed: ${item.centerSpeed} meters/second</p>
+                  <p>Center air pressure: ${item.strength}hPa</p>
+                  <p>Moving direction: ${item.moveTo_str}</p>
+                  <p>Moving speed: ${item.windSpeed}km/h</p>
                 </div>
                 <div class="tipBodySecondPart">${fqHtml}</div>
           </div>`
   }
 
   addNameGraphic(firstItem) {
-    // [起点]绘制台风起点名字
+    // [Start point] Draw the name of the typhoon starting point
     const nameGraphic = new mars3d.graphic.RectanglePrimitive({
       positions: [
         [firstItem.lon, firstItem.lat],
@@ -100,7 +100,7 @@ class Typhoon {
     this.typhoonLayer.addGraphic(nameGraphic)
   }
 
-  // 绘制一个台风到地图上
+  // Draw a typhoon on the map
   showTyphoonToMap(arr) {
     if (arr.length < 1) {
       return
@@ -111,12 +111,12 @@ class Typhoon {
 
     let lastType
     let arrPoint = []
-    // 路径点
+    // waypoint
     for (let i = 0, len = arr.length; i < len; i++) {
       const item = arr[i]
       const point = [item.lon, item.lat]
 
-      // 在图层上绘画出所有的点
+      // Draw all points on the layer
       const pointEntity = new mars3d.graphic.PointEntity({
         id: item.id,
         position: point,
@@ -128,7 +128,7 @@ class Typhoon {
       })
       this.typhoonLayer.addGraphic(pointEntity)
 
-      // 轨迹点绑定点击事件
+      // Bind the track point to the click event
       pointEntity.on(mars3d.EventType.click, (event) => {
         this.showPointFQ(event.graphic.attr)
       })
@@ -144,9 +144,9 @@ class Typhoon {
 
       arrPoint.push(point)
 
-      // 判断台风的typlevel
+      // Determine the typlevel of typhoon
       if (lastType !== item.level || i === len - 1) {
-        // 绘制线
+        // draw line
         const graphicLine = new mars3d.graphic.PolylineEntity({
           positions: arrPoint,
           style: {
@@ -160,10 +160,10 @@ class Typhoon {
       }
     }
 
-    // [起点]绘制台风起点名字
+    // [Start point] Draw the name of the typhoon starting point
     this.addNameGraphic(firstItem)
 
-    // [终点]绘制台风当前位置gif点
+    // [End point] Draw the gif point of the current position of the typhoon
     const gifGraphic = new mars3d.graphic.DivGraphic({
       position: [endItem.lon, endItem.lat],
       style: {
@@ -175,11 +175,11 @@ class Typhoon {
     this.typhoonLayer.addGraphic(gifGraphic)
     this.gifGraphic = gifGraphic
 
-    // 显示最后所在点的对应风圈等。
+    //Display the corresponding wind circle, etc. of the last point.
     this.showPointFQ(endItem)
   }
 
-  // 点击事件，点击出现台风icon
+  //Click event, click to display the typhoon icon
   showPointFQ(item, availability) {
     if (!availability) {
       this.clickPtLayer.clear()
@@ -187,18 +187,18 @@ class Typhoon {
 
     const position = [item.lon, item.lat]
 
-    // 台风实时位置gif点更新
+    // Typhoon real-time location gif point update
     if (this.gifGraphic) {
       this.gifGraphic.position = position
     }
 
-    // 绘制7级风圈面
+    //Draw the level 7 wind circle surface
     if (item.circle7) {
       let points7 = []
-      points7 = points7.concat(getPoints(position, item.circle7.radius1, 0)) // 东北方向
-      points7 = points7.concat(getPoints(position, item.circle7.radius2, 90)) // 东南
-      points7 = points7.concat(getPoints(position, item.circle7.radius3, 180)) // 西南
-      points7 = points7.concat(getPoints(position, item.circle7.radius4, 270)) // 西北
+      points7 = points7.concat(getPoints(position, item.circle7.radius1, 0)) // Northeast direction
+      points7 = points7.concat(getPoints(position, item.circle7.radius2, 90)) // Southeast
+      points7 = points7.concat(getPoints(position, item.circle7.radius3, 180)) // Southwest
+      points7 = points7.concat(getPoints(position, item.circle7.radius4, 270)) // Northwest
 
       const graphic = new mars3d.graphic.PolygonEntity({
         positions: points7,
@@ -215,10 +215,10 @@ class Typhoon {
       this.clickPtLayer.addGraphic(graphic)
     }
 
-    // 绘制10级风圈面
+    //Draw the level 10 wind circle surface
     if (item.circle10) {
       let points10 = []
-      points10 = points10.concat(getPoints(position, item.circle10.radius1, 0)) // 东北方向
+      points10 = points10.concat(getPoints(position, item.circle10.radius1, 0)) // Northeast direction
       points10 = points10.concat(getPoints(position, item.circle10.radius2, 90))
       points10 = points10.concat(getPoints(position, item.circle10.radius3, 180))
       points10 = points10.concat(getPoints(position, item.circle10.radius4, 270))
@@ -239,10 +239,10 @@ class Typhoon {
       this.clickPtLayer.addGraphic(tenGraphic)
     }
 
-    // 绘制12级风圈面
+    //Draw 12-level wind circle surface
     if (item.circle12) {
       let points12 = []
-      points12 = points12.concat(getPoints(position, item.circle12.radius1, 0)) // 东北方向
+      points12 = points12.concat(getPoints(position, item.circle12.radius1, 0)) // Northeast direction
       points12 = points12.concat(getPoints(position, item.circle12.radius2, 90))
       points12 = points12.concat(getPoints(position, item.circle12.radius3, 180))
       points12 = points12.concat(getPoints(position, item.circle12.radius4, 270))
@@ -263,20 +263,20 @@ class Typhoon {
       this.clickPtLayer.addGraphic(tenGraphic)
     }
 
-    // 台风预测路径绘制
+    //Typhoon prediction path drawing
     if (item.forecast) {
       const linePoint = [position]
       item.forecast.forEach((element) => {
         const forecastPt = [element.lon, element.lat]
         linePoint.push(forecastPt)
 
-        // 在图层上绘画出所有的点
+        // Draw all points on the layer
         const pointEntity = new mars3d.graphic.PointEntity({
           position: forecastPt,
           availability,
           style: {
             pixelSize: 6,
-            color: element.color, // 不同typlevel显示不同的颜色
+            color: element.color, // Different typlevel displays different colors
             opacity: 0.8
           },
           attr: item
@@ -293,7 +293,7 @@ class Typhoon {
           }
         )
 
-        // 预测路线
+        // Predict route
         const graphicLine = new mars3d.graphic.PolylineEntity({
           positions: linePoint,
           availability,
@@ -310,7 +310,7 @@ class Typhoon {
     }
   }
 
-  // 释放
+  // freed
   destroy() {
     this.show = false
 
@@ -326,12 +326,12 @@ class Typhoon {
 }
 
 /**
- * 动态播放 单个台风对象
+ * Dynamic playback of a single typhoon object
  * @class PlayTyphoon
  */
 class PlayTyphoon extends Typhoon {
-  //= ========= 对外属性 ==========
-  // 显示隐藏
+  //= ========= External properties ==========
+  // show hide
   get isStart() {
     return this._isStart
   }
@@ -340,7 +340,7 @@ class PlayTyphoon extends Typhoon {
     this._isStart = val
   }
 
-  // 绘制一个台风对应的对象。
+  //Draw an object corresponding to the typhoon.
   showTyphoonToMap(arr) {
     if (arr.length < 1) {
       return
@@ -349,8 +349,8 @@ class PlayTyphoon extends Typhoon {
     const firstItem = arr[0]
     const endItem = arr[arr.length - 1]
 
-    this.startTime = Cesium.JulianDate.fromDate(firstItem.time) // 开始时间
-    this.stopTime = Cesium.JulianDate.fromDate(endItem.time) // 结束时间
+    this.startTime = Cesium.JulianDate.fromDate(firstItem.time) //Start time
+    this.stopTime = Cesium.JulianDate.fromDate(endItem.time) //End time
 
     let lastType = arr[0].level
     let property = new Cesium.SampledPositionProperty()
@@ -360,12 +360,12 @@ class PlayTyphoon extends Typhoon {
       const item = arr[i]
       const point = [item.lon, item.lat]
 
-      const position = Cesium.Cartesian3.fromDegrees(item.lon, item.lat) // 经度、纬度坐标转化
-      const pointTime = Cesium.JulianDate.fromDate(item.time) // 将时间转化成需要的格式
+      const position = Cesium.Cartesian3.fromDegrees(item.lon, item.lat) // Longitude and latitude coordinate conversion
+      const pointTime = Cesium.JulianDate.fromDate(item.time) //Convert the time into the required format
 
       property.addSample(pointTime, position)
 
-      // 绘制点
+      // draw points
       const pointEntity = new mars3d.graphic.PointEntity({
         id: item.id,
         position: point,
@@ -393,7 +393,7 @@ class PlayTyphoon extends Typhoon {
       this.typhoonLayer.addGraphic(pointEntity)
 
       if (lastType !== item.level || i === len - 1) {
-        // 绘制线
+        // draw line
         const graphicLine = new mars3d.graphic.PathEntity({
           position: property,
           style: {
@@ -404,12 +404,12 @@ class PlayTyphoon extends Typhoon {
         this.typhoonLayer.addGraphic(graphicLine)
 
         lastType = item.level
-        property = new Cesium.SampledPositionProperty() // 控制动画播放的对象
+        property = new Cesium.SampledPositionProperty() // Object that controls animation playback
         property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
         property.addSample(pointTime, position)
       }
 
-      // 显示每个点的风圈和预测路线
+      //Display the wind circle and predicted route for each point
       let lastTime
       if (i === len - 1) {
         lastTime = this.lastTime
@@ -426,18 +426,18 @@ class PlayTyphoon extends Typhoon {
       this.showPointFQ(item, availability)
     }
 
-    // [起点]绘制台风起点名字
+    // [Start point] Draw the name of the typhoon starting point
     this.addNameGraphic(firstItem)
   }
 
-  // 开始播放
+  // Start playing
   start() {
     this._isStart = true
 
     this.map.clock.startTime = this.startTime.clone()
     this.map.clock.stopTime = this.stopTime.clone()
     this.map.clock.currentTime = this.startTime.clone()
-    this.map.clock.clockRange = Cesium.ClockRange.CLAMPED // 到达时间点后终止
+    this.map.clock.clockRange = Cesium.ClockRange.CLAMPED // Terminate after reaching the time point
     this.map.clock.multiplier = 16000
 
     if (this.map.controls.timeline) {
@@ -448,7 +448,7 @@ class PlayTyphoon extends Typhoon {
     this.map.clock.shouldAnimate = true
   }
 
-  // 停止播放
+  // Stop play
   stop() {
     this._isStart = false
 
@@ -463,26 +463,26 @@ class PlayTyphoon extends Typhoon {
   }
 }
 
-// 不同等级的台风对应不同的颜色
+// Typhoons of different levels correspond to different colors
 function getColor(level) {
   switch (level) {
-    case "TD": // 热带低压
+    case "TD": // tropical depression
       return "rgb(238,209,57)"
-    case "TS": // 热带风暴
+    case "TS": // tropical storm
       return "rgb(0,0,255)"
-    case "STS": // 强热带风暴
+    case "STS": // severe tropical storm
       return "rgb(15,128,0)"
-    case "TY": // 台风
+    case "TY": // Typhoon
       return "rgb(254,156,69)"
-    case "STY": // 强台风
+    case "STY": // Strong typhoon
       return "rgb(254,0,254)"
-    case "SuperTY": // 超强台风
+    case "SuperTY": // super typhoon
       return "rgb(254,0,0)"
     default:
   }
 }
 
-// 根据经纬度 直径 以及方向计算方法
+// Calculation method based on longitude, latitude, diameter and direction
 function getPoints(center, cradius, startAngle) {
   const points = []
   const radius = cradius / 100

@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.810597, lng: 117.220617, alt: 1038, heading: 13, pitch: -30 }
@@ -10,10 +10,10 @@ var mapOptions = {
   terrain: {
     show: false
   },
-  // 方式1：在创建地球前的参数中配置
+  // Method 1: Configure in the parameters before creating the earth
   layers: [
     {
-      name: "兴趣点",
+      name: "Point of Interest",
       type: "arcgis_wfs",
       url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/1",
       where: " 1=1 ",
@@ -37,56 +37,56 @@ var mapOptions = {
           }
         }
       },
-      popup: "名称：{NAME}<br />地址：{address}",
+      popup: "Name: {NAME}<br />Address: {address}",
       show: true
     }
   ]
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  map.basemap = 2017 // 蓝色底图
+  map.basemap = 2017 // blue basemap
 
-  // 添加演示图层
+  //Add presentation layer
   addArcGisWFSLayer1()
   addArcGisWFSLayer2()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+// Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
 function addArcGisWFSLayer1() {
   const changeLevel = 15
 
-  // 瓦片图，对比参考用
+  // Tile image, used for comparison reference
   const tileLayer = new mars3d.layer.ArcGisLayer({
-    name: "瓦片图层",
+    name: "tile layer",
     url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer",
     layers: "37",
-    popup: "数据：瓦片图层<br />名称：{NAME}<br />层数：{floor}",
+    popup: "Data: Tile Layer<br />Name: {NAME}<br />Number of layers: {floor}",
     maximumLevel: changeLevel - 1,
     maximumTerrainLevel: changeLevel - 1
   })
   map.addLayer(tileLayer)
 
-  // 动态矢量图
+  // dynamic vector graphics
   const wfsLayer = new mars3d.layer.ArcGisWfsLayer({
-    name: "建筑物面矢量图层",
+    name: "Building Floor Vector Layer",
     url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/37",
-    where: " NAME like '%合肥%' ",
+    where: " NAME like '%Hefei%' ",
     minimumLevel: changeLevel,
     symbol: {
       type: "polygonP",
@@ -100,42 +100,42 @@ function addArcGisWFSLayer1() {
       cloumn: "floor"
     },
     debuggerTileInfo: false,
-    popup: "数据：矢量图层<br />名称：{NAME}<br />层数：{floor}"
+    popup: "Data: Vector Layer<br />Name: {NAME}<br />Number of layers: {floor}"
   })
   map.addLayer(wfsLayer)
 
-  // 绑定事件
+  //Bind event
   wfsLayer.on(mars3d.EventType.loadConfig, function (event) {
-    console.log("加载完成服务信息", event)
+    console.log("Loading completed service information", event)
   })
 
   wfsLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 
   let timeTik
   wfsLayer.on(mars3d.EventType.update, function (event) {
-    console.log(`图层内数据更新了`, event)
+    console.log(`Data in layer updated`, event)
 
     clearTimeout(timeTik)
     timeTik = setTimeout(() => {
       if (!wfsLayer.isLoading) {
-        console.log(`本批次数据加载完成`)
+        console.log(`This batch of data loading is completed`)
       }
     }, 1000)
   })
 
   setTimeout(function () {
-    // 测试更换条件
+    // Test replacement conditions
     wfsLayer.setWhere(" 1=1 ")
   }, 10000)
 }
 
-// 适合少于1000条的少量数据，一次性请求加载
+// Suitable for a small amount of data less than 1000, one-time request to load
 function addArcGisWFSLayer2() {
-  // 一次性加载的wfs图层
+  // One-time loaded wfs layer
   const wfsLayer = new mars3d.layer.ArcGisWfsSingleLayer({
-    name: "合肥边界线",
+    name: "Hefei Boundary Line",
     url: "//server.mars3d.cn/arcgis/rest/services/mars/hefei/MapServer/41",
     symbol: {
       type: "polyline",
@@ -150,7 +150,7 @@ function addArcGisWFSLayer2() {
   map.addLayer(wfsLayer)
 }
 
-// 图层状态 在组件中进行管理的图层
+//Layer state The layer managed in the component
 function getManagerLayer() {
-  return map.getLayerByAttr("建筑物面矢量图层", "name")
+  return map.getLayerByAttr("Building surface vector layer", "name")
 }

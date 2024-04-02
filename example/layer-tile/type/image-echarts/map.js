@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.797497, lng: 117.470076, alt: 404990.7, heading: 357.2, pitch: -73.5 }
@@ -10,13 +10,13 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/radar-scores.json" })
     .then(function (arrPoints) {
@@ -28,57 +28,57 @@ function onMounted(mapInstance) {
           dataLD.push([radius, item.angle, val])
         }
       }
-      // 创建图层
+      //Create layer
       createEchartsImageLayer(dataLD)
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function createEchartsImageLayer(dataLD) {
-  // 计算图片四周边界
+  // Calculate the boundaries around the image
   const rectangle = mars3d.PolyUtil.getRectangle(
     mars3d.PolyUtil.getEllipseOuterPositions({
-      position: [117.22413, 31.859107], // 雷达中心点坐标
-      radius: 100000 // 雷达半径，单位：米
+      position: [117.22413, 31.859107], // Radar center point coordinates
+      radius: 100000 // Radar radius, unit: meters
     }),
     true
   )
 
-  // 单张图片图层
+  //Single image layer
   const imageLayer = new mars3d.layer.ImageLayer({
     crs: mars3d.CRS.EPSG3857,
     rectangle
   })
   map.addLayer(imageLayer)
 
-  // 获取echart渲染对象
+  // Get the echart rendering object
   const echartsInstance = getEchartsInstance(dataLD)
 
   function updateImage() {
     const imageData = echartsInstance.getDataURL({ type: "png", pixelRatio: 1 })
-    imageLayer.url = imageData // 更新图片，base64图片
+    imageLayer.url = imageData //Update image, base64 image
   }
 
   let timeTik
   echartsInstance.on("rendered", function () {
-    clearTimeout(timeTik) // 防抖处理
+    clearTimeout(timeTik) // Anti-shake processing
     timeTik = setTimeout(() => {
       updateImage()
     }, 1000)
   })
 }
 
-// 获取echart渲染对象
+// Get the echart rendering object
 function getEchartsInstance(dataLD) {
   function renderItem(params, api) {
     const values = [api.value(0), api.value(1)]
@@ -108,7 +108,7 @@ function getEchartsInstance(dataLD) {
     -Infinity
   )
 
-  // 构造 echarts option
+  // Construct echarts option
   const option = {
     animation: false,
     polar: {},
@@ -120,7 +120,7 @@ function getEchartsInstance(dataLD) {
       dimension: 2,
       show: false
     },
-    // 极坐标系的径向轴
+    // Radial axis of polar coordinate system
     radiusAxis: {
       type: "category",
       z: 100,
@@ -129,7 +129,7 @@ function getEchartsInstance(dataLD) {
       axisTick: { show: false },
       axisLabel: { show: false }
     },
-    // 极坐标系的角度轴
+    //Angle axis of polar coordinate system
     angleAxis: {
       type: "category",
       boundaryGap: false,

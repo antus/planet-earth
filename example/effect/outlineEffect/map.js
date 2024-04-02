@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.653633, lng: 117.075814, alt: 310, heading: 33, pitch: -29 }
@@ -12,17 +12,17 @@ var mapOptions = {
 let outlineEffect
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 加模型
+  //Add model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "石化工厂",
+    name: "Petrochemical Plant",
     url: "//data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
@@ -30,13 +30,13 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 矢量图层
+  // vector layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 加gltf模型
+  //Add gltf model
   const graphicModel = new mars3d.graphic.ModelPrimitive({
-    name: "汽车",
+    name: "car",
     position: Cesium.Cartesian3.fromDegrees(117.074035, 31.660459, 40),
     style: {
       url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
@@ -46,7 +46,7 @@ function onMounted(mapInstance) {
   })
   graphicLayer.addGraphic(graphicModel)
 
-  // 加矢量数据
+  //Add vector data
   const graphicBox1 = new mars3d.graphic.BoxPrimitive({
     position: Cesium.Cartesian3.fromDegrees(117.071033, 31.663258, 31.3),
     style: {
@@ -119,7 +119,7 @@ function onMounted(mapInstance) {
   })
   graphicLayer.addGraphic(graphic4)
 
-  // 添加特效
+  //Add special effects
   outlineEffect = new mars3d.effect.OutlineEffect({
     color: "#FFFF00",
     width: 4,
@@ -128,32 +128,32 @@ function onMounted(mapInstance) {
   map.addEffect(outlineEffect)
 
   setTimeout(() => {
-    // 指定高亮Primitive
+    //Specify highlighting Primitive
     outlineEffect.selected = [graphicBox1, graphic1]
   }, 1000)
 
-  // 从模型读取指定构件 加到 特效
+  //Read the specified component from the model and add it to the special effect
   // tiles3dLayer.readyPromise.then(function (e) {
   //   addTileToTargetEffect(tiles3dLayer, outlineEffect)
   // })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 从模型读取指定构件 加到 特效
+//Read the specified component from the model and add it to the special effect
 function addTileToTargetEffect(tiles3dLayer, effect) {
   const listGJ = new mars3d.MarsArray()
   tiles3dLayer.tileset.tileLoad.addEventListener(function (tile) {
     processTileFeatures(tile, function (feature) {
-      const attr = mars3d.Util.get3DTileFeatureAttr(feature) // 取属性
+      const attr = mars3d.Util.get3DTileFeatureAttr(feature) // Get attributes
 
-      // 根据条件判断，将feature记录
+      // Based on conditional judgment, record the feature
       if (attr.id === "4734ba6f3de83d861c3176a6273cac6d") {
         listGJ.set(feature.featureId, feature.pickId)
         effect.selected = listGJ.values

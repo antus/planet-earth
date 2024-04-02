@@ -1,15 +1,15 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   control: {
     homeButton: {
       icon: "img/svg/homeButton.svg"
-    }, // 回到默认视域按钮
-    navigationHelpButton: false, // 是否显示帮助信息控件
-    fullscreenButton: false, // 右下角全屏按钮
+    }, // Return to default view button
+    navigationHelpButton: false, // Whether to display the help information control
+    fullscreenButton: false, // Full screen button in the lower right corner
     geocoder: false,
     sceneModePicker: false,
     vrButton: false
@@ -17,63 +17,63 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   let hasSelected = false
   const toolButton = new mars3d.control.ToolButton({
-    title: "示例按钮bookmark",
+    title: "Example button bookmark",
     icon: "img/svg/bookmarkOne.svg",
     className: ".tool_bookmark_btn",
-    insertIndex: 1, // 插入的位置顺序, 1是home按钮后面
+    insertIndex: 1, // Insert position order, 1 is behind the home button
     click: () => {
       hasSelected = !hasSelected
       if (hasSelected) {
         // toolButton.setIcon("img/icon/good.svg")
         mars3d.DomUtil.addClass(toolButton.container, "toolButton-selected")
-        globalMsg("选中了 示例按钮bookmark，回调中想干啥就干啥~")
+        globalMsg("The sample button bookmark is selected, you can do whatever you want in the callback~")
       } else {
         // toolButton.setIcon("img/icon/bookmark-one.svg")
         mars3d.DomUtil.removeClass(toolButton.container, "toolButton-selected")
-        globalMsg("取消选中了 示例按钮bookmark，回调中想干啥就干啥~")
+        globalMsg("The sample button bookmark is unchecked, you can do whatever you want in the callback~")
       }
     }
   })
   map.addControl(toolButton)
 
   const toolButton2 = new mars3d.control.ToolButton({
-    title: "示例按钮good",
+    title: "Example button good",
     icon: "img/svg/good.svg",
     className: "tool_good_btn",
-    insertIndex: 0, // 插入的位置顺序
+    insertIndex: 0, // insert position order
     click: () => {
-      globalMsg("单击了 示例按钮good，回调中想干啥就干啥~")
+      globalMsg("Clicked the sample button good, you can do whatever you want in the callback~")
     }
   })
   map.addControl(toolButton2)
 
   const toolButton3 = new mars3d.control.ToolButton({
-    title: "示例按钮chinese",
+    title: "Example button chinese",
     icon: "img/svg/chinese.svg",
     click: () => {
-      globalMsg("单击了 示例按钮chinese，回调中想干啥就干啥~")
+      globalMsg("Clicked the example button chinese, you can do whatever you want in the callback~")
     }
   })
   map.addControl(toolButton3)
 
   map.controls.homeButton.on(mars3d.EventType.click, function (event) {
-    globalMsg("单击了 homeButton 按钮")
+    globalMsg("homeButton button clicked")
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

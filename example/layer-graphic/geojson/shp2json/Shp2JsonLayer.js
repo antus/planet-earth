@@ -1,19 +1,19 @@
 // import { toGeoJSON as shpToGeoJSON } from "shp-geojson"
 
 /**
- * 通过转geojson方式 加载shp文件。
- * shpUtil 使用需要引入 ../lib/geojson/shp-geojson.js文件
+ * Load shp files by converting to geojson.
+ * To use shpUtil, you need to import the ../lib/geojson/shp-geojson.js file
  */
 class Shp2JsonLayer extends mars3d.layer.GeoJsonLayer {
   /**
-   * 加载新数据 或 刷新数据
+   * Load new data or refresh data
    *
-   * @param {Object} [newOptions] 新设定的参数，会与类的构造参数合并。
-   * @param {String} [newOptions.url] geojson文件或服务url地址
-   * @param {Object} [newOptions.data] geojson格式规范数据对象，与url二选一即可。
-   * @param {Object} [newOptions.类参数] 包含当前类支持的所有参数
-   * @param {BaseGraphicLayer.ConstructorOptions} [newOptions.通用参数] 包含父类支持的所有参数
-   * @return {this} 当前对象本身，可以链式调用
+   * @param {Object} [newOptions] The newly set parameters will be merged with the construction parameters of the class.
+   * @param {String} [newOptions.url] geojson file or service url address
+   * @param {Object} [newOptions.data] geojson format specification data object, choose one from url.
+   * @param {Object} [newOptions.Class parameters] contains all parameters supported by the current class
+   * @param {BaseGraphicLayer.ConstructorOptions} [newOptions.General parameters] contains all parameters supported by the parent class
+   * @return {this} the current object itself, which can be called in a chain
    */
   load(newOptions) {
     if (newOptions) {
@@ -29,7 +29,7 @@ class Shp2JsonLayer extends mars3d.layer.GeoJsonLayer {
       }
     }
 
-    // url是需要包括shp、dbf、prj等文件的zip压缩包
+    // url is a zip package that needs to include shp, dbf, prj and other files
     if (this.options.url) {
       shpUtil
         .toGeoJSON(this.options.url, undefined, this.options.encoding ?? "gbk", this.options.crs)
@@ -37,15 +37,15 @@ class Shp2JsonLayer extends mars3d.layer.GeoJsonLayer {
           if (this._state === mars3d.State.REMOVED) {
             return
           }
-          console.log("转换完成的数据是", data)
+          console.log("The converted data is", data)
           this._load_data(data)
         })
         .catch(function (error) {
-          console.error("服务出错", error)
+          console.error("Service error", error)
         })
     } else {
       if (newOptions) {
-        console.warn("Shp2JsonLayer：没有传入 url 参数,请确认是否有误。")
+        console.warn("Shp2JsonLayer: No url parameter was passed in, please confirm whether there is an error.")
       }
     }
   }
@@ -53,5 +53,5 @@ class Shp2JsonLayer extends mars3d.layer.GeoJsonLayer {
 
 mars3d.layer.Shp2JsonLayer = Shp2JsonLayer
 
-// 注册下
+//Register
 mars3d.LayerUtil.register("kml2json", Shp2JsonLayer)

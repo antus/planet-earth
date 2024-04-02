@@ -1,6 +1,6 @@
 /**
- * 该示例由 刘博方 开发，
- * 开源地址：CesiumRoleController类最新代码在
+ * This example was developed by Liu Bofang,
+ * Open source address: The latest code of CesiumRoleController class is at
  * https://www.npmjs.com/package/cesium-role-controller?activeTab=code
  */
 class CesiumRoleController {

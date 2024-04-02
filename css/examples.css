@@ -49,9 +49,6 @@ Logo
 .logo {
     filter: invert(100%); opacity: .8;
 }
-.brand-link {
-    height: calc(2.93725rem + 1px) !important;
-}
 .brand-image {
     height: 25px !important;
 }
@@ -59,6 +56,13 @@ Logo
 /************************************************************
 Navbar
 *************************************************************/
+.badge {
+    padding:5px
+}
+
+.main-header {
+    margin-left:0 !important;
+}
 .sidebar-button {
     padding-top: 8px !important;
 }
@@ -72,6 +76,17 @@ Navbar
 
 .full-screen {
     padding-top: 3px !important;
+}
+.application {
+    padding-left: 0px !important;
+}
+.count {
+    margin: 0px 10px;
+    height: 26px;
+    padding: 7px 7px 0px 7px !important;
+    font-size: 11px;
+    width: unset;
+    background-color: rgb(63, 103, 145);
 }
 /************************************************************
 Searchbar 
@@ -100,53 +115,6 @@ Searchbar
 }
 
 /************************************************************
-Sidebar
-*************************************************************/
-.layout-navbar-fixed.layout-fixed.text-sm .wrapper .sidebar {
-    margin-top: calc(2.93725rem + 1px + 30px);
-}
-
-.badge-info {
-    padding: 6px;
-    height: 20px;
-    width: 25px;
-    margin: -4px;
-}
-  
-.sidebar-text {
-    white-space: nowrap !important;
-    width: 150px;
-    display: inline-block !important;
-    vertical-align: text-bottom;
-}
-
-.sidebar-icon {
-    margin-left: 5px !important;
-    border-radius: 0px !important;
-}
-
-.layout-fixed.text-sm .wrapper .sidebar {
-    height: calc(100vh - (2.93725rem + 1px + 30px));
-}
-
-.active-category {
-    background-color: #5089a9 !important;
-}
-
-.all-categories {
-    position:fixed;top:42px; margin-left: 3px; margin-top: 3px;
-}
-.all-categories-badge {
-    width:30px; 
-    margin-top: -4px;
-    margin-right: 9px
-}
-
-.all-categories-a {
-    padding-left: 13px !important;
-}
-
-/************************************************************
 Content
 *************************************************************/
 .content-wrapper {
@@ -154,36 +122,8 @@ Content
     background-color:#343a40!important;
     scrollbar-color: #555555 #343a40;
     scrollbar-width: thin;
-    //position: static !important;
-    //height: calc(100vh - 84px) !important;
     padding: 0px !important;
-}
-
-/************************************************************
-Footer
-*************************************************************/
-.main-footer {
-    padding: 0px;
-    height: 42px;
-}
-
-.use-cases-count {
-    display: flex;
-    align-items: center;
-  }
-  
-.count {
-    margin-left: 8px;
-    padding: 5px 5px !important;
-    font-size: 11px;
-    width: unset;
-    background-color: rgb(63, 103, 145);
-}
-
-.gis-rs-practice {
-    margin-top: -3px;
-    margin-left: -4px;
-    padding: 3px 5px 2px 5px !important;
+    margin-left:0 !important;
 }
 
 /************************************************************
@@ -191,9 +131,10 @@ Cards
 *************************************************************/
 .card-container {
     display: grid;
-    padding: 0px 15px;
+    padding: 25px 0px;
     grid-template-columns: repeat(auto-fit, minmax(220px, 250px));
     grid-gap: 0px;
+    justify-content: center;
 }
 
 .card-envelope {
@@ -205,7 +146,7 @@ Cards
     place-items: center;
     width: 100%;
     max-width: 21.875rem;
-    height: 270px;
+    height: 300px;
     overflow: hidden;
     border-radius: 0.625rem;
     border: 1px solid rgb(0, 0, 0) !important;
@@ -234,27 +175,67 @@ Cards
     width:100%;
     height: 100%;
     padding: 10px;
-    //border-top:1px solid red;
+    /*
     background: linear-gradient(
     180deg,
     hsla(0, 0%, 0%, 0.1) 0%,
     hsla(0, 0%, 0%, 0.7) 10%,
     hsl(0, 0%, 0%) 100%
     );
-    /*
-    background-color: rgba(0,0,0,0.5);
-    */    
+    */
+    background-color: rgba(0,0,0,0.7);
 }
 
 .card__content--container {
     --flow-space: 1.25rem;
 }
 
+.card-category {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 100%;
+    height: 20px;
+    margin:-4px;
+    border-radius: 0;
+    font-size: 11px;
+    background-color: rgb(23 162 184 / 100%);
+}
+
+.card-main-icon {
+    position: absolute;
+}
+.card-lock {
+    font-size: 25px;
+    color: lightgray;
+    border-style: solid;
+    padding: 7px 10px 10px 10px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.card-play {
+    font-size: 25px;
+    color: lightgray;
+    border-style: solid;
+    padding: 9px 10px 9px 13px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.card-info {
+    position: absolute;
+    right: -2px;
+    font-size: 17px;
+    top: -2px;
+}
+
 .card__title {
     position: relative;
     width: 100%;
     font-size: 12px;
-    //width: -moz-fit-content; /* Prefijo necesario para Firefox  */
+    padding: 0px 15px 0px 0px;
+    width: -moz-fit-content; /* Prefijo necesario para Firefox  */
 }
 
 .card__title::after {
@@ -291,80 +272,67 @@ Cards
     color: var(--black);
 }
 
-@media (any-hover: hover) and (any-pointer: fine) {
-    .card__content {
+.card__content {
     transform: translateY(80%);
-    transition: transform 500ms ease-out;
-    transition-delay: 500ms;
-    }
+    transition: transform 250ms ease-out;
+    transition-delay: 250ms;
+}
 
-    .card__title::after {
+.card__title::after {
     opacity: 0;
     transform: scaleX(0);
     transition: opacity 1000ms ease-in, transform 500ms ease-out;
-    transition-delay: 500ms;
+    transition-delay: 250ms;
     transform-origin: right;
-    }
+}
 
-    .card__background {
-    transition: transform 500ms ease-in;
-    }
+.card__background {
+    transition: transform 250ms ease-in;
+}
 
-    .card__content--container > :not(.card__title),
-    .card__button {
+.card__content--container > :not(.card__title),
+.card__button {
     opacity: 0;
-    transition: transform 500ms ease-out, opacity 500ms ease-out;
-    }
+    transition: transform 250ms ease-out, opacity 500ms ease-out;
+}
 
-    .card:hover,
-    .card:focus-within {
+
+.card_hover,
+.card:focus-within {
     transform: scale(1.02);
-    transition: transform 500ms ease-in;
-    }
+    transition: transform 250ms ease-in;
+}
 
-    .card:hover .card__content,
-    .card:focus-within .card__content {
-    transform: translateY(0);
-    transition: transform 500ms ease-in;
-    }
+.card_hover .card__content,
+.card:focus-within .card__content {
+    transform: translateY(0%);
+    transition: transform 250ms ease-in;
+}
 
-    .card:focus-within .card__content {
+.card:focus-within .card__content {
     transition-duration: 0ms;
-    }
+}
 
-    .card:hover .card__background,
-    .card:focus-within .card__background {
+.card_hover .card__background,
+.card:focus-within .card__background {
     transform: scale(1.3);
-    }
+}
 
-    .card:hover .card__content--container > :not(.card__title),
-    .card:hover .card__button,
-    .card:focus-within .card__content--container > :not(.card__title),
-    .card:focus-within .card__button {
+.card_hover .card__content--container > :not(.card__title),
+.card_hover .card__button,
+.card:focus-within .card__content--container > :not(.card__title),
+.card:focus-within .card__button {
     opacity: 1;
     transition: opacity 250ms ease-in;
-    transition-delay: 500ms;
-    }
+    transition-delay: 250ms;
+}
 
-    .card:hover .card__title::after,
-    .card:focus-within .card__title::after {
+.card_hover .card__title::after,
+.card:focus-within .card__title::after {
     opacity: 1;
     transform: scaleX(1);
     transform-origin: left;
     transition: opacity 250ms ease-in, transform 250ms ease-in;
-    transition-delay: 500ms;
-    }
+    transition-delay: 250ms;
 }
-
     
-.user {
-    margin-top: -5px;
-    margin-left: 10px;
-    height: auto;
-    width: 2.1rem;
-    //border: 1px solid rgba(255, 255, 255, 0.6);
-}    
-
-.badge {
-    padding:5px
-}

@@ -2,7 +2,7 @@
 
 var map
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 const color = "#363635"
 var mapOptions = {
   scene: {
@@ -12,9 +12,9 @@ var mapOptions = {
     showSkyBox: false,
     showSkyAtmosphere: false,
     fog: false,
-    backgroundColor: color, // 天空背景色
+    backgroundColor: color, // sky background color
     globe: {
-      baseColor: color, // 地球地面背景色
+      baseColor: color, // Earth ground background color
       showGroundAtmosphere: false,
       enableLighting: false
     }
@@ -28,35 +28,35 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 添加矢量图层
+  //Add vector layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 添加对象
+  // add object
   addAnhui(graphicLayer)
   addCenterCity(graphicLayer)
   addOutCircle(graphicLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 添加安徽省底图和墙
+//Add Anhui Province base map and wall
 function addAnhui() {
-  // 安徽省卫星底图
+  // Satellite base map of Anhui Province
   const tileLayer = new mars3d.layer.XyzLayer({
     url: "//data.mars3d.cn/tile/anhui/{z}/{x}/{y}.png",
     minimumLevel: 0,
@@ -65,16 +65,16 @@ function addAnhui() {
   })
   map.addLayer(tileLayer)
 
-  // 安徽省边界线墙
+  // Anhui Province Boundary Wall
   const anhuiWall = new mars3d.layer.GeoJsonLayer({
-    name: "安徽省边界墙",
+    name: "Anhui Province Border Wall",
     url: "//data.mars3d.cn/file/geojson/areas/340000.json",
-    // 自定义解析数据
+    //Customized parsing data
     onCreateGraphic: function (options) {
-      const points = options.positions[0] // 坐标
-      const attr = options.attr // 属性信息
+      const points = options.positions[0] // coordinates
+      const attr = options.attr // attribute information
 
-      console.log("边界墙原始坐标", points)
+      console.log("Original coordinates of the boundary wall", points)
 
       mars3d.PolyUtil.computeSurfaceLine({
         map,
@@ -82,13 +82,13 @@ function addAnhui() {
         has3dtiles: false,
         splitNum: 300
       }).then((result) => {
-        console.log("边界墙插值计算完成坐标", result.positions)
+        console.log("Boundary wall interpolation calculation completed coordinates", result.positions)
 
         const graphic = new mars3d.graphic.WallPrimitive({
           positions: result.positions,
           style: {
             addHeight: -15000,
-            diffHeight: 15000, // 墙高
+            diffHeight: 15000, // wall height
             materialType: mars3d.MaterialType.Image2,
             materialOptions: {
               image: "./img/textures/fence-top.png",
@@ -115,9 +115,9 @@ function addAnhui() {
   })
   map.addLayer(anhuiWall)
 
-  // 安徽各市边界线和名称
+  // Boundary lines and names of cities in Anhui
   const shiLayer = new mars3d.layer.GeoJsonLayer({
-    name: "安徽各市边界线",
+    name: "Boundary lines of cities in Anhui",
     url: "//data.mars3d.cn/file/geojson/areas/340000_full.json",
     symbol: {
       type: "polyline",
@@ -133,7 +133,7 @@ function addAnhui() {
           outline: true,
           outlineColor: "#f1f3f4",
           outlineWidth: 3,
-          // 视距的设置
+          //Sight distance settings
           scaleByDistance: true,
           scaleByDistance_far: 20000000,
           scaleByDistance_farValue: 0.1,
@@ -143,7 +143,7 @@ function addAnhui() {
       },
       styleField: "name",
       styleFieldOptions: {
-        合肥市: { color: "rgba(0,255,255,0.3)" }
+        Hefei City: { color: "rgba(0,255,255,0.3)" }
       }
     },
     popup: "{name}"
@@ -151,24 +151,24 @@ function addAnhui() {
   map.addLayer(shiLayer)
 }
 
-// 添加示范城市的相关对象
+//Add related objects of the demonstration city
 function addCenterCity(graphicLayer) {
   const point = [117.234218, 31.814155, 0]
 
-  // divgraphic标注
+  // divgraphic annotation
   const divgraphic = new mars3d.graphic.DivGraphic({
     position: point,
     style: {
       html: `<div class="marsBlackPanel">
-                <div class="marsBlackPanel-text">示范城市</div>
+                <div class="marsBlackPanel-text">Model City</div>
             </div>`,
-      horizontalOrigin: Cesium.HorizontalOrigin.LEFT, // 横向定位
-      verticalOrigin: Cesium.VerticalOrigin.CENTER // 垂直定位
+      horizontalOrigin: Cesium.HorizontalOrigin.LEFT, // horizontal positioning
+      verticalOrigin: Cesium.VerticalOrigin.CENTER // Vertical positioning
     }
   })
   graphicLayer.addGraphic(divgraphic)
 
-  // 圆形动态扩散图
+  // Circular dynamic diffusion chart
   const cicle = new mars3d.graphic.CirclePrimitive({
     position: point,
     style: {
@@ -184,11 +184,11 @@ function addCenterCity(graphicLayer) {
   graphicLayer.addGraphic(cicle)
 }
 
-// 添加周边的圆圈刻度尺等对象
+//Add surrounding circles, scales and other objects
 function addOutCircle(graphicLayer) {
   const arrImg = [
     {
-      // 刻度
+      //scale
       image: "./img/icon/calib.png",
       positions: [
         [113.564329, 35.654741],
@@ -196,7 +196,7 @@ function addOutCircle(graphicLayer) {
       ]
     },
     {
-      // 刻度尺
+      //scale
       image: "./img/icon/calib-value.png",
       positions: [
         [114.162597, 29.256489],
@@ -204,7 +204,7 @@ function addOutCircle(graphicLayer) {
       ]
     },
     {
-      // 方向
+      // direction
       image: "./img/icon/calib-dir.png",
       positions: [
         [114.162597, 29.256489],

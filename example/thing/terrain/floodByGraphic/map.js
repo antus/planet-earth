@@ -1,23 +1,23 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let floodByGraphic
 let drawPotions
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 基于polygon矢量面抬高模拟，只支持单个区域
+  // Based on polygon vector surface elevation simulation, only supports a single area
   floodByGraphic = new mars3d.thing.FloodByGraphic({
-    // perPositionHeight: true, // 是否每个分析点高度都不一样
+    // perPositionHeight: true, // Whether the height of each analysis point is different
     style: {
       color: "#007be6",
       opacity: 0.5,
@@ -27,20 +27,20 @@ function onMounted(mapInstance) {
   map.addThing(floodByGraphic)
 
   floodByGraphic.on(mars3d.EventType.start, function (e) {
-    console.log("开始分析", e)
+    console.log("Start analysis", e)
   })
   floodByGraphic.on(mars3d.EventType.change, function (e) {
     const height = e.height
     eventTarget.fire("heightChange", { height })
   })
   floodByGraphic.on(mars3d.EventType.end, function (e) {
-    console.log("结束分析", e)
+    console.log("end analysis", e)
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   clearDraw()
@@ -50,7 +50,7 @@ function onUnmounted() {
   map = null
 }
 
-// 绘制矩形
+// draw rectangle
 function btnDrawExtent(callback) {
   clearDraw()
 
@@ -62,10 +62,10 @@ function btnDrawExtent(callback) {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
 
-      // 区域
+      // area
       drawPotions = positions
 
       if (floodByGraphic.options.perPositionHeight) {
@@ -73,10 +73,10 @@ function btnDrawExtent(callback) {
         callback(-100, 100)
       } else {
         showLoading()
-        // 求最大、最小高度值
-        graphic.show = false // 会遮挡深度图，所以需要隐藏
+        // Find the maximum and minimum height values
+        graphic.show = false // Will block the depth map, so it needs to be hidden
         mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions }).then((result) => {
-          graphic.show = true // 恢复显示
+          graphic.show = true //restore display
           hideLoading()
           callback(result.minHeight, result.maxHeight)
         })
@@ -84,7 +84,7 @@ function btnDrawExtent(callback) {
     }
   })
 }
-// 绘制多边形
+// draw polygon
 function btnDraw(callback) {
   clearDraw()
 
@@ -105,10 +105,10 @@ function btnDraw(callback) {
         callback(-100, 100)
       } else {
         showLoading()
-        // 求最大、最小高度值
-        graphic.show = false // 会遮挡深度图，所以需要隐藏
+        // Find the maximum and minimum height values
+        graphic.show = false // Will block the depth map, so it needs to be hidden
         mars3d.PolyUtil.interPolygonByDepth({ scene: map.scene, positions }).then((result) => {
-          graphic.show = true // 恢复显示
+          graphic.show = true //restore display
           hideLoading()
           callback(result.minHeight, result.maxHeight)
         })
@@ -126,10 +126,10 @@ function clearDraw() {
   }
 }
 
-// 开始分析
+// Start analysis
 function begin(data, callback) {
   if (drawPotions == null) {
-    globalMsg("请首先绘制分析区域！")
+    globalMsg("Please draw the analysis area first!")
     return
   }
   map.graphicLayer.clear()
@@ -145,12 +145,12 @@ function begin(data, callback) {
   callback()
 }
 
-// 高度选择
+// height selection
 function onChangeHeight(height) {
   floodByGraphic.height = height
 }
 
-// 自动播放
+// Autoplay
 function startPlay() {
   if (floodByGraphic.isStart) {
     floodByGraphic.stop()

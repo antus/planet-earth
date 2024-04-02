@@ -1,32 +1,32 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
-    // 此处参数会覆盖config.json中的对应配置
+    // The parameters here will overwrite the corresponding configuration in config.json
     center: { lat: 40, lng: 111.833884, alt: 20000000, heading: 0, pitch: -90 },
     cameraController: {
       zoomFactor: 3.0,
       minimumZoomDistance: 1,
       maximumZoomDistance: 300000000,
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     }
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -45,34 +45,34 @@ function onMounted(mapInstance) {
       satelliteFoot.start(satelliteEntity, swathWidth)
     })
     .catch(function (error) {
-      globalAlert(error, "加载数据出错")
+      globalAlert(error, "Error loading data")
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 多个卫星时可以可配置【卫星地面投射圆半径，足迹宽度】
+//Configurable for multiple satellites [satellite ground projection circle radius, footprint width]
 const swathWidthDict = {
   "Satellite/CBERS 4": 650000.0
 }
 
-// 地球观测的轨道预测,包含绘制卫星到地球的足迹功能。
+// Orbit prediction for earth observation, including the function of drawing the footprint of satellites to the earth.
 const satelliteFoot = {
   start: function (entity, instrumentFOV) {
     if (!instrumentFOV) {
-      // 默认值；
+      // default value;
       instrumentFOV = 2000 * 1000
     }
 
-    const secondMultiplier = instrumentFOV / 250000.0 // 每间隔多少公里进行显示一次足迹。
-    const intervalBetweenFootPrints = 40 * secondMultiplier // setInterval间隔脚印的时长
-    const numberOfFootPrintsAtAtime = parseInt(90 / Math.ceil(secondMultiplier)) * 5 // 保持足迹的数量个数
+    const secondMultiplier = instrumentFOV / 250000.0 // How many kilometers apart will the footprints be displayed.
+    const intervalBetweenFootPrints = 40 * secondMultiplier // setInterval interval foot print duration
+    const numberOfFootPrintsAtAtime = parseInt(90 / Math.ceil(secondMultiplier)) * 5 // Keep the number of footprints
 
     const point = mars3d.LngLatPoint.fromCartesian(entity.position, map.clock.currentTime)
     this.drawOneFoot(point, instrumentFOV)
@@ -80,7 +80,7 @@ const satelliteFoot = {
     let timeLast = map.clock.currentTime.secondsOfDay + intervalBetweenFootPrints
 
     map.on(mars3d.EventType.clockTick, (event) => {
-      const sxTimes = Math.abs(map.clock.currentTime.secondsOfDay - timeLast) // 剩下时长
+      const sxTimes = Math.abs(map.clock.currentTime.secondsOfDay - timeLast) // remaining time
 
       if (sxTimes < 1 || sxTimes > intervalBetweenFootPrints) {
         timeLast = map.clock.currentTime.secondsOfDay + intervalBetweenFootPrints
@@ -95,23 +95,23 @@ const satelliteFoot = {
     })
   },
 
-  // 绘制一个足迹
+  // draw a footprint
   drawOneFoot: function (point, instrumentFOV) {
     if (!point || !point.valid()) {
       return
     }
 
-    // 卫星到地面的垂直线
+    //Vertical line from satellite to ground
     this._drawLineGroundToSatellite(point)
 
-    // 投射圆锥体
+    // Projection cone
     this._drawInstrumentFootPrintSwathWidth(instrumentFOV, point)
 
-    // 在地球表面上绘制可见足迹椭圆
+    // Draw a visible footprint ellipse on the Earth's surface
     this._drawVisibleFootPrint(point)
   },
 
-  // 卫星到地面的垂直线,point: 卫星在天空中的位置
+  // The vertical line from the satellite to the ground, point: the position of the satellite in the sky
   _drawLineGroundToSatellite: function (point) {
     const groundPoint = Cesium.Cartesian3.fromDegrees(point.lng, point.lat, 0.0)
 
@@ -142,10 +142,10 @@ const satelliteFoot = {
     // })
     // graphicLayer.addGraphic(primitiveLine)
   },
-  // 投射圆锥体
+  // Projection cone
   _drawInstrumentFootPrintSwathWidth: function (instrumentFOV, point) {
     const graphic = new mars3d.graphic.CylinderPrimitive({
-      name: "视锥体",
+      name: "View frustum",
       position: Cesium.Cartesian3.fromDegrees(point.lng, point.lat, point.alt / 2),
       style: {
         length: point.alt,
@@ -158,7 +158,7 @@ const satelliteFoot = {
     })
     graphicLayer.addGraphic(graphic)
   },
-  // 在地球表面上绘制可见足迹椭圆（红色外圈线）
+  // Draw a visible footprint ellipse on the Earth's surface (red outer circle line)
   _drawVisibleFootPrint: function (point) {
     const groundPoint = Cesium.Cartesian3.fromDegrees(point.lng, point.lat, 0.0)
 
@@ -169,7 +169,7 @@ const satelliteFoot = {
     const distanceAlongGround = Cesium.Math.TWO_PI * radiusOfEarth * (groundPointToOriginToTangentAngle / 360.0)
 
     const graphic = new mars3d.graphic.CirclePrimitive({
-      name: "可视卫星范围（45度）",
+      name: "Visible satellite range (45 degrees)",
       position: groundPoint,
       style: {
         radius: distanceAlongGround,

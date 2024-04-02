@@ -1,7 +1,7 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-let graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+let graphicLayer // vector layer object
 let pointLayer
 
 var mapOptions = {
@@ -12,32 +12,32 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 点矢量数据图层
+  //Point vector data layer
   pointLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(pointLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 绘制线
+// draw line
 function drawLine() {
   if (pointLayer) {
     pointLayer.clear()
@@ -52,12 +52,12 @@ function drawLine() {
       clampToGround: true
     },
     success: function () {
-      // 绘制成功之后回调
+      // Callback after successful drawing
     }
   })
 }
 
-// 绘制点
+// draw points
 function drawPoint() {
   pointLayer.clear()
   pointLayer.startDraw({
@@ -72,7 +72,7 @@ function drawPoint() {
   })
 }
 
-// 最近点计算
+// nearest point calculation
 function nearPoint() {
   const lineLayer = graphicLayer.getGraphics()
   const point = pointLayer.getGraphics()
@@ -87,7 +87,7 @@ function nearPoint() {
   const snapped = turf.nearestPointOnLine(line, pt, { units: "miles" })
   const position = snapped.geometry.coordinates
 
-  // 最近点（图标点）
+  // Nearest point (icon point)
   const graphic = new mars3d.graphic.BillboardPrimitive({
     position,
     style: {
@@ -98,12 +98,12 @@ function nearPoint() {
       scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1),
       clampToGround: true
     },
-    popup: "最近点"
+    popup: "Nearest"
   })
   pointLayer.addGraphic(graphic)
 }
 
-// 清除数据
+// clear data
 function clearLayer() {
   graphicLayer.clear()
   pointLayer.clear()

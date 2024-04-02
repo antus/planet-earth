@@ -1,7 +1,7 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-let graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+let graphicLayer // vector layer object
 
 var mapOptions = {
   scene: {
@@ -10,21 +10,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -33,38 +33,38 @@ function onUnmounted() {
 const turfOptions = { units: "kilometers" }
 const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
 
-// 蜂窝网格
+// honeycomb grid
 function hexGrid(cellSide) {
   const geojson = turf.hexGrid(bbox, cellSide, turfOptions)
   drawPolyon(geojson)
 }
 
-// 点网格
+//point grid
 function pointGrid(cellSide) {
   const geojson = turf.pointGrid(bbox, cellSide, turfOptions)
   drawPoint(geojson)
 }
 
-// 正方形网格
+// square grid
 function squareGrid(cellSide) {
   const geojson = turf.squareGrid(bbox, cellSide, turfOptions)
   drawPolyon(geojson)
 }
 
-// 三角形网格
+// triangle mesh
 function triangleGrid(cellSide) {
   const geojson = turf.triangleGrid(bbox, cellSide, turfOptions)
   drawPolyon(geojson)
 }
 
-// 蜂窝网格、正方形网格、三角形网格
+// Honeycomb grid, square grid, triangle grid
 function drawPolyon(geojson) {
   graphicLayer.clear()
-  const polygons = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+  const polygons = mars3d.Util.geoJsonToGraphics(geojson) // Parse geojson
 
   for (let i = 0; i < polygons.length; i++) {
     const item = polygons[i]
-    const text = "第" + i + "个"
+    const text = "th" + i + "number"
     const graphic = new mars3d.graphic.PolygonPrimitive({
       positions: item.positions,
       style: {
@@ -86,11 +86,11 @@ function drawPolyon(geojson) {
   }
 }
 
-// 点网格
+//point grid
 function drawPoint(geojson) {
   graphicLayer.clear()
 
-  const points = mars3d.Util.geoJsonToGraphics(geojson) // 解析geojson
+  const points = mars3d.Util.geoJsonToGraphics(geojson) // Parse geojson
 
   for (let i = 0; i < points.length; i++) {
     const item = points[i]
@@ -101,7 +101,7 @@ function drawPoint(geojson) {
         color: "#ffff00",
         pixelSize: 8
       },
-      popup: "第" + i + "个"
+      popup: "th" + i + "number"
     })
     graphicLayer.addGraphic(graphic)
   }

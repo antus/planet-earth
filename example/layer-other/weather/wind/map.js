@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 20.648765, lng: 129.340334, alt: 19999976, heading: 355, pitch: -89 },
@@ -17,35 +17,35 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.basemap = 2017 // 蓝色底图
+  map = mapInstance // record map
+  map.basemap = 2017 // blue basemap
 
-  map.mouseEvent.enabledMoveTarget = false // 是否开启鼠标移动事件的拾取矢量数据
+  map.mouseEvent.enabledMoveTarget = false // Whether to enable picking vector data for mouse move events
 
-  // map.scene.globe.showGroundAtmosphere = false// 关闭大气层
+  // map.scene.globe.showGroundAtmosphere = false// Turn off the atmosphere
   // map.scene.skyAtmosphere.show = true
   // map.scene.fog.enabled = true
-  // map.scene.fog.density = 0.00005 // 地面 0.00005 海底0.00008
+  // map.scene.fog.density = 0.00005 // Ground 0.00005 Seabed 0.00008
   // map.scene.fog.minimumBrightness = 0.03 // 0.03
 
   // map.scene.skyAtmosphere.hueShift = 0.0
   // map.scene.skyAtmosphere.saturationShift = 0.1
-  // map.scene.skyAtmosphere.brightnessShift = 0.08 // 地面0.08 海底
+  // map.scene.skyAtmosphere.brightnessShift = 0.08 // Ground 0.08 Seabed
 
-  globalNotify("已知问题提示", `(1) 当前示例仅支持WebGL1渲染，暂不支持WebGL2。`)
+  globalNotify("Known Issue Tips", `(1) The current example only supports WebGL1 rendering, and does not support WebGL2 yet.`)
 
   addLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -60,7 +60,7 @@ function addLayer() {
     dropRateBump: 0.01,
     speedFactor: 0.2,
     lineWidth: 4.0,
-    // 色带配置
+    // Ribbon configuration
     colors: [
       "rgb(4,14,216)",
       "rgb(32,80,255)",
@@ -89,7 +89,7 @@ function addLayer() {
 
 let canrefresh
 
-// 参数调整面板
+// Parameter adjustment panel
 function onParticleSystemOptionsChange(options) {
   clearTimeout(canrefresh)
   canrefresh = setTimeout(() => {
@@ -97,7 +97,7 @@ function onParticleSystemOptionsChange(options) {
   }, 500)
 }
 
-// 加载并解析NC数据
+//Load and parse NC data
 function loadNetCDF(filePath) {
   return new Promise(function (resolve) {
     const request = new XMLHttpRequest()
@@ -127,7 +127,7 @@ function loadNetCDF(filePath) {
       const maxV = vAttributes.max.value
       const minV = vAttributes.min.value
 
-      // 构造WindLayer类需要的格式数据
+      //Construct the format data required by the WindLayer class
       const result = {
         xmin: Math.min(...arrLon),
         xmax: Math.max(...arrLon),
@@ -135,8 +135,8 @@ function loadNetCDF(filePath) {
         ymax: Math.max(...arrLat),
         rows: arrLat.length,
         cols: arrLon.length,
-        udata: arrU, // 横向风速
-        vdata: arrV, // 纵向风速
+        udata: arrU, // cross wind speed
+        vdata: arrV, // Longitudinal wind speed
         umin: minU,
         umax: maxU,
         vmin: minV,
@@ -148,7 +148,7 @@ function loadNetCDF(filePath) {
   })
 }
 
-// 改变颜色
+// change color
 function changeColor(color) {
   windLayer.colors = [color]
 }

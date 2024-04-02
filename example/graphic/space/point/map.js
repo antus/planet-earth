@@ -1,11 +1,11 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 let allCount
 let lastSelectWX
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 29.646563, lng: 96.25028, alt: 150004581, heading: 352, pitch: -90 },
@@ -13,32 +13,32 @@ var mapOptions = {
       zoomFactor: 3.0,
       minimumZoomDistance: 1,
       maximumZoomDistance: 500000000,
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     },
     clock: {
-      multiplier: 2 // 速度
+      multiplier: 2 // speed
     }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
     compass: { top: "50px", left: "5px" }
   },
   terrain: false
 }
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map = mapInstance // record map
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
-  // 修改天空盒
+  //Modify the skybox
   map.scene.skyBox = new Cesium.SkyBox({
     sources: {
       negativeX: "img/skybox/5/tycho2t3_80_mx.jpg",
@@ -50,19 +50,19 @@ function onMounted(mapInstance) {
     }
   })
 
-  // 访问后端接口，取数据
+  //Access the backend interface and get data
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/tle.json" })
     .then(function (arr) {
       initData(arr.list)
     })
     .catch(function () {
-      globalMsg("获取空间目标轨道数据异常！")
+      globalMsg("Abnormal acquisition of space target orbit data!")
     })
 
-  // 单击地图空白处
+  // Click on an empty space on the map
   map.on(mars3d.EventType.clickMap, function (event) {
     if (lastSelectWX) {
-      // 重置上次选中的轨道样式
+      //Reset the last selected track style
       lastSelectWX.remove()
       lastSelectWX = null
     }
@@ -71,8 +71,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -80,13 +80,13 @@ function onUnmounted() {
 
 function initData(arr) {
   allCount = arr.length
-  globalMsg("当前外太空物数量: " + allCount)
+  globalMsg("Current number of outer space objects: " + allCount)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  const countryNumber = { 美国: 1, 前苏联: 1, 中国: 1, 英国: 1, 法国: 1, 加拿大: 1, 澳大利亚: 1, 日本: 1, 印度: 1 }
+  const countryNumber = { United States: 1, Soviet Union: 1, China: 1, United Kingdom: 1, France: 1, Canada: 1, Australia: 1, Japan: 1, India: 1 }
   const yearNumber = {}
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i]
@@ -99,31 +99,31 @@ function initData(arr) {
       scaleByDistance: new Cesium.NearFarScalar(20000000, 1.0, 150000000, 0.4)
     }
 
-    // 转为属性，方便使用
+    // Convert to attribute for easy use
     if (item.info) {
-      item.type = item.info[0] // 对象类型
-      item.status = item.info[1] // 操作状态代码
-      item.country = item.info[2] // 所有权(国家)
-      item.launchDate = item.info[3] && new Date(item.info[3]) // 发射日期
-      item.launchSite = item.info[4] // 发射地点
-      item.decayDate = item.info[5] // 衰减日期
-      item.period = item.info[6] // 轨道周期[分钟]
-      item.inclination = item.info[7] // 倾角[度]
-      item.apogee = item.info[8] // 远地点高度[公里]
-      item.perigee = item.info[9] // 近地点高度[公里]
-      item.rcs = item.info[10] // 雷达截面
-      // item.dataStatus = item.info[11]; // 数据状态码
-      item.orbitCenter = item.info[12] || "EA" // 轨道中心
-      item.orbitType = item.info[13] || "ORB" // 轨道类型
+      item.type = item.info[0] // Object type
+      item.status = item.info[1] // Operation status code
+      item.country = item.info[2] // Ownership (country)
+      item.launchDate = item.info[3] && new Date(item.info[3]) // launch date
+      item.launchSite = item.info[4] // Launch location
+      item.decayDate = item.info[5] // Decay date
+      item.period = item.info[6] // Orbital period [minutes]
+      item.inclination = item.info[7] // Inclination angle [degrees]
+      item.apogee = item.info[8] // Apogee altitude [km]
+      item.perigee = item.info[9] // Perigee height [km]
+      item.rcs = item.info[10] //Radar cross section
+      // item.dataStatus = item.info[11]; // Data status code
+      item.orbitCenter = item.info[12] || "EA" // Orbit Center
+      item.orbitType = item.info[13] || "ORB" // Orbit type
 
       delete item.info
     }
 
-    // 获取所有的国家数量
+    // Get the number of all countries
     if (countryNumber[getCountryName(item.country)]) {
       countryNumber[getCountryName(item.country)]++
     }
-    // 获取所有的年份
+    // Get all years
     if (yearNumber[new Date(item.launchDate).getFullYear()]) {
       yearNumber[new Date(item.launchDate).getFullYear()]++
     } else {
@@ -138,15 +138,15 @@ function initData(arr) {
     graphicLayer.addGraphic(graphic)
   }
 
-  // 在面板加载 echars 图表
+  //Load the echars chart in the panel
   eventTarget.fire("loadEchartsData", { allCount, countryNumber, yearNumber })
 
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了卫星", event)
+    console.log("Satellite clicked", event)
     const satelliteObj = event.graphic
 
     if (lastSelectWX) {
-      // 重置上次选中的轨道样式
+      //Reset the last selected track style
       lastSelectWX.remove()
       lastSelectWX = null
     }
@@ -171,7 +171,7 @@ function initData(arr) {
       if (item.launchSite) {
         launchSite = getLaunchSiteName(item.launchSite)
       }
-      const period = mars3d.Util.formatNum(item.period, 2) + " 分钟"
+      const period = mars3d.Util.formatNum(item.period, 2) + "minutes"
       const inclination = item.inclination + "°"
       const apogee = mars3d.Util.formatNum(item.apogee, 0) + " km"
       const perigee = mars3d.Util.formatNum(item.perigee, 0) + " km"
@@ -179,9 +179,9 @@ function initData(arr) {
       const inhtml = `<a href="https://www.n2yo.com/satellite/?s=${item.id}" target="_blank">N2YO...</a>`
 
       const weixinList = [
-        item.name || "未知",
+        item.name || "Unknown",
         item.id,
-        item.cospar || "未知",
+        item.cospar || "Unknown",
         item.type,
         status,
         country,
@@ -191,7 +191,7 @@ function initData(arr) {
         inclination,
         apogee,
         perigee,
-        item.rcs || "未知",
+        item.rcs || "Unknown",
         item.orbitCenter,
         item.orbitType,
         inhtml
@@ -206,10 +206,10 @@ function initData(arr) {
   initWorker(arr)
 }
 
-// 采用多线程来计算卫星位置
+//Use multi-threading to calculate satellite position
 let worker
 function initWorker(arr) {
-  worker = new Worker(window.currentPath + "tleWorker.js") // currentPath为当前目录，内置在示例框架中
+  worker = new Worker(window.currentPath + "tleWorker.js") // currentPath is the current directory, built into the sample framework
   worker.onmessage = function (event) {
     const time = event.data.time
     const positionObj = event.data.positionObj
@@ -226,11 +226,11 @@ function initWorker(arr) {
       }
     }
 
-    // 循环继续发送请求消息
+    // Loop to continue sending request messages
     postWorkerMessage(arr)
   }
 
-  // 主线程调用worker.postMessage()方法，向 Worker 发消息。
+  //The main thread calls the worker.postMessage() method to send a message to the Worker.
   postWorkerMessage(arr)
 }
 
@@ -238,7 +238,7 @@ function postWorkerMessage(arr) {
   const stime = Cesium.JulianDate.addSeconds(map.clock.currentTime, 1, new Cesium.JulianDate())
   const date = Cesium.JulianDate.toDate(stime)
 
-  // 主线程调用worker.postMessage()方法，向 Worker 发消息。
+  //The main thread calls the worker.postMessage() method to send a message to the Worker.
   worker.postMessage({
     time: date,
     list: arr
@@ -246,7 +246,7 @@ function postWorkerMessage(arr) {
 }
 
 function weixingStyle(item) {
-  // 高亮选中的轨道样式
+  // Highlight the selected track style
   const weixin = new mars3d.graphic.Satellite({
     tle1: item.tle1,
     tle2: item.tle2,
@@ -290,11 +290,11 @@ function weixingStyle(item) {
 
 // Orbital altitude definitions.
 
-// 重置
+// reset
 function resetGraphic() {
-  // 循环所有卫星
+  // Loop through all satellites
   if (!graphicLayer) {
-    globalMsg("当前数据正在加载")
+    globalMsg("Current data is loading")
     return
   }
   graphicLayer.eachGraphic(function (graphic) {
@@ -321,16 +321,16 @@ const INMARSAT = [20918, 21149, 21814, 21940, 23839, 24307, 24674, 24819, 25153,
 const LANDSAT = [25682, 39084]
 const DIGITALGLOBE = [25919, 32060, 33331, 35946, 40115]
 
-// 判断卫星数据
+//Judge satellite data
 function selectSatellites(data) {
   if (!graphicLayer) {
     return
   }
 
   const name = data.name
-  const xilie = data.selXiLie // 系列卫星
-  const country = data.selCountry // 所属国家
-  const type = data.selType // 对象类型
+  const xilie = data.selXiLie // series of satellites
+  const country = data.selCountry // Country
+  const type = data.selType // Object type
 
   const val1 = data.sliLaunchdate
   const min1 = 1950
@@ -358,9 +358,9 @@ function selectSatellites(data) {
 
   let selCount = 0
 
-  // 循环所有卫星
+  // Loop through all satellites
   graphicLayer.eachGraphic(function (graphic) {
-    // 先将所有样式还原
+    // Restore all styles first
     if (graphic.selected) {
       graphic.setStyle({
         color: "rgba(0,255,0,0.6)",
@@ -369,9 +369,9 @@ function selectSatellites(data) {
       graphic.selected = false
     }
 
-    const attr = graphic.attr // 卫星的属性
+    const attr = graphic.attr // Attributes of satellites
 
-    // 名称
+    // name
     if (name) {
       if ((attr.name && attr.name.indexOf(name) !== -1) || (attr.id && attr.id === name) || (attr.cospar && attr.cospar.indexOf(name) !== -1)) {
         //
@@ -380,7 +380,7 @@ function selectSatellites(data) {
       }
     }
 
-    // 系列卫星时
+    //series satellite time
     if (xilie) {
       let selected
       switch (xilie) {
@@ -408,12 +408,12 @@ function selectSatellites(data) {
       }
     }
 
-    // 国家
+    // nation
     if (country && country !== attr.country) {
       return
     }
 
-    // 类型的判断
+    // Type judgment
     if (type) {
       const name = attr.name
       if (type === "junk" && name.indexOf(" DEB") === -1 && name.indexOf(" R/B") === -1) {
@@ -424,7 +424,7 @@ function selectSatellites(data) {
       }
     }
 
-    // 滑动轨的判断
+    // Judgment of sliding rail
     // Launch date
     if (val1[0] !== min1 || val1[1] !== max1) {
       if (!attr.launchDate) {
@@ -477,7 +477,7 @@ function selectSatellites(data) {
       }
     }
 
-    // 尺寸的判断
+    // Judgment of size
     if (val6[0] !== min6 || val6[1] !== max6) {
       if (!attr.rcs) {
         return
@@ -487,7 +487,7 @@ function selectSatellites(data) {
       }
     }
 
-    // 将筛选到的数据修改为红色
+    //Modify the filtered data to red
     if (!graphic.selected) {
       graphic.selected = true
       graphic.setStyle({
@@ -498,27 +498,27 @@ function selectSatellites(data) {
     selCount++
   })
 
-  globalMsg(`${allCount}个对象中，有 ${selCount} 个符合条件`)
+  globalMsg(`Among ${allCount} objects, ${selCount} meet the conditions`)
 }
 
 function getStatusName(code) {
   switch (code) {
     case "+":
-      return "运作的"
+      return "operational"
     case "-":
-      return "非运转的"
+      return "not running"
     case "P":
-      return "部分运转,部分完成主要任务或次要任务"
+      return "Partial operation, partial completion of primary or secondary tasks"
     case "B":
-      return "备份/备用,先前运行的卫星进入储备状态"
+      return "Backup/Standby, the previously operating satellite enters reserve status"
     case "S":
-      return "备用,新卫星等待完全激活"
+      return "Standby, new satellite waiting for full activation"
     case "X":
-      return "扩展的任务"
+      return "extended task"
     case "D":
-      return "衰退的"
+      return "declining"
     case "?":
-      return "未知的"
+      return "unknown"
   }
   return code
 }
@@ -526,73 +526,73 @@ function getStatusName(code) {
 function getLaunchSiteName(code) {
   switch (code) {
     case "AFETR":
-      return "美国佛罗里达州空军东部试验场"
+      return "Air Force Eastern Proving Ground, Florida, USA"
     case "AFWTR":
-      return "美国加州空军西部试验场"
+      return "Air Force Western Proving Ground, California"
     case "CAS":
       return "Canaries Airspace"
     case "DLS":
-      return "俄罗斯Dombarovskiy发射场"
+      return "Russian Dombarovskiy launch site"
     case "ERAS":
-      return "东部领空范围"
+      return "Eastern airspace range"
     case "FRGUI":
-      return "法属圭亚那库鲁的欧洲太空港"
+      return "European Spaceport in Kourou, French Guiana"
     case "HGSTR":
-      return "阿尔及利亚的Hammaguira空间轨道靶场"
+      return "Hammaguira Space Orbital Range, Algeria"
     case "JSC":
-      return "中国酒泉航天中心"
+      return "China Jiuquan Space Center"
     case "KODAK":
-      return "美国阿拉斯加科迪亚克发射中心"
+      return "Kodiak Launch Center, Alaska, USA"
     case "KSCUT":
-      return "日本内浦航天中心"
+      return "Japan Uchiura Space Center"
     case "KWAJ":
-      return "美国陆军夸贾林环礁"
+      return "US Army Kwajalein Atoll"
     case "KYMSC":
-      return "俄罗斯Kapustin Yar导弹和太空综合体"
+      return "Russian Kapustin Yar missile and space complex"
     case "NSC":
-      return "韩国罗老宇航中心"
+      return "Korea Naro Space Center"
     case "PLMSC":
-      return "俄罗斯普列谢茨克导弹和太空综合体"
+      return "Russian Plesetsk missile and space complex"
     case "RLLB":
-      return "火箭实验室发射基地"
+      return "Rocket Lab Launch Base"
     case "SEAL":
-      return "海上发射平台(流动)"
+      return "Sea launch platform (mobile)"
     case "SEMLS":
-      return "伊朗塞姆南卫星发射场"
+      return "Iran's Semnan Satellite Launch Site"
     case "SMTS":
-      return "伊朗沙赫鲁德导弹试验场"
+      return "Iran's Shahrude Missile Test Site"
     case "SNMLP":
-      return "印度洋(肯尼亚)圣马可发射平台"
+      return "Indian Ocean (Kenya) San Marco Launch Platform"
     case "SRILR":
-      return "印度萨迪什·达万航天中心"
+      return "Sadish Dhawan Space Center, India"
     case "SUBL":
-      return "潜艇发射平台(移动式)"
+      return "Submarine launch platform (mobile)"
     case "SVOBO":
-      return "俄罗斯Svobodnyy发射中心"
+      return "Russian Svobodnyy Launch Center"
     case "TAISC":
-      return "中国太原航天中心"
+      return "China Taiyuan Space Center"
     case "TANSC":
-      return "日本种子岛宇宙中心"
+      return "Japan Tanegashima Space Center"
     case "TYMSC":
-      return "哈萨克斯坦秋拉坦导弹和航天中心"
+      return "Tyulatan Missile and Space Center of Kazakhstan"
     case "VOSTO":
-      return "俄罗斯东方港航天器发射场"
+      return "Russia's Vostochny Spacecraft Launch Site"
     case "WLPIS":
-      return "美国弗吉尼亚州瓦勒普斯岛"
+      return "Wallops Island, Virginia, United States"
     case "WOMRA":
-      return "澳大利亚Woomera"
+      return "Australia Woomera"
     case "WRAS":
-      return "西方领空范围"
+      return "Western airspace range"
     case "WSC":
-      return "中国文昌卫星发射场"
+      return "China Wenchang Satellite Launch Site"
     case "XICLF":
-      return "中国西昌发射场"
+      return "Xichang Launch Site, China"
     case "YAVNE":
-      return "以色列Yavne发射设施"
+      return "Yavne Launch Facility, Israel"
     case "YUN":
-      return "朝鲜云松发射场"
+      return "North Korea Unsong Launch Site"
     case "UNK":
-      return "未知的"
+      return "unknown"
   }
   return code
 }
@@ -600,244 +600,244 @@ function getLaunchSiteName(code) {
 function getCountryName(code) {
   switch (code) {
     case "AB":
-      return "阿拉伯卫星通信组织"
+      return "Arab Satellite Communications Organization"
     case "ABS":
-      return "亚洲广播卫星"
+      return "Asia Broadcasting Satellite"
     case "AC":
-      return "亚洲卫星电讯公司"
+      return "Asia Satellite Telecommunications Corporation"
     case "ALG":
-      return "阿尔及利亚"
+      return "Algeria"
     case "ANG":
-      return "安哥拉"
+      return "Angola"
     case "ARGN":
-      return "阿根廷"
+      return "Argentina"
     case "ASRA":
-      return "奥地利"
+      return "Austria"
     case "AUS":
-      return "澳大利亚"
+      return "Australia"
     case "AZER":
-      return "阿塞拜疆"
+      return "Azerbaijan"
     case "BEL":
-      return "比利时"
+      return "Belgium"
     case "BELA":
-      return "白俄罗斯"
+      return "Belarus"
     case "BERM":
-      return "百慕大"
+      return "Bermuda"
     case "BGD":
-      return "孟加拉国"
+      return "Bangladesh"
     case "BHUT":
-      return "不丹王国"
+      return "Kingdom of Bhutan"
     case "BOL":
-      return "玻利维亚"
+      return "Bolivia"
     case "BRAZ":
-      return "巴西"
+      return "Brazil"
     case "BUL":
-      return "保加利亚"
+      return "Bulgaria"
     case "CA":
-      return "加拿大"
+      return "Canada"
     case "CHBZ":
-      return "中国/巴西"
+      return "China/Brazil"
     case "CHLE":
-      return "智利"
+      return "Chile"
     case "CIS":
-      return "前苏联"
+      return "former Soviet Union"
     case "COL":
-      return "哥伦比亚"
+      return "Colombia"
     case "CRI":
-      return "哥斯达黎加共和国"
+      return "Republic of Costa Rica"
     case "CZCH":
-      return "捷克"
+      return "Czech"
     case "DEN":
-      return "丹麦"
+      return "Denmark"
     case "ECU":
-      return "厄瓜多尔"
+      return "Ecuador"
     case "EGYP":
-      return "埃及"
+      return "Egypt"
     case "ESA":
-      return "欧洲太空总署"
+      return "European Space Agency"
     case "ESRO":
-      return "欧洲空间研究组织"
+      return "European Space Research Organization"
     case "EST":
-      return "爱沙尼亚"
+      return "Estonia"
     case "EUME":
-      return "欧洲气象卫星开发组织"
+      return "European Organization for the Development of Meteorological Satellites"
     case "EUTE":
-      return "欧洲电信卫星组织"
+      return "Eutelsat"
     case "FGER":
-      return "法国/德国"
+      return "France/Germany"
     case "FIN":
-      return "芬兰"
+      return "Finland"
     case "FR":
-      return "法国"
+      return "France"
     case "FRIT":
-      return "法国/意大利"
+      return "France/Italy"
     case "GER":
-      return "德国"
+      return "Germany"
     case "GHA":
-      return "加纳共和国"
+      return "Republic of Ghana"
     case "GLOB":
-      return "全球星"
+      return "Global Star"
     case "GREC":
-      return "希腊"
+      return "Greece"
     case "GRSA":
-      return "希腊/沙特阿拉伯"
+      return "Greece/Saudi Arabia"
     case "GUAT":
-      return "危地马拉"
+      return "Guatemala"
     case "HUN":
-      return "匈牙利"
+      return "Hungary"
     case "IM":
-      return "国际移动卫星组织(INMARSAT)"
+      return "INMARSAT"
     case "IND":
-      return "印度"
+      return "India"
     case "INDO":
-      return "印尼"
+      return "Indonesia"
     case "IRAN":
-      return "伊朗"
+      return "Iran"
     case "IRAQ":
-      return "伊拉克"
+      return "Iraq"
     case "IRID":
       return "IRID"
     case "ISRA":
-      return "以色列"
+      return "Israel"
     case "ISRO":
-      return "印度空间研究组织"
+      return "Indian Space Research Organization"
     case "ISS":
-      return "国际空间站"
+      return "International Space Station"
     case "IT":
-      return "意大利"
+      return "Italy"
     case "ITSO":
-      return "国际电信卫星组织"
+      return "INTELSAT"
     case "JPN":
-      return "日本"
+      return "Japan"
     case "KAZ":
-      return "哈萨克斯坦"
+      return "Kazakhstan"
     case "KEN":
-      return "肯尼亚"
+      return "Kenya"
     case "LAOS":
-      return "老挝"
+      return "Laos"
     case "LKA":
-      return "斯里兰卡"
+      return "Sri Lanka"
     case "LTU":
-      return "立陶宛"
+      return "Lithuania"
     case "LUXE":
-      return "卢森堡"
+      return "Luxembourg"
     case "MA":
-      return "摩洛哥"
+      return "Morocco"
     case "MALA":
-      return "马来西亚"
+      return "Malaysia"
     case "MEX":
-      return "墨西哥"
+      return "Mexico"
     case "MMR":
-      return "缅甸"
+      return "Myanmar"
     case "MNG":
-      return "蒙古"
+      return "Mongolia"
     case "MUS":
-      return "毛里求斯"
+      return "Mauritius"
     case "NATO":
-      return "北大西洋公约组织"
+      return "NATO"
     case "NETH":
-      return "荷兰"
+      return "Holland"
     case "NICO":
-      return "新图标"
+      return "new icon"
     case "NIG":
-      return "尼日利亚"
+      return "Nigeria"
     case "NKOR":
-      return "朝鲜"
+      return "North Korea"
     case "NOR":
-      return "挪威"
+      return "Norway"
     case "NPL":
-      return "尼泊尔"
+      return "Nepal"
     case "NZ":
-      return "新西兰"
+      return "New Zealand"
     case "O3B":
-      return "O3b Networks公司"
+      return "O3b Networks"
     case "ORB":
-      return "ORBCOMM卫星公司"
+      return "ORBCOMM Satellite Corporation"
     case "PAKI":
-      return "巴基斯坦"
+      return "Pakistan"
     case "PERU":
-      return "秘鲁"
+      return "Peru"
     case "POL":
-      return "波兰"
+      return "Poland"
     case "POR":
-      return "葡萄牙"
+      return "Portugal"
     case "PRC":
-      return "中国"
+      return "China"
     case "PRY":
-      return "巴拉圭"
+      return "Paraguay"
     case "PRES":
-      return "中国/欧洲航天局"
+      return "China/European Space Agency"
     case "QAT":
-      return "卡塔尔的状态"
+      return "Qatar status"
     case "RASC":
-      return "非洲区域卫星通信组织"
+      return "African Regional Satellite Communications Organization"
     case "ROC":
-      return "台湾"
+      return "Taiwan"
     case "ROM":
-      return "罗马尼亚"
+      return "Romania"
     case "RP":
-      return "菲律宾"
+      return "Philippines"
     case "RWA":
-      return "卢旺达"
+      return "Rwanda"
     case "SAFR":
-      return "南非"
+      return "South Africa"
     case "SAUD":
-      return "沙特阿拉伯"
+      return "Saudi Arabia"
     case "SDN":
-      return "苏丹"
+      return "Sudan"
     case "SEAL":
-      return "Sea Launch公司"
+      return "Sea Launch Company"
     case "SES":
-      return "SES电信公司"
+      return "SES Telecommunications Company"
     case "SGJP":
-      return "新加坡/日本"
+      return "Singapore/Japan"
     case "SING":
-      return "新加坡"
+      return "Singapore"
     case "SKOR":
-      return "韩国"
+      return "Korea"
     case "SPN":
-      return "西班牙"
+      return "Spain"
     case "STCT":
-      return "新加坡/台湾"
+      return "Singapore/Taiwan"
     case "SVN":
-      return "斯洛文尼亚"
+      return "Slovenia"
     case "SWED":
-      return "瑞典"
+      return "Sweden"
     case "SWTZ":
-      return "瑞士"
+      return "Switzerland"
     case "TBD":
-      return "待定"
+      return "to be determined"
     case "THAI":
-      return "泰国"
+      return "Thailand"
     case "TMMC":
-      return "土库曼斯坦/摩纳哥"
+      return "Turkmenistan/Monaco"
     case "TUN":
-      return "突尼斯共和国"
+      return "Republic of Tunisia"
     case "TURK":
-      return "土耳其"
+      return "Türkiye"
     case "UAE":
-      return "阿拉伯联合酋长国"
+      return "United Arab Emirates"
     case "UK":
-      return "英国"
+      return "UK"
     case "UKR":
-      return "乌克兰"
+      return "Ukraine"
     case "URY":
-      return "乌拉圭"
+      return "Uruguay"
     case "US":
-      return "美国"
+      return "United States"
     case "USBZ":
-      return "美国/巴西"
+      return "United States/Brazil"
     case "VENZ":
-      return "委内瑞拉"
+      return "Venezuela"
     case "VTNM":
-      return "越南"
+      return "Vietnam"
     case "UNK":
-      return "未知"
+      return "unknown"
   }
   return code
 }
 
-// 清除卫星的点击事件,隐藏卫星的面板
+// Clear the click event of the satellite and hide the satellite panel
 function highlightSatellite() {
   lastSelectWX.remove()
   lastSelectWX = null

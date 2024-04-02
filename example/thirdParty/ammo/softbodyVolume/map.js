@@ -1,8 +1,8 @@
 // // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.834648, lng: 117.219733, alt: 83, heading: 64, pitch: -34 },
@@ -11,21 +11,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("操作提示", `鼠标左键单击进行发射`)
+  globalNotify("Operation prompt", `Click the left mouse button to launch`)
   addDemo()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -50,7 +50,7 @@ function addDemo() {
     }
   })
   map.scene.primitives.add(meshVisualizer)
-  meshVisualizer.showReference = true // 显示坐标轴
+  meshVisualizer.showReference = true // Show coordinate axes
 
   function createRandomColor() {
     return Cesium.Color.fromRandom({ alpha: 1 }) // fromRgba(Math.floor(Math.random() * (1 << 24)));
@@ -419,7 +419,7 @@ function addDemo() {
         }
       } catch (e) {
         meshVisualizer.beforeUpdate.removeEventListener(update)
-        console.log("崩溃了", e)
+        console.log("Crashed", e)
       }
     }
 
@@ -427,7 +427,7 @@ function addDemo() {
     let init = false
     let startTime = new Date()
     const rayDir = new Cesium.Cartesian3()
-    // const maxDistance = 100 // 发射点与射线和局部场景的交点的距离不能太远，过远会撕碎软体进而碎片过多时导致ammo物理引擎崩溃
+    // const maxDistance = 100 // The distance between the emission point and the intersection of the ray and the local scene cannot be too far. If it is too far, the software will be torn apart and too many fragments will cause the ammo physics engine to crash.
 
     function initInput() {
       const scene = map.scene

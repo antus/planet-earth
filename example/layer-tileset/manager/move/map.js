@@ -1,24 +1,24 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tiles3dLayer
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map = mapInstance // record map
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  // 如果模型地址内有“+”符号，可以加下面方法进行自定义处理
+  // If there is a "+" symbol in the model address, you can add the following method for customized processing
   Cesium.Resource.ReplaceUrl = function (url) {
     if (url.endsWith(".json") || url.endsWith(".b3dm")) {
-      return url.replace(/\+/gm, "%2B") // 将3dtiles中的“+”符号转义下
+      return url.replace(/\+/gm, "%2B") // Escape the "+" symbol in 3dtiles
     } else {
       return url
     }
@@ -26,8 +26,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -36,24 +36,24 @@ function onUnmounted() {
 
 function removeLayer() {
   if (tiles3dLayer) {
-    map.basemap = 2021 // 切换到默认卫星底图
+    map.basemap = 2021 // Switch to the default satellite base map
 
     map.removeLayer(tiles3dLayer, true)
     tiles3dLayer = null
   }
 }
 
-// 是否有地形
+// Whether there is terrain
 function chkHasTerrain(isStkTerrain) {
   map.hasTerrain = isStkTerrain
 }
 
-// 深度检测
+// Depth detection
 function chkTestTerrain(val) {
   map.scene.globe.depthTestAgainstTerrain = val
 }
 
-// 当前页面业务相关
+// Current page business related
 function showModel(modelUrl) {
   removeLayer()
   if (!modelUrl) {
@@ -64,9 +64,9 @@ function showModel(modelUrl) {
     url: modelUrl,
     maximumScreenSpaceError: 1,
 
-    // 高亮时的样式
+    // Style when highlighted
     highlight: {
-      type: mars3d.EventType.click, // 默认为鼠标移入高亮，也可以指定click单击高亮
+      type: mars3d.EventType.click, // The default is to highlight when the mouse moves in, you can also specify click to highlight
       color: "#00FF00"
     },
     popup: "all",
@@ -74,9 +74,9 @@ function showModel(modelUrl) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 加载完成事件
+  // Loading completion event
   tiles3dLayer.on(mars3d.EventType.load, function (event) {
-    console.log("模型加载完成", event)
+    console.log("Model loading completed", event)
   })
 }
 
@@ -85,8 +85,8 @@ function setTranslation(x, y, z) {
   const modelMatrix = Cesium.Matrix4.fromTranslation(translation)
   tiles3dLayer.tileset.modelMatrix = modelMatrix
 
-  // 打印值
+  // print value
   const position = mars3d.PointUtil.getPositionByHprAndOffset(tiles3dLayer.position, new Cesium.Cartesian3(x, y, z))
   const point = mars3d.LngLatPoint.parse(position)
-  console.log("新坐标为", point)
+  console.log("New coordinates are", point)
 }

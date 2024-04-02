@@ -43,7 +43,7 @@ let btnbar = {
       })
     }
   },
-  //左移
+  //Move left
   moveToLeft: function () {
     if (this.positionl >= 0) {
       return
@@ -55,7 +55,7 @@ let btnbar = {
     }
     this.picDiv.animate({ left: this.positionl + "px" })
   },
-  //右移
+  //Move right
   moveToRight: function () {
     if (this.positionl <= this.maxWidth) {
       return

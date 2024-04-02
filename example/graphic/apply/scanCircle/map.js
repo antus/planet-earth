@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.170953, lng: 121.485939, alt: 7473, heading: 10, pitch: -40 }
@@ -10,18 +10,18 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  map.basemap = 2017 // 蓝色底图
+  map.basemap = 2017 // blue basemap
 
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "上海市建筑物",
+    name: "Shanghai Buildings",
     url: "//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
     maximumScreenSpaceError: 8,
     marsJzwStyle: true,
@@ -34,11 +34,11 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
@@ -47,15 +47,15 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addDemoGraphic1(graphicLayer) {
-  // 立体围墙扩散效果,面状
+  // Three-dimensional wall diffusion effect, surface shape
   const diffuseWallGlow = new mars3d.graphic.DiffuseWall({
     positions: [
       [121.475616, 31.255374, 5.87],
@@ -67,25 +67,25 @@ function addDemoGraphic1(graphicLayer) {
     ],
     style: {
       color: "#ffff00",
-      diffHeight: 2000, // 高度
-      speed: 10 // 速度
+      diffHeight: 2000, // height
+      speed: 10 // speed
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
   graphicLayer.addGraphic(diffuseWallGlow)
 }
 
 function addDemoGraphic2(graphicLayer) {
-  // 立体围墙扩散效果,圆状
+  // Three-dimensional wall diffusion effect, circular shape
   const circleDiffuseWallGlow = new mars3d.graphic.DiffuseWall({
-    position: new mars3d.LngLatPoint(121.481165, 31.278668, 44.3), // 圆中心点
+    position: new mars3d.LngLatPoint(121.481165, 31.278668, 44.3), // Circle center point
     style: {
-      diffHeight: 2000, // 高度
-      radius: 600, // 半径
+      diffHeight: 2000, // height
+      radius: 600, // radius
       color: "#ff0000",
-      speed: 10 // 速度
+      speed: 10 // speed
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "Example 2" }
   })
   graphicLayer.addGraphic(circleDiffuseWallGlow)
 }
@@ -100,9 +100,9 @@ function addDemoGraphic3(graphicLayer) {
         color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
         speed: 10
       },
-      clampToGround: true // 是否贴地
+      clampToGround: true // Whether to stick to the ground
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "Example 3" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -114,7 +114,7 @@ function addDemoGraphic4(graphicLayer) {
     position: Cesium.Cartesian3.fromDegrees(121.504242, 31.23805, 27.88),
     style: {
       radius: 1500.0,
-      // 扫描材质
+      //Scan material
       materialType: mars3d.MaterialType.CircleScan,
       materialOptions: {
         image: "img/textures/circle-scan.png",
@@ -125,9 +125,9 @@ function addDemoGraphic4(graphicLayer) {
         return _rotation
       }, false),
       classificationType: Cesium.ClassificationType.BOTH,
-      clampToGround: true // 是否贴地
+      clampToGround: true // Whether to stick to the ground
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "Example 4" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -140,7 +140,7 @@ function addDemoGraphic5(graphicLayer) {
       radius: 700.0,
       materialType: mars3d.MaterialType.CircleScan,
       materialOptions: {
-        // 扫描材质
+        //Scan material
         image: "img/textures/circle-two.png",
         color: "#5fc4ee"
       },
@@ -149,9 +149,9 @@ function addDemoGraphic5(graphicLayer) {
         return _rotation
       }, false),
       classificationType: Cesium.ClassificationType.BOTH,
-      clampToGround: true // 是否贴地
+      clampToGround: true // Whether to stick to the ground
     },
-    attr: { remark: "示例5" }
+    attr: { remark: "Example 5" }
   })
   graphicLayer.addGraphic(graphic)
 }

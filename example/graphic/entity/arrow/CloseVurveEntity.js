@@ -1,31 +1,31 @@
 /**
- * 【自定义面状标号】 闭合曲面
- * @param {object} options 参数对象，包括以下：
- * @param {LngLatPoint[]|Cesium.Cartesian3[]|Cesium.PositionProperty|Array} options.positions 坐标位置
- * @param {PolygonEntity.StyleOptions} options.style 样式信息
- * @param {object} [options.attr] 附件的属性信息，可以任意附加属性，导出geojson或json时会自动处理导出。
+ * [Customized surface label] Closed surface
+ * @param {object} options parameter object, including the following:
+ * @param {LngLatPoint[]|Cesium.Cartesian3[]|Cesium.PositionProperty|Array} options.positions coordinate position
+ * @param {PolygonEntity.StyleOptions} options.style style information
+ * @param {object} [options.attr] The attribute information of the attachment. You can attach any attributes. The export will be automatically processed when exporting geojson or json.
  *
- * @param {number} [options.minPointNum=2] 绘制时，至少需要点的个数
- * @param {number} [options.maxPointNum=9999] 绘制时，最多允许点的个数
- * @param {function} [options.validDrawPosition] 绘制时，外部自定义校验坐标,比如判断限定在指定区域内绘制。
- * @param {boolean} [options.hasEdit=true] 是否允许编辑
- * @param {boolean} [options.hasEditContextMenu=true] 编辑时，是否绑定右键编辑菜单
- * @param {boolean} [options.hasMoveEdit=true] 编辑时，是否可以整体平移
- * @param {boolean} [options.hasHeightEdit=true] 编辑时，当有diffHeight时，是否可以编辑高度
+ * @param {number} [options.minPointNum=2] When drawing, at least the number of points required
+ * @param {number} [options.maxPointNum=9999] When drawing, the maximum number of points allowed
+ * @param {function} [options.validDrawPosition] When drawing, externally customized verification coordinates, such as determining whether to draw within a specified area.
+ * @param {boolean} [options.hasEdit=true] Whether to allow editing
+ * @param {boolean} [options.hasEditContextMenu=true] Whether to bind the right-click editing menu when editing
+ * @param {boolean} [options.hasMoveEdit=true] Whether the overall translation can be performed during editing
+ * @param {boolean} [options.hasHeightEdit=true] When editing, when there is diffHeight, whether the height can be edited
  *
- * @param {string|Array|Function} [options.popup] 绑定的popup弹窗值，也可以bindPopup方法绑定
- * @param {Popup.StyleOptions} [options.popupOptions] popup弹窗时的配置参数，也支持如pointerEvents等{@link Popup}构造参数
- * @param {string|Array|Function} [options.tooltip]  绑定的tooltip弹窗值，也可以bindTooltip方法绑
- * @param {Tooltip.StyleOptions} [options.tooltipOptions] tooltip弹窗时的配置参数，也支持如pointerEvents等{@link Tooltip}构造参数
- * @param {object} [options.contextmenuItems] 当矢量数据支持右键菜单时，也可以bindContextMenu方法绑定
+ * @param {string|Array|Function} [options.popup] The bound popup value, which can also be bound using the bindPopup method.
+ * @param {Popup.StyleOptions} [options.popupOptions] Configuration parameters for popup. It also supports {@link Popup} construction parameters such as pointerEvents.
+ * @param {string|Array|Function} [options.tooltip] The bound tooltip pop-up value, which can also be bound by the bindTooltip method
+ * @param {Tooltip.StyleOptions} [options.tooltipOptions] Configuration parameters when tooltip pops up. It also supports {@link Tooltip} construction parameters such as pointerEvents.
+ * @param {object} [options.contextmenuItems] When the vector data supports the right-click menu, it can also be bound by the bindContextMenu method.
  *
- * @param {string|number} [options.id = createGuid()] 矢量数据id标识
- * @param {string} [options.name = ''] 矢量数据名称
- * @param {boolean} [options.show = true] 矢量数据是否显示
- * @param {BaseClass|boolean} [options.eventParent]  指定的事件冒泡对象，默认为所加入的图层对象，false时不冒泡事件
- * @param {boolean|Function} [options.allowDrillPick]  是否允许鼠标穿透拾取
- * @param {boolean} [options.flyTo] 加载完成数据后是否自动飞行定位到数据所在的区域。
- * @param {object} [options.flyToOptions] 加载完成数据后是否自动飞行定位到数据所在的区域的对应 {@link BaseGraphic#flyTo}方法参数。
+ * @param {string|number} [options.id = createGuid()] vector data id identification
+ * @param {string} [options.name = ''] Vector data name
+ * @param {boolean} [options.show = true] Whether vector data is displayed
+ * @param {BaseClass|boolean} [options.eventParent] The specified event bubbling object. The default is the added layer object. If false, the event will not bubble up.
+ * @param {boolean|Function} [options.allowDrillPick] Whether to allow mouse penetration picking
+ * @param {boolean} [options.flyTo] Whether to automatically fly to the area where the data is located after loading the data.
+ * @param {object} [options.flyToOptions] Corresponding {@link BaseGraphic#flyTo} method parameters whether to automatically fly to the area where the data is located after loading the data.
  *
  * @class CloseVurveEntity
  * @extends {PolygonEntity}
@@ -34,11 +34,11 @@ class CloseVurveEntity extends mars3d.graphic.PolygonEntity {
   constructor(options = {}) {
     super(options)
 
-    // this._minPointNum = 3 // 至少需要点的个数
-    // this._maxPointNum = 999 // 最多允许点的个数
+    // this._minPointNum = 3 // At least the number of points required
+    // this._maxPointNum = 999 // The maximum number of points allowed
   }
 
-  // 是否首尾相连闭合（线不闭合，面闭合），用于处理中间点
+  // Whether the ends are connected and closed (the line is not closed, the surface is closed), used to process intermediate points
   // get hasClosure() {
   //   return true
   // }
@@ -47,37 +47,37 @@ class CloseVurveEntity extends mars3d.graphic.PolygonEntity {
     if (!positions || positions.length < 2) {
       return positions
     }
-    return getCloseCurvePoints(positions, this.style) // 调用算法
+    return getCloseCurvePoints(positions, this.style) // Call algorithm
   }
 
-  //= =================静态方法=================
+  //= =================Static method==================
 
   // /**
-  //  * 计算当前军标对象的边界坐标点
+  // * Calculate the boundary coordinate points of the current military standard object
   //  * @static
-  //  * @param {LngLatPoint[]|Cesium.Cartesian3[]|Cesium.PositionProperty|Array} positions 坐标位置
-  //  * @param {object} [options] 控制参数(预留)
-  //  * @return {Cesium.Cartesian3[]} 边界坐标点
+  // * @param {LngLatPoint[]|Cesium.Cartesian3[]|Cesium.PositionProperty|Array} positions coordinate positions
+  // * @param {object} [options] Control parameters (reserved)
+  // * @return {Cesium.Cartesian3[]} boundary coordinate point
   //  */
   // static getOutlinePositions(positions, options) {
   //   if (!positions || positions.length < 2) {
   //     return positions
   //   }
   //   positions = mars3d.LngLatArray.toCartesians(positions)
-  //   return getCloseCurvePoints(positions, options) // 调用算法
+  // return getCloseCurvePoints(positions, options) // Call algorithm
   // }
 }
 
-// 注册下, 可以再graphicLayer.startDraw中使用
+// After registration, it can be used in graphicLayer.startDraw
 mars3d.GraphicUtil.register("closeVurveEntity", CloseVurveEntity)
 
-//= =========================== 闭合曲面 主要算法============================
+//= =========================== Main algorithm for closed surfaces================ ============
 function getCloseCurvePoints(positions, options) {
   if (!positions || positions.length === 0) {
     return positions
   }
 
-  const pnts = mars3d.PointTrans.cartesians2mercators(positions) // 笛卡尔坐标 转 墨卡托投影坐标
+  const pnts = mars3d.PointTrans.cartesians2mercators(positions) // Cartesian coordinates to Mercator projection coordinates
   const maxHeight = getMaxHeight(pnts)
   pnts.push(pnts[0], pnts[1])
 
@@ -100,7 +100,7 @@ function getCloseCurvePoints(positions, options) {
     pList.push(pnt2)
   }
 
-  const returnArr = mars3d.PointTrans.mercators2cartesians(pList, maxHeight) // 墨卡托投影坐标 转  笛卡尔坐标
+  const returnArr = mars3d.PointTrans.mercators2cartesians(pList, maxHeight) // Mercator projection coordinates to Cartesian coordinates
   return returnArr
 }
 
@@ -178,7 +178,7 @@ function MathDistance(pnt1, pnt2) {
   return Math.sqrt(Math.pow(pnt1[0] - pnt2[0], 2) + Math.pow(pnt1[1] - pnt2[1], 2))
 }
 
-// 计算闭合曲面上的点
+// Calculate points on closed surface
 function isClockWise(pnt1, pnt2, pnt3) {
   if (!pnt3) {
     return false

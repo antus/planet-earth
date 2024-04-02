@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 // import * as mapv from "mapv"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 22.126801, lng: 119.173814, alt: 4100099, heading: 351, pitch: -74 }
@@ -11,84 +11,84 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/mapvchina.json" })
     .then(function (data) {
       createMapvLayer(data)
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 创建mapv图层
+//Create mapv layer
 function createMapvLayer(geojson) {
   const geojsonDataSet = mapv.geojson.getDataSet(geojson)
 
-  const to = "北京"
+  const to = "Beijing"
   const qianxi = new mapv.DataSet([
     {
-      from: "河北",
+      from: "Hebei",
       count: 354551,
       to
     },
     {
-      from: "天津",
+      from: "Tianjin",
       count: 97323,
       to
     },
     {
-      from: "山东",
+      from: "Shandong",
       count: 28664,
       to
     },
     {
-      from: "山西",
+      from: "Shanxi",
       count: 16650,
       to
     },
     {
-      from: "辽宁",
+      from: "Liaoning",
       count: 14379,
       to
     },
     {
-      from: "河南",
+      from: "Henan",
       count: 10980,
       to
     },
     {
-      from: "内蒙古自治区",
+      from: "Inner Mongolia Autonomous Region",
       count: 9603,
       to
     },
     {
-      from: "江苏",
+      from: "Jiangsu",
       count: 4536,
       to
     },
     {
-      from: "上海",
+      from: "Shanghai",
       count: 3556,
       to
     },
     {
-      from: "广东",
+      from: "Guangdong",
       count: 2600,
       to
     }
@@ -179,9 +179,9 @@ function createMapvLayer(geojson) {
     max: 354551,
     draw: "intensity",
     depthTest: false,
-    data // 数据
+    data // data
   }
-  const mapVLayer = new mars3d.layer.MapVLayer(geojsonOptions) // 创建MapV图层
+  const mapVLayer = new mars3d.layer.MapVLayer(geojsonOptions) // Create MapV layer
   map.addLayer(mapVLayer)
 
   const textOptions = {
@@ -192,9 +192,9 @@ function createMapvLayer(geojson) {
     shadowBlue: 10,
     zIndex: 11,
     shadowBlur: 10,
-    data: textData // 数据
+    data: textData // data
   }
-  const textmapVLayer = new mars3d.layer.MapVLayer(textOptions) // 创建MapV图层
+  const textmapVLayer = new mars3d.layer.MapVLayer(textOptions) // Create a MapV layer
   map.addLayer(textmapVLayer)
 
   const lineOptions = {
@@ -204,9 +204,9 @@ function createMapvLayer(geojson) {
     lineWidth: 2,
     zIndex: 100,
     draw: "simple",
-    data: lineData // 数据
+    data: lineData // data
   }
-  const linemapVLayer = new mars3d.layer.MapVLayer(lineOptions) // 创建MapV图层
+  const linemapVLayer = new mars3d.layer.MapVLayer(lineOptions) // Create a MapV layer
   map.addLayer(linemapVLayer)
 
   const pointOptions = {
@@ -216,9 +216,9 @@ function createMapvLayer(geojson) {
     size: 5,
     zIndex: 10,
     draw: "simple",
-    data: pointData // 数据
+    data: pointData // data
   }
-  const pointmapVLayer = new mars3d.layer.MapVLayer(pointOptions) // 创建MapV图层
+  const pointmapVLayer = new mars3d.layer.MapVLayer(pointOptions) // Create a MapV layer
   map.addLayer(pointmapVLayer)
 
   const timeOptions = {
@@ -235,8 +235,8 @@ function createMapvLayer(geojson) {
       duration: 2
     },
     draw: "simple",
-    data: timeData // 数据
+    data: timeData // data
   }
-  const timemapVLayer = new mars3d.layer.MapVLayer(timeOptions) // 创建MapV图层
+  const timemapVLayer = new mars3d.layer.MapVLayer(timeOptions) // Create a MapV layer
   map.addLayer(timemapVLayer)
 }

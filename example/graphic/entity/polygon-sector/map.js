@@ -1,37 +1,37 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
 var eventTarget = new mars3d.BaseClass()
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.56238, lng: 117.215326, alt: 32419, heading: 2, pitch: -49 }
   }
 }
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
@@ -41,8 +41,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -57,7 +57,7 @@ function addDemoGraphic1(graphicLayer) {
     ],
     style: {
       radius: 5000,
-      startAngle: 0, // 开始角度(正东方向为0,顺时针到360度)
+      startAngle: 0, //Start angle (due east is 0, clockwise to 360 degrees)
       endAngle: 90,
 
       color: "#3388ff",
@@ -66,7 +66,7 @@ function addDemoGraphic1(graphicLayer) {
       outlineWidth: 3,
       outlineColor: "#ffffff",
       label: {
-        text: "我是火星科技",
+        text: "I am Mars Technology",
         font_size: 18,
         color: "#ffffff",
         distanceDisplayCondition: true,
@@ -74,9 +74,9 @@ function addDemoGraphic1(graphicLayer) {
         distanceDisplayCondition_near: 0
       }
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic2(graphicLayer) {
@@ -84,18 +84,18 @@ function addDemoGraphic2(graphicLayer) {
     position: [117.257699, 31.861722, 24.8],
     style: {
       radius: 4000,
-      startAngle: 45, // 开始角度(正东方向为0,顺时针到360度)
+      startAngle: 45, //Start angle (due east is 0, clockwise to 360 degrees)
       endAngle: 170,
       clampToGround: true,
       materialType: mars3d.MaterialType.Image,
       materialOptions: {
         image: "img/textures/poly-soil.jpg",
-        color: Cesium.Color.WHITE.withAlpha(0.8) // 透明度处理
+        color: Cesium.Color.WHITE.withAlpha(0.8) // Transparency processing
       }
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "Example 2" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic3(graphicLayer) {
@@ -103,22 +103,22 @@ function addDemoGraphic3(graphicLayer) {
     position: [117.152749, 31.77278, 24.1],
     style: {
       radius: 3000,
-      startAngle: 90, // 开始角度(正东方向为0,顺时针到360度)
+      startAngle: 90, //Start angle (due east is 0, clockwise to 360 degrees)
       endAngle: 20,
       materialType: mars3d.MaterialType.Water,
       materialOptions: {
-        normalMap: "img/textures/waterNormals.jpg", // 水正常扰动的法线图
-        frequency: 80.0, // 控制波数的数字。
-        animationSpeed: 0.02, // 控制水的动画速度的数字。
-        amplitude: 5.0, // 控制水波振幅的数字。
-        specularIntensity: 0.8, // 控制镜面反射强度的数字。
-        baseWaterColor: "#006ab4", // rgba颜色对象基础颜色的水。#00ffff,#00baff,#006ab4
-        blendColor: "#006ab4" // 从水中混合到非水域时使用的rgba颜色对象。
+        normalMap: "img/textures/waterNormals.jpg", // Normal map of water normal disturbance
+        frequency: 80.0, // Number that controls the wave number.
+        animationSpeed: 0.02, // Number that controls the animation speed of water.
+        amplitude: 5.0, // Number that controls the amplitude of the water wave.
+        specularIntensity: 0.8, // Number that controls the intensity of specular reflection.
+        baseWaterColor: "#006ab4", // The base color of water in the rgba color object. #00ffff,#00baff,#006ab4
+        blendColor: "#006ab4" // The rgba color object used when blending from water to non-water.
       }
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "Example 3" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic4(graphicLayer) {
@@ -126,7 +126,7 @@ function addDemoGraphic4(graphicLayer) {
     position: [117.272405, 31.798676, 21.2],
     style: {
       radius: 3000,
-      startAngle: 0, // 开始角度(正东方向为0,顺时针到360度)
+      startAngle: 0, //Start angle (due east is 0, clockwise to 360 degrees)
       endAngle: 60,
 
       diffHeight: 2000.0,
@@ -135,15 +135,15 @@ function addDemoGraphic4(graphicLayer) {
       closeTop: false,
       closeBottom: false,
 
-      label: { text: "鼠标移入会高亮" },
-      // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+      label: { text: "It will be highlighted when the mouse is moved into it" },
+      // The style when highlighting (default is mouse move in, you can also specify type:'click' to click to highlight). After construction, you can also manually call the openHighlight and closeHighlight methods.
       highlight: {
         opacity: 0.9
       }
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "Example 4" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic5(graphicLayer) {
@@ -151,7 +151,7 @@ function addDemoGraphic5(graphicLayer) {
     position: [117.237446, 31.753303, 23.1],
     style: {
       radius: 5000,
-      startAngle: 0, // 开始角度(正东方向为0,顺时针到360度)
+      startAngle: 0, //Start angle (due east is 0, clockwise to 360 degrees)
       endAngle: 60,
 
       fill: false,
@@ -163,9 +163,9 @@ function addDemoGraphic5(graphicLayer) {
         closure: false
       }
     },
-    attr: { remark: "示例5" }
+    attr: { remark: "Example 5" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
 function addDemoGraphic6(graphicLayer) {
@@ -173,7 +173,7 @@ function addDemoGraphic6(graphicLayer) {
     position: [117.172735, 31.660464, 17],
     style: {
       radius: 5000,
-      startAngle: 90, // 开始角度(正东方向为0,顺时针到360度)
+      startAngle: 90, //Start angle (due east is 0, clockwise to 360 degrees)
       endAngle: 20,
       materialType: "Circle3Wave",
       materialOptions: {
@@ -184,19 +184,19 @@ function addDemoGraphic6(graphicLayer) {
         speed: 10.0
       }
     },
-    attr: { remark: "示例5" }
+    attr: { remark: "Example 5" }
   })
-  graphicLayer.addGraphic(graphic) // 还可以另外一种写法: graphic.addTo(graphicLayer)
+  graphicLayer.addGraphic(graphic) // There is another way to write it: graphic.addTo(graphicLayer)
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -206,7 +206,7 @@ function addRandomGraphicByCount(count) {
       position,
       style: {
         radius: result.radius,
-        startAngle: Math.random() * 100, // 开始角度(正东方向为0,顺时针到360度)
+        startAngle: Math.random() * 100, // Starting angle (due east is 0, clockwise to 360 degrees)
         endAngle: Math.random() * 100 + 100,
         color: Cesium.Color.fromRandom({ alpha: 0.6 })
       },
@@ -215,11 +215,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "sector",
@@ -230,7 +230,7 @@ function startDrawGraphic() {
       outlineWidth: 3,
       outlineColor: "#ffffff",
       label: {
-        text: "我是火星科技",
+        text: "I am Mars Technology",
         font_size: 18,
         color: "#ffffff",
         distanceDisplayCondition: true,
@@ -241,7 +241,7 @@ function startDrawGraphic() {
   })
 }
 
-// 开始绘制  绘制立体面
+// Start drawing and draw the three-dimensional surface
 function startDrawGraphic2() {
   graphicLayer.startDraw({
     type: "sector",
@@ -253,23 +253,23 @@ function startDrawGraphic2() {
   })
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -289,7 +289,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -309,7 +309,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -324,7 +324,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
@@ -332,21 +332,21 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "计算周长",
+      text: "Calculate perimeter",
       icon: "fa fa-medium",
       callback: (e) => {
         const graphic = e.graphic
         const strDis = mars3d.MeasureUtil.formatDistance(graphic.distance)
-        globalAlert("该对象的周长为:" + strDis)
+        globalAlert("The perimeter of this object is:" + strDis)
       }
     },
     {
-      text: "计算面积",
+      text: "Calculate area",
       icon: "fa fa-reorder",
       callback: (e) => {
         const graphic = e.graphic
         const strArea = mars3d.MeasureUtil.formatArea(graphic.area)
-        globalAlert("该对象的面积为:" + strArea)
+        globalAlert("The area of ​​this object is:" + strArea)
       }
     }
   ])

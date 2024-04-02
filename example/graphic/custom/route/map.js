@@ -1,34 +1,34 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.773622, lng: 117.077444, alt: 5441, heading: 359, pitch: -57 }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true // Whether to display the timeline control
   }
 }
 
 var eventTarget = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 演示数据的时间
+  //Time to demonstrate data
   map.clock.currentTime = Cesium.JulianDate.fromDate(new Date("2020-11-25 10:10:00"))
 
-  // 加载车辆
+  //Load vehicle
   mars3d.Util.fetchJson({
     url: "//data.mars3d.cn/file/apidemo/car-list.json"
   })
@@ -38,13 +38,13 @@ function onMounted(mapInstance) {
       showCarList(tableData)
     })
     .catch(function () {
-      globalMsg("查询信息失败")
+      globalMsg("Query information failed")
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -63,22 +63,22 @@ const colors = [
 ]
 
 function showCarList(arr) {
-  console.log("加载" + arr.length + "条")
+  console.log("Loading" + arr.length + "bar")
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 鼠标移入提示信息
+  // Mouse moves into prompt information
   graphicLayer.bindTooltip(function (event) {
     const attr = event.graphic?.attr
     if (!attr) {
       return
     }
-    return `车辆编号：${attr.id}<br />车牌号码：${attr.name}`
+    return `Vehicle number: ${attr.id}<br />License plate number: ${attr.name}`
   })
 
-  // 单击地图空白处
+  // Click on an empty space on the map
   map.on(mars3d.EventType.clickMap, function (event) {
     if (lastClickCar) {
       lastClickCar.circle.show = false
@@ -86,15 +86,15 @@ function showCarList(arr) {
     }
   })
 
-  // 绑定点击事件
+  //Bind click event
   graphicLayer.on(mars3d.EventType.click, (event, position) => {
     const car = event.graphic
-    console.log("单击了车辆", car)
+    console.log("Clicked the vehicle", car)
 
     if (lastClickCar) {
       if (lastClickCar === car) {
         return
-      } // 重复单击，跳出
+      } // Repeat click to jump out
       lastClickCar.circle.show = false
       lastClickCar = null
     }
@@ -102,11 +102,11 @@ function showCarList(arr) {
     car.circle.show = true
     lastClickCar = car
 
-    // 视角定位下
+    // Under perspective positioning
     // car.flyToPoint({ radius: 1000 })
   })
 
-  // 点击编辑弹出框中的删除按钮时，删除表格数据
+  // Delete table data when clicking the delete button in the edit pop-up box
   graphicLayer.on("removeGraphic", (e) => {
     eventTarget.fire("removeCar", { id: e.graphic.options.id })
   })
@@ -170,41 +170,41 @@ function showCarList(arr) {
     graphicLayer.addGraphic(car)
   }
 
-  // 定时获取卡车和铲车的列表数据
+  // Get list data of trucks and forklifts regularly
   createPath()
 }
 
-// 取轨迹数据的时间间隔（单位：秒）
+// Time interval for obtaining trajectory data (unit: seconds)
 const timeStep = 10
 let lastTime
 
-// 首次获取并创建轨迹
+// Get and create the trajectory for the first time
 function createPath() {
-  // 取数据的时间范围，结束时间
+  //The time range and end time of fetching data
   const date = Cesium.JulianDate.toDate(map.clock.currentTime)
   const endTime = mars3d.Util.formatDate(date, "yyyy-MM-dd HH:mm:ss")
 
-  // 修改当前时间回退一分钟，因为数据永远是当前时间之前的。
+  // Modify the current time and go back one minute, because the data is always before the current time.
   date.setSeconds(date.getSeconds() - 60)
   map.clock.currentTime = window.Cesium.JulianDate.fromDate(date)
 
-  // 取数据的时间范围，开始时间
-  date.setMinutes(date.getMinutes() - 10) // 初次取一定时间内的数据
+  // Time range for fetching data, start time
+  date.setMinutes(date.getMinutes() - 10) // Get data within a certain period of time for the first time
   const beginTime = mars3d.Util.formatDate(date, "yyyy-MM-dd HH:mm:ss")
 
-  // 记录最后一次读取数据的时间
+  //Record the time when the data was last read
   lastTime = endTime
 
-  // 取数据
+  // Get data
   getPathList(beginTime, endTime)
 
-  // 定时更新
+  //Regular updates
   setInterval(() => {
     updatePath()
   }, timeStep * 1000)
 }
 
-// 后续更新轨迹
+// Subsequent update track
 function updatePath() {
   const beginTime = lastTime
 
@@ -214,19 +214,19 @@ function updatePath() {
 
   lastTime = endTime
 
-  // 取数据
+  // Get data
   getPathList(beginTime, endTime)
 }
 
-// 读取车辆gps坐标路径的接口
+//Interface for reading vehicle gps coordinate path
 function getPathList(beginTime, endTime) {
   mars3d.Util.fetchJson({
     url: "//data.mars3d.cn/file/apidemo/car-path.json"
   })
     .then((res) => {
       const listALL = res.data || []
-      // 因为读取静态json，为了演示动态，筛选数据内符合时间范围内的数据。
-      // 真实接口中可以注释下面代码。
+      // Because static json is read, in order to demonstrate dynamics, the data in the data is filtered to match the time range.
+      // The following code can be commented in the real interface.
       const d_beginTime = new Date(beginTime)
       const d_endTime = new Date(endTime)
       const list = listALL.filter((item) => {
@@ -234,13 +234,13 @@ function getPathList(beginTime, endTime) {
         return thistime >= d_beginTime && thistime <= d_endTime
       })
 
-      const path = `${endTime} 获取到 ${list.length} 条GPS坐标记录`
+      const path = `${endTime} gets ${list.length} GPS coordinate records`
 
       eventTarget.fire("showPath", { path })
 
-      // 循环车辆
+      // cycle vehicles
       graphicLayer.eachGraphic((car) => {
-        // 取出对应车辆的轨迹列表
+        // Get the track list of the corresponding vehicle
         const path = list.filter((item) => {
           return item.id === car.id
         })
@@ -252,7 +252,7 @@ function getPathList(beginTime, endTime) {
       })
     })
     .catch(() => {
-      globalMsg("实时查询车辆路径信息失败，请稍候再试")
+      globalMsg("Real-time query of vehicle route information failed, please try again later")
     })
 }
 
@@ -278,7 +278,7 @@ function onChange(data) {
   })
 }
 
-// 点击行
+// click row
 function flyToModel(id) {
   const car = graphicLayer.getGraphicById(id)
   if (car) {

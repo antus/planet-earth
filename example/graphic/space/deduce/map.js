@@ -1,149 +1,149 @@
 // import * as mars3d from "mars3d"
 // import "./index.css"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
 var lineLayer
 var satelliteLayer
 
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 var mapOptions = {
   scene: {
     center: { lat: 42.126999, lng: 98.685654, alt: 16560060, heading: 5.6, pitch: -89 }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true // Whether to display the timeline control
   }
 }
 
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map  map.toolbar.style.bottom = "55px"// 修改toolbar控件的样式
+  map = mapInstance // Record map map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 线矢量数据图层
+  // Line vector data layer
   lineLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(lineLayer)
 
-  // 卫星矢量数据图层
+  // Satellite vector data layer
   satelliteLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(satelliteLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 const posArr = [
   {
-    name: "中国资源卫星应用中心",
+    name: "China Resources Satellite Application Center",
     pos: [116.240032464881, 40.0797910765005, 0],
     model: "//data.mars3d.cn/gltf/mars/leida.glb"
   },
 
   {
-    name: "自然资源部",
+    name: "Ministry of Natural Resources",
     pos: [116.364862, 39.922346, 0],
     model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
-    name: "生态环境部",
+    name: "Ministry of Ecology and Environment",
     pos: [116.352146287861, 39.9315519489232, 0],
     model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
-    name: "农业农村部",
+    name: "Ministry of Agriculture and Rural Affairs",
     pos: [116.457555, 39.932756, 0],
     model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
-    name: "水利部",
+    name: "Ministry of Water Resources",
     pos: [116.352155, 39.884728, 0],
     model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
-    name: "国家发展改革委",
+    name: "National Development and Reform Commission",
     pos: [116.331546, 39.912456, 0],
     model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
 
   {
-    name: "住建部",
+    name: "Ministry of Housing and Urban-Rural Development",
     pos: [116.326609, 39.930379, 0],
     model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
-    name: "国家林业草原局",
+    name: "National Forestry and Grassland Administration",
     pos: [116.419465, 39.954384, 0],
     model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
-    name: "交通运输部",
+    name: "Ministry of Transport",
     pos: [116.419109, 39.908169, 0],
     model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
-    name: "中国地震局",
+    name: "China Earthquake Administration",
     pos: [116.284736, 39.906494, 0],
     model: "//data.mars3d.cn/gltf/imap/171112f22bf34b09a80dfe36b7a2c3ce/gltf/gltf2.gltf"
   },
   {
-    name: "西安卫星测控中心",
+    name: "Xi'an Satellite Measurement and Control Center",
     pos: [109.023912, 34.250872, 0],
     model: "//data.mars3d.cn/gltf/mars/leida.glb"
   },
   {
-    name: "中国科学院遥感与数字地球研究所",
+    name: "Institute of Remote Sensing and Digital Earth, Chinese Academy of Sciences",
     pos: [116.276306422658, 40.0706289383518, 0],
     model: "//data.mars3d.cn/gltf/mars/leida.glb"
   },
 
   {
-    name: "密云站",
+    name: "Miyun Station",
     pos: [116.858716105082, 40.452385253501, 0],
     model: "//data.mars3d.cn/gltf/mars/leida.glb"
   },
   {
-    name: "喀什站",
+    name: "Kashgar Station",
     pos: [75.93105, 39.505111, 0],
     model: "//data.mars3d.cn/gltf/mars/leida.glb"
   },
   {
-    name: "北极站",
+    name: "Arctic Station",
     pos: [20.186391, 67.8537518, 0],
     model: "//data.mars3d.cn/gltf/mars/leida.glb"
   },
   {
-    name: "三亚站",
+    name: "Sanya Station",
     pos: [109.311472012774, 18.312718489265, 0],
     model: "//data.mars3d.cn/gltf/mars/leida.glb"
   },
   {
-    name: "昆明站",
+    name: "Kunming Station",
     pos: [102.372779, 25.532377, 0],
     model: "//data.mars3d.cn/gltf/mars/leida.glb"
   }
 ]
 
-// 初始化场景
+//Initialize scene
 function initScene() {
   for (let index = 0; index < posArr.length; index++) {
     const scenePos = posArr[index]
-    // 加模型
+    //Add model
     const graphic = new mars3d.graphic.ModelEntity({
-      name: "地面站模型",
+      name: "Ground station model",
       position: scenePos.pos,
       style: {
         url: scenePos.model,
@@ -169,10 +169,10 @@ function initScene() {
   }
 }
 
-// 需求受理
+//Demand acceptance
 
 function acceptance() {
-  satelliteLayer.clear() // 清除卫星数据
+  satelliteLayer.clear() // Clear satellite data
   map.setCameraView(
     { lat: 39.869944, lng: 115.884115, alt: 17452.2, heading: 65, pitch: -28.3 },
     {
@@ -182,11 +182,11 @@ function acceptance() {
 }
 
 function accepAction() {
-  // 线
+  // Wire
   for (let i = 1; i <= 9; i++) {
     const startPoint = Cesium.Cartesian3.fromDegrees(posArr[i].pos[0], posArr[i].pos[1])
     const endPoint = Cesium.Cartesian3.fromDegrees(116.240032464881, 40.0797910765005)
-    const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 2000, 50) // 计算曲线点
+    const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 2000, 50) // Calculate curve points
     const graphic = new mars3d.graphic.PolylineEntity({
       positions,
       style: {
@@ -204,20 +204,20 @@ function accepAction() {
   }
 }
 
-// 任务编排
+//Task arrangement
 function task() {
-  satelliteLayer.clear() // 清除卫星数据
+  satelliteLayer.clear() // Clear satellite data
   const cameraView = { lat: 40.051583, lng: 116.238469, alt: 1672.4, heading: 7.8, pitch: -27.7 }
   const html = `<div class="info">
-              <div class="working title">任务编排</div>
-               <h3 style="padding:0 10px">编排中...</h3>
-              <br><p style="padding:0 10px; line-height:30px;">中国资源卫星应用中心接收到各部门的任务请求，然后进行数据处理对任务进行分析，整理，整合出合适的方案。。。</p>
+              <div class="working title">Task arrangement</div>
+               <h3 style="padding:0 10px">Padding...</h3>
+              <br><p style="padding:0 10px; line-height:30px;">China Resources Satellite Application Center receives task requests from various departments, and then performs data processing to analyze and organize the tasks, and integrates appropriate solutions. . . . </p>
            </div>`
 
   addDivGraphic(cameraView, html)
 }
 
-// 任务上注
+// Note on task
 function startTask() {
   map.setCameraView({ lat: 23.644034, lng: 66.747739, alt: 4865177.6, heading: 358, pitch: -63 }, { complete: () => addTask() })
 }
@@ -227,13 +227,13 @@ function addTask() {
   satelliteLayer.addGraphic(weixin)
   const propertyQC = getSampledPositionProperty([[75.93105, 39.505111, 0]])
 
-  // 圆锥追踪体（动态position=>动态targetPosition）
+  // Cone tracking body (dynamic position=>dynamic targetPosition)
   const coneTrack = new mars3d.graphic.ConeTrack({
     position: propertyQC,
     targetPosition: weixin.property,
     style: {
-      angle: 5, // 半场角度
-      // 自定义扩散波纹纹理
+      angle: 5, // half-court angle
+      // Custom diffuse ripple texture
       materialType: mars3d.MaterialType.CylinderWave,
       materialOptions: {
         color: "#ffff00",
@@ -248,7 +248,7 @@ function addTask() {
   }, 5000)
 }
 
-// 卫星观测
+// satellite observation
 function satelliteLook() {
   map.setCameraView({ lat: 30.560391, lng: 58.246962, alt: 4113469.4, heading: 358, pitch: -63 }, { complete: () => lookAction() })
 }
@@ -256,7 +256,7 @@ function satelliteLook() {
 function lookAction() {
   const weixin = addSatelliteGrahic()
 
-  // 视锥体 展示
+  // View frustum display
   const satelliteSensor = new mars3d.graphic.SatelliteSensor({
     position: weixin.property,
     orientation: new Cesium.VelocityOrientationProperty(weixin.property),
@@ -274,7 +274,7 @@ function lookAction() {
   }, 10000)
 }
 
-// 数据接收
+//Data reception
 function sendDataAction() {
   map.setCameraView({ lat: 23.644034, lng: 66.747739, alt: 4865177.6, heading: 358, pitch: -63 }, { complete: () => sendData() })
 }
@@ -283,20 +283,20 @@ function sendData() {
   const weixin = addSatelliteGrahic()
   const propertyQC = getSampledPositionProperty([[75.93105, 39.505111, 0]])
 
-  // 圆锥追踪体（动态position=>动态targetPosition）
+  // Cone tracking body (dynamic position=>dynamic targetPosition)
   const coneTrack = new mars3d.graphic.ConeTrack({
     position: weixin.property,
     targetPosition: propertyQC,
     style: {
-      angle: 5, // 半场角度
-      // 自定义扩散波纹纹理
+      angle: 5, // half-court angle
+      // Custom diffuse ripple texture
       materialType: mars3d.MaterialType.CylinderWave,
       materialOptions: {
         color: "#ffff00",
         repeat: 30.0
       },
-      faceForward: false, // 当绘制的三角面片法向不能朝向视点时，自动翻转法向，从而避免法向计算后发黑等问题
-      closed: true // 是否为封闭体，实际上执行的是 是否进行背面裁剪
+      faceForward: false, // When the normal direction of the drawn triangular patch cannot face the viewpoint, the normal direction will be automatically flipped to avoid problems such as blackening after normal calculation.
+      closed: true // Whether it is a closed body, what is actually performed is whether to perform back cropping
     }
   })
   satelliteLayer.addGraphic(coneTrack)
@@ -306,18 +306,18 @@ function sendData() {
   }, 5000)
 }
 
-// 数据传输
+// data transmission
 function transferringData() {
-  satelliteLayer.clear() // 清除卫星数据
+  satelliteLayer.clear() // Clear satellite data
 
-  // 场景视角
+  // scene perspective
   map.setCameraView({ lat: 39.647456, lng: 116.234526, alt: 61145.4, heading: 17.5, pitch: -42.8 }, { complete: () => transferringAction() })
 }
 
 function transferringAction() {
   const startPoint = Cesium.Cartesian3.fromDegrees(116.858716105082, 40.452385253501)
   const endPoint = Cesium.Cartesian3.fromDegrees(116.240032464881, 40.0797910765005)
-  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 2000, 50) // 计算曲线点
+  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 2000, 50) // Calculate curve points
   const graphic = new mars3d.graphic.PolylineEntity({
     positions,
     style: {
@@ -334,27 +334,27 @@ function transferringAction() {
   lineLayer.addGraphic(graphic)
 }
 
-// 产品生产
+// product production
 function production() {
   const cameraView = { lat: 40.070515, lng: 116.23878, alt: 2213.5, heading: 3, pitch: -68.8 }
 
   const html = ` <div class="info">
-  <div class="working title">产品生产</div>
-  <h3 style="padding:0 10px">产品生产中...</h3>
-  <br><p style="padding:0 10px;line-height:30px;">中国资源卫星应用中心接收到密云站传送过来的信息开始对数据进行处理然后生成产品...</p>
+  <div class="working title">Product production</div>
+  <h3 style="padding:0 10px">Product in production...</h3>
+  <br><p style="padding:0 10px;line-height:30px;">China Resources Satellite Application Center receives the information transmitted from Miyun Station and begins to process the data and generate products...</p>
 </div>`
   addDivGraphic(cameraView, html)
 }
 
-// 产品分发
+// product distribution
 function distribution() {
   clearGraphicLayer()
-  map.setCameraView({ lat: 39.869944, lng: 115.884115, alt: 17452.2, heading: 65, pitch: -28.3 }) // 改变相机视角
-  // 线
+  map.setCameraView({ lat: 39.869944, lng: 115.884115, alt: 17452.2, heading: 65, pitch: -28.3 }) // Change camera perspective
+  // Wire
   for (let i = 1; i <= 9; i++) {
     const startPoint = Cesium.Cartesian3.fromDegrees(116.240032464881, 40.0797910765005)
     const endPoint = Cesium.Cartesian3.fromDegrees(posArr[i].pos[0], posArr[i].pos[1])
-    const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 2000, 50) // 计算曲线点
+    const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 2000, 50) // Calculate curve points
     const graphic = new mars3d.graphic.PolylineEntity({
       positions,
       style: {
@@ -382,7 +382,7 @@ function addDivGraphic(cameraView, divhtml) {
           html: divhtml,
           horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), // 按视距距离显示
+          distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 200000), // Display according to viewing distance
           scaleByDistance: new Cesium.NearFarScalar(1000, 1.0, 200000, 0.2),
           clampToGround: true
         }
@@ -399,7 +399,7 @@ let weixin
 function addSatelliteGrahic() {
   if (!weixin) {
     map.clock.currentTime = Cesium.JulianDate.fromIso8601("2019-07-15T18:48:48.36721000009856652Z")
-    map.clock.multiplier = 2 // 速度
+    map.clock.multiplier = 2 // speed
     weixin = new mars3d.graphic.Satellite({
       name: "GF-1",
       tle1: "1 39150U 13018A   19351.75901006  .00000041  00000-0  13118-4 0  9991",
@@ -422,11 +422,11 @@ function addSatelliteGrahic() {
 
     satelliteLayer.addGraphic(weixin)
   }
-  // 目标卫星
+  // target satellite
   return weixin
 }
 
-// 计算演示的SampledPositionProperty轨迹
+// Calculate the SampledPositionProperty trajectory of the demonstration
 function getSampledPositionProperty(points) {
   const property = new Cesium.SampledPositionProperty()
   property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
@@ -443,16 +443,16 @@ function getSampledPositionProperty(points) {
 
 function clearGraphicLayer() {
   if (lineLayer) {
-    lineLayer.clear() // 线矢量数据
+    lineLayer.clear() // Line vector data
   }
 
   if (satelliteLayer) {
-    satelliteLayer.clear() // 清除卫星数据
+    satelliteLayer.clear() // Clear satellite data
   }
 }
 
 function clearAll() {
-  lineLayer.clear() // 线矢量数据
-  satelliteLayer.clear() // 清除卫星数据
+  lineLayer.clear() // Line vector data
+  satelliteLayer.clear() // Clear satellite data
   graphicLayer.clear()
 }

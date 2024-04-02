@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
 
-// 事件对象，用于抛出事件给面板
+//Event object, used to throw events to the panel
 var eventTarget = new mars3d.BaseClass()
 
 var mapOptions = {
@@ -13,33 +13,33 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 加一些演示数据
+  //Add some demo data
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/volumeCloud.json" })
     .then(function (data) {
-      console.log("演示数据data", data)
+      console.log("Demo data data", data)
 
       addDemoGraphic1(data)
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -65,20 +65,20 @@ const colors = [
 const steps = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65]
 
 function addDemoGraphic1(data) {
-  // 创建气象数据体渲染模型
+  //Create a meteorological data volume rendering model
   const volumeCloud = new mars3d.graphic.VolumeCloud({
     data: {
-      rows: data.rows, // 行网格数
-      cols: data.cols, // 列网格数
-      heights: data.heights, // 高网格数
-      values: data.values, // 3D 数据集数组, 数组长度应该是 rows*cols*heights, 顺序为： [height1-row1-col1, height1-row1-col2,…… ,height1-row2-col1, height1-row2-col2,…… ,height2-row1-col1, height2-row1-col2,……]
+      rows: data.rows, // Number of row grids
+      cols: data.cols, // Number of column grids
+      heights: data.heights, // Number of high grids
+      values: data.values, // 3D data set array, the array length should be rows*cols*heights, the order is: [height1-row1-col1, height1-row1-col2,……,height1-row2-col1, height1- row2-col2,…,height2-row1-col1, height2-row1-col2,…]
 
-      xmin: data.xmin, // 最小经度（度数，-180-180）
-      xmax: data.xmax, // 最大经度（度数，-180-180）
-      ymin: data.ymin, // 最小纬度（度数，-90-90）
-      ymax: data.ymax, // 最大纬度（度数，-90-90）
-      zmin: data.zmin, // 最小高度
-      zmax: data.zmax // 最大高度
+      xmin: data.xmin, // Minimum longitude (degrees, -180-180)
+      xmax: data.xmax, // Maximum longitude (degrees, -180-180)
+      ymin: data.ymin, // minimum latitude (degrees, -90-90)
+      ymax: data.ymax, // Maximum latitude (degrees, -90-90)
+      zmin: data.zmin, // minimum height
+      zmax: data.zmax // maximum height
     },
     steps,
     colors
@@ -86,7 +86,7 @@ function addDemoGraphic1(data) {
   })
   graphicLayer.addGraphic(volumeCloud)
 
-  // 显示边界，方便对比测试
+  //Display boundaries to facilitate comparison testing
   showDebuggerRectangleOutline(volumeCloud)
 
   // setInterval(() => {
@@ -97,15 +97,15 @@ function addDemoGraphic1(data) {
   //   }
 
   //   volumeCloud.updateData({
-  //     rows: data.rows, // 行网格数
-  //     cols: data.cols, // 列网格数
-  //     heights: data.heights, // 高网格数
-  //     values: data.values // 3D 数据集数组, 数组长度应该是 rows*cols*heights
+  // rows: data.rows, // Number of row grids
+  // cols: data.cols, // Number of column grids
+  // heights: data.heights, // Number of high grids
+  // values: data.values ​​// 3D data set array, the array length should be rows*cols*heights
   //   })
   // }, 1000)
 }
 
-// 显示Rectangle矩形体边界，方便对比测试
+// Display the boundaries of the Rectangle rectangle to facilitate comparison testing.
 function showDebuggerRectangleOutline(volumeCloud) {
   const boxOutlineInstance = new Cesium.GeometryInstance({
     geometry: new Cesium.RectangleOutlineGeometry({

@@ -1,35 +1,35 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  // 创建mapv图层
+  //Create mapv layer
   createMapvLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function createMapvLayer() {
-  // 构造数据
+  // Construct data
   const positions = []
   const geojson = []
   let randomCount = 300
   while (randomCount--) {
-    // 取区域内的随机点
+    // Get random points in the area
     const point = [random(113 * 1000, 119 * 1000) / 1000, random(28 * 1000, 35 * 1000) / 1000]
 
     positions.push(Cesium.Cartesian3.fromDegrees(point[0], point[1]))
@@ -46,7 +46,7 @@ function createMapvLayer() {
     destination: Cesium.Rectangle.fromCartesianArray(positions)
   })
 
-  // mapv图层参数
+  // mapv layer parameters
   const options = {
     draw: "grid",
     fillStyle: "rgba(55, 50, 250, 0.8)",
@@ -67,10 +67,10 @@ function createMapvLayer() {
       0.85: "yellow",
       1.0: "rgb(255,0,0)"
     },
-    data: geojson // 数据
+    data: geojson // data
   }
 
-  // 创建MapV图层
+  //Create MapV layer
   const mapVLayer = new mars3d.layer.MapVLayer(options)
   map.addLayer(mapVLayer)
 }

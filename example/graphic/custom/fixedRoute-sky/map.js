@@ -1,31 +1,31 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var map // mars3d.Map three-dimensional map object
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   const fixedRoute = new mars3d.graphic.FixedRoute({
-    name: "空中漫游",
+    name: "Air Roaming",
     timeField: "datatime",
     positions: [
       { lng: 117.217898, lat: 31.80021, alt: 500, datatime: "2021/3/25 0:01:00" },
       { lng: 117.217535, lat: 31.815032, alt: 500, datatime: "2021/3/25 0:01:30" },
       { lng: 117.21596, lat: 31.853067, alt: 500, datatime: "2021/3/25 0:02:10" }
     ],
-    clockLoop: true, // 是否循环播放
-    interpolation: true, // setInterpolationOptions插值
+    clockLoop: true, // Whether to loop playback
+    interpolation: true, // setInterpolationOptions interpolation
     camera: {
       type: "dy",
       followedX: 50,
@@ -34,27 +34,27 @@ function onMounted(mapInstance) {
   })
   graphicLayer.addGraphic(fixedRoute)
 
-  // ui面板信息展示
+  //UI panel information display
   fixedRoute.on(mars3d.EventType.change, (event) => {
     throttled(eventTarget.fire("roamLineChange", event), 500)
   })
 
-  // 开始漫游
+  // Start roaming
   fixedRoute.start()
 
   addDivPoint(fixedRoute.property)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addDivPoint(position) {
-  // 创建DIV数据图层
+  //Create DIV data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -72,19 +72,19 @@ function addDivPoint(position) {
                           <div class="b-l"></div>
                           <div class="arrow-rb"></div>
                           <div class="label-wrap">
-                              <div class="title">创业大道</div>
+                              <div class="title">Entrepreneurship Avenue</div>
                               <div class="label-content">
                                   <div class="data-li">
-                                      <div class="data-label">当前位置：</div>
-                                      <div class="data-value">安徽省合肥市蜀山区XX号 </div>
+                                      <div class="data-label">Current location:</div>
+                                      <div class="data-value">No. XX, Shushan District, Hefei City, Anhui Province </div>
                                   </div>
                                   <div class="data-li">
-                                      <div class="data-label">今年产值：</div>
-                                      <div class="data-value"><span class="label-num">99</span><span class="label-unit">亿元</span>
+                                      <div class="data-label">Output value this year:</div>
+                                      <div class="data-value"><span class="label-num">99</span><span class="label-unit">billion yuan</span>
                                       </div>
                                   </div>
                                   <div class="data-li">
-                                      <div class="data-label">当前照片：</div>
+                                      <div class="data-label">Current photo:</div>
                                       <div class="data-value"><img src="http://marsgis.cn/img/common/logo.png"> </div>
                                   </div>
                               </div>
@@ -101,16 +101,16 @@ function addDivPoint(position) {
   graphicLayer.addGraphic(graphic)
 }
 
-// ui层使用
+//Used by ui layer
 var formatDistance = mars3d.MeasureUtil.formatDistance
 var formatTime = mars3d.Util.formatTime
 
-// 节流
+// Throttle
 function throttled(fn, delay) {
   let timer = null
   let starttime = Date.now()
   return function () {
-    const curTime = Date.now() // 当前时间
+    const curTime = Date.now() // current time
     const remaining = delay - (curTime - starttime)
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this

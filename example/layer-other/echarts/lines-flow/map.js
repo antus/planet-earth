@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 18.188973, lng: 112.70603, alt: 5647407, heading: 352, pitch: -76 }
@@ -10,21 +10,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  // 创建Echarts图层
+  // Create Echarts layer
   createEchartsLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -32,35 +32,35 @@ function onUnmounted() {
 
 function createEchartsLayer() {
   const options = getEchartsOption()
-  // options.pointerEvents = true // 使用单击
+  // options.pointerEvents = true // Use click
 
   const echartsLayer = new mars3d.layer.EchartsLayer(options)
   map.addLayer(echartsLayer)
 
   if (options.pointerEvents) {
     echartsLayer.on("click", function (event) {
-      console.log("单击了图层", event)
+      console.log("Layer clicked", event)
     })
   }
 
-  // 图表自适应
+  //Chart adaptive
   window.addEventListener("resize", function () {
     echartsLayer.resize()
   })
 }
 
 /**
- *echart图层
+ *echart layer
  *
- * @return {option} echart图表的数据
+ * @return {option} echart chart data
  */
 function getEchartsOption() {
   const beijinCoord = [116.407395, 39.904211]
 
   const geoCoorddata = {
-    合肥: [117.399043, 31.741401],
-    深圳: [114.057865, 22.543096],
-    乌鲁木齐: [87.405386, 41.779595]
+    Hefei: [117.399043, 31.741401],
+    Shenzhen: [114.057865, 22.543096],
+    Urumqi: [87.405386, 41.779595]
   }
 
   const symbolPoint = "image://img/icon/symbol1.png"
@@ -86,22 +86,22 @@ function getEchartsOption() {
         zlevel: 1,
         data: [
           {
-            name: "合肥",
-            toname: "北京",
-            coords: [geoCoorddata["合肥"], beijinCoord]
+            name: "Hefei",
+            toname: "Beijing",
+            coords: [geoCoorddata["Hefei"], beijinCoord]
           },
           {
-            name: "深圳",
-            toname: "北京",
-            coords: [geoCoorddata["深圳"], beijinCoord]
+            name: "Shenzhen",
+            toname: "Beijing",
+            coords: [geoCoorddata["Shenzhen"], beijinCoord]
           },
           {
-            name: "乌鲁木齐",
-            toname: "北京",
-            coords: [geoCoorddata["乌鲁木齐"], beijinCoord]
+            name: "Urumqi",
+            toname: "Beijing",
+            coords: [geoCoorddata["Urumqi"], beijinCoord]
           }
         ],
-        // 线上面的动态特效
+        //Dynamic special effects above the line
         effect: {
           show: true,
           smooth: false,
@@ -124,7 +124,7 @@ function getEchartsOption() {
         zlevel: 3,
         data: [
           {
-            name: "北京",
+            name: "Beijing",
             value: beijinCoord.concat(200)
           }
         ],

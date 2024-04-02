@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.589203, lng: 120.732051, alt: 18446, heading: 2, pitch: -49 }
@@ -10,55 +10,55 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/lineroad.json" })
     .then(function (json) {
       createEchartsLayer(json.data)
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 /**
- * 创建echart图层
+ * Create echart layer
  *
- * @param {object} data 后端接口，获取的数据
- * @returns {void} 无
+ * @param {object} data backend interface, obtained data
+ * @returns {void} None
  */
 function createEchartsLayer(data) {
   const options = getEchartsOption(data)
-  options.depthTest = false // 是否进行计算深度（大数据时，需要关闭）
+  options.depthTest = false // Whether to calculate depth (needs to be turned off when using large data)
 
   const echartsLayer = new mars3d.layer.EchartsLayer(options)
   map.addLayer(echartsLayer)
 
-  // 图表自适应
+  //Chart adaptive
   window.addEventListener("resize", function () {
     echartsLayer.resize()
   })
 }
 
 /**
- *echart图层
+ *echart layer
  *
- * @param {object} data 后端接口数据
- * @return {option} 根据获取的数据创建echart图表的数据
+ * @param {object} data backend interface data
+ * @return {option} Create echart chart data based on the obtained data
  */
 function getEchartsOption(data) {
   const option = {
@@ -69,12 +69,12 @@ function getEchartsOption(data) {
       left: "right",
       bottom: 46,
       /* pieces: [
-                {min: 15}, // 不指定 max，表示 max 为无限大（Infinity）。
+                {min: 15}, // If max is not specified, it means max is infinite (Infinity).
                 {min: 12, max: 15},
                 {min: 9, max: 12},
                 {min: 6, max: 9},
                 {min: 3, max: 6},
-                {max: 3}     // 不指定 min，表示 min 为无限大（-Infinity）。
+                {max: 3} // If min is not specified, it means min is infinite (-Infinity).
         ], */
       min: 0,
       max: 15,
@@ -87,7 +87,7 @@ function getEchartsOption(data) {
     },
     tooltip: {
       formatter: function (params, ticket, callback) {
-        return "拥堵指数:" + params.value
+        return "Congestion Index:" + params.value
       },
       trigger: "item"
     },

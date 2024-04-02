@@ -1,30 +1,30 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 let pathEntity = null
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 32.550222, lng: 117.366824, alt: 2696, heading: 273, pitch: -67 }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true // Whether to display the timeline control
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -33,24 +33,24 @@ function onMounted(mapInstance) {
       initPath(res)
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 改变视角  跟踪，上方和侧方
+//Change perspective tracking, top and side
 function viewAircraft() {
   map.trackedEntity = pathEntity.entity
 
   pathEntity.flyToPoint({
-    radius: 500, // 距离目标点的距离
+    radius: 500, // distance from the target point
     heading: 40,
     pitch: -50,
     duration: 0.01
@@ -83,10 +83,10 @@ function initPath(data) {
   let stop
   for (let i = 0, len = data.length; i < len; i++) {
     const item = data[i]
-    const lng = Number(item.x.toFixed(6)) // 经度
-    const lat = Number(item.y.toFixed(6)) // 纬度
-    const height = item.z // 高度
-    const time = item.time // 时间
+    const lng = Number(item.x.toFixed(6)) // Longitude
+    const lat = Number(item.y.toFixed(6)) // Latitude
+    const height = item.z // height
+    const time = item.time // time
 
     let position = null
     if (lng && lat) {
@@ -112,12 +112,12 @@ function initPath(data) {
         pixelSize: 4,
         color: "#cccccc"
       },
-      popup: "编号:" + item.id + "<br/>时间:" + time
+      popup: "Number:" + item.id + "<br/>Time:" + time
     })
     graphicLayer.addGraphic(graphic)
   }
 
-  // 设置时钟属性
+  //Set clock properties
   map.clock.startTime = start.clone()
   map.clock.stopTime = stop.clone()
   map.clock.currentTime = start.clone()
@@ -128,7 +128,7 @@ function initPath(data) {
     map.controls.timeline.zoomTo(start, stop)
   }
 
-  // 创建path对象
+  //Create path object
   pathEntity = new mars3d.graphic.PathEntity({
     position: property,
     orientation: new Cesium.VelocityOrientationProperty(property),
@@ -140,7 +140,7 @@ function initPath(data) {
       width: 3
     },
     label: {
-      text: "飞机1号",
+      text: "Plane No. 1",
       font_size: 19,
       font_family: "楷体",
       color: Cesium.Color.AZURE,
@@ -150,7 +150,7 @@ function initPath(data) {
       outlineWidth: 2,
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-      pixelOffset: new Cesium.Cartesian2(10, -25) // 偏移量
+      pixelOffset: new Cesium.Cartesian2(10, -25) // offset
     },
     // billboard: {
     //   image: "img/marker/lace-blue.png",
@@ -163,16 +163,16 @@ function initPath(data) {
       scale: 0.1,
       minimumPixelSize: 20
     },
-    popup: "飞行1号"
+    popup: "Flying No. 1"
   })
   graphicLayer.addGraphic(pathEntity)
 
-  // 圆锥追踪体
+  //Cone tracking body
   const coneTrack = new mars3d.graphic.ConeTrack({
     position: property,
     style: {
       length: 100,
-      angle: 12, // 半场角度
+      angle: 12, // half-court angle
       color: "#ff0000",
       opacity: 0.5
     }

@@ -1,33 +1,33 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.791477, lng: 116.348231, alt: 6351, heading: 10, pitch: -36 }
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", "(1) 删除单个数据时Cesium内部偶尔会删除2个数据")
+  globalNotify("Known Issue Tips", "(1) When deleting a single data, Cesium will occasionally delete 2 data internally")
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
@@ -35,8 +35,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -50,7 +50,7 @@ function addDemoGraphic1(graphicLayer) {
       maximumSize: new Cesium.Cartesian3(50, 15, 13),
       slice: 0.3,
       label: {
-        text: "我是一团来自火星的云",
+        text: "I am a cloud from Mars",
         font_size: 18,
         color: "#ffffff",
         pixelOffsetY: -10,
@@ -59,7 +59,7 @@ function addDemoGraphic1(graphicLayer) {
         distanceDisplayCondition_near: 0
       }
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -72,7 +72,7 @@ function addDemoGraphic2(graphicLayer) {
       maximumSize: new Cesium.Cartesian3(50, 12, 15),
       slice: 0.36
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "Example 2" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -85,7 +85,7 @@ function addDemoGraphic3(graphicLayer) {
       maximumSize: new Cesium.Cartesian3(50, 12, 15),
       slice: 0.49
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "Example 3" }
   })
   graphicLayer.addGraphic(graphic)
 }
@@ -98,12 +98,12 @@ function addDemoGraphic4(graphicLayer) {
       maximumSize: new Cesium.Cartesian3(13, 13, 13),
       slice: 0.2
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "Example 4" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
-// 批量生成测试数据
+// Generate test data in batches
 function addRandomGraphicByCount(num) {
   graphicLayer.clear()
 
@@ -127,7 +127,7 @@ function addRandomGraphicByCount(num) {
   }
 }
 
-// 取区域内的随机点
+// Get random points in the area
 function randomPoint() {
   const jd = getRandomNumberInRange(116.29 * 1000, 116.39 * 1000) / 1000
   const wd = getRandomNumberInRange(30.8 * 1000, 30.88 * 1000) / 1000
@@ -139,7 +139,7 @@ function getRandomNumberInRange(minValue, maxValue) {
   return minValue + Cesium.Math.nextRandomNumber() * (maxValue - minValue)
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "cloud",

@@ -1,32 +1,32 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
 let poiLayer
 let queryBaiduPOI
-let drawGraphic // 限定区域
-let resultList = [] // 查询结果
-let lastQueryOptions // 上一次请求参数，用于 下一页使用
+let drawGraphic //Limited area
+let resultList = [] // Query results
+let lastQueryOptions //Last request parameters, used for next page
 let graphic
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.797919, lng: 117.281329, alt: 36236, heading: 358, pitch: -81 }
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   poiLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(poiLayer)
 
@@ -37,19 +37,19 @@ function onMounted(mapInstance) {
 
     const type = String(item.type).trim()
     if (type) {
-      inHtml += "<div><label>类别</label>" + type + "</div>"
+      inHtml += "<div><label>Category</label>" + type + "</div>"
     }
     const xzqh = String(item.xzqh).trim()
     if (xzqh) {
-      inHtml += "<div><label>区域</label>" + xzqh + "</div>"
+      inHtml += "<div><label>area</label>" + xzqh + "</div>"
     }
     const tel = String(item.tel).trim()
     if (tel) {
-      inHtml += "<div><label>电话</label>" + tel + "</div>"
+      inHtml += "<div><label>Telephone</label>" + tel + "</div>"
     }
     const address = String(item.address).trim()
     if (address) {
-      inHtml += "<div><label>地址</label>" + address + "</div>"
+      inHtml += "<div><label>Address</label>" + address + "</div>"
     }
     inHtml += "</div>"
     return inHtml
@@ -57,10 +57,10 @@ function onMounted(mapInstance) {
 
   queryBaiduPOI = new mars3d.query.BaiduPOI()
 
-  // 右键菜单
+  // right-click menu
   const defaultContextmenuItems = map.getDefaultContextMenu()
   defaultContextmenuItems.push({
-    text: "查看此处地址",
+    text: "View address here",
     icon: "fa fa-eye",
     show: function (e) {
       return Cesium.defined(e.cartesian)
@@ -69,7 +69,7 @@ function onMounted(mapInstance) {
       queryBaiduPOI.getAddress({
         location: e.cartesian,
         success: (result) => {
-          console.log("根据经纬度坐标获取地址，逆地理编码", result)
+          console.log("Get address based on latitude and longitude coordinates, reverse geocoding", result)
           globalAlert(result.address)
         }
       })
@@ -79,27 +79,27 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 /**
- * 查询
+ * Inquire
  *
  * @export
- * @param {string} radioFanwei 范围选择
- * @param {string} cityShi 城市
- * @param {string} text 关键字
+ * @param {string} radioFanwei range selection
+ * @param {string} cityShi city
+ * @param {string} text keyword
  * @returns {void}
  */
 function query(radioFanwei, cityShi, text) {
   resultList = []
   switch (radioFanwei) {
     case "2": {
-      // 当前视角范围
+      //Current viewing angle range
       const extent = map.getExtent()
       loadData(
         {
@@ -114,9 +114,9 @@ function query(radioFanwei, cityShi, text) {
       )
       break
     }
-    case "3": // 按范围
+    case "3": // by range
       if (!drawGraphic) {
-        globalMsg("请绘制限定范围！")
+        globalMsg("Please draw a limited range!")
         return
       }
       loadData(
@@ -145,24 +145,24 @@ function query(radioFanwei, cityShi, text) {
 
 function loadData(queryOptions, text) {
   if (!text) {
-    globalMsg("请输入 名称 关键字筛选数据！")
+    globalMsg("Please enter name keyword to filter data!")
     return
   }
   showLoading()
 
   lastQueryOptions = {
     ...queryOptions,
-    count: 25, // count 每页数量
+    count: 25, // count number per page
     text,
     success: function (res) {
       const data = res.list
       if (data.length <= 1) {
-        globalMsg("未搜索到相关数据！")
+        globalMsg("No relevant data found!")
       }
       resultList = resultList.concat(data)
       addDemoGraphics(data)
 
-      eventTarget.fire("tableData", { data }) // 抛出数据给组件
+      eventTarget.fire("tableData", { data }) // Throw data to the component
 
       hideLoading()
     },
@@ -199,20 +199,20 @@ function addDemoGraphics(arr) {
         scaleByDistance_farValue: 0.5,
         scaleByDistance_near: 1000,
         scaleByDistance_nearValue: 1,
-        clampToGround: true, // 贴地
+        clampToGround: true, // close to the ground
         highlight: { type: "click", image: "img/marker/mark-red.png" },
         label: {
           text: item.name,
-          font: "20px 楷体",
+          font: "20px regular script",
           color: Cesium.Color.AZURE,
           outline: true,
           outlineColor: Cesium.Color.BLACK,
           outlineWidth: 2,
           horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          pixelOffset: new Cesium.Cartesian2(0, -30), // 偏移量
+          pixelOffset: new Cesium.Cartesian2(0, -30), // offset
           distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 200000),
-          clampToGround: true // 贴地
+          clampToGround: true // stick to the ground
         }
       },
       attr: item
@@ -223,7 +223,7 @@ function addDemoGraphics(arr) {
   }
 }
 
-// 框选查询 矩形
+// Frame selection query rectangle
 function drawRectangle() {
   clearAll()
   map.graphicLayer.startDraw({
@@ -238,12 +238,12 @@ function drawRectangle() {
     success: function (graphic) {
       drawGraphic = graphic
 
-      console.log("矩形：", drawGraphic.toGeoJSON({ outline: true }))
+      console.log("rectangle:", drawGraphic.toGeoJSON({ outline: true }))
     }
   })
 }
 
-// 框选查询   圆
+// Frame selection query circle
 function drawCircle() {
   clearAll()
   map.graphicLayer.startDraw({
@@ -257,12 +257,12 @@ function drawCircle() {
     },
     success: function (graphic) {
       drawGraphic = graphic
-      console.log("圆：", drawGraphic.toGeoJSON({ outline: true }))
+      console.log("circle:", drawGraphic.toGeoJSON({ outline: true }))
     }
   })
 }
 
-// 框选查询   多边行
+// Frame selection query multi-row
 function drawPolygon() {
   clearAll()
   map.graphicLayer.startDraw({
@@ -276,7 +276,7 @@ function drawPolygon() {
     },
     success: function (graphic) {
       drawGraphic = graphic
-      console.log("多边行：", drawGraphic.toGeoJSON())
+      console.log("Polyline:", drawGraphic.toGeoJSON())
     }
   })
 }
@@ -284,8 +284,8 @@ function drawPolygon() {
 function flyToGraphic(graphic) {
   graphic.openHighlight()
   graphic.flyTo({
-    radius: 1000, // 点数据：radius控制视距距离
-    scale: 1.5, // 线面数据：scale控制边界的放大比例
+    radius: 1000, // Point data: radius controls the sight distance
+    scale: 1.5, // Line and surface data: scale controls the amplification ratio of the boundary
     complete: () => {
       graphic.openPopup()
     }

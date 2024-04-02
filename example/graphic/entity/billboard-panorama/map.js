@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.649617, lng: 117.081721, alt: 444, heading: 348, pitch: -25 }
@@ -10,17 +10,17 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 加载石化工厂模型
+  //Load the petrochemical plant model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "石化工厂",
+    name: "Petrochemical Plant",
     url: "http://data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
@@ -28,24 +28,24 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建DIV数据图层
+  //Create DIV data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("您单击了", event)
+    console.log("You clicked", event)
   })
 
-  // 在layer上绑定右键菜单
+  // Bind the right-click menu to the layer
   graphicLayer.bindContextMenu(
     [
       {
-        text: "查看摄像头",
+        text: "View camera",
         icon: "fa fa-trash-o",
         callback: (e) => {
           const graphic = e.graphic
 
-          globalMsg("右键菜单示例")
+          globalMsg("right-click menu example")
         }
       }
     ],
@@ -61,19 +61,19 @@ function onMounted(mapInstance) {
     return `<iframe style="width: 600px; height: 300px; border: none; "src="${attr.url}"></iframe> `
   })
 
-  // 添加数据
+  // adding data
   addRandomGraphicByCount(graphicLayer, [117.080397, 31.656139, 33.3])
   addRandomGraphicByCount(graphicLayer, [117.078006, 31.65649, 49.4])
   addRandomGraphicByCount(graphicLayer, [117.080571, 31.657898, 50.2])
   addRandomGraphicByCount(graphicLayer, [117.078331, 31.660016, 47.2])
 
-  // console.log("导出数据测试", graphicLayer.toJSON())
+  // console.log("Export data test", graphicLayer.toJSON())
   // const layer = mars3d.LayerUtil.create(json)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -87,7 +87,7 @@ function addRandomGraphicByCount(graphicLayer, position) {
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM
     },
-    attr: { url: "https://www.720yun.com/vr/b32jOOkmvm5", name: "上海浦江郊野公园" }
+    attr: { url: "https://www.720yun.com/vr/b32jOOkmvm5", name: "Shanghai Pujiang Country Park" }
   })
   graphicLayer.addGraphic(graphic)
 }

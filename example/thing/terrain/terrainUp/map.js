@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let terrainUplift
 
 var mapOptions = {
@@ -12,28 +12,28 @@ var mapOptions = {
 var eventTabel = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   terrainUplift = new mars3d.thing.TerrainUplift({
-    upHeight: 2000, // 抬升的高度
+    upHeight: 2000, // raised height
     image: "img/textures/poly-land.png",
     // image: "./img/textures/mining.jpg",
     imageBottom: "img/textures/poly-land.png",
     diffHeight: 100,
-    splitNum: 80 // 井边界插值数
+    splitNum: 80 // Well boundary interpolation number
   })
   map.addThing(terrainUplift)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -69,7 +69,7 @@ function addTerrainUplift(height) {
   addTableItem(areaItem2)
 }
 
-// 添加矩形
+// add rectangle
 function btnDrawExtent(height) {
   map.graphicLayer.startDraw({
     type: "rectangle",
@@ -78,19 +78,19 @@ function btnDrawExtent(height) {
       opacity: 0.8
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 
-      console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 打印下边界
+      console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Print the lower boundary
 
-      // 挖地区域
+      // Digging area
       const areaItem = terrainUplift.addArea(positions, { diffHeight: height })
       addTableItem(areaItem)
     }
   })
 }
-// 添加多边形
+//Add polygon
 function btnDraw(height) {
   map.graphicLayer.startDraw({
     type: "polygon",
@@ -100,11 +100,11 @@ function btnDraw(height) {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
-      console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 打印下边界
+      console.log(JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Print the lower boundary
 
       const areaItem = terrainUplift.addArea(positions, { diffHeight: height })
       addTableItem(areaItem)
@@ -112,9 +112,9 @@ function btnDraw(height) {
   })
 }
 
-// 清除
+// clear
 function removeAll() {
-  terrainUplift.clear() // 清除挖地区域
+  terrainUplift.clear() // Clear the excavation area
   table = []
 }
 
@@ -126,15 +126,15 @@ function changeUpHeight(val) {
   terrainUplift.upHeight = val
 }
 
-// 是否挖地
+// Whether to dig the ground
 function chkClippingPlanes(val) {
   terrainUplift.enabled = val
 }
 
 let table = []
-// 区域表格添加一行记录
+//Add a row of records to the area table
 function addTableItem(item) {
-  table.push({ key: item.id, name: "抬升区域" + item.id })
+  table.push({ key: item.id, name: "lift area" + item.id })
 
   eventTabel.fire("tableObject", { table })
 }
@@ -142,7 +142,7 @@ function changeTable(data) {
   table = data
 }
 
-// 表格操作
+// table operations
 function flyToGraphic(item) {
   const graphic = terrainUplift.getAreaById(item)
   map.flyToPositions(graphic.positions)

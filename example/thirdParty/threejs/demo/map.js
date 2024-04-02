@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 // import ThreeLayer from "./ThreeLayer"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let threeLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.980053, lng: 117.375049, alt: 110976, heading: 357, pitch: -50 }
@@ -13,13 +13,13 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   threeLayer = new ThreeLayer()
   map.addLayer(threeLayer)
@@ -28,23 +28,23 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 在three的坐标系空间里，先向Z轴平移模型，然后绕X轴向上翻转90度，物体就面向Y轴了，对应Cesiumn的Z轴
+// In the coordinate system space of three, first translate the model to the Z axis, and then flip it upward 90 degrees around the X axis. The object will face the Y axis, corresponding to the Z axis of Cesiumn.
 /**
- *  three的坐标系（右手坐标系），关键数据结构 Vector3
+ * coordinate system of three (right-hand coordinate system), key data structure Vector3
  *    Y
  *    |
  *    |___ X
  *   /
  * Z
  *
- * Cesium的坐标系，关键数据结构 Cartesian3
+ * Cesium's coordinate system, key data structure Cartesian3
  *    Z
  *    |
  *    |__ Y

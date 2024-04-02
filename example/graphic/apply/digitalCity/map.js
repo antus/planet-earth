@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.215956, lng: 121.508605, alt: 887, heading: 5, pitch: -26 }
@@ -10,7 +10,7 @@ var mapOptions = {
   layers: [
     {
       type: "3dtiles",
-      name: "上海市建筑物",
+      name: "Shanghai Buildings",
       url: "//data.mars3d.cn/3dtiles/jzw-shanghai/tileset.json",
       maximumScreenSpaceError: 1,
       style: {
@@ -18,7 +18,7 @@ var mapOptions = {
       },
       marsJzwStyle: true,
       popup: "all",
-      // 裁剪区域
+      // crop area
       planClip: {
         positions: [
           [121.477666, 31.217061, 19.1],
@@ -32,7 +32,7 @@ var mapOptions = {
     },
     {
       type: "geojson",
-      name: "市区一级道路",
+      name: "Urban first-class road",
       url: "//data.mars3d.cn/file/geojson/shanghai-road.json",
       symbol: {
         styleOptions: {
@@ -53,67 +53,67 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.basemap = 2017 // 切换到蓝色底图
+  map = mapInstance // record map
+  map.basemap = 2017 // switch to blue basemap
 
-  // 特效
+  // special effects
   const bloomEffect = new mars3d.effect.BloomEffect({
     enabled: true
   })
   map.addEffect(bloomEffect)
 
-  // // 围绕旋转
+  // // rotate around
   // const rotatePoint = new mars3d.thing.RotatePoint({
-  //   direction: true, // 方向 true逆时针，false顺时针
-  //   time: 50 // 给定飞行一周所需时间(单位 秒)，控制速度
+  // direction: true, // direction true is counterclockwise, false is clockwise
+  // time: 50 // Given the time required for one flight (in seconds), control the speed
   // })
   // map.addThing(rotatePoint)
 
-  // 添加矢量数据
+  //Add vector data
   addCityGraphics()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addCityGraphics() {
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 模型的中心点
-  const position = [121.510608, 31.234322, 0] // 用于围绕旋转 + 中心点扩散 + 旋转的图片
-  const center = Cesium.Cartesian3.fromDegrees(position[0], position[1], 140) // 用于div标注和远眺的线
+  //The center point of the model
+  const position = [121.510608, 31.234322, 0] // Used to rotate around + center point spread + rotated image
+  const center = Cesium.Cartesian3.fromDegrees(position[0], position[1], 140) // Line used for div annotation and overlooking
 
-  // 中心扩散点
+  //Center diffusion point
   const circleDiffuseWallGlow = new mars3d.graphic.DiffuseWall({
-    name: "中心扩散点",
+    name: "Center Diffusion Point",
     position,
     style: {
-      diffHeight: 500, // 高度
-      radius: 150, // 半径
+      diffHeight: 500, // height
+      radius: 150, // radius
       color: "#7ffeff",
-      speed: 6 // 速度
+      speed: 6 // speed
     }
   })
   graphicLayer.addGraphic(circleDiffuseWallGlow)
 
-  // 旋转的图片 -- 中心围墙
+  // Rotated image -- center fence
   const WallImagePositions = mars3d.PolyUtil.getEllipseOuterPositions({
     position,
-    radius: 50, // 半径
-    count: 50 // 共返回(count*4)个点
+    radius: 50, // radius
+    count: 50 // Return a total of (count*4) points
   })
   const rotatWallImage = new mars3d.graphic.WallPrimitive({
     positions: WallImagePositions,
@@ -129,7 +129,7 @@ function addCityGraphics() {
   })
   graphicLayer.addGraphic(rotatWallImage)
 
-  // 旋转的图片 -- 底部
+  // Rotated image -- bottom
   let rotation = Cesium.Math.toRadians(50)
   function getRotationValue() {
     rotation -= 0.007
@@ -150,9 +150,9 @@ function addCityGraphics() {
   })
   graphicLayer.addGraphic(rotatCicleImage)
 
-  // gltf的方式：四面体
+  // gltf way: tetrahedron
   // const graphic = new mars3d.graphic.ModelEntity({
-  //   name: "四面体",
+  // name: "tetrahedron",
   //   position: [position[0], position[1], 180],
   //   style: {
   //     url: "//data.mars3d.cn/gltf/mars/zhui.glb",
@@ -160,13 +160,13 @@ function addCityGraphics() {
   //   }
   // })
   // graphicLayer.addGraphic(graphic)
-  // 开始 自旋转效果
+  // Start the self-rotation effect
   // graphic.rotateStart({
-  //   direction: true, // 控制方向, true逆时针，false顺时针
-  //   time: 6 // time：给定飞行一周所需时间(单位 秒)，控制速度
+  // direction: true, // Control direction, true counterclockwise, false clockwise
+  // time: 6 // time: given the time required for one flight (in seconds), control the speed
   // })
 
-  // 四面体
+  // tetrahedron
   const tetrahedron = new mars3d.graphic.Tetrahedron({
     position: [position[0], position[1], 180],
     style: {
@@ -178,20 +178,20 @@ function addCityGraphics() {
   })
   graphicLayer.addGraphic(tetrahedron)
 
-  // divgraphic标注
+  // divgraphic annotation
   const divgraphic = new mars3d.graphic.DivGraphic({
     position: center,
     style: {
       html: `<div class="marsBlackPanel">
-          <div class="marsBlackPanel-text">Mars3D国际大厦</div>
+          <div class="marsBlackPanel-text">Mars3D International Building</div>
       </div>`,
-      horizontalOrigin: Cesium.HorizontalOrigin.LEFT, // 横向定位
-      verticalOrigin: Cesium.VerticalOrigin.CENTER // 垂直定位
+      horizontalOrigin: Cesium.HorizontalOrigin.LEFT, // horizontal positioning
+      verticalOrigin: Cesium.VerticalOrigin.CENTER // Vertical positioning
     }
   })
   graphicLayer.addGraphic(divgraphic)
 
-  // 扫描圆形
+  //Scan circle
   const scanCircle = new mars3d.graphic.CircleEntity({
     position: Cesium.Cartesian3.fromDegrees(121.501618, 31.235704, 24.2),
     style: {
@@ -208,7 +208,7 @@ function addCityGraphics() {
   })
   graphicLayer.addGraphic(scanCircle)
 
-  // 远眺的线 ,数据获取的pointArr
+  // The line from afar, the pointArr of data acquisition
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/geojson/shanghai-point.json" })
     .then((result) => {
       const pointArr = []
@@ -231,19 +231,19 @@ function addCityGraphics() {
 
         const color = ["#ffff00", "#81d8ff", "#fff9ed"]
         const thisPoint = Cesium.Cartesian3.fromDegrees(item.point[0], item.point[1], 1)
-        const positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) // 计算曲线点
+        const positions = mars3d.PolyUtil.getLinkedPointList(center, thisPoint, 40000, 100) // Calculate curve points
 
         const graphic = new mars3d.graphic.PolylinePrimitive({
           positions,
           style: {
             width: 4,
-            material: lineMaterial // 动画线材质
+            material: lineMaterial // animation line material
           }
         })
         graphic.bindPopup(item.name)
         graphicLayer.addGraphic(graphic)
 
-        // 圆椎体
+        // Cone
         const coneGlow = new mars3d.graphic.LightCone({
           position: Cesium.Cartesian3.fromDegrees(item.point[0], item.point[1], 10),
           style: {
@@ -257,10 +257,10 @@ function addCityGraphics() {
       }
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 
-  // 竖直飞线
+  //Vertical flying line
   const arrData = []
   for (let j = 0; j < 100; ++j) {
     const startPt = randomPoint()
@@ -291,14 +291,14 @@ function addCityGraphics() {
   graphicLayer.addGraphic(upPoly)
 }
 
-// 取区域内的随机图标；用于线对象的合并渲染
+// Get random icons in the area; used for merged rendering of line objects
 function randomPoint() {
   const jd = random(121.500525 * 1000, 121.518298 * 1000) / 1000
   const wd = random(31.231515 * 1000, 31.24228 * 1000) / 1000
   return new mars3d.LngLatPoint(jd, wd, 50)
 }
 
-// 取随机数字
+// Get random numbers
 function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }

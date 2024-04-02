@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let geoJsonLayer
 
 var mapOptions = {
@@ -9,44 +9,44 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.basemap = 2017 // 切换到蓝色底图
+  map = mapInstance // record map
+  map.basemap = 2017 // switch to blue basemap
 
   addLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 /**
- * 添加合肥市建筑物和体育设施点
+ * Added buildings and sports facilities in Hefei City
  * @returns {void}
  *
  */
 function addLayer() {
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "合肥市建筑物",
+    name: "Hefei City Building",
     url: "//data.mars3d.cn/3dtiles/jzw-hefei/tileset.json",
     maximumScreenSpaceError: 1,
-    marsJzwStyle: true, // 打开建筑物特效（内置Shader代码）
+    marsJzwStyle: true, // Turn on building special effects (built-in Shader code)
     popup: [
-      { field: "objectid", name: "编号" },
-      { field: "name", name: "名称" },
-      { field: "height", name: "楼高", unit: "米" }
+      { field: "objectid", name: "number" },
+      { field: "name", name: "name" },
+      { field: "height", name: "building height", unit: "meters" }
     ],
     center: { lat: 31.841018, lng: 117.252932, alt: 1346, heading: 38, pitch: -26 },
     flyTo: true
@@ -54,7 +54,7 @@ function addLayer() {
   map.addLayer(tiles3dLayer)
 
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-    name: "体育设施点",
+    name: "Sports facilities",
     url: "//data.mars3d.cn/file/geojson/hfty-point.json",
     symbol: {
       type: "billboard",
@@ -68,29 +68,29 @@ function addLayer() {
   })
   map.addLayer(geoJsonLayer)
 
-  // 绑定事件
+  //Bind event
   geoJsonLayer.on(mars3d.EventType.load, function (event) {
     const geojsonLength = geoJsonLayer.length
     eventTarget.fire("geoJsonLayerLoad", { geojsonLength })
-    console.log("数据加载完成", event)
+    console.log("Data loading completed", event)
   })
 }
 
-// 保存为Geojson文件
+// Save as Geojson file
 function toGeojson() {
   const geojson = geoJsonLayer.toGeoJSON()
-  mars3d.Util.downloadFile("hfty-point-含高度值.json", JSON.stringify(geojson))
+  mars3d.Util.downloadFile("hfty-point-contains height value.json", JSON.stringify(geojson))
 }
 
-// 计算贴地高度示例代码，可以将获取到的高度更新到数据库内，后续不用重复计算。
+// The sample code for calculating the height of the ground can update the obtained height into the database, so there is no need to repeat the calculation in the future.
 function getDataSurfaceHeight() {
   if (geoJsonLayer.length === 0) {
-    globalMsg("数据尚未加载成功！")
+    globalMsg("The data has not been loaded successfully!")
     return
   }
   showLoading()
 
-  // 对图层内的数据做贴地运算,自动得到贴地高度
+  // Perform the grounding operation on the data in the layer to automatically obtain the grounding height.
   geoJsonLayer
     .autoSurfaceHeight({
       endItem: function (result) {

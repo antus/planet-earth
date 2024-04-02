@@ -1,41 +1,41 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let underground
 
 var mapOptions = {
   scene: {
     center: { lat: 31.840106, lng: 117.216768, alt: 554, heading: 0, pitch: -59 },
     orderIndependentTranslucency: false,
-    contextOptions: { webgl: { alpha: true } }, // 允许透明，只能Map初始化传入 [关键代码]
+    contextOptions: { webgl: { alpha: true } }, // Allow transparency, only Map initialization can be passed in [key code]
     showMoon: false,
     showSkyBox: false,
     showSkyAtmosphere: false,
     fog: false,
     globe: {
-      depthTestAgainstTerrain: true // 开启深度检测
+      depthTestAgainstTerrain: true // Turn on depth detection
     }
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.container.style.backgroundColor = "#546a53" // 背景色
+  map = mapInstance // record map
+  map.container.style.backgroundColor = "#546a53" // Background color
 
-  globalNotify("已知问题提示", `(1) 启用透明度后，放大层级底图瓦片衔接处有黑色缝隙 `)
+  globalNotify("Known Issue Tips", `(1) After enabling transparency, there is a black gap at the connection between the tiles of the enlarged level basemap `)
 
   addLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -47,13 +47,13 @@ function addLayer() {
   })
   map.addThing(underground)
 
-  /* // 地下颜色的个性化处理
+  /* // Personalization of underground colors
   underground.color = Cesium.Color.BLACK
   underground.colorAlphaByDistance = new Cesium.NearFarScalar(1000.0, 0.0, 1000000.0, 1.0) */
 
-  // 加个模型
+  //Add a model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "地下管网",
+    name: "Underground Pipe Network",
     url: "//data.mars3d.cn/3dtiles/max-piping/tileset.json",
     position: { lng: 117.215457, lat: 31.843363, alt: -3.6 },
     rotation: { z: 336.7 },
@@ -64,11 +64,11 @@ function addLayer() {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 黄色盒子
+  //yellow box
   const graphic = new mars3d.graphic.BoxEntity({
     position: [117.218633, 31.843935, 41.43],
     style: {
@@ -80,7 +80,7 @@ function addLayer() {
   })
   graphicLayer.addGraphic(graphic)
 
-  // 创建gltf模型
+  //Create gltf model
   const graphicModel = new mars3d.graphic.ModelEntity({
     position: [117.214494, 31.844015, 30],
     style: {
@@ -92,7 +92,7 @@ function addLayer() {
   graphicLayer.addGraphic(graphicModel)
 }
 
-// 俯视视角
+// top view
 function centerAtDX1() {
   map.setCameraView({
     y: 31.840106,
@@ -104,7 +104,7 @@ function centerAtDX1() {
   })
 }
 
-// 地下视角1
+// Underground perspective 1
 function centerAtDX2() {
   map.setCameraView({
     y: 31.841263,
@@ -116,7 +116,7 @@ function centerAtDX2() {
   })
 }
 
-// 地下视角2
+// Underground perspective 2
 function centerAtDX3() {
   map.setCameraView({
     y: 31.838908,
@@ -128,12 +128,12 @@ function centerAtDX3() {
   })
 }
 
-// 透明度发生改变
+//Transparency changes
 function opacityChange(value) {
   underground.alpha = value
 }
 
-// 复选框，是否开启地下模式
+// Check box, whether to enable underground mode
 function chkUnderground(value) {
   underground.enabled = value
 }

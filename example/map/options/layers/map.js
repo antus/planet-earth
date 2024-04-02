@@ -1,33 +1,33 @@
 // import * as mars3d from "mars3d"
 
 function initMap() {
-  // 添加可叠加图层有3种方式（参数除指定的type类型外无需type参数，其他参数都相同）:
+  // There are 3 ways to add overlayable layers (no type parameters are required except for the specified type, and other parameters are the same):
 
   const map = new mars3d.Map("mars3dContainer", {
     scene: {
       center: { lat: 26.035977, lng: 115.209641, alt: 2703280, heading: 7, pitch: -78 }
     },
     control: {
-      baseLayerPicker: true, // basemaps底图切换按钮
-      homeButton: true, // 视角复位按钮
-      sceneModePicker: true, // 二三维切换按钮
-      navigationHelpButton: true, // 帮助按钮
-      fullscreenButton: true, // 全屏按钮
-      contextmenu: { hasDefault: true } // 右键菜单
+      baseLayerPicker: true, // basemaps basemap switching button
+      homeButton: true, //View reset button
+      sceneModePicker: true, // 2D and 3D switching button
+      navigationHelpButton: true, // Help button
+      fullscreenButton: true, // full screen button
+      contextmenu: { hasDefault: true } // Right-click menu
     },
     basemaps: [
       {
-        name: "单张图片",
+        name: "Single picture",
         icon: "img/basemaps/offline.png",
         type: "image",
         url: "//data.mars3d.cn/file/img/world/world.jpg",
         show: true
       }
     ],
-    // 方式1：在创建地球前的传参中配置layers参数
+    // Method 1: Configure the layers parameters in the parameters before creating the earth
     layers: [
       {
-        name: "天地图注记",
+        name: "Heaven and Map Notes",
         type: "tdt",
         layer: "img_z",
         show: true
@@ -35,7 +35,7 @@ function initMap() {
     ]
   })
 
-  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  // Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
   const tileLayer = new mars3d.layer.XyzLayer({
     url: "//data.mars3d.cn/tile/dizhiChina/{z}/{x}/{y}.png",
     minimumLevel: 0,
@@ -45,7 +45,7 @@ function initMap() {
   })
   map.addLayer(tileLayer)
 
-  // 方式3：在创建地球后调用addLayer添加图层(用 mars3d.layer.create工厂方法创建)
+  // Method 3: Call addLayer to add a layer after creating the earth (created with the mars3d.layer.create factory method)
   const layerImg = mars3d.LayerUtil.create({
     type: "image",
     url: "//data.mars3d.cn//file/img/radar/201906211112.PNG",

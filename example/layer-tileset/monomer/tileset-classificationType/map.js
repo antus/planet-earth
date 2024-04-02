@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tiles3dLayerDTH
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 43.823957, lng: 125.136704, alt: 286, heading: 11, pitch: -24 }
@@ -11,26 +11,26 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 添加三维模型
+  //Add 3D model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "校园",
+    name: "campus",
     url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
     position: { alt: 279.0 },
     maximumScreenSpaceError: 1
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建单体化图层
+  //Create a single layer
   tiles3dLayerDTH = new mars3d.layer.TilesetLayer({
-    name: "学校-单体",
+    name: "School-Single",
     url: "//data.mars3d.cn/3dtiles/qx-xuexiao-dth/tileset.json",
     position: { alt: 217 },
     classificationType: Cesium.ClassificationType.CESIUM_3D_TILE,
@@ -52,24 +52,24 @@ function onMounted(mapInstance) {
       color: "#00ff00",
       opacity: 0.4
     },
-    popup: "房号：{name}<br/>楼层：第{thisFloor}层 (共{allFloor}层)<br/>班级：{remark}<br/>说明：教学楼"
+    popup: "Room number: {name}<br/>Floor: {thisFloor} floor (total {allFloor} floors)<br/>Class: {remark}<br/>Description: Teaching building"
   })
   map.addLayer(tiles3dLayerDTH)
 
   tiles3dLayerDTH.on(mars3d.EventType.click, function (event) {
-    console.log("单击了模型单体", event.graphic?.attr)
+    console.log("Model single clicked", event.graphic?.attr)
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 各层颜色显示
+//Color display of each layer
 function chkShowColor(val) {
   if (val) {
     tiles3dLayerDTH.style = {

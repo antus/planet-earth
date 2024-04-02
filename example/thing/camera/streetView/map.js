@@ -1,32 +1,32 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let streetView
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   streetView = new mars3d.thing.StreetView({
-    rotateSpeed: 30, // 右键拖动的移动度数，旋转的方向和速度，正负控制方向。
-    windingPointDirection: false, /// 绕点旋转方向 true逆时针，false顺时针
-    windingPointTime: 30, // 绕点旋转的一周时长(秒)，控制速度。
-    windingPointAngle: 360, // 旋转的角度后自动停止
-    heightStep: 0.2, // 升高或降低相机高度比例，当前相机高度的比例
-    moveStep: 0.1, // 左键双击定位的移动比例，当前视距的比例
-    moveDuration: 3 // 左键双击定位动画时长，不指定时cesium内部自动计算的
+    rotateSpeed: 30, // The degree of movement of right-click dragging, the direction and speed of rotation, and the positive and negative control directions.
+    windingPointDirection: false, /// Rotation direction around the point true counterclockwise, false clockwise
+    windingPointTime: 30, // The length of one rotation around the point (seconds), controlling the speed.
+    windingPointAngle: 360, // Automatically stop after the rotation angle
+    heightStep: 0.2, // Raise or lower the camera height ratio, the ratio of the current camera height
+    moveStep: 0.1, // The movement ratio of the left-click double-click positioning, the ratio of the current viewing distance
+    moveDuration: 3 // The duration of the left-click positioning animation is automatically calculated internally by cesium if not specified.
   })
   map.addThing(streetView)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

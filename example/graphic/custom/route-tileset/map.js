@@ -1,21 +1,21 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 33.588405, lng: 119.031988, alt: 336, heading: 359, pitch: -37 }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
     compass: { top: "10px", left: "5px" }
   },
   layers: [
     {
-      name: "文庙",
+      name: "Confucian Temple",
       type: "3dtiles",
       url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
       position: { alt: 120 },
@@ -26,16 +26,16 @@ var mapOptions = {
 }
 
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map = mapInstance // record map
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
 
   graphicLayer.on(mars3d.EventType.dblClick, function (event) {
@@ -59,10 +59,10 @@ function onMounted(mapInstance) {
     }
   })
 
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 
-  // 加一些演示数据
+  //Add some demo data
   for (let i = 0; i < 20; i++) {
     const graphic = new mars3d.graphic.Route({
       model: {
@@ -70,19 +70,19 @@ function onMounted(mapInstance) {
         scale: 0.1,
         roll: 0,
         pitch: 0
-        // clampToGround: true // 支持贴模型+地形
+        // clampToGround: true // Supports pasting model + terrain
       },
-      // 实时贴模型的处理参数
-      clampToTileset: true // 贴模型，但效率不高，车多就卡
-      // frameRate: 3, // 控制贴模型的效率，多少帧计算一次
+      //Processing parameters of real-time pasting model
+      clampToTileset: true // Paste the model, but the efficiency is not high. If there are too many cars, it will get stuck.
+      // frameRate: 3, // Control the efficiency of pasting the model, how many frames are calculated once
     })
     graphicLayer.addGraphic(graphic)
   }
 
-  // 设置动态位置
+  //Set dynamic position
   changePosition(0)
 
-  // 定时更新动态位置（setInterval为演示）
+  // Update dynamic position regularly (setInterval is a demonstration)
   const interval = 30
   changePosition(interval)
   setInterval(() => {
@@ -90,19 +90,19 @@ function onMounted(mapInstance) {
   }, interval * 1000)
 }
 
-// 改变位置
+// change position
 function changePosition(time) {
   graphicLayer.eachGraphic((graphic) => {
     if (graphic.isPrivate) {
       return
     }
-    graphic.addDynamicPosition(randomPoint(), time) // 按time秒运动至指定位置
+    graphic.addDynamicPosition(randomPoint(), time) // Move to the specified position in time seconds
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -111,7 +111,7 @@ function onUnmounted() {
   graphicLayer = null
 }
 
-// 取区域内的随机点
+// Get random points in the area
 function randomPoint() {
   const jd = random(119.028631 * 1000, 119.034843 * 1000) / 1000
   const wd = random(33.589624 * 1000, 33.594783 * 1000) / 1000
@@ -121,23 +121,23 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -152,7 +152,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)

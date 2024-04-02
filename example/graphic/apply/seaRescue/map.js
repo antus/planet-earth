@@ -1,30 +1,30 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 20.772952, lng: 82.609338, alt: 22604251, heading: 0, pitch: -90 }
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 let moveGraphicObj
 const tiles3dLayerArr = []
 let removeGraphicArr
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 加个模型，效果更NB
+  //Add a model and the effect will be better
 
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
@@ -388,18 +388,18 @@ const heatMapPoints = [
   }
 ]
 
-// 添加矢量数据
+//Add vector data
 function addGraphics() {
   map.setCameraView({ lat: 18, lng: 126, alt: 800000, heading: 354.2109524366, pitch: -29.3531104185 })
 
-  // 后面会移动的矢量数据
+  //Vector data that will be moved later
   let yiLiaoShip, jiuYuanShip
 
-  // 添加建筑
+  //Add building
   const buildPositions = [
-    { lat: 38, lng: 117.3, name: "海事局" },
-    { lat: 33, lng: 117.1, name: "指挥中心" },
-    { lat: 30, lng: 116.5, name: "智能中心" }
+    { lat: 38, lng: 117.3, name: "Maritime Safety Administration" },
+    { lat: 33, lng: 117.1, name: "Command Center" },
+    { lat: 30, lng: 116.5, name: "Smart Center" }
   ]
   buildPositions.forEach((e) => {
     const tiles3dLayer = new mars3d.layer.TilesetLayer({
@@ -430,27 +430,27 @@ function addGraphics() {
     graphicLayer.addGraphic(labelGraphic)
   })
 
-  // 添加基岸雷达
+  //Add base radar
   const leiDaPositions = [
     {
       position: [120.3479992508, 28.4277417126],
-      name: "基岸雷达1"
+      name: "Base Radar 1"
     },
     {
       position: [120.098207771, 30.2945074558],
-      name: "基岸雷达2"
+      name: "Base Radar 2"
     },
     {
       position: [120.1278554546, 32.4739348842],
-      name: "基岸雷达3"
+      name: "Base Radar 3"
     },
     {
       position: [119.6090489248, 33.9603970691],
-      name: "基岸雷达4"
+      name: "Base Radar 4"
     },
     {
       position: [119.563892164, 35.9884519627],
-      name: "基岸雷达5"
+      name: "Based Radar 5"
     }
   ]
   leiDaPositions.forEach((e) => {
@@ -477,15 +477,15 @@ function addGraphics() {
     graphicLayer.addGraphic(graphic)
   })
 
-  // 添加卫星
+  //Add satellite
   const modelGraphic = new mars3d.graphic.ModelEntity({
-    name: "救援卫星",
+    name: "Rescue Satellite",
     position: [120, 36, 550000],
     style: {
       url: "//data.mars3d.cn/gltf/mars/weixin.gltf",
       scale: 100,
       label: {
-        text: "救援卫星",
+        text: "Rescue Satellite",
         scale: 1,
         hasPixelOffset: true,
         pixelOffsetY: -10,
@@ -498,9 +498,9 @@ function addGraphics() {
   })
   graphicLayer.addGraphic(modelGraphic)
 
-  // 添加救援飞机
+  //Add rescue aircraft
   const plane1 = new mars3d.graphic.ModelEntity({
-    name: "飞机1",
+    name: "Aircraft 1",
     position: [129, 36, 550000],
     style: {
       url: "//data.mars3d.cn/gltf/mars/wrj.glb",
@@ -510,7 +510,7 @@ function addGraphics() {
   graphicLayer.addGraphic(plane1)
 
   const plane = new mars3d.graphic.FixedRoute({
-    name: "飞行飞机",
+    name: "Flying Plane",
     speed: 500000,
     id: "rescuePlane",
     positions: [
@@ -525,46 +525,46 @@ function addGraphics() {
   })
   graphicLayer.addGraphic(plane)
 
-  // 添加船
+  // add ship
   const shipPositions = [
     {
       position: [121.64, 26.03],
-      name: "补给船"
+      name: "supply ship"
     },
     {
       position: [121.94, 27.03],
-      name: "医疗船"
+      name: "hospital ship"
     },
     {
       position: [122.24, 28.03],
-      name: "救援船1"
+      name: "Rescue Ship 1"
     },
     {
       position: [122.54, 29.03],
-      name: "救援船2"
+      name: "Rescue Ship 2"
     },
     {
       position: [126.54, 27.03],
-      name: "货001"
+      name: "Goods 001"
     },
     {
       position: [127.24, 32.03],
-      name: "货002"
+      name: "Goods 002"
     },
     {
       position: [128.54, 29.03],
-      name: "货003"
+      name: "Goods 003"
     },
     {
       position: [122.54, 34.03],
-      name: "货004"
+      name: "Goods 004"
     }
   ]
 
   shipPositions.forEach((e) => {
-    if (e.name === "医疗船") {
+    if (e.name === "hospital ship") {
       yiLiaoShip = new mars3d.graphic.FixedRoute({
-        name: "医疗船",
+        name: "hospital ship",
         id: "treatShip",
         speed: 500000,
         positions: [
@@ -577,7 +577,7 @@ function addGraphics() {
           scale: 5000
         },
         label: {
-          text: "医疗船",
+          text: "hospital ship",
           scale: 1,
           hasPixelOffset: true,
           pixelOffsetY: -10,
@@ -588,9 +588,9 @@ function addGraphics() {
         }
       })
       graphicLayer.addGraphic(yiLiaoShip)
-    } else if (e.name === "救援船2") {
+    } else if (e.name === "Rescue Ship 2") {
       jiuYuanShip = new mars3d.graphic.FixedRoute({
-        name: "救援船2",
+        name: "Rescue Ship 2",
         speed: 500000,
         id: "rescueShip",
         positions: [
@@ -603,7 +603,7 @@ function addGraphics() {
           scale: 5000
         },
         label: {
-          text: "救援船2",
+          text: "Rescue Ship 2",
           scale: 1,
           hasPixelOffset: true,
           pixelOffsetY: -10,
@@ -637,7 +637,7 @@ function addGraphics() {
     }
   })
 
-  // 添加油污扩散波
+  //Add oil diffusion wave
   const oilWave = new mars3d.graphic.CircleEntity({
     position: new mars3d.LngLatPoint(127, 31.83),
     style: {
@@ -648,7 +648,7 @@ function addGraphics() {
       outlineOpacity: 1,
       clampToGround: true
     },
-    id: "油污范围"
+    id: "Oil pollution range"
   })
   graphicLayer.addGraphic(oilWave)
 
@@ -656,26 +656,26 @@ function addGraphics() {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 得到一个拱起的曲线坐标
+// Get the coordinates of an arched curve
 function getLinePosition(position) {
   const startPoint = Cesium.Cartesian3.fromDegrees(position[0][0], position[0][1], position[0][2])
   const endPoint = Cesium.Cartesian3.fromDegrees(position[1][0], position[1][1], position[1][2])
-  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) // 计算曲线点
+  const positions = mars3d.PolyUtil.getLinkedPointList(startPoint, endPoint, 20000, 50) // Calculate curve points
   return positions
 }
 
 function showHeatMap(arrPoints) {
-  // 热力图 图层
+  //Heat map layer
   const heatLayer = new mars3d.layer.HeatLayer({
     positions: arrPoints,
-    // 以下为热力图本身的样式参数，可参阅api：https://www.patrick-wied.at/static/heatmapjs/docs.html
+    //The following are the style parameters of the heat map itself, please refer to the API: https://www.patrick-wied.at/static/heatmapjs/docs.html
     max: 100,
     heatStyle: {
       radius: 250,
@@ -683,7 +683,7 @@ function showHeatMap(arrPoints) {
       maxOpacity: 0.8,
       blur: 0.9
     },
-    // 以下为矩形矢量对象的样式参数
+    //The following are the style parameters of the rectangular vector object
     style: {
       opacity: 1.0
     },
@@ -693,7 +693,7 @@ function showHeatMap(arrPoints) {
   map.addLayer(heatLayer)
 }
 
-// 清除上一步中的矢量数据
+//Clear the vector data from the previous step
 const removeGraphic = (graphicArr, canClear) => {
   if (graphicArr && graphicArr.length !== 0) {
     graphicArr.forEach((graphic) => {
@@ -704,7 +704,7 @@ const removeGraphic = (graphicArr, canClear) => {
   }
 }
 
-// 第一步 发送信号
+//The first step is to send a signal
 function firstStep() {
   removeGraphic(removeGraphicArr, true)
   map.setCameraView({ lat: 23.232027, lng: 131.178867, alt: 1126670.6, heading: 343.9, pitch: -39.3 })
@@ -712,8 +712,8 @@ function firstStep() {
     position: [127, 31.83, 14000],
     style: {
       html: `<div class="marsBlueBlack  animation-spaceInDown">
-              <div class="marsBlueBlack-top">第一步</div>
-              <div class="marsBlueBlack-down">漏油事故船只发出求救信号</div>
+              <div class="marsBlueBlack-top">First step</div>
+              <div class="marsBlueBlack-down">Oil spill ship sends distress signal</div>
           </div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
       verticalOrigin: Cesium.VerticalOrigin.CENTER,
@@ -722,7 +722,7 @@ function firstStep() {
   })
   graphicLayer.addGraphic(firstPannel)
 
-  // 添加救援图标
+  //Add rescue icon
   const rescueIcon = new mars3d.graphic.BillboardEntity({
     position: new mars3d.LngLatPoint(126.320842, 31.97364, 14000),
     id: "rescueIcon",
@@ -744,7 +744,7 @@ function firstStep() {
     rescueIcon.show = !rescueIcon.show
   }, 500)
 
-  // 事故船发送给卫星的通信波
+  // The communication wave sent by the accident ship to the satellite
   const shipTOweixin = new mars3d.graphic.PolylineEntity({
     positions: [
       [127, 31.83, 14000],
@@ -762,12 +762,12 @@ function firstStep() {
   })
   graphicLayer.addGraphic(shipTOweixin)
 
-  graphicLayer.getGraphicById("油污范围").show = true
+  graphicLayer.getGraphicById("Oil range").show = true
 
   removeGraphicArr = [firstPannel, shipTOweixin]
 }
 
-// 第二步 传送信号
+//The second step is to send the signal
 function secondStep() {
   removeGraphic(removeGraphicArr, true)
 
@@ -781,8 +781,8 @@ function secondStep() {
     position: [117.3, 38, 14000],
     style: {
       html: `<div class="marsBlueBlack  animation-spaceInDown">
-              <div class="marsBlueBlack-top">第二步</div>
-              <div class="marsBlueBlack-down">海事局向指挥中心传达求助信号</div>
+              <div class="marsBlueBlack-top">Step 2</div>
+              <div class="marsBlueBlack-down">The Maritime Safety Administration sends a help signal to the command center</div>
           </div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
       verticalOrigin: Cesium.VerticalOrigin.CENTER,
@@ -791,7 +791,7 @@ function secondStep() {
   })
   graphicLayer.addGraphic(secondPannel)
 
-  // 事故船发送给卫星的通信波
+  // The communication wave sent by the accident ship to the satellite
   const weixinTObuild = new mars3d.graphic.PolylineEntity({
     positions: [
       [120, 36, 550000],
@@ -812,7 +812,7 @@ function secondStep() {
   removeGraphicArr = [secondPannel, weixinTObuild]
 }
 
-// 第三步 下达指令
+//The third step is to issue the command
 function thirdStep() {
   removeGraphic(removeGraphicArr, true)
   map.setCameraView({ lat: 36.976138, lng: 122.494085, alt: 551666.1, heading: 257.4, pitch: -48 })
@@ -821,8 +821,8 @@ function thirdStep() {
     position: [117.1, 33, 14000],
     style: {
       html: `<div class="marsBlueBlack  animation-spaceInDown">
-              <div class="marsBlueBlack-top">第三步</div>
-              <div class="marsBlueBlack-down">指挥中心接到报告后进行现场情况分析,并分派任务给救援船和救援飞机</div>
+              <div class="marsBlueBlack-top">Step 3</div>
+              <div class="marsBlueBlack-down">After receiving the report, the command center will analyze the on-site situation and assign tasks to rescue ships and rescue aircraft</div>
           </div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
       verticalOrigin: Cesium.VerticalOrigin.CENTER,
@@ -831,7 +831,7 @@ function thirdStep() {
   })
   graphicLayer.addGraphic(thirdPannel)
 
-  // 海事局发送给指挥中心
+  // Sent by the Maritime Safety Administration to the command center
   const haishiTOzhihui = new mars3d.graphic.PolylineEntity({
     positions: getLinePosition([
       [117.3, 38, 14000],
@@ -858,7 +858,7 @@ function thirdStep() {
   removeGraphicArr = [thirdPannel, haishiTOzhihui]
 }
 
-// 第四步 准备出发
+// Step 4: Get ready to go
 function forthStep() {
   removeGraphic(removeGraphicArr, true)
   map.setCameraView({ lat: 29.097887, lng: 110.576537, alt: 653281.5, heading: 65.1, pitch: -28.3 })
@@ -867,8 +867,8 @@ function forthStep() {
     position: [121.94, 27.03, 20000],
     style: {
       html: `<div class="marsBlueBlack  animation-spaceInDown">
-              <div class="marsBlueBlack-top">第四步</div>
-              <div class="marsBlueBlack-down">救援船和救援飞机开始执行救援任务</div>
+              <div class="marsBlueBlack-top">Step 4</div>
+              <div class="marsBlueBlack-down">Rescue ships and rescue aircraft begin rescue missions</div>
           </div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
       verticalOrigin: Cesium.VerticalOrigin.CENTER,
@@ -877,7 +877,7 @@ function forthStep() {
   })
   graphicLayer.addGraphic(forthPannel)
 
-  // 指挥中心发送给医疗船
+  //The command center sends it to the hospital ship
   const zhihuiTOyiliao = new mars3d.graphic.PolylineEntity({
     positions: getLinePosition([
       [117.1, 33, 14000],
@@ -896,7 +896,7 @@ function forthStep() {
   })
   graphicLayer.addGraphic(zhihuiTOyiliao)
 
-  // 指挥中心发送给救援船
+  //The command center sends it to the rescue ship
   const zhihuiTOjiuyuan = new mars3d.graphic.PolylineEntity({
     positions: getLinePosition([
       [117.1, 33, 14000],
@@ -915,7 +915,7 @@ function forthStep() {
   })
   graphicLayer.addGraphic(zhihuiTOjiuyuan)
 
-  // 指挥中心发送给雷达5
+  //The command center sends it to Radar 5
   const zhihuiTOleida5 = new mars3d.graphic.PolylineEntity({
     positions: getLinePosition([
       [117.1, 33, 14000],
@@ -934,18 +934,18 @@ function forthStep() {
   })
   graphicLayer.addGraphic(zhihuiTOleida5)
 
-  // 飞机下的圆锥
+  // Cone under the plane
   const coneTrack = new mars3d.graphic.ConeTrack({
     position: [119.563892164, 35.9884519627],
-    targetPosition: [123, 36, 550000], // 可选
+    targetPosition: [123, 36, 550000], // optional
     style: {
-      angle: 2, // 半场角度
+      angle: 2, // half-court angle
       color: "#42b883",
       opacity: 0.3
     }
   })
 
-  // 加载救援路线（救援船）
+  //Load rescue route (rescue boat)
   const shipLine1 = new mars3d.graphic.CurveEntity({
     id: "rescueLine",
     positions: [
@@ -960,11 +960,11 @@ function forthStep() {
         image: "img/textures/line-arrow-blue.png"
       }
     },
-    name: "救援船救援路线",
+    name: "Rescue boat rescue route",
     attr: { save: true }
   })
 
-  // 加载救援路线（补给船）
+  //Load rescue route (supply ship)
   const shipLine2 = new mars3d.graphic.CurveEntity({
     id: "supplyLine",
     positions: [
@@ -979,7 +979,7 @@ function forthStep() {
         image: "img/textures/line-arrow-blue.png"
       }
     },
-    name: "补给船救援路线",
+    name: "Supply Ship Rescue Route",
     attr: { save: true }
   })
 
@@ -997,7 +997,7 @@ function forthStep() {
   removeGraphicArr = [forthPannel, zhihuiTOyiliao, zhihuiTOjiuyuan, zhihuiTOleida5, coneTrack, shipLine1, shipLine2]
 }
 
-// 第五步,添加飞行动画 出发
+// Step 5, add flight animation and start
 function fifthStep() {
   removeGraphic(removeGraphicArr)
   map.setCameraView({ lat: 22.221019, lng: 127.76867, alt: 492335.3, heading: 341.9, pitch: -24 })
@@ -1016,12 +1016,12 @@ function fifthStep() {
   removeGraphicArr = [shipLine1, shipLine2]
 }
 
-// 第六步,添加活性炭 处理泄露
+// Step six, add activated carbon to deal with leaks
 function sixthStep() {
   removeGraphic(removeGraphicArr)
   map.setCameraView({ lat: 28.263862, lng: 128.114428, alt: 351171.2, heading: 345.9, pitch: -40.8 })
 
-  graphicLayer.getGraphicById("油污范围").show = true
+  graphicLayer.getGraphicById("Oil range").show = true
 
   const carbonList = [
     [127.540097, 31.429462, 0],
@@ -1047,11 +1047,11 @@ function sixthStep() {
   removeGraphicArr = graphicArr
 }
 
-// 第七步，清除油污范围 完成营救
+// Step 7, clear the oil pollution area and complete the rescue
 var seventhStep = () => {
   removeGraphic(removeGraphicArr)
 
-  graphicLayer.getGraphicById("油污范围").show = false
+  graphicLayer.getGraphicById("Oil range").show = false
 }
 
 var clear = () => {

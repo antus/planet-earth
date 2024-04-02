@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 17.372658, lng: 109.327197, alt: 3459173, heading: 12, pitch: -69 },
@@ -11,7 +11,7 @@ var mapOptions = {
   terrain: false,
   basemaps: [
     {
-      name: "蓝色底图",
+      name: "Blue Basemap",
       icon: "//data.mars3d.cn/file/img/world/blue.jpg",
       type: "image",
       url: "//data.mars3d.cn/file/img/world/blue.jpg",
@@ -22,46 +22,46 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 一线以上城市地理位置
+  //Geographical location of first-tier and above cities
   const arrStart = [
-    { name: "北京", position: [116.395645038, 39.9299857781] },
-    { name: "上海", position: [121.487899486, 31.24916171] },
-    { name: "广州", position: [113.307649675, 23.1200491021] },
-    { name: "深圳", position: [114.025973657, 22.5460535462] },
-    { name: "成都", position: [104.067923463, 30.6799428454] },
-    { name: "杭州", position: [120.219375416, 30.2592444615] },
-    { name: "重庆", position: [106.530635013, 29.5446061089] },
-    { name: "苏州", position: [113.64964385, 34.7566100641] },
-    { name: "武汉", position: [114.316200103, 30.5810841269] },
-    { name: "南京", position: [118.778074408, 32.0572355018] },
-    { name: "天津", position: [117.210813092, 39.1439299033] },
-    { name: "郑州", position: [113.64964385, 34.7566100641] },
-    { name: "长沙", position: [112.979352788, 28.2134782309] },
-    { name: "东莞", position: [113.763433991, 23.0430238154] },
-    { name: "佛山", position: [113.134025635, 23.0350948405] },
-    { name: "宁波", position: [121.579005973, 29.8852589659] },
-    { name: "青岛", position: [120.384428184, 36.1052149013] },
-    { name: "沈阳", position: [123.432790922, 41.8086447835] },
-    { name: "深圳", position: [114.025973657, 22.5460535462] },
-    { name: "乌鲁木齐", position: [87.613307, 43.824787] }
+    { name: "Beijing", position: [116.395645038, 39.9299857781] },
+    { name: "Shanghai", position: [121.487899486, 31.24916171] },
+    { name: "Guangzhou", position: [113.307649675, 23.1200491021] },
+    { name: "Shenzhen", position: [114.025973657, 22.5460535462] },
+    { name: "Chengdu", position: [104.067923463, 30.6799428454] },
+    { name: "Hangzhou", position: [120.219375416, 30.2592444615] },
+    { name: "Chongqing", position: [106.530635013, 29.5446061089] },
+    { name: "Suzhou", position: [113.64964385, 34.7566100641] },
+    { name: "Wuhan", position: [114.316200103, 30.5810841269] },
+    { name: "Nanjing", position: [118.778074408, 32.0572355018] },
+    { name: "Tianjin", position: [117.210813092, 39.1439299033] },
+    { name: "Zhengzhou", position: [113.64964385, 34.7566100641] },
+    { name: "Changsha", position: [112.979352788, 28.2134782309] },
+    { name: "Dongguan", position: [113.763433991, 23.0430238154] },
+    { name: "Foshan", position: [113.134025635, 23.0350948405] },
+    { name: "Ningbo", position: [121.579005973, 29.8852589659] },
+    { name: "Qingdao", position: [120.384428184, 36.1052149013] },
+    { name: "Shenyang", position: [123.432790922, 41.8086447835] },
+    { name: "Shenzhen", position: [114.025973657, 22.5460535462] },
+    { name: "Urumqi", position: [87.613307, 43.824787] }
   ]
 
-  //  连接点地理位置
+  //Connection point location
   const arrEnd = [
-    { name: "西安", position: [108.953098279, 34.2777998978] },
-    { name: "南京", position: [118.778074408, 32.0572355018] },
-    { name: "武汉", position: [114.316200103, 30.5810841269] }
+    { name: "Xi'an", position: [108.953098279, 34.2777998978] },
+    { name: "Nanjing", position: [118.778074408, 32.0572355018] },
+    { name: "Wuhan", position: [114.316200103, 30.5810841269] }
   ]
 
-  // 创建矢量数据
+  //Create vector data
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
@@ -69,7 +69,7 @@ function onMounted(mapInstance) {
     const item = arrStart[i]
     const position = item.position
 
-    // 城市名字
+    //city name
     const graphic = new mars3d.graphic.DivGraphic({
       position,
       style: {
@@ -85,7 +85,7 @@ function onMounted(mapInstance) {
     const item = arrEnd[i]
     const endPoint = item.position
 
-    // 城市名字
+    //city name
     const graphic = new mars3d.graphic.DivGraphic({
       position: endPoint,
       style: {
@@ -100,7 +100,7 @@ function onMounted(mapInstance) {
       const item = arrStart[j]
       const startPoint = item.position
 
-      // 连线
+      // connect
       const line = new mars3d.graphic.PolylinePrimitive({
         positions: [startPoint, endPoint],
         style: {
@@ -119,8 +119,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

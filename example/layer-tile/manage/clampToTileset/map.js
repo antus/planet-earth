@@ -1,11 +1,11 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 事件对象，用于抛出事件给面板
+//Event object, used to throw events to the panel
 var eventTarget = new mars3d.BaseClass()
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.931953, lng: 117.352307, alt: 207201, heading: 0, pitch: -64 }
@@ -13,19 +13,19 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.basemap = 2013 // 无底图
+  map = mapInstance // record map
+  map.basemap = 2013 // No basemap
 
   globalNotify(
-    "已知问题提示",
-    `(1)多个图层调整时会全部重新渲染；
-    (2)目前不支持EPSG:3857 Web墨卡托投影坐标系的瓦片进行贴模型。`
+    "Known Issue Tips",
+    `(1) When multiple layers are adjusted, they will all be re-rendered;
+    (2) Currently, tiles in the EPSG:3857 Web Mercator projection coordinate system are not supported for pasting models. `
   )
 
   // const graphic = new mars3d.graphic.RectanglePrimitive({
@@ -37,12 +37,12 @@ function onMounted(mapInstance) {
   //     color: Cesium.Color.BLUE,
   //     clampToGround: true
   //   },
-  //   attr: { remark: "示例4" }
+  // attr: { remark: "Example 4" }
   // })
   // map.graphicLayer.addGraphic(graphic)
 
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "县城社区",
+    name: "County Community",
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
@@ -53,32 +53,32 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 注记层
+  // Annotation layer
   const tdtLayer = new mars3d.layer.TdtLayer({
-    name: "贴模型注记",
+    name: "Post model annotation",
     layer: "img_z",
     key: mars3d.Token.tiandituArr,
     crs: mars3d.CRS.EPSG4326,
-    clampToTileset: true // 关键代码
+    clampToTileset: true // key code
   })
   map.addLayer(tdtLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 叠加的图层
+// overlaid layers
 let tileLayer
 function addTileLayer() {
   removeTileLayer()
 
   tileLayer = new mars3d.layer.TileInfoLayer({
-    name: "瓦片信息",
+    name: "tile information",
     clampToTileset: true
   })
   map.addLayer(tileLayer)

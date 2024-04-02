@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: -7.606383, lng: 119.069383, alt: 10521145, heading: 0, pitch: -82 },
@@ -10,49 +10,49 @@ var mapOptions = {
       zoomFactor: 3.0,
       minimumZoomDistance: 1000,
       maximumZoomDistance: 300000000,
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     },
     clock: {
-      multiplier: 5 // 速度
+      multiplier: 5 // speed
     }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件,
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control,
     compass: { top: "10px", left: "5px" }
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map = mapInstance // record map
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
-  globalMsg("非实际卫星轨道，随机模拟的坐标，只是为了演示追踪！")
+  globalMsg("Not actual satellite orbit, randomly simulated coordinates, just to demonstrate tracking!")
 
   addGraphicLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addGraphicLayer() {
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   // ===========================================================
-  // 取数据
+  // Get data
   const property = getDynamicProperty(function (timeInterval) {
     graphic.entity.availability = new Cesium.TimeIntervalCollection([new Cesium.TimeInterval(timeInterval)])
   })
@@ -68,7 +68,7 @@ function addGraphicLayer() {
         stop: stopTime
       })
     ]),
-    position: property, // 点集
+    position: property, // point set
     orientation: new Cesium.VelocityOrientationProperty(property),
     style: {
       leadTime: 0,
@@ -91,7 +91,7 @@ function addGraphicLayer() {
 
   // ===========================================================
 
-  // 视锥体 展示
+  // View frustum display
   const satelliteSensor = new mars3d.graphic.SatelliteSensor({
     position: property,
     orientation: new Cesium.VelocityOrientationProperty(property),
@@ -104,12 +104,12 @@ function addGraphicLayer() {
   })
   graphicLayer.addGraphic(satelliteSensor)
 
-  // 地面站 展示
+  // Ground station display
   const localStart = Cesium.Cartesian3.fromDegrees(109.51856, 18.258736, 2000)
   const conicSensor = new mars3d.graphic.ConicSensor({
     position: localStart,
     style: {
-      angle: 5, // 雷达最小扫描仰角
+      angle: 5, // Minimum radar scanning elevation angle
       length: 2500000,
       color: Cesium.Color.fromBytes(255, 0, 0, 85),
       rayEllipsoid: true
@@ -117,9 +117,9 @@ function addGraphicLayer() {
   })
   graphicLayer.addGraphic(conicSensor)
 
-  conicSensor.lookAt = property // 追踪卫星
+  conicSensor.lookAt = property // Tracking satellites
 
-  // 测试连接线
+  //Test the connection line
   const testLine = new mars3d.graphic.PolylineEntity({
     positions: new Cesium.CallbackProperty(function (time) {
       const localEnd = conicSensor.rayPosition
@@ -140,7 +140,7 @@ function addGraphicLayer() {
   graphicLayer.addGraphic(testLine)
 }
 
-// 构造模拟数据，实际项目应改为服务读取返回
+// Construct simulated data, the actual project should be changed to service read return
 function getDynamicProperty(callback) {
   const arr = dataWork.getTestData(Cesium.JulianDate.toIso8601(map.clock.currentTime), 2 * 60)
 
@@ -152,7 +152,7 @@ function getDynamicProperty(callback) {
     const thisTime = Cesium.JulianDate.fromIso8601(item.time)
     const position = Cesium.Cartesian3.fromDegrees(item.x, item.y, item.z)
 
-    // 添加每一个链接点的信息，到达的时间以及坐标位置
+    //Add information about each link point, arrival time and coordinate location
     property.addSample(thisTime, position)
   }
 
@@ -160,10 +160,10 @@ function getDynamicProperty(callback) {
   const startTime = times[0].clone()
   let stopTime = times[times.length - 1].clone()
 
-  const allTimes = Cesium.JulianDate.secondsDifference(stopTime, map.clock.currentTime) * 0.3 // 判断剩下多少时长时加载下一步数据
+  const allTimes = Cesium.JulianDate.secondsDifference(stopTime, map.clock.currentTime) * 0.3 // Load the next data when determining how much time is left
   let loading = false
   map.on(mars3d.EventType.clockTick, function (clock) {
-    const sxTimes = Cesium.JulianDate.secondsDifference(stopTime, map.clock.currentTime) // 剩下时长
+    const sxTimes = Cesium.JulianDate.secondsDifference(stopTime, map.clock.currentTime) // Remaining time
 
     if (!loading && sxTimes < allTimes) {
       loading = true
@@ -175,7 +175,7 @@ function getDynamicProperty(callback) {
         const thisTime = Cesium.JulianDate.fromIso8601(item.time)
         const position = Cesium.Cartesian3.fromDegrees(item.x, item.y, item.z)
 
-        // 添加每一个链接点的信息，到达的时间以及坐标位置
+        //Add information about each link point, arrival time and coordinate location
         property.addSample(thisTime, position)
       }
 
@@ -193,16 +193,16 @@ function getDynamicProperty(callback) {
   return property
 }
 
-// 模拟数据生产类
+//Simulation data production class
 const dataWork = {
   thisPoint: {
     x: 100.245989,
     y: 0,
     z: 1000000
   },
-  // data开始时间，seconds 秒数
+  //data start time, seconds seconds
   getTestData: function (date, seconds) {
-    const startTime = Cesium.JulianDate.fromIso8601(date) // 飞行开始时间
+    const startTime = Cesium.JulianDate.fromIso8601(date) // Flight start time
 
     const arr = []
 
@@ -210,7 +210,7 @@ const dataWork = {
     for (let i = 0; i <= seconds; i += 5) {
       thisTime = Cesium.JulianDate.addSeconds(startTime, i, new Cesium.JulianDate())
 
-      // 生成随机的坐标
+      // Generate random coordinates
       this.thisPoint.x += i * 0.01
       this.thisPoint.y += i * 0.01
 

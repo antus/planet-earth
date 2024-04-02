@@ -1,39 +1,39 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 0.072832, lng: 151.409367, alt: 29330818, heading: 10, pitch: -90 }
   },
   cameraController: {
     maximumZoomDistance: 9000000000,
-    constrainedAxis: false // 解除在南北极区域鼠标操作限制
+    constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", `(1) SatelliteSensor性能比较差，后期会尝试优化，非投射需求时建议用conicSensor或rectSensor`)
+  globalNotify("Known problem tips", `(1) The performance of SatelliteSensor is relatively poor, and we will try to optimize it later. It is recommended to use conicSensor or rectSensor when there are non-projection requirements`)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -41,12 +41,12 @@ function onUnmounted() {
 
 let modelGraphic
 
-// 初始化创建一个卫星视锥体
+//Initialize and create a satellite frustum
 function addDemoGraphic1(sensorParams) {
   const position = Cesium.Cartesian3.fromDegrees(sensorParams.model_x, sensorParams.model_y, sensorParams.model_z)
-  // 加个模型
+  //Add a model
   modelGraphic = new mars3d.graphic.ModelPrimitive({
-    name: "卫星模型",
+    name: "Satellite Model",
     position: position,
     forwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
     backwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
@@ -61,10 +61,10 @@ function addDemoGraphic1(sensorParams) {
   })
   graphicLayer.addGraphic(modelGraphic)
 
-  // 打开3个轴进行显示对比
+  //Open 3 axes for display and comparison
   modelGraphic.debugAxis = true
 
-  // 视锥体
+  // frustum
   const satelliteSensor = new mars3d.graphic.SatelliteSensor({
     position: position,
     forwardExtrapolationType: Cesium.ExtrapolationType.HOLD,
@@ -85,14 +85,14 @@ function addDemoGraphic1(sensorParams) {
   eventTarget.fire("addTableData", { graphicLayer })
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 5000)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -111,11 +111,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制 相阵控雷达
+// Start drawing phased array radar
 function startDrawGraphic() {
   graphicLayer
     .startDraw({
@@ -152,7 +152,7 @@ function locate() {
   satelliteSensor.flyTo({ radius: satelliteSensor.alt * 2 })
 }
 
-// 方向角改变
+// Direction angle change
 function headingChange(value) {
   if (modelGraphic && !modelGraphic.isDestroy) {
     modelGraphic.heading = value
@@ -162,7 +162,7 @@ function headingChange(value) {
   }
 }
 
-// 俯仰角
+// Pitch angle
 function pitchChange(value) {
   if (modelGraphic && !modelGraphic.isDestroy) {
     modelGraphic.pitch = value
@@ -172,7 +172,7 @@ function pitchChange(value) {
   }
 }
 
-// 左右角
+// left and right corners
 function rollChange(value) {
   if (modelGraphic && !modelGraphic.isDestroy) {
     modelGraphic.roll = value
@@ -182,41 +182,41 @@ function rollChange(value) {
   }
 }
 
-// 夹角1
+// included angle 1
 function angle1(value) {
   if (satelliteSensor) {
     satelliteSensor.angle1 = value
   }
 }
 
-// 夹角2
+// included angle 2
 function angle2(value) {
   if (satelliteSensor) {
     satelliteSensor.angle2 = value
   }
 }
 
-// 参考轴系显示与隐藏
+// Display and hide reference axis system
 function chkShowModelMatrix(val) {
   if (modelGraphic && !modelGraphic.isDestroy) {
     modelGraphic.debugAxis = val
   }
 }
 
-// 视椎体状态
+// Optic frustum status
 function sensorShowHide(val) {
   if (satelliteSensor) {
     satelliteSensor.show = val
   }
 }
-// 是否与地球相交
+// Whether it intersects with the earth
 function chkUnderground(val) {
   if (satelliteSensor) {
     satelliteSensor.rayEllipsoid = val
   }
 }
 
-// 类型选择
+// type selection
 function chkSensorType(value) {
   if (satelliteSensor) {
     if (value === "1") {
@@ -239,19 +239,19 @@ function updateColor(value) {
   }
 }
 
-// 获取边界值
+// Get the boundary value
 function getRegion() {
   map.graphicLayer.clear()
   if (!satelliteSensor) {
     return
   }
 
-  const coords = satelliteSensor.getAreaCoords() // 导出成像区边界坐标
+  const coords = satelliteSensor.getAreaCoords() // Export imaging area boundary coordinates
   if (!coords || coords.length === 0) {
-    globalMsg("当前与地球无成像区边")
+    globalMsg("There is currently no imaging area with the Earth")
     return
   }
-  // 显示边界点，测试
+  //Display boundary points, test
 
   coords.forEach((position) => {
     const graphic = new mars3d.graphic.PointPrimitive({
@@ -278,7 +278,7 @@ function getCenter() {
 
   const groundPosition = satelliteSensor.groundPosition
   if (!groundPosition) {
-    globalMsg("当前与地球无交点")
+    globalMsg("There is currently no intersection with the earth")
     return
   }
 

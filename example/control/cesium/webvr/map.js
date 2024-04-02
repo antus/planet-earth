@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = function (option) {
   option.scene.center = { lat: 28.439577, lng: 119.476925, alt: 229, heading: 57, pitch: -29 }
   option.control = {
@@ -12,19 +12,19 @@ var mapOptions = function (option) {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", `(1) 请确保您的显示器调整到 3D模式。(2) 需要佩戴3D眼镜才能体验效果。`)
+  globalNotify("Known Issue Tips", `(1) Please make sure your monitor is adjusted to 3D mode. (2) You need to wear 3D glasses to experience the effect.`)
 
-  // 加个模型，效果更NB
+  //Add a model and the effect will be better
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "县城社区",
+    name: "County Community",
     url: "//data.mars3d.cn/3dtiles/qx-shequ/tileset.json",
     position: { alt: 148.2 },
     maximumScreenSpaceError: 1,
@@ -35,19 +35,19 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 这句话打开VR
+  //This sentence opens VR
   map.scene.useWebVR = true
 
-  // WebVR相关参数: 眼镜的视角距离（单位：米）
+  // WebVR related parameters: viewing distance of glasses (unit: meters)
   map.scene.eyeSeparation = 100.0
 
-  // WebVR相关参数: 焦距
+  //WebVR related parameters: focal length
   map.scene.eyeSeparation.focalLength = 5.0
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var tiles3dLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     showSun: false,
@@ -11,38 +11,38 @@ var mapOptions = {
     showSkyBox: false,
     showSkyAtmosphere: false,
     fog: false,
-    backgroundColor: "#363635", // 天空背景色
+    backgroundColor: "#363635", // sky background color
     globe: {
-      baseColor: "#363635", // 地球地面背景色
+      baseColor: "#363635", // Earth ground background color
       showGroundAtmosphere: false,
       enableLighting: false
     },
     clock: {
-      currentTime: "2023-11-01 12:00:00" // 固定光照时间
+      currentTime: "2023-11-01 12:00:00" // Fixed light time
     },
     cameraController: {
       zoomFactor: 1.5,
       minimumZoomDistance: 0.1,
       maximumZoomDistance: 200000,
-      enableCollisionDetection: false // 允许进入地下
+      enableCollisionDetection: false // Allow underground access
     }
   }
 }
 
-// 自定义事件
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+// Custom event
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map = mapInstance // record map
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  // 固定光照方向
+  // Fixed lighting direction
   map.scene.light = new Cesium.DirectionalLight({
     direction: map.scene.camera.direction
   })
@@ -51,24 +51,24 @@ function onMounted(mapInstance) {
     map.scene.light.direction = map.scene.camera.direction
   })
 
-  // 如果模型地址内有“+”符号，可以加下面方法进行自定义处理
+  // If there is a "+" symbol in the model address, you can add the following method for customized processing
   Cesium.Resource.ReplaceUrl = function (url) {
     if (url.endsWith(".json") || url.endsWith(".b3dm")) {
-      return url.replace(/\+/gm, "%2B") // 将3dtiles中的“+”符号转义下
+      return url.replace(/\+/gm, "%2B") // Escape the "+" symbol in 3dtiles
     } else {
       return url
     }
   }
 
-  // 读取localStorage值
+  //Read localStorage value
   localforage.getItem(storageName).then(function (lastUrl) {
     eventTarget.fire("historyUrl", { url: lastUrl })
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -85,12 +85,12 @@ function showModel(url) {
   removeLayer()
 
   if (!url) {
-    globalMsg("请输入图层URL！")
+    globalMsg("Please enter the layer URL!")
     return
   }
 
   tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "模型名称",
+    name: "model name",
     url,
     maximumScreenSpaceError: 16,
     cacheBytes: 1073741824, // 1024MB = 1024*1024*1024
@@ -102,18 +102,18 @@ function showModel(url) {
 
   tiles3dLayer.readyPromise
     .then(() => {
-      // 加载完成
-      console.log("模型加载完成", tiles3dLayer)
+      // Loading completed
+      console.log("Model loading completed", tiles3dLayer)
 
-      localforage.setItem(storageName, url) // 记录历史值
+      localforage.setItem(storageName, url) //Record historical values
       eventTarget.fire("tiles3dLayerLoad", { layer: tiles3dLayer })
     })
     .catch((e) => {
-      // 加载失败
-      console.log("模型加载失败", e)
+      // Failed to load
+      console.log("Model loading failed", e)
     })
 
-  // 加载完成事件
+  // Loading completion event
   tiles3dLayer.on(mars3d.EventType.updatePosition, function (event) {
     eventTarget.fire("changePoition", {
       center: tiles3dLayer.center,
@@ -123,7 +123,7 @@ function showModel(url) {
 
   tiles3dLayer.bindContextMenu([
     {
-      text: "开始编辑",
+      text: "Start editing",
       icon: "fa fa-edit",
       show: function (e) {
         return tiles3dLayer.hasEdit && !tiles3dLayer.isEditing
@@ -133,7 +133,7 @@ function showModel(url) {
       }
     }
     // {
-    //   text: "停止编辑",
+    // text: "Stop editing",
     //   icon: "fa fa-edit",
     //   show: function (e) {
     //     return tiles3dLayer.hasEdit && tiles3dLayer.isEditing
@@ -145,18 +145,18 @@ function showModel(url) {
   ])
 }
 
-// 异步求准确高度
+// Find the exact height asynchronously
 function updateHeightForSurfaceTerrain(position) {
-  // 求地面海拔 (异步)
+  // Find ground altitude (asynchronous)
   if (Cesium.defined(position) && Cesium.defined(position.alt)) {
-    // 存在历史设置的高度时不用处理
+    // No need to process when there is a height set by history
   } else {
     mars3d.PointUtil.getSurfaceTerrainHeight(map.scene, tiles3dLayer.orginCenterPosition).then((result) => {
       if (!Cesium.defined(result.height)) {
         return
       }
       const offsetZ = Math.ceil(result.height - tiles3dLayer.orginCenterPoint.alt + 1)
-      console.log("地面海拔：" + result.height.toFixed(2) + ",需要偏移" + offsetZ)
+      console.log("Ground altitude: " + result.height.toFixed(2) + ", offset required" + offsetZ)
 
       tiles3dLayer.height = offsetZ
 
@@ -165,15 +165,15 @@ function updateHeightForSurfaceTerrain(position) {
   }
 }
 
-// 修改更改后的参数
+//Modify the changed parameters
 function updateModel(params, pannelData) {
   tiles3dLayer.setOptions(params)
 
-  // 非参数，调用方法绑定或解绑
+  //Non-parameter, call method to bind or unbind
   if (pannelData.highlightEnable) {
     tiles3dLayer.highlight = {
-      type: mars3d.EventType.click, // 默认为鼠标移入高亮，也可以指定click单击高亮
-      outlineEffect: true, // 采用OutlineEffect方式来高亮
+      type: mars3d.EventType.click, // The default is to highlight when the mouse moves in, you can also specify click to highlight
+      outlineEffect: true, // Use OutlineEffect to highlight
       color: "#00FF00"
     }
   } else {
@@ -186,7 +186,7 @@ function updateModel(params, pannelData) {
   }
 }
 
-// 深度检测
+// Depth detection
 function updateDepthTest(enabled) {
   map.scene.globe.depthTestAgainstTerrain = enabled
 }
@@ -203,20 +203,20 @@ function locate() {
   }
 }
 
-// 保存GeoJSON
+//Save GeoJSON
 function saveBookmark() {
   const params = tiles3dLayer.toJSON()
 
-  // 清理参数中无需保存的部分（只是当前示例内部控制使用的）
+  // Clean up the parts of the parameters that do not need to be saved (only used for internal control of the current example)
   delete params.highlightEnable
   delete params.popupEnable
 
-  console.log("图层参数为：", params)
+  console.log("Layer parameters are: ", params)
 
-  mars3d.Util.downloadFile("3dtiles图层配置.json", JSON.stringify(params))
+  mars3d.Util.downloadFile("3dtiles layer configuration.json", JSON.stringify(params))
 }
 
-// 查看构件
+// View components
 function checkedTree() {
   tiles3dLayer.tileset.style = undefined
 }
@@ -239,7 +239,7 @@ function showCompTree(model) {
       eventTarget.fire("compTree", { data })
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }
 
@@ -247,20 +247,20 @@ function compModelChange(nodeid, nodesphere) {
   if (nodesphere[3] <= 0) {
     return
   }
-  // 构件节点位置
+  // Component node position
   let center = new Cesium.Cartesian3(nodesphere[0], nodesphere[1], nodesphere[2])
 
-  // 获取构件节点位置，现对于原始矩阵变化后的新位置
+  // Get the position of the component node, now the new position after the change of the original matrix
   center = tiles3dLayer.getPositionByOrginMatrix(center)
 
-  // 飞行过去
+  // fly over
   const sphere = new Cesium.BoundingSphere(center, nodesphere[3])
   map.camera.flyToBoundingSphere(sphere, {
     offset: new Cesium.HeadingPitchRange(map.camera.heading, map.camera.pitch, nodesphere[3] * 1.5),
     duration: 0.5
   })
 
-  // 设置tileset的样式
+  //Set the style of tileset
   tiles3dLayer.style = new Cesium.Cesium3DTileStyle({
     color: {
       conditions: [
@@ -271,7 +271,7 @@ function compModelChange(nodeid, nodesphere) {
   })
 }
 
-// 取构件树数据
+// Get component tree data
 function querySceneTreeData(url) {
   const scenetree = url.substring(0, url.lastIndexOf("/") + 1) + "scenetree.json"
 
@@ -281,7 +281,7 @@ function querySceneTreeData(url) {
 function name2text(o) {
   o.text = o.name
 
-  // 这块为了避免tree控件里的id不统一，所以加改变一下
+  // In order to avoid the inconsistency of the IDs in the tree control, we need to change this.
   o.eleid = o.id
   o.id = undefined
 

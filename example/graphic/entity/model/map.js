@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     fxaa: true,
@@ -14,29 +14,29 @@ var mapOptions = {
 var eventTarget = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.basemap = 2017 // 蓝色底图
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map = mapInstance // record map
+  map.basemap = 2017 // blue basemap
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
 
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
@@ -44,8 +44,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -56,7 +56,7 @@ function onUnmounted() {
 
 function addDemoGraphic1(graphicLayer) {
   const graphic = new mars3d.graphic.ModelEntity({
-    name: "警车",
+    name: "Police Car",
     position: [116.346929, 30.861947, 401.34],
     style: {
       url: "//data.mars3d.cn/gltf/mars/jingche/jingche.gltf",
@@ -68,13 +68,13 @@ function addDemoGraphic1(graphicLayer) {
       distanceDisplayCondition_near: 0,
       distanceDisplayCondition_far: 10000,
       distanceDisplayPoint: {
-        // 当视角距离超过一定距离(distanceDisplayCondition_far定义的) 后显示为点对象的样式
+        // When the viewing angle distance exceeds a certain distance (defined by distanceDisplayCondition_far), it is displayed as a point object style.
         color: "#00ff00",
         pixelSize: 8
       },
 
       label: {
-        text: "我是原始的",
+        text: "I am original",
         font_size: 18,
         color: "#ffffff",
         pixelOffsetY: -50,
@@ -83,44 +83,44 @@ function addDemoGraphic1(graphicLayer) {
         distanceDisplayCondition_near: 0
       }
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
   graphicLayer.addGraphic(graphic)
 
-  // 演示个性化处理graphic
+  // Demonstrate personalized processing graphic
   initGraphicManager(graphic)
 
-  // graphic转geojson
+  // graphic to geojson
   const geojson = graphic.toGeoJSON()
-  console.log("转换后的geojson", geojson)
+  console.log("Converted geojson", geojson)
   addGeoJson(geojson, graphicLayer)
 }
 
-// 也可以在单个Graphic上做个性化管理及绑定操作
+// You can also perform personalized management and binding operations on a single Graphic
 function initGraphicManager(graphic) {
-  // 3.在graphic上绑定监听事件
+  // 3. Bind the listening event to the graphic
   // graphic.on(mars3d.EventType.click, function (event) {
-  //   console.log("监听graphic，单击了矢量对象", event)
+  // console.log("Listening to graphic, clicked vector object", event)
   // })
-  // 绑定Tooltip
-  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
+  // Bind Tooltip
+  // graphic.bindTooltip('I am the Tooltip bound to graphic') //.openTooltip()
 
-  // 绑定Popup
+  // Bind Popup
   const inthtml = `<table style="width: auto;">
             <tr>
-              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
+              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">I am a Popup bound to the graphic </th>
             </tr>
             <tr>
-              <td>提示：</td>
-              <td>这只是测试信息，可以任意html</td>
+              <td>Tips:</td>
+              <td>This is just test information, you can use any html</td>
             </tr>
           </table>`
   graphic.bindPopup(inthtml).openPopup()
 
-  // 绑定右键菜单
+  //Bind right-click menu
   graphic.bindContextMenu([
     {
-      text: "删除对象[graphic绑定的]",
+      text: "Delete object [graphic-bound]",
       icon: "fa fa-trash-o",
       callback: (e) => {
         const graphic = e.graphic
@@ -131,33 +131,33 @@ function initGraphicManager(graphic) {
     }
   ])
 
-  // 测试 颜色闪烁
+  //Test color flash
   if (graphic.startFlicker) {
     graphic.startFlicker({
-      time: 20, // 闪烁时长（秒）
+      time: 20, // Flashing duration (seconds)
       maxAlpha: 0.5,
       color: Cesium.Color.YELLOW,
       onEnd: function () {
-        // 结束后回调
+        // Callback after completion
       }
     })
   }
 }
 
-// 添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+// Add a single geojson as graphic, use graphicLayer.loadGeoJSON directly for multiple
 function addGeoJson(geojson, graphicLayer) {
   const graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
   delete graphicCopy.attr
-  // 新的坐标
+  // new coordinates
   graphicCopy.position = [116.348587, 30.859472, 373.8]
   graphicCopy.style.label = graphicCopy.style.label || {}
-  graphicCopy.style.label.text = "我是转换后生成的"
+  graphicCopy.style.label.text = "I generated it after conversion"
   graphicLayer.addGraphic(graphicCopy)
 }
 
 function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.ModelEntity({
-    name: "风机",
+    name: "Fan",
     position: [116.35104, 30.86225, 374.4],
     style: {
       url: "//data.mars3d.cn/gltf/mars/fengche.gltf",
@@ -170,26 +170,26 @@ function addDemoGraphic2(graphicLayer) {
       distanceDisplayCondition_near: 0,
       distanceDisplayCondition_far: 9000,
       distanceDisplayBillboard: {
-        // 当视角距离超过一定距离(distanceDisplayCondition_far定义的) 后显示为图标对象的样式
+        // When the viewing angle distance exceeds a certain distance (defined by distanceDisplayCondition_far), it is displayed as the style of the icon object
         image: "img/marker/square.png",
         scale: 1
       },
 
-      // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+      // The style when highlighting (default is mouse move in, you can also specify type:'click' to click to highlight). After construction, you can also manually call the openHighlight and closeHighlight methods.
       highlight: {
         silhouette: true,
         silhouetteColor: "#00ffff",
         silhouetteSize: 3
       }
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "Example 2" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
 function addDemoGraphic3(graphicLayer) {
   const graphic = new mars3d.graphic.ModelEntity({
-    name: "汽车",
+    name: "car",
     position: [116.349194, 30.864603, 376.58],
     style: {
       url: "//data.mars3d.cn/gltf/mars/qiche.gltf",
@@ -198,7 +198,7 @@ function addDemoGraphic3(graphicLayer) {
       silhouette: false,
 
       label: {
-        text: "皖A12345",
+        text: "WanA12345",
         font_size: 18,
         color: "#ffffff",
         pixelOffsetY: -50,
@@ -207,7 +207,7 @@ function addDemoGraphic3(graphicLayer) {
         distanceDisplayCondition_near: 0
       },
 
-      // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+      // The style when highlighting (default is mouse move in, you can also specify type:'click' to click to highlight). After construction, you can also manually call the openHighlight and closeHighlight methods.
       highlight: {
         label: {
           font_size: 30
@@ -217,7 +217,7 @@ function addDemoGraphic3(graphicLayer) {
         silhouetteSize: 4
       }
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "Example 3" }
   })
   graphicLayer.addGraphic(graphic)
 
@@ -241,7 +241,7 @@ function addDemoGraphic4(graphicLayer) {
     [116.345028, 30.870436, 500]
   ])
 
-  // 飞机
+  // airplane
   const graphicModel = new mars3d.graphic.ModelEntity({
     position: propertyFJ,
     orientation: new Cesium.VelocityOrientationProperty(propertyFJ),
@@ -254,7 +254,7 @@ function addDemoGraphic4(graphicLayer) {
       distanceDisplayCondition_near: 0,
       distanceDisplayCondition_far: 8000,
       distanceDisplayBillboard: {
-        // 当视角距离超过一定距离(distanceDisplayCondition_far定义的) 后显示为图标对象的样式
+        // When the viewing angle distance exceeds a certain distance (defined by distanceDisplayCondition_far), it is displayed as the style of the icon object
         image: "img/icon/huojian.svg",
         scale: 0.5,
         alignedAxis: new Cesium.VelocityVectorProperty(propertyFJ, true)
@@ -262,16 +262,16 @@ function addDemoGraphic4(graphicLayer) {
     },
     path: {
       width: 2,
-      leadTime: 0, // 不显示前方路线
+      leadTime: 0, // Do not display the route ahead
       color: "#00ffff"
     },
-    attr: { remark: "示例4" },
+    attr: { remark: "Example 4" },
     hasEdit: false
   })
   graphicLayer.addGraphic(graphicModel)
 }
 
-// 计算演示的SampledPositionProperty轨迹
+// Calculate the SampledPositionProperty trajectory of the demonstration
 function getSampledPositionProperty(points) {
   const property = new Cesium.SampledPositionProperty()
   property.forwardExtrapolationType = Cesium.ExtrapolationType.HOLD
@@ -286,14 +286,14 @@ function getSampledPositionProperty(points) {
   return property
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -310,11 +310,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "model",
@@ -322,8 +322,8 @@ function startDrawGraphic() {
       scale: 10,
       url: "//data.mars3d.cn/gltf/mars/firedrill/xiaofangche.gltf",
       label: {
-        // 不需要文字时，去掉label配置即可
-        text: "可以同时支持文字",
+        // When text is not needed, just remove the label configuration
+        text: "can support text at the same time",
         font_size: 20,
         color: "#ffffff",
         outline: true,
@@ -334,23 +334,23 @@ function startDrawGraphic() {
   })
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -370,7 +370,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -390,7 +390,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -405,7 +405,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)

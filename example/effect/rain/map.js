@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let rainEffect
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.789209, lng: 117.214049, alt: 603, heading: 10, pitch: -11 }
@@ -11,23 +11,23 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 大气层外光圈
+  // Aperture outside the atmosphere
   map.scene.skyAtmosphere.hueShift = -0.8
   map.scene.skyAtmosphere.saturationShift = -0.7
   map.scene.skyAtmosphere.brightnessShift = -0.33
-  // 雾化效果
+  //Atomization effect
   map.scene.fog.density = 0.001
   map.scene.fog.minimumBrightness = 0.8
 
-  // 雨效果
+  // rain effect
   rainEffect = new mars3d.effect.RainEffect({
     speed: 10,
     size: 20,
@@ -35,7 +35,7 @@ function onMounted(mapInstance) {
   })
   map.addEffect(rainEffect)
 
-  // 在指定时间范围显示对象 0-10，20-30,40-max
+  //Display objects in the specified time range 0-10, 20-30, 40-max
   // const now = map.clock.currentTime
   // rainEffect.availability = [
   //   { start: now, stop: Cesium.JulianDate.addSeconds(now, 10, new Cesium.JulianDate()) },
@@ -45,29 +45,29 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 是否开启特效
+// Whether to enable special effects
 function setEffect(val) {
   rainEffect.enabled = val
 }
 
-// 粒子速度
+// particle speed
 function setSpeed(value) {
   rainEffect.speed = value
 }
 
-// 粒子大小
+// particle size
 function setSize(value) {
   rainEffect.size = value
 }
 
-// 粒子方向
+//Particle direction
 function setDirection(value) {
   rainEffect.direction = value
 }

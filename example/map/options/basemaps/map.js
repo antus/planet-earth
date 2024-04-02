@@ -1,36 +1,36 @@
 // import * as mars3d from "mars3d"
 
 function initMap() {
-  // 在创建地球前的传参中配置basemaps参数
+  //Configure basemaps parameters in the parameters before creating the earth
   const map = new mars3d.Map("mars3dContainer", {
     scene: {
       center: { lat: 14.029537, lng: 105.94238, alt: 4879779, heading: 0, pitch: -66 }
     },
     control: {
-      baseLayerPicker: true, // basemaps底图切换按钮
-      homeButton: true, // 视角复位按钮
-      sceneModePicker: true, // 二三维切换按钮
-      navigationHelpButton: true, // 帮助按钮
-      fullscreenButton: true, // 全屏按钮
-      contextmenu: { hasDefault: true } // 右键菜单
+      baseLayerPicker: true, // basemaps basemap switching button
+      homeButton: true, //View reset button
+      sceneModePicker: true, // 2D and 3D switching button
+      navigationHelpButton: true, // Help button
+      fullscreenButton: true, // full screen button
+      contextmenu: { hasDefault: true } // Right-click menu
     },
     basemaps: [
       {
-        name: "天地图影像",
+        name: "Heaven Map Image",
         icon: "img/basemaps/tdt_img.png",
         type: "tdt",
         layer: "img_d",
         show: true
       },
       {
-        name: "离线地图",
+        name: "Offline Map",
         icon: "img/basemaps/mapboxSatellite.png",
         type: "xyz",
         url: "//data.mars3d.cn/tile/googleImg/{z}/{x}/{y}.jpg",
         maximumLevel: 12
       },
       {
-        name: "单张图片",
+        name: "Single picture",
         icon: "img/basemaps/offline.png",
         type: "image",
         url: "//data.mars3d.cn/file/img/world/world.jpg"
@@ -38,11 +38,11 @@ function initMap() {
     ]
   })
 
-  // 根据config配置的id或name属性，更新显示指定的地图底图
-  // map.basemap = '离线地图'
+  //According to the id or name attribute of the config configuration, update and display the specified map base map
+  // map.basemap = 'Offline map'
 }
 
-// basemaps说支持的图层类型（tileLayer）
+//basemaps says supported layer types (tileLayer)
 // "type": "image"
 // "type": "xyz"
 // "type": "wms"
@@ -52,8 +52,8 @@ function initMap() {
 // "type": "arcgis_cache"
 // "type": "gee"
 
-// "type": "tileinfo" 瓦片信息（一般用于测试）
-// "type": "grid"   网格线（一般用于无地图模式）
+// "type": "tileinfo" tile information (generally used for testing)
+// "type": "grid" grid lines (generally used in no-map mode)
 
 // "type": "tdt"
 // "type": "gaode"

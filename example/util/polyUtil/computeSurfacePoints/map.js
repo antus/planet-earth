@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
 var mapOptions = {
   scene: {
@@ -9,7 +9,7 @@ var mapOptions = {
   terrain: false
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 let graphicLayer
 let graphic1
@@ -17,15 +17,15 @@ let graphic2
 let graphic3
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer({ popup: "all" })
   map.addLayer(graphicLayer)
 
@@ -59,8 +59,8 @@ function onMounted(mapInstance) {
   graphicLayer.addGraphic(graphic3)
 }
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -95,9 +95,9 @@ async function computeStepSurfaceLine(positions) {
     positions,
     splitNum: 50,
     exact: true,
-    surfaceHeight: false // 不用重复计算高度
+    surfaceHeight: false // No need to repeatedly calculate height
   })
-  console.log("插值后新坐标数组", newPositions)
+  console.log("New coordinate array after interpolation", newPositions)
 
   graphic1.show = true
   graphic2.show = false
@@ -111,7 +111,7 @@ async function computeStepSurfaceLine(positions) {
     exact: true
   })
   const arrHeightPoints1 = result1.positions
-  console.log("生成第1层数据", result1)
+  console.log("Generate layer 1 data", result1)
 
   graphic1.show = false
   graphic2.show = true
@@ -125,7 +125,7 @@ async function computeStepSurfaceLine(positions) {
     exact: true
   })
   const arrHeightPoints2 = result2.positions
-  console.log("生成第2层数据", result2)
+  console.log("Generate layer 2 data", result2)
 
   graphic1.show = false
   graphic2.show = false
@@ -138,7 +138,7 @@ async function computeStepSurfaceLine(positions) {
     exact: true
   })
   const arrHeightPoints3 = result3.positions
-  console.log("生成第3层数据", result3)
+  console.log("Generate layer 3 data", result3)
 
   graphic1.show = true
   graphic2.show = true
@@ -153,7 +153,7 @@ async function computeStepSurfaceLine(positions) {
   const arrHB3 = []
 
   for (let i = 0; i < arrHeightPoints1.length; i++) {
-    // 长度
+    // length
     if (i !== 0) {
       const templen = Cesium.Cartesian3.distance(arrHeightPoints1[i], arrHeightPoints1[i - 1])
       all_distance += templen
@@ -161,12 +161,12 @@ async function computeStepSurfaceLine(positions) {
     }
     arrLen.push(Number(all_distance.toFixed(1)))
 
-    // 海拔高度
+    // Altitude
     const point = mars3d.LngLatPoint.fromCartesian(arrHeightPoints1[i])
     arrHB1.push(point.alt)
     arrPoint.push(point)
 
-    // 其他3层的高度
+    //The height of the other 3 floors
     const point2 = mars3d.LngLatPoint.fromCartesian(arrHeightPoints2[i])
     arrHB2.push(point2.alt)
 
@@ -179,11 +179,11 @@ async function computeStepSurfaceLine(positions) {
 
 let tipGraphic
 /**
- *  echart图表中的图标
+ *Icons in echart charts
  *
  * @export
- * @param {Array} point 坐标点
- * @param {number} z 海拔高度
+ * @param {Array} point coordinate point
+ * @param {number} z altitude
  * @param {html} inthtml html
  * @returns {void}
  */
@@ -192,7 +192,7 @@ function showTipMarker(point, z, inthtml) {
 
   if (!tipGraphic) {
     tipGraphic = new mars3d.graphic.BillboardEntity({
-      name: "当前点",
+      name: "Current point",
       position: _position_draw,
       style: {
         image: "img/marker/mark-blue.png",

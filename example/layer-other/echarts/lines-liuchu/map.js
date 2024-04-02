@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 26.63086, lng: 113.052819, alt: 5934039, heading: 0, pitch: -80 }
@@ -10,21 +10,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  // 创建Echarts图层
+  // Create Echarts layer
   createEchartsLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -35,161 +35,161 @@ function createEchartsLayer() {
   const echartsLayer = new mars3d.layer.EchartsLayer(options)
   map.addLayer(echartsLayer)
 
-  // 图表自适应
+  //Chart adaptive
   window.addEventListener("resize", function () {
     echartsLayer.resize()
   })
 }
 
 /**
- *echart图层
+ *echart layer
  *
- * @return {option} echart图表的数据
+ * @return {option} echart chart data
  */
 function getEchartsOption() {
   const geoCoordMap = {
-    安徽省: [117.17, 31.52],
-    北京市: [116.24, 39.55],
-    重庆市: [106.54, 29.59],
-    福建省: [119.18, 26.05],
-    甘肃省: [103.51, 36.04],
-    广东省: [113.14, 23.08],
-    广西壮族自治区: [108.19, 22.48],
-    贵州省: [106.42, 26.35],
-    海南省: [110.2, 20.02],
-    河北省: [114.3, 38.02],
-    河南省: [113.4, 34.46],
-    黑龙江省: [128.36, 45.44],
-    湖北省: [112.27, 30.15],
-    湖南省: [112.59, 28.12],
-    吉林省: [125.19, 43.54],
-    江苏省: [118.46, 32.03],
-    江西省: [115.55, 28.4],
-    辽宁省: [123.25, 41.48],
-    内蒙古: [108.41, 40.48],
-    宁夏回族自治区: [106.16, 38.27],
-    青海省: [101.48, 36.38],
-    山东省: [118.0, 36.4],
-    山西省: [112.33, 37.54],
-    陕西省: [108.57, 34.17],
-    上海市: [121.29, 31.14],
-    海南: [108.77, 19.1],
-    四川省: [104.04, 30.4],
-    天津市: [117.12, 39.02],
-    西藏自治区: [91.08, 29.39],
-    新疆维吾尔自治区: [87.36, 43.45],
-    云南省: [102.42, 25.04],
-    浙江省: [120.1, 30.16],
-    澳门: [115.07, 21.33],
-    台湾省: [121.21, 23.53]
+    Anhui Province: [117.17, 31.52],
+    Beijing: [116.24, 39.55],
+    Chongqing: [106.54, 29.59],
+    Fujian Province: [119.18, 26.05],
+    Gansu Province: [103.51, 36.04],
+    Guangdong Province: [113.14, 23.08],
+    Guangxi Zhuang Autonomous Region: [108.19, 22.48],
+    Guizhou Province: [106.42, 26.35],
+    Hainan Province: [110.2, 20.02],
+    Hebei Province: [114.3, 38.02],
+    Henan Province: [113.4, 34.46],
+    Heilongjiang Province: [128.36, 45.44],
+    Hubei Province: [112.27, 30.15],
+    Hunan Province: [112.59, 28.12],
+    Jilin Province: [125.19, 43.54],
+    Jiangsu Province: [118.46, 32.03],
+    Jiangxi Province: [115.55, 28.4],
+    Liaoning Province: [123.25, 41.48],
+    Inner Mongolia: [108.41, 40.48],
+    Ningxia Hui Autonomous Region: [106.16, 38.27],
+    Qinghai Province: [101.48, 36.38],
+    Shandong Province: [118.0, 36.4],
+    Shanxi Province: [112.33, 37.54],
+    Shaanxi Province: [108.57, 34.17],
+    Shanghai: [121.29, 31.14],
+    Hainan: [108.77, 19.1],
+    Sichuan Province: [104.04, 30.4],
+    Tianjin: [117.12, 39.02],
+    Tibet Autonomous Region: [91.08, 29.39],
+    Xinjiang Uygur Autonomous Region: [87.36, 43.45],
+    Yunnan Province: [102.42, 25.04],
+    Zhejiang Province: [120.1, 30.16],
+    Macau: [115.07, 21.33],
+    Taiwan Province: [121.21, 23.53]
   }
 
   const BJData = [
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "上海市",
+        name: "Shanghai City",
         value: 195
       }
     ],
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "广东省",
+        name: "Guangdong Province",
         value: 90
       }
     ],
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "辽宁省",
+        name: "Liaoning Province",
         value: 80
       }
     ],
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "湖北省",
+        name: "Hubei Province",
         value: 70
       }
     ],
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "内蒙古",
+        name: "Inner Mongolia",
         value: 70
       }
     ],
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "江苏省",
+        name: "Jiangsu Province",
         value: 60
       }
     ],
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "新疆维吾尔自治区",
+        name: "Xinjiang Uygur Autonomous Region",
         value: 70
       }
     ],
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "四川省",
+        name: "Sichuan Province",
         value: 40
       }
     ],
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "云南省",
+        name: "Yunnan Province",
         value: 130
       }
     ],
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "黑龙江省",
+        name: "Heilongjiang Province",
         value: 130
       }
     ],
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "甘肃省",
+        name: "Gansu Province",
         value: 200
       }
     ],
     [
       {
-        name: "北京市"
+        name: "Beijing"
       },
       {
-        name: "西藏自治区",
+        name: "Tibet Autonomous Region",
         value: 60
       }
     ]
@@ -220,7 +220,7 @@ function getEchartsOption() {
   ;[["", BJData]].forEach(function (item, i) {
     mySeries.push(
       {
-        // 线
+        // Wire
         name: item[0],
         type: "lines",
         coordinateSystem: "mars3dMap",
@@ -240,7 +240,7 @@ function getEchartsOption() {
         data: convertData(item[1])
       },
       {
-        // 移动 点
+        //Move point
         name: item[0],
         type: "lines",
         coordinateSystem: "mars3dMap",
@@ -262,7 +262,7 @@ function getEchartsOption() {
         data: convertData(item[1])
       },
       {
-        // 省份圆点
+        //Province dots
         name: item[0],
         // name: item[0] + ' Top10',
         type: "effectScatter",
@@ -307,8 +307,8 @@ function getEchartsOption() {
     // backgroundColor: '#404a59',
     backgroundColor: "rgba(116, 112, 124, 0.2)",
     title: {
-      text: "北京病人就诊流向图",
-      subtext: "(1月份统计结果)",
+      text: "Patient treatment flow chart in Beijing",
+      subtext: "(Statistical results for January)",
       left: "center",
       textStyle: {
         color: "#fff"
@@ -322,7 +322,7 @@ function getEchartsOption() {
       trigger: "item",
       formatter: function (params) {
         if (params.seriesIndex === 2 || params.seriesIndex === 5 || params.seriesIndex === 8) {
-          return params.name + " " + params.seriesName + " " + params.data.value[2] + " 人次"
+          return params.name + " " + params.seriesName + " " + params.data.value[2] + " persons"
         } else if (params.seriesIndex === 1 || params.seriesIndex === 4 || params.seriesIndex === 7) {
           return params.data.fromName + "→" + params.data.toName
         }

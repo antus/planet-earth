@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 32.246011, lng: 119.666969, alt: 317736, heading: 0, pitch: -90 }
@@ -11,21 +11,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  // 创建div图层
+  //Create div layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   const arrData = [
     {
-      name: "南通市",
+      name: "Nantong City",
       totalLength: 233991,
       deepUsedLength: 51077,
       deepUnUsedLength: 131008,
@@ -35,7 +35,7 @@ function onMounted(mapInstance) {
       lat: 32.000300065
     },
     {
-      name: "南京市",
+      name: "Nanjing City",
       totalLength: 91025,
       deepUsedLength: 36909,
       deepUnUsedLength: 12551,
@@ -45,7 +45,7 @@ function onMounted(mapInstance) {
       lat: 32.089238239
     },
     {
-      name: "镇江市",
+      name: "Zhenjiang City",
       totalLength: 147431,
       deepUsedLength: 35499,
       deepUnUsedLength: 52026,
@@ -55,7 +55,7 @@ function onMounted(mapInstance) {
       lat: 32.182042328
     },
     {
-      name: "扬州市",
+      name: "Yangzhou City",
       totalLength: 49649,
       deepUsedLength: 30245,
       deepUnUsedLength: 9140,
@@ -65,7 +65,7 @@ function onMounted(mapInstance) {
       lat: 32.271322643
     },
     {
-      name: "常州市",
+      name: "Changzhou City",
       totalLength: 9849,
       deepUsedLength: 3484,
       deepUnUsedLength: 836,
@@ -75,7 +75,7 @@ function onMounted(mapInstance) {
       lat: 31.971521771
     },
     {
-      name: "江阴市",
+      name: "Jiangyin City",
       totalLength: 23570,
       deepUsedLength: 22365,
       deepUnUsedLength: 1205,
@@ -89,8 +89,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -98,15 +98,15 @@ function onUnmounted() {
 
 function showDivGraphic(arr) {
   for (let i = 0; i < arr.length; i++) {
-    const deepUnUsed = arr[i].deepUnUsedLength // 国道
-    const deepUsed = arr[i].deepUsedLength // 县道
-    const total = arr[i].totalLength // 中间显示
-    const unDeepUnUsed = arr[i].unDeepUnUsedLength // 铁路
-    const unDeepUsed = arr[i].unDeepUsedLength // 高速
-    const cityName = arr[i].name // 城市名字
-    const point = [arr[i].lng, arr[i].lat] // 位置
+    const deepUnUsed = arr[i].deepUnUsedLength // National highway
+    const deepUsed = arr[i].deepUsedLength // County road
+    const total = arr[i].totalLength // middle display
+    const unDeepUnUsed = arr[i].unDeepUnUsedLength // Railway
+    const unDeepUsed = arr[i].unDeepUsedLength // high speed
+    const cityName = arr[i].name // City name
+    const point = [arr[i].lng, arr[i].lat] // position
 
-    // 白色背景
+    // White background
     const backGroundGraphic = new mars3d.graphic.DivGraphic({
       position: point,
       style: {
@@ -136,7 +136,7 @@ function showDivGraphic(arr) {
       const option = {
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b} : {c}km </br>占比 : {d}%",
+          formatter: "{a} <br/>{b} : {c}km </br>Proportion : {d}%",
           backgroundColor: "rgba(63, 72, 84, 0.7)",
           textStyle: {
             color: "#ffffff"
@@ -172,10 +172,10 @@ function showDivGraphic(arr) {
               show: false
             },
             data: [
-              { value: deepUnUsed, name: "国道" },
-              { value: deepUsed, name: "县道" },
-              { value: unDeepUnUsed, name: "铁路" },
-              { value: unDeepUsed, name: "高速" }
+              { value: deepUnUsed, name: "National Highway" },
+              { value: deepUsed, name: "County Road" },
+              { value: unDeepUnUsed, name: "Railway" },
+              { value: unDeepUsed, name: "High Speed" }
             ]
           }
         ]

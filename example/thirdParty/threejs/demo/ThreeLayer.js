@@ -1,7 +1,7 @@
 const BaseLayer = mars3d.layer.BaseLayer
 const THREE = window.THREE
 
-// 与THREE.js集成
+// Integrate with THREE.js
 class ThreeLayer extends BaseLayer {
   constructor(options = {}) {
     super(options)
@@ -18,29 +18,29 @@ class ThreeLayer extends BaseLayer {
   }
 
   /**
-   * 对象添加到地图上的创建钩子方法，
-   * 每次add时都会调用
-   * @return {void}  无
+   * Create hook method to add objects to the map,
+   * Called every time add
+   * @return {void} None
    * @private
    */
   _addedHook() {
     this.initThree()
 
-    this._map.viewer.useDefaultRenderLoop = false // 关闭自动渲染
+    this._map.viewer.useDefaultRenderLoop = false // Turn off automatic rendering
 
     // eslint-disable-next-line
     const that = this
     ;(function frame() {
-      // animateFrame: requestAnimationFrame事件句柄，用来清除操作
+      // animateFrame: requestAnimationFrame event handle, used for clearing operations
       that._animateFrame = window.requestAnimationFrame(frame)
-      that.update() // 按帧率执行
+      that.update() // Execute by frame rate
     })()
   }
 
   /**
-   * 对象从地图上移除的创建钩子方法，
-   * 每次remove时都会调用
-   * @return {void}  无
+   * Create hook method for object removal from the map,
+   * Called every time remove
+   * @return {void} None
    * @private
    */
   _removedHook() {
@@ -57,7 +57,7 @@ class ThreeLayer extends BaseLayer {
 
   initThree() {
     if (!THREE) {
-      throw new Error("请引入 three.js 库 ")
+      throw new Error("Please introduce the three.js library ")
     }
 
     const width = this._map.scene.canvas.clientWidth
@@ -69,7 +69,7 @@ class ThreeLayer extends BaseLayer {
     threeContainer.style.left = "0px"
     threeContainer.style.width = width + "px"
     threeContainer.style.height = height + "px"
-    threeContainer.style.pointerEvents = this._pointerEvents ? "auto" : "none" // auto时可以交互，但是没法放大地球， none 没法交互
+    threeContainer.style.pointerEvents = this._pointerEvents ? "auto" : "none" // You can interact with auto, but you can't zoom in on the earth, and you can't interact with none
     this._threeCanvas = threeContainer
 
     const fov = 45
@@ -156,8 +156,8 @@ class ThreeLayer extends BaseLayer {
   }
 
   /**
-   * 改变图层canvas容器尺寸
-   * @return {void}  无
+   * Change the size of the layer canvas container
+   * @return {void} None
    */
   resize() {
     if (this._threeCanvas) {

@@ -1,30 +1,30 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 var eventTarget = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 
-  // 加一些演示数据
+  //Add some demo data
   addDemoGraphic1(graphicLayer)
   addDemoGraphic2(graphicLayer)
   addDemoGraphic3(graphicLayer)
@@ -32,8 +32,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -51,7 +51,7 @@ function addDemoGraphic1(graphicLayer) {
       outlineColor: "#ffffff",
       outlineWidth: 2,
       label: {
-        text: "我是原始点",
+        text: "I am the original point",
         font_size: 18,
         color: "#ffffff",
         pixelOffsetY: -10,
@@ -60,42 +60,42 @@ function addDemoGraphic1(graphicLayer) {
         distanceDisplayCondition_near: 0
       }
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
   graphicLayer.addGraphic(graphic)
 
   initGraphicManager(graphic)
 
-  // graphic转geojson
+  // graphic to geojson
   const geojson = graphic.toGeoJSON()
-  console.log("转换后的geojson", geojson)
+  console.log("Converted geojson", geojson)
   addGeoJson(geojson, graphicLayer)
 }
-// 也可以在单个Graphic上做个性化管理及绑定操作
+// You can also perform personalized management and binding operations on a single Graphic
 function initGraphicManager(graphic) {
-  // 3.在graphic上绑定监听事件
+  // 3. Bind the listening event to the graphic
   // graphic.on(mars3d.EventType.click, function (event) {
-  //   console.log("监听graphic，单击了矢量对象", event)
+  // console.log("Listening to graphic, clicked vector object", event)
   // })
-  // 绑定Tooltip
-  // graphic.bindTooltip('我是graphic上绑定的Tooltip') //.openTooltip()
+  // Bind Tooltip
+  // graphic.bindTooltip('I am the Tooltip bound to graphic') //.openTooltip()
 
-  // 绑定Popup
+  // Bind Popup
   const inthtml = `<table style="width: auto;">
             <tr>
-              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">我是graphic上绑定的Popup </th>
+              <th scope="col" colspan="2" style="text-align:center;font-size:15px;">I am a Popup bound to the graphic </th>
             </tr>
             <tr>
-              <td>提示：</td>
-              <td>这只是测试信息，可以任意html</td>
+              <td>Tips:</td>
+              <td>This is just test information, you can use any html</td>
             </tr>
           </table>`
   graphic.bindPopup(inthtml).openPopup()
 
-  // 绑定右键菜单
+  //Bind right-click menu
   graphic.bindContextMenu([
     {
-      text: "删除对象[graphic绑定的]",
+      text: "Delete object [graphic-bound]",
       icon: "fa fa-trash-o",
       callback: (e) => {
         const graphic = e.graphic
@@ -106,47 +106,47 @@ function initGraphicManager(graphic) {
     }
   ])
 
-  // 测试 颜色闪烁
+  //Test color flash
   if (graphic.startFlicker) {
     graphic.startFlicker({
-      time: 20, // 闪烁时长（秒）
+      time: 20, // Flashing duration (seconds)
       maxAlpha: 0.5,
       color: Cesium.Color.YELLOW,
       onEnd: function () {
-        // 结束后回调
+        // Callback after completion
       }
     })
   }
 }
 
-// 添加单个geojson为graphic，多个直接用graphicLayer.loadGeoJSON
+// Add a single geojson as graphic, use graphicLayer.loadGeoJSON directly for multiple
 function addGeoJson(geojson, graphicLayer) {
   const graphicCopy = mars3d.Util.geoJsonToGraphics(geojson)[0]
   delete graphicCopy.attr
-  // 新的坐标
+  // new coordinates
   graphicCopy.position = [116.18869, 30.95041, 525.84]
   graphicCopy.style.label = graphicCopy.style.label || {}
-  graphicCopy.style.label.text = "我是转换后生成的"
+  graphicCopy.style.label.text = "I generated it after conversion"
   graphicLayer.addGraphic(graphicCopy)
 }
 
 function addDemoGraphic2(graphicLayer) {
   const graphic = new mars3d.graphic.PointEntity({
-    name: "根据视距缩放点",
+    name: "Scale points based on viewing distance",
     position: new mars3d.LngLatPoint(116.301798, 30.835848, 915),
     style: {
       color: "#00ff00",
       pixelSize: 32,
       scaleByDistance: new Cesium.NearFarScalar(10000, 1.0, 500000, 0.1)
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "Example 2" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
 function addDemoGraphic3(graphicLayer) {
   const graphic = new mars3d.graphic.PointEntity({
-    name: "贴地点",
+    name: "Posting location",
     position: new mars3d.LngLatPoint(116.39224, 30.902853),
     style: {
       color: "#ffff00",
@@ -154,23 +154,23 @@ function addDemoGraphic3(graphicLayer) {
       clampToGround: true,
       outlineWidth: 0,
 
-      label: { text: "鼠标单击会高亮", pixelOffsetY: -10 },
-      // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+      label: { text: "Mouse click will highlight", pixelOffsetY: -10 },
+      // The style when highlighting (default is mouse move in, you can also specify type:'click' to click to highlight). After construction, you can also manually call the openHighlight and closeHighlight methods.
       highlight: {
-        type: mars3d.EventType.click, // 默认为鼠标移入高亮，也可以指定click单击高亮
+        type: mars3d.EventType.click, // The default is to highlight when the mouse moves in, you can also specify click to highlight
         pixelSize: 15,
         outlineColor: "#ff0000",
         outlineWidth: 2
       }
     },
-    attr: { remark: "示例3" }
+    attr: { remark: "Example 3" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
 function addDemoGraphic4(graphicLayer) {
   const graphic = new mars3d.graphic.PointEntity({
-    name: "根据视距显示点",
+    name: "Display points based on viewing distance",
     position: new mars3d.LngLatPoint(116.329102, 30.977955, 1548.6),
     style: {
       color: "#0000ff",
@@ -179,19 +179,19 @@ function addDemoGraphic4(graphicLayer) {
       outlineWidth: 2,
       distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 100000)
     },
-    attr: { remark: "示例4" }
+    attr: { remark: "Example 4" }
   })
   graphicLayer.addGraphic(graphic)
 }
 
-// 生成演示数据(测试数据量)
+// Generate demonstration data (test data amount)
 function addRandomGraphicByCount(count) {
   graphicLayer.clear()
-  graphicLayer.enabledEvent = false // 关闭事件，大数据addGraphic时影响加载时间
+  graphicLayer.enabledEvent = false // Turn off the event, which affects the loading time when big data addGraphic
 
   const bbox = [116.984788, 31.625909, 117.484068, 32.021504]
   const result = mars3d.PolyUtil.getGridPoints(bbox, count, 30)
-  console.log("生成的测试网格坐标", result)
+  console.log("Generated test grid coordinates", result)
 
   for (let j = 0; j < result.points.length; ++j) {
     const position = result.points[j]
@@ -210,11 +210,11 @@ function addRandomGraphicByCount(count) {
     graphicLayer.addGraphic(graphic)
   }
 
-  graphicLayer.enabledEvent = true // 恢复事件
+  graphicLayer.enabledEvent = true // restore event
   return result.points.length
 }
 
-// 开始绘制
+// Start drawing
 function startDrawGraphic() {
   graphicLayer.startDraw({
     type: "point",
@@ -224,8 +224,8 @@ function startDrawGraphic() {
       outlineColor: "#ffffff",
       outlineWidth: 2,
       label: {
-        // 不需要文字时，去掉label配置即可
-        text: "可以同时支持文字",
+        // When text is not needed, just remove the label configuration
+        text: "can support text at the same time",
         font_size: 20,
         color: "#ffffff",
         outline: true,
@@ -236,23 +236,23 @@ function startDrawGraphic() {
   })
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "开始编辑对象",
+      text: "Start editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -272,7 +272,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "停止编辑对象",
+      text: "Stop editing object",
       icon: "fa fa-edit",
       show: function (e) {
         const graphic = e.graphic
@@ -292,7 +292,7 @@ function bindLayerContextMenu() {
       }
     },
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -307,7 +307,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)

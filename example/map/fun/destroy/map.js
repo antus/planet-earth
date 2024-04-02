@@ -1,20 +1,20 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   layers: [
     {
       type: "geojson",
-      name: "示例数据",
+      name: "Sample data",
       url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
       popup: "{type} {name}",
       show: true
     },
     {
       type: "3dtiles",
-      name: "测试模型",
+      name: "Test Model",
       url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
       position: { lng: 116.313536, lat: 31.217297, alt: 80 },
       scale: 100,
@@ -24,22 +24,22 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
   map.on(mars3d.EventType.load, function (event) {
-    console.log(`地图所有图层加载完成`)
+    console.log(`All map layers loaded`)
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   destroyMap()
@@ -47,7 +47,7 @@ function onUnmounted() {
 
 function createMap() {
   if (map) {
-    globalMsg("地图已存在,请勿重复创建!")
+    globalMsg("The map already exists, please do not create it again!")
     return map
   }
   map = new mars3d.Map("mars3dContainer", mapOptions)
@@ -57,7 +57,7 @@ function createMap() {
 
 function destroyMap() {
   if (!map) {
-    globalMsg("地图已销毁,无需重复销毁!")
+    globalMsg("The map has been destroyed, no need to destroy it again!")
     return
   }
   map.destroy()

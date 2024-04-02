@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let terrainPlanClip
 
 var mapOptions = {
@@ -12,32 +12,32 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", `因为使用clippingPlanes接口，绘制多边形时，部分围合角度时会存在效果不对`)
+  globalNotify("Known problem tips", `Because the clippingPlanes interface is used, when drawing polygons, there will be incorrect effects when partially enclosing angles`)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addLayer(height) {
-  // 管网模型图层
+  // Pipe network model layer
   const tilesetLayer = new mars3d.layer.TilesetLayer({
-    name: "地下管网",
+    name: "Underground Pipe Network",
     url: "//data.mars3d.cn/3dtiles/max-piping/tileset.json",
     position: { lng: 117.215457, lat: 31.843363, alt: -3.6 },
     rotation: { z: 336.7 },
@@ -55,37 +55,37 @@ function addLayer(height) {
       [117.21764, 31.843807, 42.83],
       [117.214491, 31.843807, 42.83]
     ],
-    diffHeight: height, // 井的深度
-    image: "img/textures/poly-stone.jpg", // 边界墙材质
-    imageBottom: "img/textures/poly-soil.jpg", // 底部区域材质
-    splitNum: 50 // 井边界插值数
+    diffHeight: height, //The depth of the well
+    image: "img/textures/poly-stone.jpg", // Boundary wall material
+    imageBottom: "img/textures/poly-soil.jpg", // Bottom area material
+    splitNum: 50 // Well boundary interpolation number
   })
   map.addThing(terrainPlanClip)
 }
 
-// 是否挖地
+// Whether to dig the ground
 function chkClippingPlanes(val) {
   terrainPlanClip.enabled = val
 }
 
-// 是否外切割
+// Whether to cut outside
 function chkUnionClippingRegions(val) {
   terrainPlanClip.clipOutSide = val
 }
 
-// 是否深度检测
+// Whether to detect depth
 function chkTestTerrain(val) {
   map.scene.globe.depthTestAgainstTerrain = val
 }
 
-// 改变切割的深度
+//Change the depth of the cut
 function changeClipHeight(val) {
   terrainPlanClip.diffHeight = val
 }
 
-// 添加矩形
+// add rectangle
 function btnDrawExtent() {
-  terrainPlanClip.clear() // 清除挖地区域
+  terrainPlanClip.clear() // Clear the excavation area
 
   map.graphicLayer.startDraw({
     type: "rectangle",
@@ -95,21 +95,21 @@ function btnDrawExtent() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
-      // 挖地区域
+      // Digging area
       terrainPlanClip.positions = positions
     }
   })
 }
 
-// 添加多边形
+//Add polygon
 function btnDraw() {
-  terrainPlanClip.clear() // 清除挖地区域
+  terrainPlanClip.clear() // Clear the excavation area
 
   map.graphicLayer.startDraw({
     type: "polygon",
@@ -118,18 +118,18 @@ function btnDraw() {
       opacity: 0.5
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
-      // 挖地区域
+      // Digging area
       terrainPlanClip.positions = positions
     }
   })
 }
-// 清除
+// clear
 function removeAll() {
-  terrainPlanClip.clear() // 清除挖地区域
+  terrainPlanClip.clear() // Clear the excavation area
 }

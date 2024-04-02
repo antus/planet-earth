@@ -1,10 +1,10 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let tileLayer
 let wmsLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 28.268322, lng: 117.426104, alt: 1052215, heading: 0, pitch: -69 }
@@ -13,38 +13,38 @@ var mapOptions = {
     baseLayerPicker: false
   },
   basemaps: [],
-  layers: [{ type: "tileinfo", name: "瓦片信息", zIndex: 3, show: true }]
+  layers: [{ type: "tileinfo", name: "tile information", zIndex: 3, show: true }]
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
   addLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addLayer() {
-  // 添加图层
+  //Add layer
   tileLayer = new mars3d.layer.TdtLayer({
-    name: "天地图影像",
+    name: "Heaven Map Image",
     layer: "img_d",
     zIndex: 1
   })
   map.addLayer(tileLayer)
 
-  // wms、arcgis等矢量发布类型图层支持click事件
+  // Vector publishing type layers such as wms and arcgis support click events.
   wmsLayer = new mars3d.layer.WmsLayer({
     url: "//server.mars3d.cn/geoserver/mars/wms",
     layers: "mars:hf",
@@ -66,36 +66,36 @@ function addLayer() {
 
 function addTileStatus() {
   map.on(mars3d.EventType.tileLoadProgress, function (count) {
-    // console.log(`地图所有瓦片加载,剩余：${count}`)
+    // console.log(`All map tiles loaded, remaining: ${count}`)
     if (count === 0) {
-      console.log(`地图所有瓦片加载完成`)
+      console.log(`All map tiles loaded`)
     }
   })
 
   let count = 0
-  // 添加单个瓦片，开始加载瓦片（请求前）
+  //Add a single tile and start loading tiles (before request)
   tileLayer.on(mars3d.EventType.addTile, function (event) {
     count++
-    console.log(`${count},开始请求加载瓦片: L:${event.level},X:${event.x},Y:${event.y}`)
+    console.log(`${count}, start request to load tiles: L:${event.level},X:${event.x},Y:${event.y}`)
   })
-  // 添加单个瓦片 加载瓦片完成
+  //Add a single tile. Loading of tiles is completed.
   tileLayer.on(mars3d.EventType.addTileSuccess, function (event) {
     count--
-    console.log(`${count},开始请求加载瓦片: L:${event.level},X:${event.x},Y:${event.y}`)
+    console.log(`${count}, start request to load tiles: L:${event.level},X:${event.x},Y:${event.y}`)
   })
-  // 添加单个瓦片 加载瓦片出错
+  //Add a single tile. An error occurred while loading the tile.
   tileLayer.on(mars3d.EventType.addTileError, function (event) {
     count--
-    console.log(`${count},开始请求加载瓦片: L:${event.level},X:${event.x},Y:${event.y}`)
+    console.log(`${count}, start request to load tiles: L:${event.level},X:${event.x},Y:${event.y}`)
   })
 
-  // 卸载移除了瓦片
+  // Uninstall removes tiles
   tileLayer.on(mars3d.EventType.removeTile, function (event) {
-    console.log(`卸载移除了瓦片: L:${event.level},X:${event.x},Y:${event.y}`)
+    console.log(`Uninstall removed tiles: L:${event.level},X:${event.x},Y:${event.y}`)
   })
 
-  // 单击事件
+  // click event
   wmsLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了矢量数据，共" + event.features.length + "条", event)
+    console.log("Clicked vector data, total" + event.features.length + "bar", event)
   })
 }

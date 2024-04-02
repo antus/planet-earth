@@ -1,33 +1,33 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
 let queryMapserver
 let geoJsonLayer
 let drawGraphic
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.79536, lng: 117.255222, alt: 16294, heading: 358, pitch: -76 }
   }
 }
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
   showGeoJsonLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -35,22 +35,22 @@ function onUnmounted() {
 
 function query(text) {
   queryMapserver.query({
-    column: "项目名称",
+    column: "Project name",
     text,
     graphic: drawGraphic,
     success: (result) => {
       if (result.count === 0) {
-        globalMsg("未查询到相关记录！")
+        globalMsg("No relevant records found!")
         geoJsonLayer.load({ data: { features: null } })
         return
       } else {
-        globalMsg("共查询到 " + result.count + " 条记录！")
+        globalMsg("A total of " + result.count + " records were queried!")
       }
       geoJsonLayer.load({ data: result.geojson })
     },
     error: (error, msg) => {
-      console.log("服务访问错误", error)
-      globalAlert(msg, "服务访问错误")
+      console.log("Service access error", error)
+      globalAlert(msg, "Service access error")
     }
   })
 }
@@ -61,7 +61,7 @@ function showGeoJsonLayer() {
     layer: "mars:hfjy"
   })
 
-  // 用于显示查询结果（geojson）的图层
+  //Layer used to display query results (geojson)
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
     symbol: {
       styleOptions: {
@@ -75,7 +75,7 @@ function showGeoJsonLayer() {
         highlight: { type: "click", image: "img/marker/mark-red.png" },
         clampToGround: true,
         label: {
-          text: "{项目名称}",
+          text: "{project name}",
           font_size: 25,
           color: "#ffffff",
           outline: true,
@@ -102,7 +102,7 @@ function showGeoJsonLayer() {
   })
 }
 
-// 框选查询 矩形
+// Frame selection query rectangle
 function drawRectangle() {
   clearAll()
   map.graphicLayer.startDraw({
@@ -117,12 +117,12 @@ function drawRectangle() {
     success: function (graphic) {
       drawGraphic = graphic
 
-      console.log("矩形：", drawGraphic.toGeoJSON({ outline: true }))
+      console.log("rectangle:", drawGraphic.toGeoJSON({ outline: true }))
     }
   })
 }
 
-// 框选查询   圆
+// Frame selection query circle
 function drawCircle() {
   clearAll()
   map.graphicLayer.startDraw({
@@ -136,12 +136,12 @@ function drawCircle() {
     },
     success: function (graphic) {
       drawGraphic = graphic
-      console.log("圆：", drawGraphic.toGeoJSON({ outline: true }))
+      console.log("circle:", drawGraphic.toGeoJSON({ outline: true }))
     }
   })
 }
 
-// 框选查询   多边行
+// Frame selection query multi-row
 function drawPolygon() {
   clearAll()
   map.graphicLayer.startDraw({
@@ -155,7 +155,7 @@ function drawPolygon() {
     },
     success: function (graphic) {
       drawGraphic = graphic
-      console.log("多边行：", drawGraphic.toGeoJSON())
+      console.log("Polyline:", drawGraphic.toGeoJSON())
     }
   })
 }
@@ -171,8 +171,8 @@ function clearAll(noClearDraw) {
 function flyToGraphic(graphic) {
   graphic.openHighlight()
   graphic.flyTo({
-    radius: 1000, // 点数据：radius控制视距距离
-    scale: 1.5, // 线面数据：scale控制边界的放大比例
+    radius: 1000, // Point data: radius controls the sight distance
+    scale: 1.5, // Line and surface data: scale controls the amplification ratio of the boundary
     complete: () => {
       graphic.openPopup()
     }

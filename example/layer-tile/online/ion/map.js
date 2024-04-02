@@ -1,17 +1,17 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 25.229785, lng: 113.226084, alt: 3339440, heading: 0, pitch: -81 },
     highDynamicRange: false
   },
-  // 方式1：在创建地球前的参数中配置
+  // Method 1: Configure in the parameters before creating the earth
   basemaps: [
     {
-      name: "Ion影像地图",
+      name: "Ion Image Map",
       icon: "img/basemaps/bingAerial.png",
       type: "ion",
       assetId: 2,
@@ -19,7 +19,7 @@ var mapOptions = {
       show: true
     },
     {
-      name: "Ion电子地图",
+      name: "Ion electronic map",
       icon: "img/basemaps/bingmap.png",
       type: "ion",
       assetId: 4,
@@ -28,40 +28,40 @@ var mapOptions = {
   ]
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   globalNotify(
-    "已知问题提示",
-    `如图层未显示或服务URL访问超时，是因为目前国家测绘主管部门对未经审核批准的国外地图服务做了屏蔽封锁。
-     您可以需翻墙使用 或 参考示例代码替换本地服务地址使用。`
+    "Known Issue Tips",
+    `For example, if the layer is not displayed or the service URL access times out, it is because the national surveying and mapping authorities currently block foreign map services that have not been reviewed and approved.
+     You can use it if you need to circumvent the firewall or refer to the sample code to replace the local service address. `
   )
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 叠加的图层
+// overlaid layers
 let tileLayer
 function addTileLayer() {
   removeTileLayer()
 
-  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  // Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
   tileLayer = new mars3d.layer.IonLayer({
-    layer: "Ion电子地图",
+    layer: "Ion electronic map",
     minimumTerrainLevel: 4,
     minimumLevel: 4,
     assetId: 4,

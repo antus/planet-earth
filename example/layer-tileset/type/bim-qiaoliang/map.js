@@ -1,12 +1,12 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let terrainPlanClip
-let tilesetPlanClip // 模型裁剪事件
+let tilesetPlanClip // Model clipping event
 let underground
 let terrainClip
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.8503, lng: 117.101008, alt: 308, heading: 291, pitch: -30 },
@@ -18,40 +18,40 @@ var mapOptions = {
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 加个模型
+  //Add a model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     id: 1987,
-    name: "桥梁",
+    name: "bridge",
     url: "//data.mars3d.cn/3dtiles/bim-qiaoliang/tileset.json",
     maximumScreenSpaceError: 16,
     cullWithChildrenBounds: false,
 
     position: { lng: 117.096906, lat: 31.851564, alt: 45 },
     rotation: { z: 17.5 },
-    // 高亮时的样式
+    // Style when highlighted
     highlight: {
-      // all: true, //全部整体高亮，false时是构件高亮
-      type: mars3d.EventType.click, // 默认为鼠标移入高亮，也可以指定click单击高亮
+      // all: true, //All the overall highlighting, false is the component highlighting
+      type: mars3d.EventType.click, // The default is to highlight when the mouse moves in, you can also specify click to highlight
       color: "#00FF00"
     },
     popup: "all"
   })
   map.addLayer(tiles3dLayer)
 
-  // 单击事件
+  // click event
   tiles3dLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了3dtiles图层", event)
+    console.log("3dtiles layer clicked", event)
   })
 
   addPlanClipThing(tiles3dLayer)
@@ -60,15 +60,15 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addPlanClipThing(tiles3dLayer) {
-  // 模型裁剪
+  //Model cropping
   tilesetPlanClip = new mars3d.thing.TilesetPlanClip({
     positions: [
       [117.096786, 31.851355, 0],
@@ -93,9 +93,9 @@ function addPlanClipThing(tiles3dLayer) {
   map.addThing(terrainPlanClip)
 }
 
-// 是否开启地下模式
+// Whether to enable underground mode
 function chkUnderground(val, alphaVal) {
-  // 地下模式
+  // underground mode
   if (!underground) {
     underground = new mars3d.thing.Underground({
       alpha: alphaVal,
@@ -107,7 +107,7 @@ function chkUnderground(val, alphaVal) {
   underground.enabled = val
 }
 
-// 透明度发生改变
+//Transparency changes
 function alphaChange(value) {
   if (underground) {
     underground.alpha = value
@@ -115,14 +115,14 @@ function alphaChange(value) {
 }
 
 // ==========================================
-// 是否开挖
+// Whether to excavate
 function chkClippingPlanes(val) {
   terrainClip.enabled = val
   terrainPlanClip.enabled = val
 }
 
 function terrainClips(heightVal) {
-  // 挖地区域
+  // Digging area
   terrainClip = new mars3d.thing.TerrainClip({
     positions: [
       [117.096176, 31.851189, 42.56],
@@ -131,10 +131,10 @@ function terrainClips(heightVal) {
       [117.096176, 31.853494, 42.56]
     ],
     exact: true,
-    diffHeight: heightVal, // 高度
+    diffHeight: heightVal, // height
     image: "./img/textures/poly-stone.jpg",
     imageBottom: "./img/textures/poly-soil.jpg",
-    splitNum: 80 // 井边界插值数
+    splitNum: 80 // Well boundary interpolation number
   })
   map.addThing(terrainClip)
 }
@@ -143,9 +143,9 @@ function heightChange(num) {
   terrainClip.diffHeight = num
 }
 
-// 绘制矩形
+// draw rectangle
 function drawExtent() {
-  terrainClip.clear() // 清除挖地区域
+  terrainClip.clear() // Clear the excavation area
   terrainPlanClip.clear()
 
   map.graphicLayer.startDraw({
@@ -156,13 +156,13 @@ function drawExtent() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
-      // 挖地区域
+      // Digging area
       terrainClip.positions = positions
 
       terrainPlanClip.positions = positions
@@ -170,9 +170,9 @@ function drawExtent() {
   })
 }
 
-// 绘制多边形
+// draw polygon
 function drawPolygon() {
-  terrainClip.clear() // 清除挖地区域
+  terrainClip.clear() // Clear the excavation area
   terrainPlanClip.clear()
 
   map.graphicLayer.startDraw({
@@ -183,13 +183,13 @@ function drawPolygon() {
       clampToGround: true
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
-      console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+      console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
-      // 挖地区域
+      // Digging area
       terrainClip.positions = positions
       terrainPlanClip.positions = positions
     }
@@ -197,7 +197,7 @@ function drawPolygon() {
 }
 
 function clearWJ() {
-  terrainClip.clear() // 清除挖地区域
+  terrainClip.clear() // Clear the excavation area
   terrainPlanClip.clear()
 }
 
@@ -206,15 +206,15 @@ function distanceChange(value) {
   tilesetPlanClip.distance = value
 }
 
-// 切顶
+// Top cut
 function clipTop() {
   tilesetPlanClip.clipType = mars3d.ClipType.ZR
 }
-// 起点
+// starting point
 function clipBottom() {
   tilesetPlanClip.clipType = mars3d.ClipType.Z
 }
-// 切线
+// tangent
 function clipLine() {
   tilesetPlanClip.clear()
 
@@ -227,7 +227,7 @@ function clipLine() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.positionsShow
       map.graphicLayer.clear()
 
@@ -236,7 +236,7 @@ function clipLine() {
   })
 }
 
-// 内切
+// incision
 function clipPoly() {
   tilesetPlanClip.clear()
 
@@ -247,11 +247,11 @@ function clipPoly() {
   //     opacity: 0.5
   //   },
   //   success: function (graphic) {
-  //     // 绘制成功后回调
+  // // Callback after successful drawing
   //     const positions = graphic.positionsShow
   //     map.graphicLayer.clear()
 
-  //     console.log("绘制坐标为", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // 方便测试拷贝坐标
+  // console.log("The drawing coordinates are", JSON.stringify(mars3d.LngLatArray.toArray(positions))) // Convenient for testing copy coordinates
 
   //     tilesetPlanClip.positions = positions
   //   }
@@ -265,7 +265,7 @@ function clipPoly() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 
@@ -274,7 +274,7 @@ function clipPoly() {
   })
 }
 
-// 外切
+// circumcision
 function clipPoly2() {
   tilesetPlanClip.clear()
 
@@ -286,7 +286,7 @@ function clipPoly2() {
   //     clampToGround: true
   //   },
   //   success: function (graphic) {
-  //     // 绘制成功后回调
+  // // Callback after successful drawing
   //     const positions = graphic.positionsShow
   //     map.graphicLayer.clear()
 
@@ -303,7 +303,7 @@ function clipPoly2() {
       outline: false
     },
     success: function (graphic) {
-      // 绘制成功后回调
+      // Callback after successful drawing
       const positions = graphic.getOutlinePositions(false)
       map.graphicLayer.clear()
 

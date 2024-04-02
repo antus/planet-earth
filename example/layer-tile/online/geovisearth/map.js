@@ -1,34 +1,34 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-const creditHtml = `©2023 中科星图- <span>审图号：GS (2023) 1924号</span>
--  甲测资字11111577 - <a href="https://geovisearth.com/declaration#/user" target="_blank" trace="tos">服务条款</a> `
+const creditHtml = `©2023 Zhongke Star Map- <span>Plan approval number: GS (2023) No. 1924</span>
+- Jiatestizizi11111577 - <a href="https://geovisearth.com/declaration#/user" target="_blank" trace="tos">Terms of Service</a> `
 
-// 星图官方地址：https://datacloud.geovisearth.com/support/map/summary
+//Official address of star map: https://datacloud.geovisearth.com/support/map/summary
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.675177, lng: 117.323257, alt: 81193, heading: 0, pitch: -79 },
     highDynamicRange: false
   },
-  // 方式1：在创建地球前的参数中配置
+  // Method 1: Configure in the parameters before creating the earth
   basemaps: [
     {
       pid: 10,
-      name: "星图影像",
+      name: "Star Map Image",
       icon: "/img/basemaps/tdt_img.png",
       type: "group",
       layers: [
         {
-          name: "底图",
+          name: "basemap",
           type: "xyz",
           url: "https://tiles{s}.geovisearth.com/base/v1/img/{z}/{x}/{y}?token=82455ef06c72bb3a35bbb4d7d05fd9eceb96a94dc942a056b8feb0e5928ed96f",
           subdomains: "123"
         },
         {
-          name: "注记",
+          name: "note",
           type: "xyz",
           url: "https://tiles{s}.geovisearth.com/base/v1/cia/{z}/{x}/{y}?token=82455ef06c72bb3a35bbb4d7d05fd9eceb96a94dc942a056b8feb0e5928ed96f",
           subdomains: "123"
@@ -39,7 +39,7 @@ var mapOptions = {
     },
     {
       pid: 10,
-      name: "星图电子",
+      name: "Star Map Electronics",
       icon: "/img/basemaps/tdt_vec.png",
       type: "xyz",
       url: "https://tiles{s}.geovisearth.com/base/v1/vec/{z}/{x}/{y}?token=82455ef06c72bb3a35bbb4d7d05fd9eceb96a94dc942a056b8feb0e5928ed96f",
@@ -49,36 +49,36 @@ var mapOptions = {
   ]
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
   addCreditDOM()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   removeCreditDOM()
   map = null
 }
 
-// 叠加的图层
+// overlaid layers
 let tileLayer
 function addTileLayer() {
   removeTileLayer()
 
-  // 方式2：在创建地球后调用addLayer添加图层(直接new对应type类型的图层类)
+  // Method 2: Call addLayer to add a layer after creating the earth (directly use new layer class corresponding to the type type)
   tileLayer = new mars3d.layer.XyzLayer({
-    name: "地形晕渲",
+    name: "Terrain Shading",
     url: "https://tiles{s}.geovisearth.com/base/v1/ter/{z}/{x}/{y}?token=82455ef06c72bb3a35bbb4d7d05fd9eceb96a94dc942a056b8feb0e5928ed96f",
     subdomains: "123",
     maximumLevel: 9
@@ -93,7 +93,7 @@ function removeTileLayer() {
   }
 }
 
-// 在下侧状态栏增加一个额外div展示图层版权信息
+//Add an additional div to the lower status bar to display layer copyright information
 let creditDOM
 function addCreditDOM() {
   const locationBar = map.controls.locationBar?.container

@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let heatLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.823087, lng: 117.236208, alt: 2383, heading: 3, pitch: -61 }
@@ -11,50 +11,50 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.basemap = 2017 // 蓝色底图
+  map = mapInstance // record map
+  map.basemap = 2017 // blue basemap
 
   showHeatMap()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function showHeatMap() {
-  // 随机数据的生成
+  //Generation of random data
   const heatMapData0 = getRandomPoints()
   const heatMapData1 = getRandomPoints()
   const resultHeatMapData = getRandomPoints()
 
-  // 热力图 图层
+  //Heat map layer
   heatLayer = new mars3d.layer.HeatLayer({
     positions: heatMapData0,
     rectangle,
-    // 以下为热力图本身的样式参数，可参阅api：https://www.patrick-wied.at/static/heatmapjs/docs.html
+    //The following are the style parameters of the heat map itself, please refer to the API: https://www.patrick-wied.at/static/heatmapjs/docs.html
     heatStyle: {
       radius: 40,
       blur: 0.85
     },
-    // 以下为矩形矢量对象的样式参数
+    //The following are the style parameters of the rectangular vector object
     style: {
-      // arc: true, // 是否为曲面
+      // arc: true, // Whether it is a surface
       height: 200.0
     }
   })
   map.addLayer(heatLayer)
 
-  // 为了演示动态更新
+  // To demonstrate dynamic updates
   let ratio = 0
   setInterval(() => {
     if (!isDynamic) {
@@ -68,7 +68,7 @@ function showHeatMap() {
 
     lerpHeatMapData(heatMapData0, heatMapData1, ratio, resultHeatMapData)
 
-    // 更新数据
+    // update data
     heatLayer.setPositions(resultHeatMapData, true)
   }, 100)
 }
@@ -87,13 +87,13 @@ const rectangle = {
 
 const heatCount = 1000
 
-// 获取bbox矩形区域内的count个随机点
+// Get count random points within the bbox rectangular area
 function getRandomPoints() {
   const arr = []
-  const arrPoint = turf.randomPoint(heatCount, { bbox: [rectangle.xmin, rectangle.ymin, rectangle.xmax, rectangle.ymax] }).features // 随机点
+  const arrPoint = turf.randomPoint(heatCount, { bbox: [rectangle.xmin, rectangle.ymin, rectangle.xmax, rectangle.ymax] }).features // Random points
   for (let i = 0; i < arrPoint.length; i++) {
     const item = arrPoint[i].geometry.coordinates
-    const val = Math.floor(Math.random() * 100) // 热力值
+    const val = Math.floor(Math.random() * 100) // Thermal value
     arr.push({ lng: item[0], lat: item[1], value: val })
   }
   return arr

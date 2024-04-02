@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 12.845055, lng: 112.931363, alt: 24286797, heading: 3, pitch: -90 },
@@ -10,54 +10,54 @@ var mapOptions = {
       zoomFactor: 3.0,
       minimumZoomDistance: 1000,
       maximumZoomDistance: 300000000,
-      constrainedAxis: false // 解除在南北极区域鼠标操作限制
+      constrainedAxis: false //Remove restrictions on mouse operations in the north and south poles
     }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
     compass: { top: "10px", left: "5px" }
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map = mapInstance // record map
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
   map.clock.shouldAnimate = true
-  map.clock.multiplier = 60 // 速度
+  map.clock.multiplier = 60 // speed
 
   addGraphicLayer()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addGraphicLayer() {
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了卫星", event)
+    console.log("Satellite clicked", event)
   })
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "卫星图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Satellite Layer", template: "all", attr })
   })
 
   const weixin = new mars3d.graphic.Satellite({
@@ -99,7 +99,7 @@ function addGraphicLayer() {
   })
   graphicLayer.addGraphic(weixin)
 
-  // 目标卫星
+  // target satellite
   const winxinMB = new mars3d.graphic.Satellite({
     name: "COSMOS 2251 DEB",
     tle1: "1 33916U 93036DV  21197.38574736  .00000034  00000-0  48020-4 0  9991",
@@ -139,7 +139,7 @@ function addGraphicLayer() {
   })
   graphicLayer.addGraphic(winxinMB)
 
-  // 四棱椎体
+  // Four-sided pyramid
   const rectSensor = new mars3d.graphic.RectSensor({
     position: new Cesium.CallbackProperty(function (time) {
       return weixin.position
@@ -151,13 +151,13 @@ function addGraphicLayer() {
       outline: true,
       topShow: true,
       topSteps: 2,
-      rayEllipsoid: true // 与地球求交
+      rayEllipsoid: true // Intersect with the Earth
     },
     reverse: true
   })
   graphicLayer.addGraphic(rectSensor)
 
-  // 追踪目标
+  // Track target
   rectSensor.lookAt = new Cesium.CallbackProperty(function (time) {
     return winxinMB.position
   }, false)

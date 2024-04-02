@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 23.54104, lng: 121.083097, alt: 10219674, heading: 0, pitch: -85 },
@@ -16,7 +16,7 @@ var mapOptions = {
   },
   basemaps: [
     {
-      name: "GEE地图",
+      name: "GEE map",
       icon: "img/basemaps/osm.png",
       type: "gee",
       url: "http://www.earthenterprise.org/3d",
@@ -27,20 +27,20 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
+  map = mapInstance //Record the first created map
 
-  globalNotify("已知问题提示", `(1) 需要自行部署自己的谷歌地球企业版服务后，修改url才能体验。`)
+  globalNotify("Known Issue Tips", `(1) You need to deploy your own Google Earth Enterprise Edition service and modify the URL to experience it.`)
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

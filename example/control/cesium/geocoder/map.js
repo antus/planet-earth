@@ -1,35 +1,35 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = function (option) {
   option.control = {
-    // geocoder: true // 用cesium原生
-    geocoder: "gaode" // 使用高德POI服务
+    // geocoder: true // Use cesium native
+    geocoder: "gaode" // Use Gaode POI service
   }
   return option
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 查询结果回调方法
+  // Query result callback method
   map.controls.geocoder._czmContrl.viewModel.complete.addEventListener(function () {
     const arrdata = map.controls.geocoder._czmContrl.viewModel.suggestions
-    console.log("查询结果", arrdata)
+    console.log("query results", arrdata)
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

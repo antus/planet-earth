@@ -3,24 +3,24 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="author" content="Mars Technology http://mars3d.cn " />
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="x5-fullscreen" content="true" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-    <!-- 标题及搜索关键字 -->
-    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <!-- Title and search keywords -->
+    <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
     <meta
       name="description"
-      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+      content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework three-dimensional earth model gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming Geographic Information System Cloud GIS 3D GIS GIS Platform WebGIS"
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
-    <title>控件控制(显示及关闭) | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>Control control (display and close) | Mars3D | 3D map | Mars Technology | Hefei Mars Technology Co., Ltd.</title>
 
-    <!--第三方lib-->
+    <!--Third-party lib-->
     <script
       type="text/javascript"
       src="/lib/include-lib.js"
@@ -38,72 +38,72 @@
 
     <div class="infoview">
       <div>
-        按钮：
+        Button:
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showLocationSearch" class="styled" type="checkbox" checked />
-          <label for="showLocationSearch"> POI搜索 </label>
+          <label for="showLocationSearch"> POI search </label>
         </div>
 
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showGoHome" class="styled" type="checkbox" checked />
-          <label for="showGoHome"> 视角复位 </label>
+          <label for="showGoHome">View reset </label>
         </div>
 
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showSceneModePicker" class="styled" type="checkbox" checked />
-          <label for="showSceneModePicker"> 二三维切换 </label>
+          <label for="showSceneModePicker"> 2D and 3D switching </label>
         </div>
 
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showBaseLayerPicker" class="styled" type="checkbox" checked />
-          <label for="showBaseLayerPicker"> 底图切换 </label>
+          <label for="showBaseLayerPicker"> Basemap switching </label>
         </div>
 
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showFullScreen" class="styled" type="checkbox" checked />
-          <label for="showFullScreen"> 全屏切换 </label>
+          <label for="showFullScreen"> Full screen switch </label>
         </div>
 
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showVR" class="styled" type="checkbox" checked />
-          <label for="showVR"> VR模式 </label>
+          <label for="showVR"> VR mode </label>
         </div>
 
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showHelpButton" class="styled" type="checkbox" checked />
-          <label for="showHelpButton"> 帮助 </label>
+          <label for="showHelpButton"> Help </label>
         </div>
 
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="zoomButton" class="styled" type="checkbox" checked />
-          <label for="zoomButton"> 地图缩放 </label>
+          <label for="zoomButton"> Map zoom </label>
         </div>
       </div>
       <div>
-        面板：
+        panel:
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showLocation" class="styled" type="checkbox" checked />
-          <label for="showLocation"> 位置信息状态栏 </label>
+          <label for="showLocation"> Location information status bar </label>
         </div>
 
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showClock" class="styled" type="checkbox" checked />
-          <label for="showClock"> 时钟面板（左下角） </label>
+          <label for="showClock"> Clock panel (lower left corner) </label>
         </div>
 
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showTimeLine" class="styled" type="checkbox" checked />
-          <label for="showTimeLine"> 时间刻度线 </label>
+          <label for="showTimeLine"> Time tick line </label>
         </div>
 
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showNav" class="styled" type="checkbox" checked />
-          <label for="showNav"> 导航球 </label>
+          <label for="showNav"> Navigation ball </label>
         </div>
 
         <div class="checkbox checkbox-primary checkbox-inline">
           <input id="showLegend" class="styled" type="checkbox" checked />
-          <label for="showLegend"> 比例尺 </label>
+          <label for="showLegend"> Scale </label>
         </div>
       </div>
     </div>
@@ -111,70 +111,70 @@
     <script src="/js/common.js"></script>
     <script src="./map.js"></script>
     <script type="text/javascript">
-      "use script" //开发环境建议开启严格模式
+      "use script" //It is recommended to turn on strict mode in the development environment
 
       function initUI(options) {
-        //显示clock
+        //display clock
         $("#showClock").change(function () {
           let val = $(this).is(":checked")
           bindClock(val)
         })
 
-        //显示刻度线
+        //Display tick marks
         $("#showTimeLine").change(function () {
           let val = $(this).is(":checked")
           bindTimeLine(val)
         })
 
-        //位置信息状态栏
+        //Location information status bar
         $("#showLocation").change(function () {
           let val = $(this).is(":checked")
           bindLocation(val)
         })
 
-        //导航球
+        //Navigation ball
         $("#showNav").change(function () {
           let val = $(this).is(":checked")
           bindNav(val)
         })
 
-        // 显示地图缩放
+        //Show map zoom
         $("#zoomButton").change(function () {
           let val = $(this).is(":checked")
           bindZoom(val)
         })
 
-        //比例尺
+        //scale
         $("#showLegend").change(function () {
           let val = $(this).is(":checked")
           bindLegend(val)
         })
 
-        //显示位置搜索
+        //Display location search
         $("#showLocationSearch").change(function () {
           let val = $(this).is(":checked")
           bindPOI(val)
         })
 
-        //显示回主页
+        //Display back to homepage
         $("#showGoHome").change(function () {
           let val = $(this).is(":checked")
           bindView(val)
         })
 
-        //显示三维视图切换
+        //Show 3D view switching
         $("#showSceneModePicker").change(function () {
           let val = $(this).is(":checked")
           bindSceneModePicker(val)
         })
 
-        //显示基础图层切换
+        //Display base layer switching
         $("#showBaseLayerPicker").change(function () {
           let val = $(this).is(":checked")
           bindBaseLayerPicker(val)
         })
 
-        //全屏切换
+        //Full screen switch
         $("#showFullScreen").change(function () {
           let val = $(this).is(":checked")
           bindFullScreen(val)
@@ -186,7 +186,7 @@
           bindVR(val)
         })
 
-        //显示帮助
+        //Show help
         $("#showHelpButton").change(function () {
           let val = $(this).is(":checked")
           bindHelpButton(val)

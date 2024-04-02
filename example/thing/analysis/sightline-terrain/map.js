@@ -1,42 +1,42 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let sightline
 
 let positionSXT
 let positionDM
-let positionJD // 与地面的交点
+let positionJD //Intersection point with the ground
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.841574, lng: 116.18792, alt: 6828, heading: 215, pitch: -28 }
   }
 }
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   creatTestData()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 创建测试数据
+//Create test data
 function creatTestData() {
   sightline = new mars3d.thing.Sightline()
   map.addThing(sightline)
@@ -45,7 +45,7 @@ function creatTestData() {
     positionJD = e.position
   })
 
-  // 测试数据
+  // Test Data
   positionSXT = Cesium.Cartesian3.fromDegrees(116.144485, 30.744249, 1060)
 
   const graphicSXT = new mars3d.graphic.PointEntity({
@@ -54,7 +54,7 @@ function creatTestData() {
       color: "#ffff00",
       pixelSize: 8,
       label: {
-        text: "摄像头",
+        text: "Camera",
         font_size: 20,
         color: "#ffffff",
         outline: true,
@@ -65,11 +65,11 @@ function creatTestData() {
   })
   map.graphicLayer.addGraphic(graphicSXT)
 
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 地面点
+  // ground point
   const TargetGraphic = new mars3d.graphic.PointEntity({
     position: new Cesium.CallbackProperty(() => {
       return positionDM
@@ -80,7 +80,7 @@ function creatTestData() {
       outlineColor: "#ffffff",
       outlineWidth: 2,
       label: {
-        text: "目标参考点",
+        text: "Target reference point",
         font_size: 18,
         color: "#ffffff",
         pixelOffsetY: -10,
@@ -103,10 +103,10 @@ function creatTestData() {
       outlineWidth: 2
     }
   })
-  graphicJD.bindTooltip("与地形地面的交点")
+  graphicJD.bindTooltip("Intersection with terrain ground")
   graphicLayer.addGraphic(graphicJD)
 
-  // 摄像头朝向的地面点连线
+  //The line connecting the ground points towards which the camera is facing
   const graphicLine = new mars3d.graphic.PolylineEntity({
     positions: new Cesium.CallbackProperty(function (time) {
       if (!positionSXT || !positionDM || positionJD != null) {
@@ -127,7 +127,7 @@ function creatTestData() {
   })
 }
 
-// 计算与地面焦点
+// Calculation and ground focus
 function analysisIntersection() {
   if (!positionSXT || !positionDM) {
     return []
@@ -137,7 +137,7 @@ function analysisIntersection() {
   sightline.addAsync(positionSXT, positionDM)
 }
 
-// 设置摄像头位置
+//Set camera position
 function sePoint() {
   map.graphicLayer.clear()
   map.graphicLayer.startDraw({
@@ -146,7 +146,7 @@ function sePoint() {
       pixelSize: 8,
       color: "#ffff00",
       label: {
-        text: "摄像头",
+        text: "Camera",
         font_size: 20,
         color: "#ffffff",
         outline: true,
@@ -156,7 +156,7 @@ function sePoint() {
     },
     success: function (graphic) {
       positionSXT = graphic.positionShow
-      positionSXT = mars3d.PointUtil.addPositionsHeight(positionSXT, 5.0) // 增加杆子高度
+      positionSXT = mars3d.PointUtil.addPositionsHeight(positionSXT, 5.0) // Increase the height of the pole
     }
   })
 }
@@ -164,11 +164,11 @@ function sePoint() {
 function testTerrain(val) {
   map.scene.globe.depthTestAgainstTerrain = val
   if (val) {
-    globalMsg("深度监测打开后，您将无法看到地下或被地形遮挡的对象")
+    globalMsg("When depth monitoring is turned on, you will not be able to see objects underground or obscured by terrain")
   }
 }
 
-// 更新模型数据
+//Update model data
 function updateModel(params) {
   if (!positionSXT) {
     return
@@ -182,7 +182,7 @@ function updateModel(params) {
   positionDM = mars3d.PointUtil.getRayEarthPosition(positionSXT, hpr, true, map.scene.globe.ellipsoid)
 
   if (!positionDM) {
-    // 与地面无交点时
+    // When there is no intersection with the ground
     positionDM = mars3d.PointUtil.getPositionByHprAndLen(positionSXT, hpr, 5000)
   }
 

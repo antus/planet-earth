@@ -1,36 +1,36 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = function (option) {
   option.control = {
-    distanceLegend: false // 当前演示的示例控件-比例尺控件
+    distanceLegend: false //The currently demonstrated sample control-scale control
   }
   return option
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 方式2：在创建地球后按需调用addControl添加(直接new对应type类型的控件) 不可多次添加
+  // Method 2: After creating the earth, call addControl as needed to add (directly new the control corresponding to the type type). It cannot be added multiple times.
   const distanceLegend = new mars3d.control.DistanceLegend({ left: "100px", bottom: "2px" })
   map.addControl(distanceLegend)
 
   distanceLegend.on(mars3d.EventType.change, function (event) {
-    console.log("比例尺发生变化", event)
+    console.log("Scale bar changes", event)
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

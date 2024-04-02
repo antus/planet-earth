@@ -2,17 +2,17 @@
 var map
 
 function initMap(mapOptions) {
-  // 读取 config.json 配置文件
+  //Read the config.json configuration file
   //return mars3d.Util.fetchJson({ url: "config/config.json" }).then(function (json) {
-  //  console.log("读取 config.json 配置文件完成", json) // 打印测试信息
+  // console.log("Reading config.json configuration file completed", json) // Print test information
 
-    // 创建三维地球场景
+    //Create a 3D earth scene
   //  const mapOptions = json.map3d
     map = new mars3d.Map("mars3dContainer", mapOptions)
 
-    // 打印测试信息
-    console.log("mars3d的Map主对象构造完成", map)
-    console.log("其中Cesium原生的Cesium.Viewer为", map.viewer)
+    //Print test information
+    console.log("Mars3d's Map main object construction completed", map)
+    console.log("The native Cesium.Viewer of Cesium is ", map.viewer)
     return map
   //})
 }

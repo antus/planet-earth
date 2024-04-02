@@ -1,11 +1,11 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.811646, lng: 117.22232, alt: 842.4, heading: 358.5, pitch: -45 }
@@ -13,56 +13,56 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.fixedLight = true // 固定光照，避免gltf模型随时间存在亮度不一致。
+  map = mapInstance // record map
+  map.fixedLight = true // Fixed lighting to avoid brightness inconsistencies in the gltf model over time.
 
   graphicLayer = new mars3d.layer.GraphicLayer({
     hasEdit: true,
-    isAutoEditing: true // 绘制完成后是否自动激活编辑
+    isAutoEditing: true // Whether to automatically activate editing after drawing is completed
   })
   map.addLayer(graphicLayer)
 
-  // 在layer上绑定监听事件
+  //Bind listening events on the layer
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("监听layer，单击了矢量对象", event)
+    console.log("Monitoring layer, clicked vector object", event)
   })
 
-  // 加载模型列表
+  //Load model list
   const configUrl = "//data.mars3d.cn/gltf/list.json"
   mars3d.Util.fetchJson({ url: configUrl })
     .then(function (data) {
       eventTarget.fire("loadModelList", { data })
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
   deleteAll()
 }
 
-// 绘制模型
+// draw model
 function startDrawModel(style) {
   graphicLayer.startDraw({
     type: "model",
-    drawShow: true, // 绘制时，是否显示模型，可避免在3dtiles上拾取坐标存在问题。
+    drawShow: true, // Whether to display the model when drawing can avoid problems with picking coordinates on 3dtiles.
     style
   })
 }
 
-// 深度检测
+// Depth detection
 function chkTestTerrain(val) {
   map.scene.globe.depthTestAgainstTerrain = val
 }
@@ -84,11 +84,11 @@ function changeItemUrl(item) {
 }
 
 /**
- *打开geojson文件
+ *Open geojson file
  *
  * @export
- * @param {FileInfo} file 文件名称
- * @returns {void} 无
+ * @param {FileInfo} file file name
+ * @returns {void} None
  */
 function openGeoJSON(file) {
   const fileName = file.name
@@ -123,16 +123,16 @@ function openGeoJSON(file) {
       graphic.flyTo({ radius: 1000 })
     }
   } else {
-    globalMsg("暂不支持 " + fileType + " 文件类型的数据！")
+    globalMsg("Data of " + fileType + " file type is not supported yet!")
   }
 }
 
-// 保存文件
+// save document
 function saveGeoJSON() {
   if (graphicLayer.length === 0) {
-    globalMsg("当前没有标注任何数据，无需保存！")
+    globalMsg("No data is currently marked, no need to save!")
     return
   }
   const geojson = graphicLayer.toGeoJSON()
-  mars3d.Util.downloadFile("模型标绘.json", JSON.stringify(geojson))
+  mars3d.Util.downloadFile("Model plotting.json", JSON.stringify(geojson))
 }

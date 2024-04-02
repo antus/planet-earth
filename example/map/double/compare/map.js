@@ -1,21 +1,21 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let mapSplit
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   layers: [
     {
       type: "geojson",
-      name: "示例数据",
+      name: "Sample data",
       url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
       popup: "{type} {name}",
       show: true
     },
     {
       type: "3dtiles",
-      name: "测试模型",
+      name: "Test Model",
       url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
       position: { lng: 116.313536, lat: 31.217297, alt: 80 },
       scale: 100,
@@ -25,21 +25,21 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
   createControl()
 
   map.on(mars3d.EventType.addLayer, function (event) {
     const mapEx = mapSplit.mapEx
     if (mapEx) {
-      const layerOptions = event.layer.toJSON() // 转为参数
-      const newLayer = mars3d.LayerUtil.create(layerOptions) // 创建图层
+      const layerOptions = event.layer.toJSON() // Convert to parameters
+      const newLayer = mars3d.LayerUtil.create(layerOptions) // Create layer
       mapEx.addLayer(newLayer)
     }
   })
@@ -50,8 +50,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -62,25 +62,25 @@ function createControl() {
     return
   }
 
-  // 修改已有地图为50%
+  // Modify the existing map to 50%
   const mapOld = document.getElementById("centerDiv3D")
   mapOld.style.width = "50%"
 
-  // 获取原来地图的参数
+  // Get the parameters of the original map
   const mapOptions2 = map.getCurrentOptions() // map.getOptions()
-  mapOptions2.control.baseLayerPicker = true // basemaps底图切换按钮
+  mapOptions2.control.baseLayerPicker = true // basemaps basemap switching button
   mapOptions2.control.sceneModePicker = false
 
-  // 用于双屏同图层，不同配置展示
+  // Used for dual screens with the same layer and different configuration display
   for (let i = 0, len = mapOptions2.layers.length; i < len; i++) {
     const item = mapOptions2.layers[i]
     if (item.compare) {
       for (const key in item.compare) {
-        item[key] = item.compare[key] // 存在compare属性时
+        item[key] = item.compare[key] // When compare attribute exists
       }
     }
   }
-  console.log("分屏地图配置", mars3d.Util.clone(mapOptions2))
+  console.log("Split screen map configuration", mars3d.Util.clone(mapOptions2))
 
   mapSplit = new mars3d.control.MapCompare({
     ...mapOptions2,
@@ -88,8 +88,8 @@ function createControl() {
   })
   map.addControl(mapSplit)
 
-  // 修改对比地图
-  mapSplit.mapEx.basemap = "天地图电子"
+  //Modify comparison map
+  mapSplit.mapEx.basemap = "Tian Map Electronics"
 }
 
 function destroyControl() {
@@ -103,7 +103,7 @@ function destroyControl() {
 
 function addTestData() {
   const layer = new mars3d.layer.TilesetLayer({
-    name: "测试模型2",
+    name: "Test Model 2",
     url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
     position: { lng: 116.267315, lat: 31.457617, alt: 103 },
     scale: 100,

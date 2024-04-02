@@ -1,21 +1,21 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var eventTarget = new mars3d.BaseClass() // 事件对象，用于抛出事件到面板中
+var map // mars3d.Map three-dimensional map object
+var eventTarget = new mars3d.BaseClass() // Event object, used to throw events into the panel
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 33.588405, lng: 119.031988, alt: 336, heading: 359, pitch: -37 }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
     compass: { top: "10px", left: "5px" }
   },
   layers: [
     {
-      name: "文庙",
+      name: "Confucian Temple",
       type: "3dtiles",
       url: "//data.mars3d.cn/3dtiles/qx-simiao/tileset.json",
       position: { alt: 120 },
@@ -27,14 +27,14 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map = mapInstance // record map
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
   map.on("load", function () {
     addRoamLine()
@@ -42,21 +42,21 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function addRoamLine() {
-  // 创建矢量数据图层
+  //Create vector data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 该数据可以从 基础项目 飞行漫游功能界面操作后单个路线的 保存JSON
+  // This data can be saved as JSON of a single route after operating the basic project flight roaming function interface.
   const fixedRoute = new mars3d.graphic.FixedRoute({
-    name: "贴模型表面漫游",
+    name: "Roaming on the model surface",
     speed: 60,
     positions: [
       [119.030216, 33.59167, 50.9],
@@ -87,18 +87,18 @@ function addRoamLine() {
   })
   graphicLayer.addGraphic(fixedRoute)
 
-  // 绑定popup
+  //Bind popup
   bindPopup(fixedRoute)
 
-  // ui面板信息展示
+  //UI panel information display
   fixedRoute.on(mars3d.EventType.change, (event) => {
     throttled(eventTarget.fire("roamLineChange", event), 500)
   })
 
-  // 不贴地时，直接开始
+  // When not touching the ground, start directly
   // startFly(fixedRoute)
 
-  // 需要计算贴地点时，异步计算完成贴地后再启动
+  // When it is necessary to calculate the placement location, the asynchronous calculation will be started after the placement is completed.
   showLoading()
   fixedRoute.autoSurfaceHeight({ has3dtiles: true, splitNum: 10 }).then(function (e) {
     hideLoading()
@@ -108,24 +108,24 @@ function addRoamLine() {
 
 function startFly(fixedRoute) {
   fixedRoute.start()
-  fixedRoute.openPopup() // 显示popup
+  fixedRoute.openPopup() // Display popup
 }
 
 function bindPopup(fixedRoute) {
   fixedRoute.bindPopup(
     `<div style="width: 200px">
-      <div>总 距 离：<span id="lblAllLen"> </span></div>
-      <div>总 时 间：<span id="lblAllTime"> </span></div>
-      <div>开始时间：<span id="lblStartTime"> </span></div>
-      <div>剩余时间：<span id="lblRemainTime"> </span></div>
-      <div>剩余距离：<span id="lblRemainLen"> </span></div>
+      <div>Total distance: <span id="lblAllLen"> </span></div>
+      <div>Total time: <span id="lblAllTime"> </span></div>
+      <div>Start time: <span id="lblStartTime"> </span></div>
+      <div>Remaining time: <span id="lblRemainTime"> </span></div>
+      <div>Remaining distance: <span id="lblRemainLen"> </span></div>
     </div>`,
     { closeOnClick: false }
   )
 
-  // 刷新局部DOM,不影响popup面板的其他控件操作
+  // Refresh the local DOM without affecting the operations of other controls in the popup panel.
   fixedRoute.on(mars3d.EventType.popupRender, function (event) {
-    const container = event.container // popup对应的DOM
+    const container = event.container // DOM corresponding to popup
 
     const params = fixedRoute?.info
     if (!params) {
@@ -154,21 +154,21 @@ function bindPopup(fixedRoute) {
 
     const lblRemainLen = container.querySelector("#lblRemainLen")
     if (lblRemainLen) {
-      lblRemainLen.innerHTML = mars3d.MeasureUtil.formatDistance(params.distance_all - params.distance) || "完成"
+      lblRemainLen.innerHTML = mars3d.MeasureUtil.formatDistance(params.distance_all - params.distance) || "Complete"
     }
   })
 }
 
-// ui层使用
+//Used by ui layer
 var formatDistance = mars3d.MeasureUtil.formatDistance
 var formatTime = mars3d.Util.formatTime
 
-// 节流
+// Throttle
 function throttled(fn, delay) {
   let timer = null
   let starttime = Date.now()
   return function () {
-    const curTime = Date.now() // 当前时间
+    const curTime = Date.now() // current time
     const remaining = delay - (curTime - starttime)
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const context = this

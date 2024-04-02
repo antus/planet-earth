@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-var graphicLayer // 矢量图层对象
+var map // mars3d.Map three-dimensional map object
+var graphicLayer // vector layer object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.623244, lng: 123.508771, alt: 345435, heading: 0, pitch: -48 }
@@ -12,7 +12,7 @@ var mapOptions = {
     // },
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
+    clockAnimate: true, // Clock animation control (lower left corner)
     timeline: true,
     compass: { top: "10px", left: "5px" }
   }
@@ -21,16 +21,16 @@ var mapOptions = {
 var eventTarget = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录首次创建的map
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map = mapInstance //Record the first created map
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
-  // url传入模型地址
+  // url passes in the model address
   const type = mars3d.Util.getRequestByName("data")
   switch (type) {
     case "feiji":
@@ -49,8 +49,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -64,80 +64,80 @@ function removeLayer() {
   }
 }
 
-// 示例：
+// Example:
 function showCar() {
   removeLayer()
 
   map.setCameraView({ lat: 40.893923, lng: 121.917192, alt: 691, heading: 64, pitch: -46 })
 
   graphicLayer = new mars3d.layer.CzmlLayer({
-    name: "汽车",
+    name: "car",
     url: "//data.mars3d.cn/file/czml/car.czml"
     // flyTo: true,
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (data) {
-    console.log("数据加载完成", data)
+    console.log("Data loading completed", data)
     eventTarget.fire("loadGraphicLayer", { data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 示例：
+// Example:
 function showAircraft() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.CzmlLayer({
-    name: "飞行编队",
+    name: "Flight Formation",
     url: "//data.mars3d.cn/file/czml/flight2.czml",
     popup: "all"
     // flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (data) {
-    console.log("数据加载完成", data)
+    console.log("Data loading completed", data)
     eventTarget.fire("loadGraphicLayer", { data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 示例：
+// Example:
 function showShip() {
   removeLayer()
 
   graphicLayer = new mars3d.layer.CzmlLayer({
-    name: "船舶编队",
+    name: "ship formation",
     url: "//data.mars3d.cn/file/czml/ship2.czml",
     popup: "all"
     // flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (data) {
-    console.log("数据加载完成", data)
+    console.log("Data loading completed", data)
     eventTarget.fire("loadGraphicLayer", { data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 示例：
+// Example:
 function showBDSatellite() {
   removeLayer()
 
   map.setCameraView({ lat: 51.630551, lng: 165.640607, alt: 110141973.7, heading: 360, pitch: -89.9 })
 
-  // 更新地球参数
+  //Update earth parameters
   map.setSceneOptions({
     cameraController: {
       maximumZoomDistance: 500000000
@@ -145,28 +145,28 @@ function showBDSatellite() {
   })
 
   graphicLayer = new mars3d.layer.CzmlLayer({
-    name: "北斗卫星",
+    name: "Beidou Satellite",
     url: "//data.mars3d.cn/file/czml/satellite.czml",
     center: { lng: 10, lat: 111.833884, z: 150000000, heading: 0, pitch: -90, roll: 0 }
     // flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (data) {
-    console.log("数据加载完成", data)
+    console.log("Data loading completed", data)
 
     eventTarget.fire("loadGraphicLayer", { data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
 function showSatellite() {
   removeLayer()
 
-  // 更新地球参数
+  //Update earth parameters
   map.setSceneOptions({
     cameraController: {
       maximumZoomDistance: 500000000
@@ -174,70 +174,70 @@ function showSatellite() {
   })
 
   graphicLayer = new mars3d.layer.CzmlLayer({
-    name: "卫星",
+    name: "satellite",
     url: "//data.mars3d.cn/file/czml/satellite-simple.czml",
     center: { lat: -20.236138, lng: -144.262661, alt: 41875827, heading: 339, pitch: -90 },
     flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (data) {
-    console.log("数据加载完成", data)
+    console.log("Data loading completed", data)
 
     eventTarget.fire("loadGraphicLayer", { data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 示例：
+// Example:
 function showRocket() {
   removeLayer()
 
-  map.basemap = "ArcGIS影像"
+  map.basemap = "ArcGIS Imagery"
   map.setCameraView({ lat: 28.561843, lng: -80.577575, alt: 630, heading: 359, pitch: -85 })
 
   graphicLayer = new mars3d.layer.CzmlLayer({
-    name: "火箭发射",
+    name: "Rocket Launch",
     url: "//data.mars3d.cn/file/czml/space.czml",
     flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (data) {
-    console.log("数据加载完成", data)
-    // 火星发射时，锁定火箭模型对象
+    console.log("Data loading completed", data)
+    // When Mars is launched, lock the rocket model object
     map.trackedEntity = data.dataSource.entities.getById("Vulcan")
 
     eventTarget.fire("loadGraphicLayer", { data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }
 
-// 示例：
+// Example:
 function showFireDrill() {
   removeLayer()
 
   map.setCameraView({ lat: 32.891559, lng: 117.360875, alt: 378, heading: 18, pitch: -62 })
 
   graphicLayer = new mars3d.layer.CzmlLayer({
-    name: "消防演练",
+    name: "Fire Drill",
     url: "//data.mars3d.cn/file/czml/firedrill.czml"
     // flyTo: true
   })
   map.addLayer(graphicLayer)
 
-  // 绑定事件
+  //Bind event
   graphicLayer.on(mars3d.EventType.load, function (data) {
-    console.log("数据加载完成", data)
+    console.log("Data loading completed", data)
     eventTarget.fire("loadGraphicLayer", { data })
   })
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("单击了图层", event)
+    console.log("Layer clicked", event)
   })
 }

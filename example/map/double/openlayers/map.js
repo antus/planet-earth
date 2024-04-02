@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 30.753913, lng: 116.271687, alt: 7959.2, heading: 5.5, pitch: -39.1 }
@@ -10,14 +10,14 @@ var mapOptions = {
   layers: [
     {
       type: "geojson",
-      name: "示例数据",
+      name: "Sample data",
       url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
       popup: "{type} {name}",
       show: true
     },
     {
       type: "3dtiles",
-      name: "测试模型",
+      name: "Test Model",
       url: "//data.mars3d.cn/3dtiles/bim-daxue/tileset.json",
       position: { lng: 116.313536, lat: 31.217297, alt: 80 },
       scale: 100,
@@ -27,20 +27,20 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 修改3d地图的样式
+  // Modify the style of the 3D map
   const dom3d = document.getElementById("centerDiv3D")
   dom3d.style.left = "50%"
   dom3d.style.width = "50%"
 
-  // 创建2d地图
+  //Create 2d map
   const mapDiv = mars3d.DomUtil.create("div", "", document.body)
   mapDiv.setAttribute("id", "centerDiv2D")
   mapDiv.style.width = "50%"
@@ -68,10 +68,10 @@ function onMounted(mapInstance) {
     })
   })
 
-  // 联动控制器
+  // Linkage controller
   const ol3d = new olcs.OLCesium({ map: map2d, viewer: map.viewer })
 
-  // 移除ol同步的底图
+  //Remove ol synchronized base map
   const layers = map.imageryLayers._layers
   for (let i = layers.length - 1; i >= 0; i--) {
     const imageLayer = layers[i]
@@ -83,8 +83,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null

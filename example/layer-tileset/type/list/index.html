@@ -3,24 +3,24 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
-    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <meta name="author" content="Mars Technology http://mars3d.cn " />
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="x5-fullscreen" content="true" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-    <!-- 标题及搜索关键字 -->
-    <meta name="keywords" content="火星科技,cesium,3D,GIS,marsgis,三维,地球,地图,开发,框架,系统,示例,资料,模型,离线,外包,合肥,安徽,中国" />
+    <!-- Title and search keywords -->
+    <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
     <meta
       name="description"
-      content="火星科技 合肥火星 合肥火星科技 合肥火星科技有限公司 leaflet leaflet框架 leaflet开发 cesium cesium开发 cesium框架 三维 地球 模型  gis marsgis 地图离线 地图开发 地图框架 地图外包 框架 开发 外包  地图离线 二维地图 三维地图 全景漫游 地理信息系统 云GIS 三维GIS GIS平台 WebGIS"
+      content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework three-dimensional earth model gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming Geographic Information System Cloud GIS 3D GIS GIS Platform WebGIS"
     />
 
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
-    <title>3dtiles图层 | Mars3D | 三维地图 | 火星科技 | 合肥火星科技有限公司</title>
+    <title>3dtiles layer | Mars3D | 3D map | Mars Technology | Hefei Mars Technology Co., Ltd.</title>
 
-    <!--第三方lib-->
+    <!--Third-party lib-->
     <script
       type="text/javascript"
       src="/lib/include-lib.js"
@@ -35,7 +35,7 @@
   <body class="dark">
     <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <!-- 面板 -->
+    <!-- Panel -->
     <div class="infoview" style="overflow: auto; top: 5px; max-height: calc(100% - 90px)">
       <ul id="treeOverlays" class="ztree"></ul>
     </div>
@@ -44,7 +44,7 @@
     <script src="./map.js"></script>
 
     <script type="text/javascript">
-      "use script" //开发环境建议开启严格模式
+      "use script" //It is recommended to turn on strict mode in the development environment
 
       function initUI(options) {
         mars3d.Util.fetchJson({ url: "../config/tileset.json" })
@@ -52,16 +52,16 @@
             initTree(data.layers)
           })
           .catch(function (error) {
-            console.log("加载JSON出错", error)
+            console.log("Error loading JSON", error)
           })
       }
 
-      //===========================树控件处理============================
+      //============================Tree control processing================== ==========
       let layers = []
       let layersObj = {}
 
       function initTree(layers) {
-        //初始化树
+        //Initialize tree
         let setting = {
           check: {
             enable: true
@@ -81,7 +81,7 @@
         for (let i = layers.length - 1; i >= 0; i--) {
           let layerOptions = layers[i]
           layerOptions.flyTo = true
-          let layer = mars3d.LayerUtil.create(layerOptions) //创建图层
+          let layer = mars3d.LayerUtil.create(layerOptions) //Create layer
 
           let node = _getNodeConfig(layer)
           if (node) {
@@ -98,7 +98,7 @@
 
         let item = layer.options
 
-        if (item.name == "未命名") {
+        if (item.name == "Unnamed") {
           return
         }
 
@@ -109,12 +109,12 @@
         }
 
         if (layer.hasEmptyGroup) {
-          //空数组
+          //empty array
           node.icon = "/lib/jquery/ztree/css/mars/images/folder.png"
           node.open = item.open == null ? true : item.open
           layersObj[node.id] = layer
         } else if (layer.hasChildLayer) {
-          //有子节点的数组
+          //Array with child nodes
           node.icon = "/lib/jquery/ztree/css/mars/images/layerGroup.png"
           node.open = item.open == null ? true : item.open
           layersObj[node.id] = layer
@@ -126,7 +126,7 @@
             node._parentId = layer.parent.id
           }
 
-          //记录图层
+          //record layer
           layersObj[node.id] = layer
         }
         return node
@@ -134,7 +134,7 @@
 
       function treeOverlays_onCheck(e, treeId, chktreeNode) {
         let treeObj = $.fn.zTree.getZTreeObj(treeId)
-        //获得所有改变check状态的节点
+        //Get all nodes that change check status
         let changedNodes = treeObj.getChangeCheckedNodes()
 
         haoutil.array.remove(changedNodes, chktreeNode)
@@ -145,7 +145,7 @@
           treeNode.checkedOld = treeNode.checked
 
           if (treeNode.check_Child_State == 1) {
-            // 0:无子节点被勾选,  1:部分子节点被勾选,  2:全部子节点被勾选, -1:不存在子节点 或 子节点全部设置为 nocheck = true
+            // 0: No child nodes are checked, 1: Some child nodes are checked, 2: All child nodes are checked, -1: There are no child nodes or all child nodes are set to nocheck = true
             continue
           }
 
@@ -154,7 +154,7 @@
             continue
           }
 
-          //显示隐藏透明度设置view
+          //Show hide transparency setting view
           if (treeNode.checked) {
             $("#" + treeNode.tId + "_range").show()
           } else {
@@ -165,7 +165,7 @@
         }
       }
 
-      //更新图层:显示隐藏状态
+      //Update layer: show hidden state
       function updateLayerShow(layer, show) {
         layer.show = show
 
@@ -187,7 +187,7 @@
         }
         let layer = layersObj[treeNode.id]
         if (layer == null || !layer.layer) {
-          haoutil.msg("图层尚未加载，需要加载后才能定位！")
+          haoutil.msg("The layer has not been loaded yet and needs to be loaded before it can be positioned!")
           return
         }
 

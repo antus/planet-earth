@@ -1,39 +1,39 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
-let geoJsonLayer // 矢量图层对象,用于layer绑定展示
-let graphicLayer // 矢量图层对象,用于graphic绑定展示
+var map // mars3d.Map three-dimensional map object
+let geoJsonLayer // Vector layer object, used for layer binding display
+let graphicLayer // Vector layer object, used for graphic binding display
 
 var eventTarget = new mars3d.BaseClass()
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   map.on(mars3d.EventType.popupOpen, function (event) {
-    const container = event.container // popup对应的DOM
-    console.log("打开了popup(全局监听)", event)
+    const container = event.container // DOM corresponding to popup
+    console.log("popup (global monitoring) is turned on", event)
   })
   map.on(mars3d.EventType.popupClose, function (event) {
-    const container = event.container // popup对应的DOM
-    console.log("关闭了popup(全局监听)", event)
+    const container = event.container // DOM corresponding to popup
+    console.log("popup (global listening) is closed", event)
   })
 
   bindLayerDemo()
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -48,78 +48,78 @@ function removeDemoLayer() {
   }
 }
 
-// 1.在map地图上绑定Popup单击弹窗
+// 1. Bind the Popup click pop-up window on the map
 function bindMapDemo() {
   removeDemoLayer()
 
-  // 关闭弹窗
+  //Close pop-up window
   map.closePopup()
 
-  // 传入坐标和内容，可以直接任意弹出
+  // Pass in the coordinates and content, and you can pop it up directly.
   const position = [116.328539, 30.978731, 1521]
-  map.openPopup(position, "我是地图上直接弹出的")
+  map.openPopup(position, "I pop up directly on the map")
 }
 
-// 2.在layer图层上绑定Popup单击弹窗
+// 2. Bind Popup to the layer layer and click the pop-up window.
 function bindLayerDemo() {
   removeDemoLayer()
 
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-    name: "标绘示例数据",
+    name: "Plotting sample data",
     url: "//data.mars3d.cn/file/geojson/mars3d-draw.json"
   })
   map.addLayer(geoJsonLayer)
 
-  // 在layer上绑定Popup单击弹窗
+  // Bind the Popup click popup window to the layer
   geoJsonLayer.bindPopup(
     function (event) {
       const attr = event.graphic.attr
-      return attr.type + " 我是layer上绑定的Popup" + new Date().toLocaleTimeString()
+      return attr.type + "I am the Popup bound on the layer" + new Date().toLocaleTimeString()
 
       // return new Promise((resolve) => {
-      //   // 这里可以进行后端接口请求数据，setTimeout测试异步
+      // // Here you can request data from the backend interface, and setTimeout tests asynchronously
       //   setTimeout(() => {
-      //     resolve("Promise异步回调显示的弹窗内容信息")
+      // resolve("Pop-up content information displayed by Promise asynchronous callback")
       //   }, 2000)
       // })
     },
-    { timeRender: true, closeButton: false } // timeRender实时刷新
+    { timeRender: true, closeButton: false } // timeRender refreshes in real time
   )
 
   // geoJsonLayer.on(mars3d.EventType.click, function (event) {
   //   setTimeout(() => {
   //     const popup = event.graphic.getPopup()
-  //     console.log("测试获取popup", popup)
+  // console.log("Test to get popup", popup)
   //   }, 1000)
   // })
 
   geoJsonLayer.on(mars3d.EventType.popupOpen, function (event) {
-    const container = event.container // popup对应的DOM
-    console.log("图层上打开了popup", container)
+    const container = event.container // DOM corresponding to popup
+    console.log("popup is opened on the layer", container)
   })
   geoJsonLayer.on(mars3d.EventType.popupClose, function (event) {
-    const container = event.container // popup对应的DOM
-    console.log("图层上移除了popup", container)
+    const container = event.container // DOM corresponding to popup
+    console.log("popup removed from layer", container)
   })
 }
 
-// 2.在layer图层上预定义Popup单击弹窗
+// 2. Predefine the Popup click pop-up window on the layer layer
 function bindLayerDemo2() {
   removeDemoLayer()
 
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-    name: "标绘示例数据",
+    name: "Plotting sample data",
     url: "//data.mars3d.cn/file/geojson/mars3d-draw.json",
-    // popup按属性字段配置，可以是字符串模板或数组
-    // popup: 'all', //显示所有属性，常用于测试
+    // Popup is configured by attribute field, which can be a string template or array
+    // popup: 'all', //Display all attributes, often used for testing
     // popup: '{name} {type}',
     popup: [
-      { field: "id", name: "编码" },
-      { field: "name", name: "名称" },
-      { field: "type", name: "类型" },
+      { field: "id", name: "encoding" },
+      { field: "name", name: "name" },
+      { field: "type", name: "type" },
       {
         type: "html",
-        html: "<label>视频</label><video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style=\"width: 300px;\" ></video>"
+        html: "<label>Video</label><video src='http://data.mars3d.cn/file/video/lukou.mp4' controls autoplay style=\"width: 300px;\" ></video >"
       }
     ],
     popupOptions: {
@@ -129,21 +129,21 @@ function bindLayerDemo2() {
   map.addLayer(geoJsonLayer)
 }
 
-// 2.在layer图层上绑定Popup单击弹窗
+// 2. Bind Popup to the layer layer and click the pop-up window.
 function bindLayerTemplateDemo() {
   removeDemoLayer()
 
   geoJsonLayer = new mars3d.layer.GeoJsonLayer({
-    name: "标绘示例数据",
+    name: "Plotting sample data",
     url: "//data.mars3d.cn/file/geojson/mars3d-draw.json"
   })
   map.addLayer(geoJsonLayer)
 
-  // 在layer上绑定Popup单击弹窗
+  // Bind the Popup click popup window to the layer
   geoJsonLayer.bindPopup(
     function (event) {
       const attr = event.graphic.attr
-      return "我是layer上绑定的自定义模版Popup<br />" + attr.type
+      return "I am a custom template Popup<br /> bound to the layer" + attr.type
     },
     {
       template: `<div class="marsBlackPanel animation-spaceInDown">
@@ -156,16 +156,16 @@ function bindLayerTemplateDemo() {
   )
 
   geoJsonLayer.on(mars3d.EventType.popupOpen, function (event) {
-    const container = event.container // popup对应的DOM
-    console.log("图层上打开了popup", container)
+    const container = event.container // DOM corresponding to popup
+    console.log("popup is opened on the layer", container)
   })
   geoJsonLayer.on(mars3d.EventType.popupClose, function (event) {
-    const container = event.container // popup对应的DOM
-    console.log("图层上移除了popup", container)
+    const container = event.container // DOM corresponding to popup
+    console.log("popup removed from layer", container)
   })
 }
 
-// 3.在graphic数据上绑定Popup单击弹窗局部刷新
+// 3. Bind Popup to the graphic data and click the pop-up window to partially refresh.
 function bindGraphicDemo1() {
   removeDemoLayer()
 
@@ -177,14 +177,14 @@ function bindGraphicDemo1() {
       color: "#00ff00",
       opacity: 0.9,
       label: {
-        text: "graphic绑定的演示",
+        text: "Demonstration of graphic binding",
         font_size: 19,
         pixelOffsetY: -45,
         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       }
     },
-    attr: { remark: "示例1" }
+    attr: { remark: "Example 1" }
   })
   graphicLayer.addGraphic(graphic)
 
@@ -192,17 +192,17 @@ function bindGraphicDemo1() {
     // let attr = event.graphic.attr
     const inthtml = `<table style="width:280px;">
                 <tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">graphic.bindPopup</th></tr>
-                <tr><td >说明：</td><td >Popup鼠标单击信息弹窗1 </td></tr>
-                <tr><td >方式：</td><td >可以绑定任意html </td></tr>
-                <tr><td >备注：</td><td >我是graphic上绑定的Popup</td></tr>
-                <tr><td colspan="4" style="text-align:right;cursor: pointer;"><button id="btnDetails">更多</button></td></tr>
+                <tr><td >Instructions: </td><td >Popup mouse click information pop-up window 1 </td></tr>
+                <tr><td >Method: </td><td >Can bind any html </td></tr>
+                <tr><td >Remarks:</td><td >I am a Popup bound to the graphic</td></tr>
+                <tr><td colspan="4" style="text-align:right;cursor: pointer;"><button id="btnDetails">More</button></td></tr>
               </table>`
     return inthtml
   }
 
   graphic.on(mars3d.EventType.popupOpen, function (event) {
-    const container = event.container // popup对应的DOM
-    console.log("打开了popup", container)
+    const container = event.container // DOM corresponding to popup
+    console.log("popup opened", container)
 
     const btnDetails = container.querySelector("#btnDetails")
     if (btnDetails) {
@@ -212,15 +212,15 @@ function bindGraphicDemo1() {
     }
   })
   graphic.on(mars3d.EventType.popupClose, function (event) {
-    const container = event.container // popup对应的DOM
-    console.log("移除了popup", container)
+    const container = event.container // DOM corresponding to popup
+    console.log("popup removed", container)
   })
 
-  // 绑定Popup
+  // Bind Popup
   graphic.bindPopup(getInnerHtml).openPopup()
 }
 
-// 4.在graphic数据上绑定Popup单击弹窗
+// 4. Bind the Popup click pop-up window to the graphic data
 function bindGraphicDemo2() {
   removeDemoLayer()
 
@@ -231,7 +231,7 @@ function bindGraphicDemo2() {
       horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       label: {
-        text: "Popup局部更新绑定的演示",
+        text: "Demonstration of Popup partial update binding",
         font_size: 18,
         font_family: "楷体",
         pixelOffsetY: -45,
@@ -239,21 +239,21 @@ function bindGraphicDemo2() {
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM
       }
     },
-    attr: { remark: "示例2" }
+    attr: { remark: "Example 2" }
   })
   graphicLayer.addGraphic(graphic)
 
   const innerHtml = `<table style="width:280px;">
-                <tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">graphic.bindPopup局部刷新</th></tr>
-                <tr><td >说明：</td><td >Popup鼠标单击信息弹窗2 </td></tr>
-                <tr><td >方式：</td><td >可以绑定任意html </td></tr>
-                <tr><td >备注：</td><td >我是graphic上绑定的Popup</td></tr>
-                <tr><td >时间：</td><td id="tdTime"></td></tr>
-                <tr><td colspan="4" style="text-align:right;cursor: pointer;"><button id="btnDetails">更多</button></td></tr>
+                <tr><th scope="col" colspan="4" style="text-align:center;font-size:15px;">graphic.bindPopup partial refresh</th></tr>
+                <tr><td >Instructions: </td><td >Popup mouse click information pop-up window 2 </td></tr>
+                <tr><td >Method: </td><td >Can bind any html </td></tr>
+                <tr><td >Remarks:</td><td >I am a Popup bound to the graphic</td></tr>
+                <tr><td >Time:</td><td id="tdTime"></td></tr>
+                <tr><td colspan="4" style="text-align:right;cursor: pointer;"><button id="btnDetails">More</button></td></tr>
               </table>`
 
   graphic.on(mars3d.EventType.popupOpen, function (event) {
-    const container = event.container // popup对应的DOM
+    const container = event.container // DOM corresponding to popup
     const btnDetails = container.querySelector("#btnDetails")
     if (btnDetails) {
       btnDetails.addEventListener("click", (e) => {
@@ -262,9 +262,9 @@ function bindGraphicDemo2() {
     }
   })
 
-  // 刷新局部DOM,不影响popup面板的其他控件操作
+  // Refresh the local DOM without affecting the operations of other controls in the popup panel.
   graphic.on(mars3d.EventType.popupRender, function (event) {
-    const container = event.container // popup对应的DOM
+    const container = event.container // DOM corresponding to popup
     const tdTime = container.querySelector("#tdTime")
     if (tdTime) {
       const date = mars3d.Util.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss S")
@@ -273,17 +273,17 @@ function bindGraphicDemo2() {
     }
   })
 
-  // 绑定Popup
+  // Bind Popup
   graphic.bindPopup(innerHtml, { offsetY: -30, closeOnClick: false, autoClose: false }).openPopup()
 }
 
-// 只是为了演示，可以单击详情
+// Just for demonstration, you can click on details
 function showXQ() {
   const showHistoryLayer = true
   eventTarget.fire("showWebsite", { showHistoryLayer })
 }
 
-// 在原始ceisum对象绑定popup
+// Bind popup to the original ceisum object
 function bindCesiumEntityDemo() {
   const blueBox = map.viewer.entities.add({
     name: "Blue box",
@@ -295,14 +295,14 @@ function bindCesiumEntityDemo() {
   })
 
   const innerHtml = `<table style="width:280px;">
-    <tr><th scope="col" colspan="4"  style="text-align:center;font-size:15px;">在原始ceisum对象绑定popup</th></tr>
-    <tr><td >说明：</td><td >在原始ceisum对象绑定popup </td></tr>
-    <tr><td >方式：</td><td >可以绑定任意html </td></tr>
-    <tr><td >备注：</td><td >我是在原始ceisum对象绑定popup</td></tr>
+    <tr><th scope="col" colspan="4" style="text-align:center;font-size:15px;">Bind popup to the original ceisum object</th></tr>
+    <tr><td >Description: </td><td >Bind popup to the original ceisum object </td></tr>
+    <tr><td >Method: </td><td >Can bind any html </td></tr>
+    <tr><td >Remarks:</td><td>I am binding the popup in the original ceisum object</td></tr>
   </table>`
 
   blueBox._popupConfig = {
-    content: innerHtml, // 支持回调方法，同bindPopup的第1个参数
-    options: { offsetY: -30, closeOnClick: false, autoClose: false } // 同bindPopup的第2个参数
+    content: innerHtml, // Support callback method, same as the first parameter of bindPopup
+    options: { offsetY: -30, closeOnClick: false, autoClose: false } // Same as the second parameter of bindPopup
   }
 }

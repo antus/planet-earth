@@ -1,6 +1,6 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let polygonLayer
 let graphicLayer
 
@@ -11,15 +11,15 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 加载面数据
+  //Load surface data
   loadPolygon()
 
   graphicLayer = new mars3d.layer.GraphicLayer()
@@ -27,8 +27,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -37,7 +37,7 @@ function clearGraphicLayer() {
   graphicLayer.clear()
 }
 
-// 绘制线
+// draw line
 function drawLine() {
   clearGraphicLayer()
 
@@ -57,7 +57,7 @@ function drawLine() {
   })
 }
 
-// 加载面数据
+//Load surface data
 function loadPolygon() {
   polygonLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(polygonLayer)
@@ -121,7 +121,7 @@ function loadPolygon() {
   }
 }
 
-// 循环所有面，判断相交的去切割面
+// Loop through all surfaces and determine the intersecting surfaces to be cut.
 function clipAllPolygon(clipLine) {
   polygonLayer.eachGraphic(function (graphic) {
     try {
@@ -144,11 +144,11 @@ function clipAllPolygon(clipLine) {
 }
 
 /**
- * geoJson数据处理模块(需要引入turf.js)
- * 输入输出数据均为标准geoJson格式
+ * geoJson data processing module (turf.js needs to be introduced)
+ * Input and output data are in standard geoJson format
  */
 const geoUtil = {
-  // 合并多边形
+  // Merge polygons
   unionPolygon: function (polygons) {
     let polygon = polygons[0]
     for (let i = 0; i < polygons.length; i++) {
@@ -158,26 +158,26 @@ const geoUtil = {
   },
 
   /**
-   * 线分割面
-   * 面类型只能是polygon 但可以是环
-   * 注:线与多边形必须有两个交点
+   * Line dividing surface
+   * The surface type can only be polygon but can be a ring
+   * Note: The line and the polygon must have two intersection points
    */
   polygonClipByLine: function (polygon, clipLine) {
     if (polygon.geometry.type === "Polygon") {
       const polyLine = turf.polygonToLine(polygon)
       if (polyLine.geometry.type === "LineString") {
-        // 切割普通多边形
+        // Cut ordinary polygons
         return this._singlePolygonClip(polyLine, clipLine)
       } else if (polyLine.geometry.type === "MultiLineString") {
-        // 切割环
+        // cutting ring
         return this._multiPolygonClip(polyLine, clipLine)
       }
     } else if (polygon.geometry.type === "MultiPolygon") {
-      // 若输入的多边形类型为Multipolygon则拆分成多个Polygon
+      // If the input polygon type is Multipolygon, split it into multiple Polygons
       const polygons = this.multiPolygon2polygons(polygon)
       let clipPolygon = null
       let clipPolygonIndex = -1
-      // 获取MultiPolygon中与切割线相交的多边形（有且只能有一个多边形相交2个交点）
+      // Get the polygon that intersects the cutting line in MultiPolygon (there can be only one polygon that intersects 2 intersection points)
       polygons.forEach(function (polygon, index) {
         const polyLine = turf.polygonToLine(polygon)
         if (turf.lineIntersect(polyLine, clipLine).features.length === 2) {
@@ -185,7 +185,7 @@ const geoUtil = {
             clipPolygon = polygon
             clipPolygonIndex = index
           } else {
-            throw new Error({ state: "裁剪失败", message: "MultiPolygon只能有一个多边形与切割线存在交点" })
+            throw new Error({ state: "Cutting failed", message: "MultiPolygon can only have one polygon that intersects with the cutting line" })
           }
         }
       })
@@ -193,37 +193,37 @@ const geoUtil = {
         polygons.splice(clipPolygonIndex, 1)
         return turf.featureCollection(polygons.concat(this.polygonClipByLine(clipPolygon, clipLine).features))
       } else {
-        throw new Error({ state: "裁剪失败", message: "MultiPolygon与切割线无交点" })
+        throw new Error({ state: "Cutting failed", message: "MultiPolygon has no intersection with the cutting line" })
       }
     } else {
-      throw new Error({ state: "裁剪失败", message: "输入的多边形类型为错误" })
+      throw new Error({ state: "Cutting failed", message: "The input polygon type is wrong" })
     }
   },
 
   _singlePolygonClip: function (polyLine, clipLine) {
-    // 获得裁切点
+    // Get the cutting point
     const intersects = turf.lineIntersect(polyLine, clipLine)
     if (intersects.features.length !== 2) {
-      throw new Error({ state: "裁剪失败", message: "切割线与多边形交点应该为2个,当前交点个数为" + intersects.features.length })
+      throw new Error({ state: "Cutting failed", message: "The intersection points between the cutting line and the polygon should be 2, and the current number of intersection points is" + intersects.features.length })
     }
-    // 检查切割线与多边形的位置关系 （切割线的起点和终点不能落在多边形内部）
+    // Check the positional relationship between the cutting line and the polygon (the starting point and end point of the cutting line cannot fall inside the polygon)
     const clipLineLength = clipLine.geometry.coordinates.length
     const clipLineStartPoint = turf.point(clipLine.geometry.coordinates[0])
     const clipLineEndPoint = turf.point(clipLine.geometry.coordinates[clipLineLength - 1])
     const polygon = turf.polygon([polyLine.geometry.coordinates])
     if (turf.booleanPointInPolygon(clipLineStartPoint, polygon) || turf.booleanPointInPolygon(clipLineEndPoint, polygon)) {
-      throw new Error({ state: "裁剪失败", message: "切割线起点或终点不能在 裁剪多边形内部" })
+      throw new Error({ state: "Cut failed", message: "The starting point or end point of the cutting line cannot be inside the clipping polygon" })
     }
-    // 通过裁切点 分割多边形（只能获得多边形的一部分）
+    // Split the polygon by cutting points (only part of the polygon can be obtained)
     const slicedPolyLine = turf.lineSlice(intersects.features[0], intersects.features[1], polyLine)
-    // 裁剪线分割 保留多边形内部部分
+    //Cut line segmentation to retain the internal parts of the polygon
     const slicedClipLine = turf.lineSlice(intersects.features[0], intersects.features[1], clipLine)
-    // 重新拼接多边形 存在 对接的问题 所以先进行判断 如何对接裁剪的多边形和裁剪线
+    // Re-splicing polygons has a docking problem, so we need to judge first how to connect the clipped polygons and clipping lines.
     const resultPolyline1 = this.connectLine(slicedPolyLine, slicedClipLine)
-    // 闭合线 来构造多边形
+    // Close the line to construct the polygon
     resultPolyline1.geometry.coordinates.push(resultPolyline1.geometry.coordinates[0])
     const resultPolygon1 = turf.lineToPolygon(resultPolyline1)
-    // 构造切割的另一面多边形
+    //Construct the polygon on the other side of the cut
     const firstPointOnLine = this.isOnLine(turf.point(polyLine.geometry.coordinates[0]), slicedPolyLine)
     const pointList = []
     if (firstPointOnLine) {
@@ -234,7 +234,7 @@ const geoUtil = {
         }
       }
     } else {
-      let skipNum = 0 // 记录前面被跳过的点的个数
+      let skipNum = 0 //Record the number of previously skipped points
       let isStartPush = false
       for (let i = 0; i < polyLine.geometry.coordinates.length; i++) {
         const coordinate = polyLine.geometry.coordinates[i]
@@ -248,36 +248,36 @@ const geoUtil = {
           isStartPush = true
         }
       }
-      // 将前面跳过的点补充到 点数组中
+      //Add previously skipped points to the point array
       for (let i = 0; i < skipNum; i++) {
         pointList.push(polyLine.geometry.coordinates[i])
       }
     }
     const slicedPolyLine_2 = turf.lineString(pointList)
     const resultPolyline2 = this.connectLine(slicedPolyLine_2, slicedClipLine)
-    // 闭合线 来构造多边形
+    // Close the line to construct the polygon
     resultPolyline2.geometry.coordinates.push(resultPolyline2.geometry.coordinates[0])
     const resultPolygon2 = turf.lineToPolygon(resultPolyline2)
-    // 返回面要素集
+    // Return the polygon feature set
     return turf.featureCollection([resultPolygon1, resultPolygon2])
   },
 
   _multiPolygonClip: function (polyLine, clipLine) {
-    // 将环 多边形分割成 内部逆时针多边形+外部多边形
+    // Split the ring polygon into inner counterclockwise polygon + outer polygon
     let outPolyline
     const insidePolylineList = []
     for (let i = 0; i < polyLine.geometry.coordinates.length; i++) {
       const splitPolyline = turf.lineString(polyLine.geometry.coordinates[i])
       if (turf.booleanClockwise(splitPolyline)) {
         if (outPolyline) {
-          throw new Error({ state: "裁剪失败", message: "出现了两个外部多边形无法处理" })
+          throw new Error({ state: "Cutting failed", message: "Two external polygons appeared and cannot be processed" })
         } else {
           outPolyline = splitPolyline
         }
       } else {
         const intersects = turf.lineIntersect(splitPolyline, clipLine)
         if (intersects.features.length > 0) {
-          throw new Error({ state: "裁剪失败", message: "切割线不能与内环有交点" })
+          throw new Error({ state: "Cutting failed", message: "The cutting line cannot intersect with the inner ring" })
         }
         insidePolylineList.push(splitPolyline)
       }
@@ -296,8 +296,8 @@ const geoUtil = {
   },
 
   /**
-   * 连接两条线
-   * 方法会将两条线段最近的一段直接连接
+   * Connect two lines
+   * This method will directly connect the nearest segment of the two line segments.
    */
   connectLine: function (line1, line2) {
     const line2_length = line2.geometry.coordinates.length
@@ -305,13 +305,13 @@ const geoUtil = {
     const line2_startPoint = line2.geometry.coordinates[0]
     const line2_endPoint = line2.geometry.coordinates[line2_length - 1]
     const pointList = []
-    // 获取line1 所有点坐标
+    // Get the coordinates of all points in line1
     for (let i = 0; i < line1.geometry.coordinates.length; i++) {
       const coordinate = line1.geometry.coordinates[i]
       pointList.push(coordinate)
     }
 
-    // 判断两条线的 起点是否接近，如果接近 逆转line2线 进行连接
+    // Determine whether the starting points of the two lines are close. If they are close, reverse the line2 line to connect.
     if (turf.distance(line1_startPoint, line2_startPoint) < turf.distance(line1_startPoint, line2_endPoint)) {
       line2.geometry.coordinates = line2.geometry.coordinates.reverse()
     }
@@ -323,8 +323,8 @@ const geoUtil = {
   },
 
   /**
-   * 判断点是否在线里面
-   * 注：线组成的坐标对比
+   * Determine whether the point is online
+   * Note: Comparison of coordinates composed of lines
    */
   isOnLine: function (point, line) {
     for (let i = 0; i < line.geometry.coordinates.length; i++) {
@@ -337,13 +337,13 @@ const geoUtil = {
   },
 
   /**
-   * 获得两条线交点
+   * Get the intersection point of two lines
    */
   getIntersectPoints: function (line1, line2) {
     return turf.lineIntersect(line1, line2)
   },
 
-  // multiPolygon转polygons,不涉及属性
+  // convert multiPolygon to polygons, no attributes are involved
   multiPolygon2polygons: function (multiPolygon) {
     if (multiPolygon.geometry.type !== "MultiPolygon") {
       return
@@ -365,8 +365,8 @@ const geoUtil = {
   },
 
   /**
-   * polygons转multiPolygon,不涉及属性，只输出属性为{}
-   * 考虑polygons中就存在多面的情况
+   * Convert polygons to multiPolygon, no attributes are involved, only the output attributes are {}
+   * Consider the multi-faceted situation in polygons
    */
   polygons2MultiPolygon: function (geoJson) {
     const newGeoJson = {

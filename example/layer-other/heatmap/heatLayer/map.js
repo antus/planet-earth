@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 25.873121, lng: 119.290515, alt: 51231, heading: 2, pitch: -71 }
@@ -10,17 +10,17 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
-  // map.basemap = 2017 // 蓝色底图
+  map = mapInstance // record map
+  // map.basemap = 2017 // blue basemap
 
-  // 问题解决思路：https://zhuanlan.zhihu.com/p/361468247
-  globalNotify("已知问题提示", `纬度跨度超过一个城市时，会出现偏移情况(墨卡托投影造成的，暂未找到合适解决方式)。`)
+  // Problem solving ideas: https://zhuanlan.zhihu.com/p/361468247
+  globalNotify("Known Problem Tips", `When the latitude span exceeds one city, there will be an offset (caused by Mercator projection, no suitable solution has been found yet).`)
 
   mars3d.Util.fetchJson({ url: "//data.mars3d.cn/file/apidemo/heat-fuzhou.json" })
     .then(function (result) {
@@ -32,23 +32,23 @@ function onMounted(mapInstance) {
       showHeatMap(arrPoints)
     })
     .catch(function (error) {
-      console.log("加载JSON出错", error)
+      console.log("Error loading JSON", error)
     })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
 function showHeatMap(arrPoints) {
-  // 热力图 图层
+  //Heat map layer
   const heatLayer = new mars3d.layer.HeatLayer({
     positions: arrPoints,
-    // 以下为热力图本身的样式参数，可参阅api：https://www.patrick-wied.at/static/heatmapjs/docs.html
+    //The following are the style parameters of the heat map itself, please refer to the API: https://www.patrick-wied.at/static/heatmapjs/docs.html
     max: 20000,
     heatStyle: {
       radius: 20,
@@ -63,7 +63,7 @@ function showHeatMap(arrPoints) {
         1: "#ff0000"
       }
     },
-    // 以下为矩形矢量对象的样式参数
+    //The following are the style parameters of the rectangular vector object
     style: {
       opacity: 1.0
       // clampToGround: true,
@@ -77,12 +77,12 @@ function showHeatMap(arrPoints) {
     const data = heatLayer.getPointData(point)
 
     const inhtml = `
-      经度: ${point.lng} <br />
-      纬度: ${point.lat} <br />
-      X值: ${data.x} <br />
-      Y值: ${data.y} <br />
-      value值: ${data.value} <br />
-      颜色:<span style="background-color: ${data.color};padding:2px 5px;">${data.color}</span>
+      Longitude: ${point.lng} <br />
+      Latitude: ${point.lat} <br />
+      X value: ${data.x} <br />
+      Y value: ${data.y} <br />
+      value: ${data.value} <br />
+      Color:<span style="background-color: ${data.color};padding:2px 5px;">${data.color}</span>
       `
     map.openSmallTooltip(e.windowPosition, inhtml)
   })

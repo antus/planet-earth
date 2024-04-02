@@ -1,9 +1,9 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 let geoJsonLayerDTH
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 43.823957, lng: 125.136704, alt: 286, heading: 11, pitch: -24 }
@@ -11,19 +11,19 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  // 模型
+  // Model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
     pid: 2030,
     type: "3dtiles",
-    name: "校园",
+    name: "campus",
     url: "//data.mars3d.cn/3dtiles/qx-xuexiao/tileset.json",
     position: { alt: 279.0 },
     maximumScreenSpaceError: 1,
@@ -31,27 +31,27 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建单体化图层
+  //Create a single layer
   geoJsonLayerDTH = new mars3d.layer.GeoJsonLayer()
   map.addLayer(geoJsonLayerDTH)
 
   geoJsonLayerDTH.bindPopup((e) => {
     const item = e.graphic.attr
-    const html = `房号：${item.name}<br/>
-                楼层：第${item.thisFloor}层 (共${item.allFloor}层)<br/>`
+    const html = `Room number: ${item.name}<br/>
+                Floor: Floor ${item.thisFloor} (Total ${item.allFloor})<br/>`
     return html
   })
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
 }
 
-// 添加单体化数据
+//Add singleton data
 function addData() {
   return map.graphicLayer.startDraw({
     type: "polygonP",
@@ -70,25 +70,25 @@ function addData() {
 
 let houseTypeCount = 0
 
-// 生成表格数据，绘制每层
+// Generate table data and draw each layer
 function produceData(drawGraphicId, dthPara, lastGraphicArrId) {
   if (dthPara.floorCount === 0) {
-    globalMsg("楼层不能为0 ！")
+    globalMsg("The floor cannot be 0!")
     return
   } else if (dthPara.minHeight === 0) {
-    globalMsg("最低高度不能为0 ！")
+    globalMsg("The minimum height cannot be 0!")
     return
   } else if (dthPara.maxHeight === 0) {
-    globalMsg("最高高度不能为0 ！")
+    globalMsg("The maximum height cannot be 0!")
     return
   } else if (dthPara.maxHeight <= dthPara.minHeight) {
-    globalMsg("最高高度不能小于等于最低高度 ！")
+    globalMsg("The highest height cannot be less than or equal to the lowest height!")
     return
   }
 
   const floorHeight = (dthPara.maxHeight - dthPara.minHeight) / dthPara.floorCount
 
-  // 清除对应id的单体化数据
+  // Clear the singleton data corresponding to the id
   if (lastGraphicArrId) {
     lastGraphicArrId.forEach((item) => {
       quitDraw(item)
@@ -106,11 +106,11 @@ function produceData(drawGraphicId, dthPara, lastGraphicArrId) {
     const height = dthPara.minHeight * 1 + floorHeight * i
     const extrudedHeight = dthPara.minHeight * 1 + floorHeight * (i + 1)
     const color = i % 2 === 0 ? "red" : "#1e1e1e"
-    // 用于popup展示的数据，可添加任意数据展示在popup内
+    // Data used for popup display. Any data can be added to be displayed in the popup.
     const attr = {
       name: i + 1,
       thisFloor: i + 1,
-      houseType: `${houseTypeCount}号户型`,
+      houseType: `${houseTypeCount} house type`,
       floorHeight: floorHeight.toFixed(2),
       allFloor: dthPara.floorCount,
       positions: dthPara.positions,
@@ -123,11 +123,11 @@ function produceData(drawGraphicId, dthPara, lastGraphicArrId) {
       style: {
         height,
         extrudedHeight,
-        // 单体化默认显示样式
+        //Single default display style
         color: getColor(),
         opacity: 0.3,
         classification: true,
-        // 单体化鼠标移入或单击后高亮的样式
+        // Singletify the style highlighted after the mouse is moved or clicked
         highlight: {
           type: mars3d.EventType.click,
           color,
@@ -143,7 +143,7 @@ function produceData(drawGraphicId, dthPara, lastGraphicArrId) {
 
   return {
     floorHeight,
-    generateGraphicIdArr, // 单体化面的总id
+    generateGraphicIdArr, //The total id of the singleton surface
     houseTypeCount
   }
 }
@@ -166,13 +166,13 @@ function getBuildingHeight() {
   })
 }
 
-// 取消绘制
+// Cancel drawing
 function quitDraw(id) {
   const quitGraphic = geoJsonLayerDTH.getGraphicById(id)
   quitGraphic && geoJsonLayerDTH.removeGraphic(quitGraphic)
 }
 
-// 颜色
+// color
 let index = 0
 const colors = ["#99CCCC", "#66FF66", "#FF6666", "#00CCFF", "#00FF33", "#CC0000", "#CC00CC", "#CCFF00", "#0000FF"]
 function getColor() {
@@ -180,17 +180,17 @@ function getColor() {
   return colors[i]
 }
 
-// 清除所有graphic数据
+//Clear all graphic data
 function clearAllData() {
   geoJsonLayerDTH.clear(true)
 }
 
 /**
- * 打开geojson文件
+ * Open geojson file
  *
  * @export
- * @param {FileInfo} file 文件
- * @returns {void} 无
+ * @param {FileInfo} file file
+ * @returns {void} None
  */
 function openGeoJSON(file, resolve) {
   const fileName = file.name
@@ -206,16 +206,16 @@ function openGeoJSON(file, resolve) {
       resolve(geoJsonLayerDTH.getGraphics())
     }
   } else {
-    globalMsg("暂不支持 " + fileType + " 文件类型的数据！")
+    globalMsg("Data of " + fileType + " file type is not supported yet!")
   }
 }
 
-// 点击保存GeoJSON
+// Click to save GeoJSON
 function saveGeoJSON() {
   if (geoJsonLayerDTH.length === 0) {
-    globalMsg("当前没有任何数据，无需保存！")
+    globalMsg("There is currently no data, no need to save!")
     return
   }
   const geojson = geoJsonLayerDTH.toGeoJSON()
-  mars3d.Util.downloadFile("分层分户矢量单体化.json", JSON.stringify(geojson))
+  mars3d.Util.downloadFile("Hierarchical household division vector singleton.json", JSON.stringify(geojson))
 }

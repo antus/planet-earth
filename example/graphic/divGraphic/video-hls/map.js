@@ -1,8 +1,8 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.649617, lng: 117.081721, alt: 444, heading: 348, pitch: -25 }
@@ -10,19 +10,19 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
 
-  globalNotify("已知问题提示", `如视频未播放或服务URL访问超时，是因为目前在线演示URL地址已失效，您可以替换代码中url为本地服务后使用。`)
+  globalNotify("Known Problem Tips", `If the video does not play or the service URL access times out, it is because the current online demo URL address has expired. You can replace the url in the code with a local service and use it.`)
 
-  // 加载石化工厂模型
+  //Load the petrochemical plant model
   const tiles3dLayer = new mars3d.layer.TilesetLayer({
-    name: "石化工厂",
+    name: "Petrochemical Plant",
     url: "http://data.mars3d.cn/3dtiles/max-shihua/tileset.json",
     position: { lng: 117.077158, lat: 31.659116, alt: -2.0 },
     maximumScreenSpaceError: 1,
@@ -30,31 +30,31 @@ function onMounted(mapInstance) {
   })
   map.addLayer(tiles3dLayer)
 
-  // 创建DIV数据图层
+  //Create DIV data layer
   const graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
   graphicLayer.on(mars3d.EventType.click, function (event) {
-    console.log("您单击了", event)
+    console.log("You clicked", event)
   })
 
-  // 在layer上绑定右键菜单
+  // Bind the right-click menu to the layer
   graphicLayer.bindContextMenu(
     [
       {
-        text: "查看摄像头",
+        text: "View camera",
         icon: "fa fa-trash-o",
         callback: (e) => {
           const graphic = e.graphic
 
-          globalMsg("右键菜单示例")
+          globalMsg("right-click menu example")
         }
       }
     ],
     { offsetY: -170 }
   )
 
-  // 添加数据
+  // adding data
   addRandomGraphicByCount(graphicLayer, [117.080397, 31.656139, 33.3])
   addRandomGraphicByCount(graphicLayer, [117.078006, 31.65649, 49.4])
   addRandomGraphicByCount(graphicLayer, [117.080571, 31.657898, 50.2])
@@ -62,8 +62,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -89,7 +89,7 @@ function addRandomGraphicByCount(graphicLayer, position) {
     popup: `<video style="width: 200px;height:100px;" id="videoHLS"  muted="muted" autoplay="autoplay" loop="loop" crossorigin="" controls="">
               </video>`,
     popupOptions: {
-      offsetY: -170, // 显示Popup的偏移值，是DivGraphic本身的像素高度值
+      offsetY: -170, // Display the offset value of Popup, which is the pixel height value of DivGraphic itself
       template: `<div class="marsBlackPanel animation-spaceInDown">
                     <div class="marsBlackPanel-text">{content}</div>
                     <span class="mars3d-popup-close-button closeButton" >×</span>
@@ -101,7 +101,7 @@ function addRandomGraphicByCount(graphicLayer, position) {
   graphicLayer.addGraphic(graphicImg)
 
   graphicImg.on(mars3d.EventType.popupOpen, function (event) {
-    const videoElement = event.container.querySelector("#videoHLS") // popup对应的DOM
+    const videoElement = event.container.querySelector("#videoHLS") // DOM corresponding to popup
 
     if (window.Hls.isSupported()) {
       const hls = new window.Hls()

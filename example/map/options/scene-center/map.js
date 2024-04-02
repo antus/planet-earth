@@ -3,7 +3,7 @@
 var map
 let graphic
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 25.389914, lng: 119.084961, alt: 1179575, heading: 346, pitch: -60 }
@@ -11,13 +11,13 @@ var mapOptions = {
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
   map.camera.percentageChanged = 0.01
 
   const graphicLayer = new mars3d.layer.GraphicLayer()
@@ -27,7 +27,7 @@ function onMounted(mapInstance) {
     position: [107.39956, 29.719738, 100.9],
     style: {
       radii: new Cesium.Cartesian3(2500.0, 2500.0, 1000.0),
-      maximumConeDegree: 90, // 半球
+      maximumConeDegree: 90, // hemisphere
       fill: false,
       subdivisions: 64,
       stackPartitions: 32,
@@ -35,14 +35,14 @@ function onMounted(mapInstance) {
       outline: true,
       outlineColor: "#ffff00",
 
-      // 高亮时的样式（默认为鼠标移入，也可以指定type:'click'单击高亮），构造后也可以openHighlight、closeHighlight方法来手动调用
+      // The style when highlighting (default is mouse move in, you can also specify type:'click' to click to highlight). After construction, you can also manually call the openHighlight and closeHighlight methods.
       highlight: {
         outlineColor: "#ff0000"
       }
     },
-    // 添加扫描面
+    //Add scanning surface
     scanPlane: {
-      step: 0.5, // 步长
+      step: 0.5, // step size
       style: {
         color: "#ffff00",
         opacity: 0.4
@@ -53,15 +53,15 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 
 function onUnmounted() {
   map = null
 }
 
-// **************************** 景点视角演示********************** //
+//****************************** Attraction perspective demonstration************************ ***** //
 function changeView1() {
   map.setCameraView({ lat: 39.904128, lng: 116.391643, alt: 1054, heading: 0, pitch: -39 })
 }
@@ -78,10 +78,10 @@ function changeView4() {
   map.setCameraView({ lat: 30.83463, lng: 115.86774, alt: 710, heading: 303, pitch: -7 })
 }
 
-// **************************** 相机和视角控制********************** //
+//******************************Camera and perspective control****************** ****** //
 function mapGetCameraView() {
   const camera = map.getCameraView()
-  globalAlert(JSON.stringify(camera), "当前视角参数")
+  globalAlert(JSON.stringify(camera), "Current perspective parameters")
 }
 
 function mapSetCameraView() {
@@ -89,7 +89,7 @@ function mapSetCameraView() {
 }
 
 function mapSetCameraViewList() {
-  // 视角切换（分步执行）, stop设置停留在该视角的时间
+  // Perspective switching (step-by-step execution), stop sets the time to stay in this perspective
   map.setCameraViewList([
     { lng: 108.961601, lat: 34.217109, alt: 509.2, heading: 314.5, pitch: -22.5, duration: 8, stop: 0 },
     { lng: 108.96164, lat: 34.222159, alt: 510.3, heading: 211.2, pitch: -22.5, duration: 5, stop: 0 },

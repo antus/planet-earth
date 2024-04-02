@@ -1,41 +1,41 @@
 // import * as mars3d from "mars3d"
 
-var map // mars3d.Map三维地图对象
+var map // mars3d.Map three-dimensional map object
 var graphicLayer
 
-// 需要覆盖config.json中地图属性参数（当前示例框架中自动处理合并）
+// Need to override the map attribute parameters in config.json (the merge is automatically handled in the current example framework)
 var mapOptions = {
   scene: {
     center: { lat: 31.71887, lng: 117.225745, alt: 7101, heading: 2, pitch: -26 }
   },
   control: {
-    clockAnimate: true, // 时钟动画控制(左下角)
-    timeline: true, // 是否显示时间线控件
+    clockAnimate: true, // Clock animation control (lower left corner)
+    timeline: true, // Whether to display the timeline control
     compass: { top: "10px", left: "5px" }
   }
 }
 
 /**
- * 初始化地图业务，生命周期钩子函数（必须）
- * 框架在地图初始化完成后自动调用该函数
- * @param {mars3d.Map} mapInstance 地图对象
- * @returns {void} 无
+ * Initialize map business, life cycle hook function (required)
+ * The framework automatically calls this function after the map initialization is completed.
+ * @param {mars3d.Map} mapInstance map object
+ * @returns {void} None
  */
 function onMounted(mapInstance) {
-  map = mapInstance // 记录map
+  map = mapInstance // record map
   map.basemap = 2017
-  map.toolbar.style.bottom = "55px" // 修改toolbar控件的样式
+  map.toolbar.style.bottom = "55px" // Modify the style of the toolbar control
 
-  // 创建矢量数据图层
+  //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()
   map.addLayer(graphicLayer)
 
-  // 绑定点击事件
+  //Bind click event
   graphicLayer.on(mars3d.EventType.click, (event) => {
-    console.log("单击了漫游路线", event)
+    console.log("Roaming route clicked", event)
   })
-  bindLayerPopup() // 在图层上绑定popup,对所有加到这个图层的矢量数据都生效
-  bindLayerContextMenu() // 在图层绑定右键菜单,对所有加到这个图层的矢量数据都生效
+  bindLayerPopup() // Bind popup on the layer, which will take effect on all vector data added to this layer.
+  bindLayerContextMenu() // Bind the right-click menu on the layer, which will take effect on all vector data added to this layer.
 
   map.clock.multiplier = 10
 
@@ -43,8 +43,8 @@ function onMounted(mapInstance) {
 }
 
 /**
- * 释放当前地图业务的生命周期函数
- * @returns {void} 无
+ * Release the life cycle function of the current map business
+ * @returns {void} None
  */
 function onUnmounted() {
   map = null
@@ -72,7 +72,7 @@ function addRoamLines() {
         leadTime: 0
       },
       coneTrack: {
-        angle: 5, // 半场角度
+        angle: 5, // half-court angle
         color: "rgba(255,0,0,0.5)"
       }
     },
@@ -279,7 +279,7 @@ function addRoamLines() {
         leadTime: 0
       },
       coneTrack: {
-        angle: 15, // 半场角度
+        angle: 15, // half-court angle
         color: "rgba(255,0,255,0.5)"
       }
     }
@@ -291,7 +291,7 @@ function addRoamLines() {
   for (let i = 0, len = arrLine.length; i < len; i++) {
     const flydata = arrLine[i]
 
-    flydata.updateClock = false // 多个FixedRoute模型，避免时钟冲突
+    flydata.updateClock = false // Multiple FixedRoute models to avoid clock conflicts
 
     flydata.label = {
       text: flydata.name,
@@ -310,7 +310,7 @@ function addRoamLines() {
       distanceDisplayCondition_near: 0,
       distanceDisplayCondition_far: 80000
     }
-    // 当视角距离超过80000米(distanceDisplayCondition_far定义的) 后显示为点对象的样式
+    // When the viewing angle distance exceeds 80000 meters (defined by distanceDisplayCondition_far), it is displayed as a point object style
     flydata.point = {
       color: "#ffff00",
       pixelSize: 5,
@@ -325,7 +325,7 @@ function addRoamLines() {
     const fixedRoute = new mars3d.graphic.FixedRoute(flydata)
     graphicLayer.addGraphic(fixedRoute)
 
-    // 启动漫游
+    // Start roaming
     fixedRoute.start()
 
     if (i === 0) {
@@ -340,23 +340,23 @@ function addRoamLines() {
   map.controls.timeline.zoomTo(startTime, stopTime)
 }
 
-// 在图层绑定Popup弹窗
+// Bind the Popup window to the layer
 function bindLayerPopup() {
   graphicLayer.bindPopup(function (event) {
     const attr = event.graphic.attr || {}
-    attr["类型"] = event.graphic.type
-    attr["来源"] = "我是layer上绑定的Popup"
-    attr["备注"] = "我支持鼠标交互"
+    attr["type"] = event.graphic.type
+    attr["source"] = "I am the Popup bound to the layer"
+    attr["Remarks"] = "I support mouse interaction"
 
-    return mars3d.Util.getTemplateHtml({ title: "矢量图层", template: "all", attr })
+    return mars3d.Util.getTemplateHtml({ title: "Vector Layer", template: "all", attr })
   })
 }
 
-// 绑定右键菜单
+//Bind right-click menu
 function bindLayerContextMenu() {
   graphicLayer.bindContextMenu([
     {
-      text: "删除对象",
+      text: "Delete object",
       icon: "fa fa-trash-o",
       show: (event) => {
         const graphic = event.graphic
@@ -371,7 +371,7 @@ function bindLayerContextMenu() {
         if (!graphic) {
           return
         }
-        const parent = graphic.parent // 右击是编辑点时
+        const parent = graphic.parent // When the right click is the editing point
         graphicLayer.removeGraphic(graphic)
         if (parent) {
           graphicLayer.removeGraphic(parent)
