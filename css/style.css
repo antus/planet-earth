@@ -551,3 +551,18 @@ html {
   color: white;
   cursor: pointer;
 }
+
+.minicolors-theme-default .minicolors-swatch {
+  top: 5px;
+  left: 5px;
+  width: 12px;
+  height: 12px;
+}
+
+.minicolors-theme-default .minicolors-input {
+  width: 100% !important;
+}
+
+.form-control {
+  width: 250px;
+}

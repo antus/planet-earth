@@ -14,7 +14,7 @@ function centerAtTerrain() {
   map.setCameraView({ lat: 30.859414, lng: 116.28709, alt: 8617, heading: 18, pitch: -28 })
 }
 
-easy modelTest
+let modelTest
 function centerAtModel() {
   map.setCameraView({ lat: 33.590452, lng: 119.032184, alt: 185, heading: 359, pitch: -34 })
 

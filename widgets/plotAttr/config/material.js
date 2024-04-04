@@ -1,31 +1,31 @@
-// 材质对应的api文档: https://mars3d.cn/api/MaterialType.html
+// API documentation corresponding to the material: https://mars3d.cn/api/MaterialType.html
 const materialConfig = {
-  Color: [{ name: "color", label: "颜色", type: "color", defval: "#3388ff" }],
+  Color: [{ name: "color", label: "color", type: "color", defval: "#3388ff" }],
 
   PolylineDash: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "gapColor", label: "间隔颜色", type: "color", defval: "rgba(255,255,255,0)" },
-    { name: "dashLength", label: "虚线间长", type: "number", step: 1, defval: 16.0 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "gapColor", label: "gap color", type: "color", defval: "rgba(255,255,255,0)" },
+    { name: "dashLength", label: "Length between dashes", type: "number", step: 1, defval: 16.0 }
   ],
   PolylineOutline: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "outlineColor", label: "衬色", type: "color", defval: "rgba(255,255,255,0)" },
-    { name: "outlineWidth", label: "衬色宽度", type: "number", min: 0, max: 20, step: 1, defval: 1.0 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "outlineColor", label: "Color", type: "color", defval: "rgba(255,255,255,0)" },
+    { name: "outlineWidth", label: "lining width", type: "number", min: 0, max: 20, step: 1, defval: 1.0 }
   ],
-  PolylineArrow: [{ name: "color", label: "颜色", type: "color", defval: "#3388ff" }],
+  PolylineArrow: [{ name: "color", label: "color", type: "color", defval: "#3388ff" }],
   PolylineGlow: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "glowPower", label: "高亮强度", type: "number", min: 0, max: 1, step: 0.1, defval: 0.25 },
-    { name: "taperPower", label: "渐变效果", type: "number", min: 0, max: 20, step: 0.1, defval: 1.0 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "glowPower", label: "Highlight intensity", type: "number", min: 0, max: 1, step: 0.1, defval: 0.25 },
+    { name: "taperPower", label: "Gradient Effect", type: "number", min: 0, max: 20, step: 0.1, defval: 1.0 }
   ],
   LineFlow: [
-    { name: "image", label: "图片", type: "label", defval: "img/textures/fence.png" },
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "speed", label: "速度", type: "number", step: 1, defval: 10 },
+    { name: "image", label: "image", type: "label", defval: "img/textures/fence.png" },
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "speed", label: "speed", type: "number", step: 1, defval: 10 },
 
     {
       name: "repeat_x",
-      label: "X重复数量",
+      label: "X number of repeats",
       type: "number",
       step: 1,
       defval: 1,
@@ -35,7 +35,7 @@ const materialConfig = {
     },
     {
       name: "repeat_y",
-      label: "Y重复数量",
+      label: "Y repeat quantity",
       type: "number",
       step: 1,
       defval: 1,
@@ -44,62 +44,62 @@ const materialConfig = {
       }
     },
 
-    { name: "axisY", label: "Y轴朝上", type: "radio", defval: false }
+    { name: "axisY", label: "Y-axis upward", type: "radio", defval: false }
   ],
   LineFlowColor: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "alpha", label: "透明度", type: "slider", min: 0, max: 1, step: 0.1, defval: 1 },
-    { name: "percent", label: "比例", type: "number", min: 0, max: 1, step: 0.01, defval: 0.04 },
-    { name: "speed", label: "速度", type: "number", step: 1, defval: 10 },
-    { name: "startTime", label: "开始时间", type: "number", step: 1, defval: 0 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "alpha", label: "transparency", type: "slider", min: 0, max: 1, step: 0.1, defval: 1 },
+    { name: "percent", label: "proportion", type: "number", min: 0, max: 1, step: 0.01, defval: 0.04 },
+    { name: "speed", label: "speed", type: "number", step: 1, defval: 10 },
+    { name: "startTime", label: "start time", type: "number", step: 1, defval: 0 }
   ],
   ODLine: [
-    { name: "color", label: "颜色", type: "color", defval: "#ff0000" },
-    { name: "bgColor", label: "背景颜色", type: "color", defval: "#000000" },
-    { name: "speed", label: "速度", type: "number", step: 1, defval: 10 },
-    { name: "startTime", label: "开始时间", type: "number", step: 1, defval: 0 },
+    { name: "color", label: "color", type: "color", defval: "#ff0000" },
+    { name: "bgColor", label: "Background Color", type: "color", defval: "#000000" },
+    { name: "speed", label: "speed", type: "number", step: 1, defval: 10 },
+    { name: "startTime", label: "start time", type: "number", step: 1, defval: 0 },
     {
       name: "bidirectional",
-      label: " 运行形式",
+      label: "Run form",
       type: "combobox",
       defval: "0",
       data: [
-        { label: "正向运动", type: "number", value: "0" },
-        { label: "反向运动", type: "number", value: "1" },
-        { label: "双向运动", type: "number", value: "2" }
+        { label: "Forward motion", type: "number", value: "0" },
+        { label: "Reverse motion", type: "number", value: "1" },
+        { label: "two-way movement", type: "number", value: "2" }
       ]
     }
   ],
   LineFlicker: [
-    { name: "color", label: "泛光颜色", type: "color", defval: "#3388ff" },
-    { name: "speed", label: "速度", type: "number", step: 1, defval: 10 }
+    { name: "color", label: "flood color", type: "color", defval: "#3388ff" },
+    { name: "speed", label: "speed", type: "number", step: 1, defval: 10 }
   ],
   LineTrail: [
-    { name: "color", label: "轨迹颜色", type: "color", defval: "#3388ff" },
-    { name: "speed", label: "速度", type: "number", step: 1, defval: 10 }
+    { name: "color", label: "track color", type: "color", defval: "#3388ff" },
+    { name: "speed", label: "speed", type: "number", step: 1, defval: 10 }
   ],
   LineBloom: [
-    { name: "color", label: "泛光颜色", type: "color", defval: "#3388ff" },
-    { name: "glow", label: "泛光强度", type: "number", step: 1, defval: 1 },
-    { name: "speed", label: "速度", type: "number", step: 1, defval: 10 }
+    { name: "color", label: "flood color", type: "color", defval: "#3388ff" },
+    { name: "glow", label: "Flood intensity", type: "number", step: 1, defval: 1 },
+    { name: "speed", label: "speed", type: "number", step: 1, defval: 10 }
   ],
 
   WallScroll: [
-    { name: "image", label: "图片", type: "label", defval: "img/textures/fence.png" },
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "count", label: "数量", type: "number", min: 0, step: 1, defval: 1 },
-    { name: "speed", label: "速度", type: "number", min: 0, step: 1, defval: 10 },
-    { name: "reverse", label: "方向往上", type: "radio", defval: false },
-    { name: "bloom", label: "是否泛光", type: "radio", defval: false },
-    { name: "axisY", label: "Y轴朝上", type: "radio", defval: false }
+    { name: "image", label: "image", type: "label", defval: "img/textures/fence.png" },
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "count", label: "quantity", type: "number", min: 0, step: 1, defval: 1 },
+    { name: "speed", label: "speed", type: "number", min: 0, step: 1, defval: 10 },
+    { name: "reverse", label: "direction up", type: "radio", defval: false },
+    { name: "bloom", label: "whether to bloom", type: "radio", defval: false },
+    { name: "axisY", label: "Y-axis upward", type: "radio", defval: false }
   ],
 
   Image: [
-    { name: "image", label: "图片", type: "label", defval: "" },
-    { name: "transparent", label: "是否透明", type: "radio", defval: false },
+    { name: "image", label: "image", type: "label", defval: "" },
+    { name: "transparent", label: "whether it is transparent", type: "radio", defval: false },
     {
       name: "opacity",
-      label: "透明度",
+      label: "transparency",
       type: "slider",
       min: 0,
       max: 1,
@@ -109,56 +109,56 @@ const materialConfig = {
         return style.transparent === true
       }
     },
-    { name: "repeat_x", label: "X重复次数", type: "number", step: 1, defval: 1 },
-    { name: "repeat_y", label: "Y重复次数", type: "number", step: 1, defval: 1 }
+    { name: "repeat_x", label: "X number of repetitions", type: "number", step: 1, defval: 1 },
+    { name: "repeat_y", label: "Number of repetitions of Y", type: "number", step: 1, defval: 1 }
   ],
   Text: [
     {
       name: "text",
-      label: "文本内容",
+      label: "text content",
       type: "textarea",
-      defval: "文字"
+      defval: "text"
     },
     {
       name: "font_family",
-      label: "字体",
+      label: "Font",
       type: "combobox",
       defval: "楷体",
       data: [
-        { label: "微软雅黑", value: "微软雅黑" },
+        { label: "Microsoft Yahei", value: "Microsoft Yahei" },
         { label: "宋体", value: "宋体" },
         { label: "楷体", value: "楷体" },
-        { label: "隶书", value: "隶书" },
+        { label: "official script", value: "official script" },
         { label: "黑体", value: "黑体" }
       ]
     },
-    { name: "font_size", label: "字体大小", type: "number", step: 1, defval: 100 },
+    { name: "font_size", label: "font size", type: "number", step: 1, defval: 100 },
     {
       name: "font_weight",
-      label: "是否加粗",
+      label: "Whether to bold",
       type: "combobox",
       defval: "normal",
       data: [
-        { label: "是", value: "bold" },
-        { label: "否", value: "normal" }
+        { label: "is", value: "bold" },
+        { label: "No", value: "normal" }
       ]
     },
     {
       name: "font_style",
-      label: "是否斜体",
+      label: "Whether italics",
       type: "combobox",
       defval: "normal",
       data: [
-        { label: "是", value: "italic" },
-        { label: "否", value: "normal" }
+        { label: "Yes", value: "italic" },
+        { label: "No", value: "normal" }
       ]
     },
-    { name: "color", label: "文本颜色", type: "color", defval: "#FFFF00" },
+    { name: "color", label: "text color", type: "color", defval: "#FFFF00" },
 
-    { name: "stroke", label: "是否描边", type: "radio", defval: false },
+    { name: "stroke", label: "Whether to stroke", type: "radio", defval: false },
     {
       name: "strokeColor",
-      label: "描边颜色",
+      label: "stroke color",
       type: "color",
       defval: "#ffffff",
       show(style, allStyle, graphicType) {
@@ -167,7 +167,7 @@ const materialConfig = {
     },
     {
       name: "strokeWidth",
-      label: "描边宽度",
+      label: "stroke width",
       type: "number",
       min: 1,
       max: 5,
@@ -180,13 +180,13 @@ const materialConfig = {
 
     {
       name: "background",
-      label: "是否背景",
+      label: "Background or not",
       type: "radio",
       defval: false
     },
     {
       name: "backgroundColor",
-      label: "背景颜色",
+      label: "background color",
       type: "color",
       defval: "#000000",
       show(style, allStyle, graphicType) {
@@ -195,7 +195,7 @@ const materialConfig = {
     },
     {
       name: "padding",
-      label: "背景内边距",
+      label: "background padding",
       type: "number",
       step: 1,
       defval: 5,
@@ -205,111 +205,111 @@ const materialConfig = {
     }
   ],
   Grid: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "cellAlpha", label: "填充透明度", type: "slider", min: 0, max: 1, step: 0.1, defval: 0.1 },
-    { name: "lineCount", label: "网格数量", type: "number", step: 1, defval: 10 },
-    { name: "lineThickness", label: "网格宽度", type: "number", step: 1, defval: 2 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "cellAlpha", label: "Fill transparency", type: "slider", min: 0, max: 1, step: 0.1, defval: 0.1 },
+    { name: "lineCount", label: "number of grids", type: "number", step: 1, defval: 10 },
+    { name: "lineThickness", label: "grid width", type: "number", step: 1, defval: 2 }
   ],
   Checkerboard: [
-    { name: "evenColor", label: "主色", type: "color", defval: "#000000" },
-    { name: "oddColor", label: "衬色", type: "color", defval: "#ffffff" },
-    { name: "repeat_x", label: "横向数量", type: "number", step: 1, defval: 10 },
-    { name: "repeat_y", label: "纵向数量", type: "number", step: 1, defval: 10 }
+    { name: "evenColor", label: "main color", type: "color", defval: "#000000" },
+    { name: "oddColor", label: "Color", type: "color", defval: "#ffffff" },
+    { name: "repeat_x", label: "Horizontal quantity", type: "number", step: 1, defval: 10 },
+    { name: "repeat_y", label: "vertical quantity", type: "number", step: 1, defval: 10 }
   ],
   Stripe: [
-    { name: "evenColor", label: "主色", type: "color", defval: "#000000" },
-    { name: "oddColor", label: "衬色", type: "color", defval: "#ffffff" },
-    { name: "repeat", label: "数量", type: "number", step: 1, defval: 10 },
-    { name: "orientation", label: "方向", type: "radio", defval: false },
-    { name: "offset", label: "起始位置", type: "number", step: 1, defval: 0 }
+    { name: "evenColor", label: "main color", type: "color", defval: "#000000" },
+    { name: "oddColor", label: "Color", type: "color", defval: "#ffffff" },
+    { name: "repeat", label: "quantity", type: "number", step: 1, defval: 10 },
+    { name: "orientation", label: "orientation", type: "radio", defval: false },
+    { name: "offset", label: "starting position", type: "number", step: 1, defval: 0 }
   ],
   PolyGradient: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "alphaPower", label: "透明系数", type: "number", min: 0, max: 50, step: 0.1, defval: 1.5 },
-    { name: "diffusePower", label: "漫射系数", type: "number", min: 0, max: 50, step: 0.1, defval: 1.6 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "alphaPower", label: "Transparency coefficient", type: "number", min: 0, max: 50, step: 0.1, defval: 1.5 },
+    { name: "diffusePower", label: "diffusion coefficient", type: "number", min: 0, max: 50, step: 0.1, defval: 1.6 }
   ],
   PolyAsphalt: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "size", label: "透明系数", type: "number", min: 0, max: 10, step: 0.01, defval: 0.02 },
-    { name: "frequency", label: "漫射系数", type: "number", min: 0, max: 10, step: 0.01, defval: 0.2 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "size", label: "Transparency coefficient", type: "number", min: 0, max: 10, step: 0.01, defval: 0.02 },
+    { name: "frequency", label: "diffusion coefficient", type: "number", min: 0, max: 10, step: 0.01, defval: 0.2 }
   ],
   PolyBlob: [
-    { name: "evenColor", label: "主色", type: "color", defval: "#000000" },
-    { name: "oddColor", label: "衬色", type: "color", defval: "#ffffff" },
-    { name: "frequency", label: "漫射系数", type: "number", min: 0, max: 50, step: 0.1, defval: 10.0 }
+    { name: "evenColor", label: "main color", type: "color", defval: "#000000" },
+    { name: "oddColor", label: "Color", type: "color", defval: "#ffffff" },
+    { name: "frequency", label: "diffusion coefficient", type: "number", min: 0, max: 50, step: 0.1, defval: 10.0 }
   ],
   PolyWood: [
-    { name: "evenColor", label: "主色", type: "color", defval: "#000000" },
-    { name: "oddColor", label: "衬色", type: "color", defval: "#ffffff" },
-    { name: "frequency", label: "漫射系数", type: "number", min: 0, max: 50, step: 0.1, defval: 10.0 },
-    { name: "noiseScale", label: "噪波比例", type: "number", min: 0, max: 50, step: 0.01, defval: 0.7 },
-    { name: "grainFrequency", label: "颗粒的频率", type: "number", min: 0, max: 100, step: 0.1, defval: 27 }
+    { name: "evenColor", label: "main color", type: "color", defval: "#000000" },
+    { name: "oddColor", label: "Color", type: "color", defval: "#ffffff" },
+    { name: "frequency", label: "diffusion coefficient", type: "number", min: 0, max: 50, step: 0.1, defval: 10.0 },
+    { name: "noiseScale", label: "noise scale", type: "number", min: 0, max: 50, step: 0.01, defval: 0.7 },
+    { name: "grainFrequency", label: "Grain Frequency", type: "number", min: 0, max: 100, step: 0.1, defval: 27 }
   ],
   Water: [
-    { name: "baseWaterColor", label: "基础颜色", type: "color", defval: "#123e59" },
-    { name: "blendColor", label: "混合颜色", type: "color", defval: "#123e59" },
-    { name: "normalMap", label: "反射图片", type: "label", defval: "img/textures/waterNormals.jpg" },
-    { name: "frequency", label: "波数", type: "number", min: 1, max: 100000, step: 1, defval: 9000 },
-    { name: "amplitude", label: "水波振幅", type: "number", min: 0, max: 100, step: 1, defval: 5.0 },
-    { name: "animationSpeed", label: "动画速度", type: "slider", min: 0, max: 1, step: 0.01, defval: 0.03 },
-    { name: "specularIntensity", label: "反射强度", type: "slider", min: 0, max: 1, step: 0.1, defval: 0.5 }
+    { name: "baseWaterColor", label: "base color", type: "color", defval: "#123e59" },
+    { name: "blendColor", label: "BlendColor", type: "color", defval: "#123e59" },
+    { name: "normalMap", label: "Reflection Picture", type: "label", defval: "img/textures/waterNormals.jpg" },
+    { name: "frequency", label: "wavenumber", type: "number", min: 1, max: 100000, step: 1, defval: 9000 },
+    { name: "amplitude", label: "water wave amplitude", type: "number", min: 0, max: 100, step: 1, defval: 5.0 },
+    { name: "animationSpeed", label: "animation speed", type: "slider", min: 0, max: 1, step: 0.01, defval: 0.03 },
+    { name: "specularIntensity", label: "reflection intensity", type: "slider", min: 0, max: 1, step: 0.1, defval: 0.5 }
   ],
   WaterLight: [
-    { name: "specularMap", label: "反射图片", type: "label", defval: "img/textures/poly-stone.jpg" },
-    { name: "alpha", label: "透明度", type: "slider", min: 0, max: 1, step: 0.1, defval: 0.2 }
+    { name: "specularMap", label: "reflection picture", type: "label", defval: "img/textures/poly-stone.jpg" },
+    { name: "alpha", label: "transparency", type: "slider", min: 0, max: 1, step: 0.1, defval: 0.2 }
   ],
 
   RectSlide: [
-    { name: "image", label: "图片", type: "label", defval: "" },
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "speed", label: "秒刷新数", type: "number", step: 1, defval: 60 },
-    { name: "pure", label: "是否纯色", type: "radio", defval: false }
+    { name: "image", label: "image", type: "label", defval: "" },
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "speed", label: "Number of refresh seconds", type: "number", step: 1, defval: 60 },
+    { name: "pure", label: "Whether it is pure color", type: "radio", defval: false }
   ],
 
   ScanLine: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "speed", label: "速度", type: "number", min: 0, step: 1, defval: 10 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "speed", label: "speed", type: "number", min: 0, step: 1, defval: 10 }
   ],
   CircleScan: [
-    { name: "image", label: "图片", type: "label", defval: "img/textures/circle-scan.png" },
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" }
+    { name: "image", label: "image", type: "label", defval: "img/textures/circle-scan.png" },
+    { name: "color", label: "color", type: "color", defval: "#3388ff" }
   ],
   CircleWave: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "count", label: "数量", type: "number", step: 1, defval: 1 },
-    { name: "gradient", label: "圈间系数", type: "slider", min: 0, max: 1, step: 0.1, defval: 0.1 },
-    { name: "speed", label: "速度", type: "number", step: 1, defval: 10 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "count", label: "quantity", type: "number", step: 1, defval: 1 },
+    { name: "gradient", label: "Inter-circle coefficient", type: "slider", min: 0, max: 1, step: 0.1, defval: 0.1 },
+    { name: "speed", label: "speed", type: "number", step: 1, defval: 10 }
   ],
   RadarLine: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "speed", label: "速度", type: "number", min: 0, step: 1, defval: 10 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "speed", label: "speed", type: "number", min: 0, step: 1, defval: 10 }
   ],
 
   CylinderWave: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "repeat", label: "圈数量", type: "number", step: 1, defval: 30 },
-    { name: "thickness", label: "圈宽度比例", type: "slider", min: 0.01, max: 0.99, step: 0.01, defval: 0.3 },
-    { name: "speed", label: "速度", type: "number", step: 1, defval: 10 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "repeat", label: "number of circles", type: "number", step: 1, defval: 30 },
+    { name: "thickness", label: "circle width ratio", type: "slider", min: 0.01, max: 0.99, step: 0.01, defval: 0.3 },
+    { name: "speed", label: "speed", type: "number", step: 1, defval: 10 }
   ],
 
   EllipsoidWave: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "speed", label: "速度", type: "number", step: 1, defval: 10 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "speed", label: "speed", type: "number", step: 1, defval: 10 }
   ],
   EllipsoidElectric: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "speed", label: "速度", type: "number", step: 1, defval: 10 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "speed", label: "speed", type: "number", step: 1, defval: 10 }
   ],
   LineCross: [
-    { name: "color", label: "颜色", type: "color", defval: "#3388ff" },
-    { name: "dashLength", label: "长度", type: "number", step: 1, defval: 64 },
-    { name: "maskLength", label: "间隔", type: "number", step: 1, defval: 9 },
-    { name: "centerPower", label: "中心百分比", type: "number", step: 0.1, defval: 0.1 },
-    { name: "dashPower", label: "虚线百分比", type: "number", step: 0.1, defval: 0.1 }
+    { name: "color", label: "color", type: "color", defval: "#3388ff" },
+    { name: "dashLength", label: "length", type: "number", step: 1, defval: 64 },
+    { name: "maskLength", label: "interval", type: "number", step: 1, defval: 9 },
+    { name: "centerPower", label: "center percentage", type: "number", step: 0.1, defval: 0.1 },
+    { name: "dashPower", label: "dash percentage", type: "number", step: 0.1, defval: 0.1 }
   ]
 }
 
-// 部分矢量对应与其他基本类型完全相同配置时，复制配置
+// When some vectors correspond to the same configuration as other basic types, copy the configuration
 materialConfig.Image2 = materialConfig.Image
 materialConfig.PolyFacet = materialConfig.PolyBlob
 materialConfig.PolyGrass = materialConfig.PolyBlob

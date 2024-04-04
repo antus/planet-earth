@@ -1,89 +1,89 @@
-<!-- 2017-11-6 09:38:52 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<!-- 2017-11-6 09:38:52 | Modification Mu Yao (WeChat: http://marsgis.cn/weixin.html ) -->
 <div id="map-querybar" class="querybar-ssk animation-slide-top   no-print-view">
-    <input id="txt_querypoi" type="search" class="querybar-ssk1" placeholder="搜索 地点  " autocomplete="off"  />
+    <input id="txt_querypoi" type="search" class="querybar-ssk1" placeholder="Search location" autocomplete="off" />
     <button id="btn_querypoi" type="button" value="" class="querybar-ssk2">
         <i class="fa fa-search fa-2x"></i>
     </button>
     <div class="querybar-clear"></div>
 
-    <!--历史记录-->
+    <!--History-->
     <div id="querybar_histroy_view" class="querybar-sbox " style="display: none;">
         <!--<div class="querybar-kbtab">
             <ul>
-                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('美食');"><div><img src="images/tools/menu1.png"></div><div>美食</div></a></li>
-                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('酒店');"><div><img src="images/tools/menu2.png"></div><div>酒店</div></a></li>
-                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('景点');"><div><img src="images/tools/menu3.png"></div><div>景点</div></a></li>
-                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('小区');"><div><img src="images/tools/menu4.png"></div><div>小区</div></a></li>
+                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('Food');"><div><img src="images/tools/menu1.png"></div><div>Food</div> </a></li>
+                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('Hotel');"><div><img src="images/tools/menu2.png"></div><div>Hotel</div> </a></li>
+                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('Attractions');"><div><img src="images/tools/menu3.png"></div><div>Attractions</div> </a></li>
+                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('Community');"><div><img src="images/tools/menu4.png"></div><div>Community</div> </a></li>
             </ul>
         </div>-->
         <div class="querybar-ssls">
             <ul id="querybar_ul_history">
-                <!--<li><a href="javascript:queryBaiduPOIWidget.autoSearch('木遥安徽总队');">木遥安徽总队</a></li>
-                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('木遥安徽总队医院');">木遥安徽总队医院</a></li>-->
+                <!--<li><a href="javascript:queryBaiduPOIWidget.autoSearch('Muyao Anhui Corps');">Muyao Anhui Corps</a></li>
+                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('Muyao Anhui Corps Hospital');">Muyao Anhui Corps Hospital</a></li>-->
             </ul>
         </div>
         <div>
-            <a href="javascript:queryBaiduPOIWidget.clearHistory();" class="querybar-more">删除历史</a>
+            <a href="javascript:queryBaiduPOIWidget.clearHistory();" class="querybar-more">Delete history</a>
         </div>
     </div>
 
-    <!--搜索智能提示-->
+    <!--Search smart tips-->
     <div id="querybar_autotip_view" class="querybar-znbox" style="display: none;">
         <div class="querybar-znts">
             <ul id="querybar_ul_autotip">
-                <!--<li><a href="javascript:queryBaiduPOIWidget.autoSearch('木遥招待所');">木遥招待所</a></li>
-                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('木遥医院');">木遥医院</a></li>-->
+                <!--<li><a href="javascript:queryBaiduPOIWidget.autoSearch('Muyao Guest House');">Muyao Guest House</a></li>
+                <li><a href="javascript:queryBaiduPOIWidget.autoSearch('Muyao Hospital');">Muyao Hospital</a></li>-->
             </ul>
         </div>
     </div>
 
-    <!--搜索结果列表-->
+    <!--Search result list-->
     <div id="querybar_resultlist_view" class="querybar-sbox" style="display: none;">
 
         <!--<div class="querybar-site">
             <div class="querybar-sitejj">
-                <h3>1、木遥安徽总队</h3>
-                <p>合肥市安徽区玉兰大道8号</p>
+                <h3>1. Muyao Anhui Corps</h3>
+                <p>No. 8 Yulan Avenue, Anhui District, Hefei City</p>
             </div>
         </div>
         <div class="querybar-site">
             <div class="querybar-sitejj">
-                <h3>2、木遥安徽总队医院</h3>
-                <p>合肥市庐阳区长丰路78号</p>
+                <h3>2. Muyao Anhui Corps Hospital</h3>
+                <p>No. 78, Changfeng Road, Luyang District, Hefei City</p>
             </div>
         </div>
         <div class="querybar-site">
             <div class="querybar-sitejj">
-                <h3>3、木遥医院-公交车站</h3>
-                <p>113路;125路;138路;t13b路;t13路;</p>
+                <h3>3. Muyao Hospital-Bus Station</h3>
+                <p>Road 113;Road 125;Road 138;Road t13b;Road t13;</p>
             </div>
         </div>
 
         <div class="querybar-page">
             <div class="querybar-fl">
-                找到<strong>134</strong>条结果
+                Found<strong>134</strong> results
             </div>
             <div class="querybar-ye querybar-fr">
-                1/7页 <a href="javascript:void(0)">首页</a> <a href="javascript:void(0)">&lt;</a> <a href="javascript:void(0)">&gt;</a>
+                Page 1/7<a href="javascript:void(0)">Homepage</a> <a href="javascript:void(0)"><</a> <a href="javascript:void(0 )">></a>
             </div>
         </div>-->
     </div>
 
-    <!--查看单条结果-->
+    <!--View single result-->
     <div id="querybar_detail_view" class="querybar-sbox" style="display: none;">
         <div class="querybar-dtit">
-            <span id="lbl_poi_name">名称</span>
-            <a id="querybar_detail_back" style="float: right; cursor: pointer; font-size: 12px;color: #ffffff;"> &lt;&lt;返回&nbsp;</a>
+            <span id="lbl_poi_name">Name</span>
+            <a id="querybar_detail_back" style="float: right; cursor: pointer; font-size: 12px;color: #ffffff;"> <<Back </a>
         </div>
         <div class="querybar-itr">
             <div class="querybar-itrtit">
-                <img id="querybar_img_jianjie" src="images/jj.png" class="querybar-fl">&nbsp;简介
-                <a id="btnShowDetail" href="" target="_blank" class="querybar-more">详情&gt;</a>
+                <img id="querybar_img_jianjie" src="images/jj.png" class="querybar-fl"> Introduction
+                <a id="btnShowDetail" href="" target="_blank" class="querybar-more">Details></a>
             </div>
             <div id="poi_detail_info" class="querybar-itrcon">
-                <!--<p>类别：总队机关</p>
-                <p>电话：0551-65395595</p>
-                <p>地址：安徽省合肥市安徽区望江西路600号</p>-->
+                <!--<p>Category: Corps Organization</p>
+                <p>Tel: 0551-65395595</p>
+                <p>Address: No. 600, Wangjiang West Road, Anhui District, Hefei City, Anhui Province</p>-->
             </div>
         </div>
     </div>

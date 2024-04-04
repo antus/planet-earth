@@ -1,18 +1,18 @@
-﻿"use script" //开发环境建议开启严格模式
+ "use script" //It is recommended to turn on strict mode in the development environment
 
-//对应widget.js中MyWidget实例化后的对象
+//Corresponds to the object instantiated by MyWidget in widget.js
 let thisWidget
 let layers = []
 let layersObj = {}
 
-//当前页面业务
+//Current page business
 function initWidgetView(_thisWidget) {
   thisWidget = _thisWidget
 
-  //右键
+  //right click
   bindRightMenuEvnet()
 
-  //初始化树
+  //Initialize tree
   let setting = {
     check: {
       enable: true
@@ -52,8 +52,8 @@ function _getNodeConfig(layer) {
 
   let item = layer.options
 
-  if (!item.name || item.name == "未命名") {
-    console.log("未命名图层不加入图层管理", layer)
+  if (!item.name || item.name == "Unnamed") {
+    console.log("Unnamed layers are not added to layer management", layer)
     return
   }
 
@@ -65,11 +65,11 @@ function _getNodeConfig(layer) {
   }
 
   if (layer.hasEmptyGroup) {
-    //空数组
+    //empty array
     node.icon = "img/folder.png"
     node.open = item.open == null ? true : item.open
   } else if (layer.hasChildLayer) {
-    //有子节点的数组
+    //Array with child nodes
     node.icon = "img/layerGroup.png"
     node.open = item.open == null ? true : item.open
   } else {
@@ -78,7 +78,7 @@ function _getNodeConfig(layer) {
       node._parentId = layer.parent.id
     }
   }
-  //记录图层
+  //record layer
   layersObj[node.id] = layer
   return node
 }
@@ -98,7 +98,7 @@ function addNode(item) {
 
   treeObj.addNodes(parentNode, 0, [node], true)
 
-  //更新子节点图层
+  //Update child node layer
   if (item.hasChildLayer) {
     item.eachLayer((childLayer) => {
       removeNode(childLayer)
@@ -122,7 +122,7 @@ function updateNode(layer) {
   let node = treeObj.getNodeByParam("id", layer.id, null)
   let show = layer.isAdded && layer.show
   if (node) {
-    //更新node
+    //update node
     if (node.checked == show) {
       return
     }
@@ -136,7 +136,7 @@ function updateNode(layer) {
   }
 }
 
-//===================================双击定位图层====================================
+//====================================Double-click to position the layer========== ===========================
 function treeOverlays_onClick(e, treeId, treeNode, clickFlag) {
   // if (treeNode == null || treeNode.id == null) {
   //   return
@@ -157,7 +157,7 @@ function treeOverlays_onDblClick(event, treeId, treeNode) {
   }
 }
 
-//===================================勾选显示隐藏图层====================================
+//================================== Check to show hidden layers======== =============================
 function removeArrayItem(arr, val) {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] == val) {
@@ -170,7 +170,7 @@ function removeArrayItem(arr, val) {
 
 function treeOverlays_onCheck(e, treeId, chktreeNode) {
   let treeObj = $.fn.zTree.getZTreeObj(treeId)
-  //获得所有改变check状态的节点
+  //Get all nodes that change check status
   let changedNodes = treeObj.getChangeCheckedNodes()
 
   removeArrayItem(changedNodes, chktreeNode)
@@ -181,7 +181,7 @@ function treeOverlays_onCheck(e, treeId, chktreeNode) {
     treeNode.checkedOld = treeNode.checked
 
     if (treeNode.check_Child_State == 1) {
-      // 0:无子节点被勾选,  1:部分子节点被勾选,  2:全部子节点被勾选, -1:不存在子节点 或 子节点全部设置为 nocheck = true
+      // 0: No child nodes are checked, 1: Some child nodes are checked, 2: All child nodes are checked, -1: There are no child nodes or all child nodes are set to nocheck = true
       continue
     }
 
@@ -190,14 +190,14 @@ function treeOverlays_onCheck(e, treeId, chktreeNode) {
       continue
     }
 
-    //显示隐藏透明度设置view
+    //Show hide transparency setting view
     if (treeNode.checked) {
       $("#slider" + treeNode.tId).css("display", "")
     } else {
       $("#slider" + treeNode.tId).css("display", "none")
     }
 
-    //特殊处理同目录下的单选的互斥的节点，可在config对应图层节点中配置"radio":true即可
+    //Specially handle the mutually exclusive nodes of single selection in the same directory. You can configure "radio":true in the corresponding layer node of config.
     if (layer.options.radio && treeNode.checked) {
       let nodes = treeObj.getNodesByFilter(
         function (node) {
@@ -218,7 +218,7 @@ function treeOverlays_onCheck(e, treeId, chktreeNode) {
       }
     }
 
-    //处理图层显示隐藏
+    //Processing layer display and hiding
     thisWidget.updateLayerShow(layer, treeNode.checked)
   }
 
@@ -228,9 +228,9 @@ function treeOverlays_onCheck(e, treeId, chktreeNode) {
   }
 }
 
-//===================================透明度设置====================================
+//====================================Transparency settings============ =========================
 
-//在节点后添加自定义控件
+//Add custom control after node
 function addOpacityRangeDom(treeId, tNode) {
   //if (tNode.icon == "images/folder.png") return;
 
@@ -247,7 +247,7 @@ function addOpacityRangeDom(treeId, tNode) {
     .on("change", (e) => {
       let opacity = e.value.newValue / 100
       let layer = layersObj[tNode.id]
-      //设置图层的透明度
+      //Set the transparency of the layer
       // thisWidget.udpateLayerOpacity(layer, opacity)
       layer.opacity = opacity
     })
@@ -257,7 +257,7 @@ function addOpacityRangeDom(treeId, tNode) {
   }
 }
 
-//===================================右键菜单====================================
+//====================================Right-click menu============ =========================
 let lastRightClickTreeId
 let lastRightClickTreeNode
 
@@ -271,7 +271,7 @@ function treeOverlays_OnRightClick(event, treeId, treeNode) {
     return
   }
 
-  //右击时的节点
+  //Node when right clicked
   lastRightClickTreeId = treeId
   lastRightClickTreeNode = treeNode
 
@@ -316,11 +316,11 @@ function bindRightMenuEvnet() {
   })
 }
 
-//移动节点及图层位置
+//Move node and layer position
 function moveNodeAndLayer(type) {
   let treeObj = $.fn.zTree.getZTreeObj(lastRightClickTreeId)
 
-  //获得当前节点的所有同级节点
+  //Get all sibling nodes of the current node
   let childNodes
   let parent = lastRightClickTreeNode.getParentNode()
   if (parent == null) {
@@ -335,7 +335,7 @@ function moveNodeAndLayer(type) {
   switch (type) {
     default:
       break
-    case "up": //图层上移一层
+    case "up": //Move the layer up one layer
       {
         let moveNode = thisNode.getPreNode()
         if (moveNode) {
@@ -347,13 +347,13 @@ function moveNodeAndLayer(type) {
       }
       break
 
-    case "top": //图层置于顶层
+    case "top": //The layer is placed on top
       {
         if (thisNode.getIndex() == 0) {
           return
         }
         while (thisNode.getIndex() > 0) {
-          //冒泡交换
+          //bubble exchange
           let moveNode = thisNode.getPreNode()
           if (moveNode) {
             treeObj.moveNode(moveNode, thisNode, "prev")
@@ -365,7 +365,7 @@ function moveNodeAndLayer(type) {
       }
       break
 
-    case "down": //图层下移一层
+    case "down": //Move the layer down one layer
       {
         let moveNode = thisNode.getNextNode()
         if (moveNode) {
@@ -376,14 +376,14 @@ function moveNodeAndLayer(type) {
         }
       }
       break
-    case "bottom": //图层置于底层
+    case "bottom": //The layer is placed at the bottom
       {
         if (thisNode.getIndex() == childNodes.length - 1) {
           return
         }
 
         while (thisNode.getIndex() < childNodes.length - 1) {
-          //冒泡交换
+          //bubble exchange
           let moveNode = thisNode.getNextNode()
           if (moveNode) {
             treeObj.moveNode(moveNode, thisNode, "next")
@@ -396,40 +396,40 @@ function moveNodeAndLayer(type) {
       break
   }
 
-  //按order重新排序
+  //Reorder by order
   layers.sort(function (a, b) {
     return a.zIndex - b.zIndex
   })
 }
 
 /**
- * 交换相邻的图层 ： layer1 待移动图层 ，layer2 移动目标图层
+ * Swap adjacent layers: layer1 is the layer to be moved, layer2 is the target layer to move
  */
 function exchangeLayer(layer1, layer2) {
   if (layer1 == null || layer2 == null) {
     return
   }
   let or = layer1.zIndex
-  layer1.zIndex = layer2.zIndex //向上移动
-  layer2.zIndex = or //向下移动
+  layer1.zIndex = layer2.zIndex //Move up
+  layer2.zIndex = or //Move down
 
   console.log(`${layer1.name}:${layer1.zIndex},  ${layer2.name}:${layer2.zIndex}`)
 
-  // //向上移动
+  // //Move up
   // thisWidget.udpateLayerZIndex(layer1, layer1.zIndex)
-  // //向下移动
+  // //Move Downward
   // thisWidget.udpateLayerZIndex(layer2, layer2.zIndex)
 }
 
-//===================================其他====================================
+//====================================Other============ ========================
 
-//地图图层添加移除监听，自动勾选
+//Add and remove monitoring for map layer, automatically checked
 function updateCheckd(name, checked) {
   let treeObj = $.fn.zTree.getZTreeObj("treeOverlays")
   let nodes = treeObj.getNodesByParam("name", name, null)
   if (nodes && nodes.length > 0) {
     treeObj.checkNode(nodes[0], checked, false)
   } else {
-    console.log("未在图层树上找到图层“" + name + "”，无法自动勾选处理")
+    console.log("Layer "" + name + "" was not found in the layer tree and cannot be automatically checked for processing")
   }
 }

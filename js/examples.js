@@ -10,10 +10,13 @@ const defaultThumbnail = "default.gif";
 const editorUrl = "editor-es5.html"
 const readUrl = "read-es5.html"
 
-var dev = false;
+
 var applications=[];
 var searchText = "";
 
+// Is dev param present?
+const urlParams = new URLSearchParams(window.location.search);
+const dev = urlParams.get('dev')!=undefined  
 
 // Synchronous loading examples and applications
 $.getJSON(EXAMPLE_FILE, '',function (examples) {
@@ -22,13 +25,12 @@ $.getJSON(EXAMPLE_FILE, '',function (examples) {
         apps.forEach(element => {
             data.push(element);
         });
-        examples.forEach(element => {
-            data.push(element);
-        });
+        if (dev) {
+            examples.forEach(element => {
+                data.push(element);
+            });
+        }
         applications = getApplicationList(data,[],[]);
-        // Is dev param present?
-        const urlParams = new URLSearchParams(window.location.search);
-        dev = urlParams.get('dev')!=undefined  
         // Set language
         initI18next();
         // Create content

@@ -1,12 +1,12 @@
 ;(function (window, mars3d) {
-  //创建widget类，需要继承BaseWidget
+  //Create a widget class, which needs to inherit BaseWidget
   class MyWidget extends es5widget.BaseWidget {
-    //初始化[仅执行1次]
+    //Initialization [executed only once]
     create() {
       this.zommControl = new mars3d.control.ToolButton({
-        title: "图层控制",
+        title: "Layer Control",
         icon: "fa fa-tasks",
-        insertIndex: 1, //插入的位置顺序, 1是home按钮后面
+        insertIndex: 1, //Insertion position sequence, 1 is behind the home button
         click: (event) => {
           es5widget.activate({
             name: event.title,
@@ -16,14 +16,14 @@
       })
       this.map.addControl(this.zommControl)
     }
-    //激活插件
+    //Activate plugin
     activate() {}
-    //释放插件
+    //Release the plug-in
     disable() {}
   }
 
-  //注册到widget管理器中。
+  //Register to the widget manager.
   es5widget.bindClass(MyWidget)
 
-  //每个widet之间都是直接引入到index.html中，会存在彼此命名冲突，所以闭包处理下。
+  //Each widet is directly introduced into index.html, and there will be naming conflicts with each other, so the closure is used.
 })(window, mars3d)

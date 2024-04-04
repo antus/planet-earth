@@ -2,11 +2,11 @@
 let thisWidget
 let availabilityList = []
 
-//当前页面业务
+//Current page business
 function initWidgetView(_thisWidget) {
   thisWidget = _thisWidget
 
-  //清除所有标号
+  //Clear all labels
   $("#btnDelete").click(function () {
     thisWidget.deleteEntity()
   })
@@ -17,7 +17,7 @@ function initWidgetView(_thisWidget) {
 
   $("#btn_plot_savefile").click(function () {
     let data = thisWidget.getGeoJson()
-    haoutil.file.downloadFile("标绘item.json", JSON.stringify(data))
+    haoutil.file.downloadFile("plot item.json", JSON.stringify(data))
   })
 
   $("#btn_avali_add").click(function () {
@@ -55,8 +55,8 @@ function initWidgetView(_thisWidget) {
   }
 }
 
-let newAttr = {} // 解决的问题：在updateAttr捕获到内容改变后，会导致仅保留最后一次更改的属性数据
-//属性编辑相关
+let newAttr = {} // Solved problem: After updateAttr captures content changes, only the last changed attribute data will be retained.
+//Property editing related
 var plotEdit = {
   hasEditSylte: true,
 
@@ -66,11 +66,11 @@ var plotEdit = {
       $("#attr_style_view").hide()
     }
 
-    //改变高度 - 高程全部设置为
+    //Change height - elevation all set to
     $("#plot_latlngs_allheight").bind("input propertychange", function () {
       $("#plot_latlngs_addheight").val("")
 
-      let thisval = Number($(this).val()) //高度（米）
+      let thisval = Number($(this).val()) //Height (meters)
       if (isNaN(thisval)) {
         thisval = 1
       }
@@ -81,7 +81,7 @@ var plotEdit = {
           $(this).val(thisval)
           latlngs.push(thisval)
         } else {
-          latlngs.push(Number($(this).val())) //经纬度值
+          latlngs.push(Number($(this).val())) //Longitude and latitude values
         }
       })
 
@@ -92,10 +92,10 @@ var plotEdit = {
       thisWidget.updatePoints2map(arrPoint)
     })
 
-    //改变高度 - 在地表高程偏移
+    //Change height - Offset in surface elevation
     $("#plot_latlngs_addheight").bind("input propertychange", function () {
       $("#plot_latlngs_allheight").val("")
-      let thisval = Number($(this).val()) //高度（米）
+      let thisval = Number($(this).val()) //Height (meters)
       if (isNaN(thisval)) {
         thisval = 1
       }
@@ -107,7 +107,7 @@ var plotEdit = {
           $(this).val(oldval + thisval)
           latlngs.push(oldval + thisval)
         } else {
-          latlngs.push(Number($(this).val())) //经纬度值
+          latlngs.push(Number($(this).val())) //Longitude and latitude values
         }
       })
 
@@ -119,7 +119,7 @@ var plotEdit = {
     })
   },
   _last_attr: null,
-  //选中标号，激活属性面板
+  //Select the label and activate the properties panel
   startEditing: function (attr, latlngs) {
     if (!window.styleConfig) {
       return
@@ -160,9 +160,9 @@ var plotEdit = {
     //==============style==================
     if (this.hasEditSylte) {
       parname = "plot_attr_style_"
-      inHtml = `<tr><td class="nametd">所在图层：</td><td>${thisWidget.getLayerName() || "默认图层"}</td></tr>
-      <tr><td class="nametd">标号类型：</td><td>${attr.type}</td></tr>
-      <tr><td class="nametd">样式类型：</td><td>${config.type || "未配置"}</td></tr>`
+      inHtml = `<tr><td class="nametd">Layer:</td><td>${thisWidget.getLayerName() || "Default layer"}</td></tr>
+      <tr><td class="nametd">Tag type:</td><td>${attr.type}</td></tr>
+      <tr><td class="nametd">Style type:</td><td>${config.type || "Not configured"}</td></tr>`
 
       for (let idx = 0; idx < config.style.length; idx++) {
         let edit = config.style[idx]
@@ -186,7 +186,7 @@ var plotEdit = {
           attrVal = attr.style[attrName][edit.next] ?? val ?? edit.defval
         }
 
-        //材质时
+        //Material
         if (edit.name === "materialType") {
           attrVal = this._materialType_selectd || attrVal
 
@@ -196,7 +196,7 @@ var plotEdit = {
           }
           inHtml += '<tr  id="' + parname + "tr_" + attrName + '" > <td class="nametd">' + edit.label + "</td>  <td>" + input.html + "</td>  </tr>"
 
-          let defStyle //style.js 材质默认值
+          let defStyle //style.js material default value
           edit.data.forEach((m) => {
             if (m.value === attrVal) {
               defStyle = m.defval || {}
@@ -211,7 +211,7 @@ var plotEdit = {
               return
             }
             let parnamemat = "plot_attr_style_mat"
-            // 初始化进入默认值的取值顺序 1. 本身属性 2. style中的属性 3. style.js 材质默认值 4. material.js 的默认值
+            // The order of initializing and entering the default value 1. Its own attributes 2. Attributes in style 3. Style.js material default value 4. Material.js default value
             materialOptions[maItem.name] = materialOptions[maItem.name] ?? attr.style[maItem.name] ?? defStyle[maItem.name] ?? maItem.defval
 
             let input = this.getAttrInput(parnamemat, maItem.name, materialOptions[maItem.name], maItem)
@@ -234,7 +234,7 @@ var plotEdit = {
           }
           inHtml += '<tr  id="' + parname + "tr_" + attrName + '" > <td class="nametd">' + edit.label + "</td>  <td>" + input.html + "</td>  </tr>"
 
-          let defStyle //style.js 材质默认值
+          let defStyle //style.js material default value
           edit.data.forEach((m) => {
             if (m.value === attrVal || m.value === attrVal + "2") {
               defStyle = m || {}
@@ -250,7 +250,7 @@ var plotEdit = {
             }
             let parnamemat = "plot_attr_style_mat"
 
-            // 初始化进入默认值的取值顺序 1. 本身属性 2. 父参数中数值 3. 关联参数  4. style.js 材质默认值 5. material.js 的默认值
+            // The value order of initialization and entering the default value 1. The own attribute 2. The value in the parent parameter 3. The associated parameter 4. The default value of style.js material 5. The default value of material.js
             materialOptions[maItem.name] =
               materialOptions[maItem.name] ?? attr.style[attrName][maItem.name] ?? attr.style[defStyle?.contant] ?? defStyle?.defval ?? maItem.defval
 
@@ -279,7 +279,7 @@ var plotEdit = {
       }
       $("#talbe_style").html(inHtml)
 
-      //注记属性
+      //note attributes
       if (attr.style.label) {
         let configLbl = window.styleConfig["label"] || {}
 
@@ -354,20 +354,20 @@ var plotEdit = {
 
     $("#talbe_attr").html(inHtml)
 
-    //执行各方法
+    //Execute each method
     for (let idx = 0; idx < arrFun.length; idx++) {
       let item = arrFun[idx]
       item.fun(item.parname, item.name, item.value, item.edit)
     }
 
-    window.tab2attr() //切换面板
+    window.tab2attr() //Switch panel
   },
   updateLatlngsHtml: function (latlngs) {
     $("#plot_latlngs_addheight").val("")
     $("#plot_latlngs_allheight").val("")
     $("#view_updateheight").hide()
 
-    //显示坐标信息
+    //Display coordinate information
     let inHtml = ""
     if (!latlngs || latlngs.length == 0) {
       //
@@ -379,15 +379,15 @@ var plotEdit = {
 
       inHtml +=
         ' <div class="mp_attr" style=" margin-top: 10px;"><table>' +
-        ' <tr> <td class="nametd">经度：</td> <td><input type="number" class="mp_input plot_latlngs" data-type="jd" step="0.000001"  value="' +
+        ' <tr> <td class="nametd">Longitude:</td> <td><input type="number" class="mp_input plot_latlngs" data-type="jd" step="0.000001" value="' +
         jd +
         '"></td></tr>' +
-        '<tr>  <td class="nametd">纬度：</td> <td><input type="number" class="mp_input plot_latlngs" data-type="wd" step="0.000001"  value="' +
+        '<tr> <td class="nametd">Latitude:</td> <td><input type="number" class="mp_input plot_latlngs" data-type="wd" step="0.000001" value="' +
         wd +
         '"></td></tr>'
       if (this._hasHeight) {
         inHtml +=
-          '<tr><td class="nametd">高程：</td> <td><input type="number" class="mp_input plot_latlngs" data-type="height" step="0.1" value="' +
+          '<tr><td class="nametd">Height:</td> <td><input type="number" class="mp_input plot_latlngs" data-type="height" step="0.1" value="' +
           height +
           '" oldvalue="' +
           height +
@@ -402,7 +402,7 @@ var plotEdit = {
       let delhtml = ""
 
       if (latlngs.length > thisWidget.getMinPointNum()) {
-        delhtml = '<i class="fa fa-trash-o latlng-del" title="删除点" ></i>'
+        delhtml = '<i class="fa fa-trash-o latlng-del" title="Delete point" ></i>'
       }
 
       for (let idx = 0; idx < latlngs.length; idx++) {
@@ -414,30 +414,30 @@ var plotEdit = {
 
         let addthml = ""
         if (latlngs.length < thisWidget.getMaxPointNum()) {
-          addthml = '<i class="fa  fa-plus-square-o latlng-install" title="插入点" data-index="' + idx + '" ></i>&nbsp;&nbsp;'
+          addthml = '<i class="fa fa-plus-square-o latlng-install" title="Insertion point" data-index="' + idx + '" ></i> '
         }
 
         //
         inHtml +=
-          '<div><div class="open"><i class="tree_icon">-</i>第' +
+          '<div><div class="open"><i class="tree_icon">-</i>No' +
           (idx + 1) +
-          '点 <label style="width:100px;">&nbsp;</label>    ' +
+          'Click <label style="width:100px;"> </label> ' +
           addthml +
           delhtml +
           ' </div><div class="mp_attr"><table>' +
-          '<tr> <td class="nametd">经度：</td> <td><input  type="number" class="mp_input plot_latlngs" data-type="jd"  step="0.000001" data-index="' +
+          '<tr> <td class="nametd">Longitude:</td> <td><input type="number" class="mp_input plot_latlngs" data-type="jd" step="0.000001" data-index= "' +
           idx +
           '" value="' +
           jd +
           '"></td>  </tr> ' +
-          '<tr>  <td class="nametd">纬度：</td> <td><input  type="number" class="mp_input plot_latlngs" data-type="wd"  step="0.000001" data-index="' +
+          '<tr> <td class="nametd">Latitude:</td> <td><input type="number" class="mp_input plot_latlngs" data-type="wd" step="0.000001" data-index= "' +
           idx +
           '" value="' +
           wd +
           '"></td> </tr> '
         if (this._hasHeight) {
           inHtml +=
-            '<tr>  <td class="nametd">高程：</td> <td><input  type="number" step="0.1" class="mp_input plot_latlngs" data-type="height" data-index="' +
+            '<tr> <td class="nametd">Height:</td> <td><input type="number" step="0.1" class="mp_input plot_latlngs" data-type="height" data-index= "' +
             idx +
             '" value="' +
             height +
@@ -464,7 +464,7 @@ var plotEdit = {
         }
       })
 
-      //重新修改界面
+      //Remodify the interface
       let arr = []
       if (withHeight) {
         for (let i = 0; i < latlngs.length; i += 3) {
@@ -490,7 +490,7 @@ var plotEdit = {
         }
       })
 
-      //重新修改界面
+      //Remodify the interface
       let arr = []
       if (withHeight) {
         for (let i = 0; i < latlngs.length; i += 3) {
@@ -541,13 +541,13 @@ var plotEdit = {
       thisWidget.updatePoints2map(arrPoint)
     })
   },
-  // //单击地图空白，释放属性面板
+  // //Click on the map blank to release the properties panel
   // stopEditing: function () {
   //     $("#talbe_style").html('');
   //     $("#talbe_attr").html('');
   //     this._last_attr = null;
   // },
-  //获取各属性的编辑html和change方法
+  //Get the edit html and change methods of each attribute
   getAttrInput: function (parname, attrName, attrVal, edit) {
     if (attrVal == null || attrVal == undefined) {
       attrVal = ""
@@ -611,7 +611,7 @@ var plotEdit = {
         break
       case "slider":
         if (edit.max !== 1) {
-          //同"number"
+          //Same as "number"
           inHtml = '<input id="' + parname + attrName + '" type="number" value="' + (attrVal || 0) + '"    class="mp_input"/>'
           fun = function (parname, attrName, attrVal, edit) {
             $("#" + parname + attrName).on("input propertychange", function (e) {
@@ -624,7 +624,7 @@ var plotEdit = {
           inHtml = '<input id="' + parname + attrName + '"  type="text" value="' + attrVal * 100 + '"   data-value="' + attrVal + '" />'
           fun = function (parname, attrName, attrVal, edit) {
             let _width = $(".mp_tab_card").width() * 0.6 - 30
-            $("#" + parname + attrName).progress(_width) //绑定样式
+            $("#" + parname + attrName).progress(_width) //Binding style
             $("#" + parname + attrName).change(function () {
               let attrVal = Number($(this).val()) / 100
 
@@ -648,7 +648,7 @@ var plotEdit = {
         inHtml += "</select>"
 
         fun = function (parname, attrName, attrVal, edit) {
-          $("#" + parname + attrName).select() //绑定样式
+          $("#" + parname + attrName).select() //Binding style
           $("#" + parname + attrName).change(function () {
             let attrVal = $(this).attr("data-value")
 
@@ -696,11 +696,11 @@ var plotEdit = {
           let _name_key = parname + attrName
           inHtml = `<div class="radio radio-info radio-inline" id="${_name_key}"  data-value="${attrVal}" >
             <input type="radio" id="${_name_key}_1" value="1"  name="${_name_key}" ${attrVal ? 'checked="checked"' : ""}>
-            <label for="${_name_key}_1"> 是</label>
+            <label for="${_name_key}_1"> Yes</label>
           </div>
           <div class="radio radio-info radio-inline">
             <input type="radio" id="${_name_key}_0" value="0" name="${_name_key}" ${attrVal ? "" : 'checked="checked"'}">
-            <label for="${_name_key}_0"> 否 </label>
+            <label for="${_name_key}_0"> No </label>
           </div>`
 
           fun = function (parname, attrName, attrVal, edit) {
@@ -750,7 +750,7 @@ var plotEdit = {
     }
     return { html: inHtml, fun: fun }
   },
-  //联动属性控制
+  //Linkage attribute control
   changeViewByAttr: function (parname, arrimpact, show) {
     if (arrimpact && arrimpact.length > 0) {
       for (let jj = 0; jj < arrimpact.length; jj++) {
@@ -773,7 +773,7 @@ var plotEdit = {
     }
   },
 
-  //属性面板值修改后触发此方法
+  //This method is triggered after the property panel value is modified
   updateAttr: function (parname, attrName, attrVal, edit) {
     attrName = attrName.split("-")[0]
 
@@ -783,7 +783,7 @@ var plotEdit = {
       case "plot_attr_style_": {
         let newStyle = {}
 
-        // 拥有二级菜单
+        //Have secondary menu
         if (edit.next) {
           newStyle[attrName] = {}
           newStyle[attrName][edit.next] = attrVal
@@ -817,16 +817,16 @@ var plotEdit = {
             this._last_attr.style[attrName] = true
             $("input[name='" + parname + attrName + "']:eq(0)").attr("checked", "checked")
             $("input[name='" + parname + attrName + "']:eq(0)").click()
-            haoutil.msg("填充和边框不能同时为否，需要至少开启一个！")
+            haoutil.msg("Padding and border cannot be set to 'no' at the same time, at least one needs to be turned on!")
             return false
           }
         }
 
-        // 材质类型 materialType 改变时的特殊处理
+        //Special handling when material type materialType changes
         if (attrName === "materialType") {
           newStyle.materialOptions = {}
 
-          let defStyle //style.js 材质默认值
+          let defStyle //style.js material default value
           edit.data.forEach((m) => {
             if (m.value === attrVal) {
               defStyle = m.defval || {}
@@ -836,7 +836,7 @@ var plotEdit = {
 
           attrVal = attrVal.split("-")[0]
           window.materialConfig[attrVal].forEach((p) => {
-            // 更新时的默认值的取值顺序 1. style.js 材质默认值 2. material.json 的默认值
+            // The value order of the default values ​​when updating 1. style.js material default value 2. material.json default value
             newStyle.materialOptions[p.name] = defStyle[p.name] ?? p.defval
           })
           this._last_attr.style.materialOptions = newStyle.materialOptions
@@ -848,7 +848,7 @@ var plotEdit = {
         } else if (edit.next && edit.next === "materialType") {
           newStyle[attrName].materialOptions = {}
 
-          let defStyle //父元素 材质默认值
+          let defStyle //parent element material default value
           edit.data.forEach((m) => {
             if (m.value === attrVal) {
               defStyle = m.defval || {}
@@ -858,7 +858,7 @@ var plotEdit = {
 
           attrVal = attrVal.split("-")[0]
           window.materialConfig[attrVal].forEach((p) => {
-            // 更新时的默认值的取值顺序 1. style.js 材质默认值 2. material.json 的默认值
+            // The value order of the default values ​​when updating 1. style.js material default value 2. material.json default value
             newStyle[attrName].materialOptions[p.name] = defStyle[p.name] ?? p.defval
           })
           this._last_attr.style[attrName].materialOptions = newStyle[attrName].materialOptions
@@ -877,7 +877,7 @@ var plotEdit = {
       case "plot_attr_style_mat": {
         let newStyle = {}
 
-        // 拥有二级菜单
+        //Have secondary menu
         if (edit?.parent?.next) {
           const parent = edit?.parent
           newStyle[parent.name] = {}
@@ -927,16 +927,16 @@ var plotEdit = {
   }
 }
 
-// 时序相关
+// timing related
 function changeAvali() {
   $("#table-box").empty()
-  //   <li id="btnAdd" onclick="addAvaliItem('ava-title${index + 1}')" class="ava-btn"><i class="fa fa-plus" title="新增"></i></li>
+  // <li id="btnAdd" onclick="addAvaliItem('ava-title${index + 1}')" class="ava-btn"><i class="fa fa-plus" title="New "></i></li>
 
   availabilityList.forEach((item, index) => {
     const span = $(`
-        <span class="ava-title" id="ava-title${index + 1}">第${index + 1}个时间段
+        <span class="ava-title" id="ava-title${index + 1}">The ${index + 1} time period
         <ul class="ava-tools">
-        <li id="btnDelete" onclick="deleteAvali('ava-title${index + 1}')" class="ava-btn"><i class="fa fa-trash" title="删除"></i></li>
+        <li id="btnDelete" onclick="deleteAvali('ava-title${index + 1}')" class="ava-btn"><i class="fa fa-trash" title="Delete">< /i></li>
         </ul>
         </span>
         `)
@@ -944,11 +944,11 @@ function changeAvali() {
       `<table id='ava-table' class='mars-table'>
         <tbody>
           <tr>
-            <td>开始时间</td>
+            <td>Start time</td>
             <td><input type='text' class='form-control' id='startTime${index + 1}' placeholder='YYYY-MM-DD' /></td>
         </tr>
         <tr>
-            <td>结束时间</td>
+            <td>End time</td>
             <td><input type='text' class='form-control' id='endTime${index + 1}' placeholder='YYYY-MM-DD' /></td>
         </tr>
         </tbody>
@@ -1058,11 +1058,11 @@ function getMinData(avaList, index, key, val) {
 
   if (val) {
     if (startTime && new Date(val) < new Date(startTime)) {
-      console.log(`选中时间小于开始时间！\n选中：${val}\n 开始时间：${startTime}`)
-      return { isChange: false, message: `请重新选择时间，须大于${startTime}` }
+      console.log(`The selected time is less than the start time!\nSelected: ${val}\n Start time: ${startTime}`)
+      return { isChange: false, message: `Please reselect a time, it must be greater than ${startTime}` }
     } else if (endTime && new Date(val) > new Date(endTime)) {
-      console.log(`选中时间大于结束时间！\n选中：${val}\n 结束时间：${endTime}`)
-      return { isChange: false, message: `请重新选择时间，须小于${endTime}` }
+      console.log(`The selected time is greater than the end time!\nSelected: ${val}\n End time: ${endTime}`)
+      return { isChange: false, message: `Please reselect the time, it must be less than ${endTime}` }
     } else {
       return { isChange: true, message: "" }
     }

@@ -1,8 +1,8 @@
-"use script" //开发环境建议开启严格模式
+"use script" //It is recommended to turn on strict mode in the development environment
 ;(function (window, mars3d) {
-  //创建widget类，需要继承BaseWidget
+  //Create a widget class, which needs to inherit BaseWidget
   class MyWidget extends es5widget.BaseWidget {
-    //弹窗配置
+    //Pop-up window configuration
     get view() {
       return {
         type: "window",
@@ -20,16 +20,16 @@
       }
     }
 
-    //初始化[仅执行1次]
+    //Initialization [executed only once]
     create() {}
 
-    //每个窗口创建完成后调用
+    //Called after each window is created
     winCreateOK(opt, result) {
       this.viewWindow = result
     }
-    //激活插件
+    //Activate plugin
     activate() {}
-    //释放插件
+    //Release the plug-in
     disable() {
       let graphic = this.config.graphic
       if (graphic && graphic._minPointNum) {
@@ -56,9 +56,9 @@
     }
     get defaultAttrList() {
       return [
-        { name: "id", label: "主键", type: "label", defval: "" },
-        { name: "name", label: "名称", type: "text", defval: "" },
-        { name: "remark", label: "备注", type: "textarea", defval: "" }
+        { name: "id", label: "primary key", type: "label", defval: "" },
+        { name: "name", label: "name", type: "text", defval: "" },
+        { name: "remark", label: "notes", type: "textarea", defval: "" }
       ]
     }
     getAttrList() {
@@ -90,25 +90,25 @@
       lonlats = this.config.lonlats
 
       let config = { ...graphic.options, type: graphic.type, style: graphic.style }
-      console.log("开始编辑属性", config)
+      console.log("Start editing properties", config)
 
       this.viewWindow.plotEdit.startEditing(config, lonlats)
     }
 
-    //更新样式
+    //update style
     updateStyle2map(style) {
-      console.log("更新style样式", style)
+      console.log("Update style style", style)
       let graphic = this.config.graphic
       graphic.style = style
     }
-    //更新坐标
+    //update coordinates
     updatePoints2map(points) {
-      console.log("更新坐标", points)
+      console.log("Update coordinates", points)
 
       let graphic = this.config.graphic
       graphic.positions = points
     }
-    //更新属性
+    //Update properties
     updateAttr2map(attr) {
       let graphic = this.config.graphic
       graphic.attr = attr
@@ -143,15 +143,15 @@
       this.disableBase()
     }
 
-    //文件处理
+    //File processing
     getGeoJson() {
       let graphic = this.config.graphic
       let geojson = graphic.toGeoJSON()
-      geojson.properties._layer = graphic._layer.name //记录分组信息
+      geojson.properties._layer = graphic._layer.name //Record grouping information
 
       return geojson
     }
-    //时序
+    //timing
     availabilityChange(availability) {
       // console.log("availability", availability)
       let graphic = this.config.graphic
@@ -164,8 +164,8 @@
     }
   }
 
-  //注册到widget管理器中。
+  //Register to the widget manager.
   es5widget.bindClass(MyWidget)
 
-  //每个widet之间都是直接引入到index.html中，会存在彼此命名冲突，所以闭包处理下。
+  //Each widet is directly introduced into index.html, and there will be naming conflicts with each other, so the closure is used.
 })(window, mars3d)

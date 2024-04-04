@@ -2,7 +2,7 @@ $(function () {
   $(window).resize(refHeight)
   refHeight()
 
-  // 切换选项卡
+  //Switch tab
   $(".mp_tab_tit li").click(function () {
     if ($(this).hasClass("cur") || $(this).hasClass("disabled")) {
       return false
@@ -45,7 +45,7 @@ function tab2attr() {
 
   // if ($("#tab_plot").hasClass('cur'))
 
-  //读取localStorage值
+  //Read localStorage value
   localforage.getItem(storageName).then(function (last_attr_tab) {
     if (last_attr_tab != null) {
       $("#" + last_attr_tab).click()
@@ -73,7 +73,7 @@ function refHeight() {
 }
 
 ;(function ($) {
-  //下拉菜单默认参数
+  //Default parameters of drop-down menu
   let defaluts = {
     select: "mp_select",
     select_text: "mp_select_text",
@@ -81,12 +81,12 @@ function refHeight() {
   }
 
   $.fn.extend({
-    // 下拉菜单
+    // Drop-down menu
     select: function (options) {
       let opts = $.extend({}, defaluts, options)
       return this.each(function () {
         let that = $(this)
-        //模拟下拉列表
+        //Simulate drop-down list
         if (that.data("value") !== undefined && that.data("value") !== "") {
           that.val(that.data("value"))
         }
@@ -109,7 +109,7 @@ function refHeight() {
         let select_ul = select.find("." + opts.select_ul)
         that.after(select)
         that.hide()
-        //下拉列表操作
+        //drop-down list operation
         select.click(function (event) {
           $(this).toggleClass("mp_selected")
           $(this)
@@ -136,7 +136,7 @@ function refHeight() {
       })
     },
 
-    //滑动条
+    //Slider bar
     progress: function (max) {
       let opts = {
         progress: "puiprogress",
@@ -147,7 +147,7 @@ function refHeight() {
       }
       return this.each(function () {
         let that = $(this)
-        //模拟进度条
+        //Simulate progress bar
         let _html = []
         _html.push('<div class="' + opts.progress + '">')
         _html.push('<div class="' + opts.progress_bg + '">')
@@ -163,7 +163,7 @@ function refHeight() {
         let progress_text = pro.find("." + opts.progress_text)
         that.after(pro)
         that.hide()
-        //进度条操作
+        //Progress bar operation
         let tag = false,
           ox = 0,
           left = 0,
@@ -184,7 +184,7 @@ function refHeight() {
           tag = false
         })
         pro.mousemove(function (e) {
-          //鼠标移动
+          //mouse movement
           if (tag) {
             left = e.pageX - ox
             if (left <= 0) {
@@ -202,7 +202,7 @@ function refHeight() {
           }
         })
         progress_bg.click(function (e) {
-          //鼠标点击
+          //Mouse click
           if (!tag) {
             bgleft = progress_bg.offset().left
             left = e.pageX - bgleft

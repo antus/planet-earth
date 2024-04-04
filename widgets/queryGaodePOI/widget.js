@@ -1,13 +1,13 @@
-"use script" //开发环境建议开启严格模式
+"use script" //It is recommended to turn on strict mode in the development environment
 ;(function (window, mars3d) {
-  //创建widget类，需要继承BaseWidget
+  //Create a widget class, which needs to inherit BaseWidget
   class MyWidget extends es5widget.BaseWidget {
-    //外部资源配置
+    //External resource configuration
     get resources() {
       return ["view.css"]
     }
 
-    //弹窗配置
+    //Pop-up window configuration
     get view() {
       return {
         type: "append",
@@ -16,19 +16,19 @@
       }
     }
 
-    //初始化[仅执行1次]
+    //Initialization [executed only once]
     create() {
       this.storageName = "mars3d_queryGaodePOI"
       this.pageSize = 6
       this.allpage = 0
       this.thispage = 0
 
-      //创建矢量数据图层
+      //Create vector data layer
       this.graphicLayer = new mars3d.layer.GraphicLayer({
         name: this.config.name,
-        pid: 99 //图层管理 中使用，父节点id
+        pid: 99 //Used in layer management, parent node id
       })
-      //鼠标单击后的信息面板弹窗
+      //Information panel pop-up window after mouse click
       this.graphicLayer.bindPopup(
         function (event) {
           let item = event.graphic?.attr
@@ -40,18 +40,18 @@
 
           let phone = $.trim(item.tel)
           if (phone != "") {
-            inHtml += "<div><label>电话</label>" + phone + "</div>"
+            inHtml += "<div><label>Phone</label>" + phone + "</div>"
           }
 
           let dz = $.trim(item.address)
           if (dz != "") {
-            inHtml += "<div><label>地址</label>" + dz + "</div>"
+            inHtml += "<div><label>Address</label>" + dz + "</div>"
           }
 
           if (item.type) {
             let fl = $.trim(item.type)
             if (fl != "") {
-              inHtml += "<div><label>类别</label>" + fl + "</div>"
+              inHtml += "<div><label>Category</label>" + fl + "</div>"
             }
           }
           inHtml += "</div>"
@@ -61,12 +61,12 @@
         { has3dtiles: false }
       )
 
-      //查询控制器
+      //Query controller
       this._queryPoi = new mars3d.query.GaodePOI({
-        // city: '合肥市',
+        // city: 'Hefei City',
       })
     }
-    //每个窗口创建完成后调用
+    //Called after each window is created
     winCreateOK(opt, result) {
       if (opt.type != "append") {
         return
@@ -84,18 +84,18 @@
         $("#map-querybar").css(this.config.style)
       }
 
-      // 搜索框
+      // search bar
       $("#txt_querypoi").click(function () {
-        // 文本框内容为空
+        //The content of the text box is empty
         if ($.trim($(this).val()).length === 0) {
           that.hideAllQueryBarView()
-          that.showHistoryList() // 显示历史记录
+          that.showHistoryList() // Show history records
         }
       })
 
       let timetik = 0
 
-      // 搜索框绑定文本框值发生变化,隐藏默认搜索信息栏,显示匹配结果列表
+      //The value of the text box bound to the search box changes, hides the default search information bar, and displays the matching result list
       $("#txt_querypoi").bind("input propertychange", () => {
         clearTimeout(timetik)
         timetik = setTimeout(() => {
@@ -104,7 +104,7 @@
 
           let queryVal = $.trim($("#txt_querypoi").val())
           if (queryVal.length == 0) {
-            // 文本框内容为空,显示历史记录
+            //The content of the text box is empty and the history record is displayed.
             this.showHistoryList()
           } else {
             this.autoTipList(queryVal, true)
@@ -112,7 +112,7 @@
         }, 500)
       })
 
-      // 点击搜索查询按钮
+      // Click the search query button
       $("#btn_querypoi").click(() => {
         clearTimeout(timetik)
         this.hideAllQueryBarView()
@@ -120,31 +120,31 @@
         let queryVal = $.trim($("#txt_querypoi").val())
         this.strartQueryPOI(queryVal, true)
 
-        // //演示：抛出事件
-        // let layer = this.map.getLayer(203012, "id"); //文庙图层
-        // layer.show = true; //为了演示勾选
+        // //Demo: throw event
+        // let layer = this.map.getLayer(203012, "id"); //Confucian Temple layer
+        // layer.show = true; // Check for demonstration
         // this.map.addLayer(layer);
 
         // es5widget.fire("checkLayer", { layer });
       })
-      //绑定回车键
+      //Bind the enter key
       $("#txt_querypoi").bind("keydown", (event) => {
         if (event.keyCode == "13") {
           $("#btn_querypoi").click()
         }
       })
 
-      // 返回查询结果面板界面
+      // Return to the query results panel interface
       $("#querybar_detail_back").click(() => {
         this.hideAllQueryBarView()
         $("#querybar_resultlist_view").show()
       })
     }
-    //打开激活
+    //Open activation
     activate() {
       this.map.addLayer(this.graphicLayer)
 
-      // 下侧状态栏提示
+      // Lower status bar prompt
       const locationBar = this.map.controls.locationBar?.container
       if (locationBar) {
         this.queryAddressDOM = mars3d.DomUtil.create(
@@ -155,16 +155,16 @@
         this.queryAddressDOM.style.marginRight = "50px"
       }
 
-      //单击地图事件
+      //Click map event
       this.map.on(mars3d.EventType.clickMap, this.onMapClick, this)
       this.map.on(mars3d.EventType.cameraChanged, this.onMapCameraChanged, this)
       this.onMapCameraChanged()
     }
-    //关闭释放
+    //Close release
     disable() {
       this.map.removeLayer(this.graphicLayer)
 
-      //释放单击地图事件
+      //Release click map event
       this.map.off(mars3d.EventType.clickMap, this.onMapClick, this)
       this.map.off(mars3d.EventType.cameraChanged, this.onMapCameraChanged, this)
 
@@ -177,14 +177,14 @@
       this.clearLayers()
     }
     onMapClick(event) {
-      // 点击地图区域,隐藏所有弹出框
+      // Click on the map area to hide all pop-up boxes
       if ($.trim($("#txt_querypoi").val()).length == 0) {
         this.hideAllQueryBarView()
         $("#txt_querypoi").blur()
       }
     }
     onMapCameraChanged(event) {
-      let radius = this.map.camera.positionCartographic.height //单位：米
+      let radius = this.map.camera.positionCartographic.height //Unit: meters
       if (radius > 100000) {
         this.address = null
         this.queryAddressDOM.innerHTML = ""
@@ -194,9 +194,9 @@
       this._queryPoi.getAddress({
         location: this.map.getCenter(),
         success: (result) => {
-          // console.log("地址", result);
+          // console.log("address", result);
           this.address = result
-          this.queryAddressDOM.innerHTML = "地址：" + result.address
+          this.queryAddressDOM.innerHTML = "Address:" + result.address
         }
       })
     }
@@ -206,29 +206,29 @@
       $("#querybar_resultlist_view").hide()
     }
 
-    // 点击面板条目,自动填充搜索框,并展示搜索结果面板
+    // Click on the panel entry to automatically fill in the search box and display the search results panel
     autoSearch(name) {
       $("#txt_querypoi").val(name)
       $("#btn_querypoi").trigger("click")
     }
 
-    //===================与后台交互========================
+    //====================Interacting with the background========================
 
-    //显示智能提示搜索结果
+    //Display smart prompt search results
     autoTipList(text, queryEx) {
-      //输入经纬度数字时
+      //When entering longitude and latitude numbers
       if (this.isLonLat(text)) {
         return
       }
 
-      //查询外部widget
+      //Query external widget
       if (this.hasExWidget() && queryEx) {
         this.autoExTipList(text)
         return
       }
-      //查询外部widget
+      //Query external widget
 
-      //搜索提示
+      //Search tips
       this._queryPoi.autoTip({
         text: text,
         city: this.address?.city,
@@ -251,42 +251,42 @@
       })
     }
 
-    // 根据输入框内容，查询显示列表
+    // Query the display list based on the content of the input box
     strartQueryPOI(text, queryEx) {
       if (text.length == 0) {
-        toastr.warning("请输入搜索关键字！")
+        toastr.warning("Please enter the search keyword!")
         return
       }
 
-      // TODO:根据文本框输入内容,从数据库模糊查询到所有匹配结果（分页显示）
+      // TODO: According to the input content in the text box, fuzzy query from the database to all matching results (displayed in pages)
       this.addHistory(text)
 
       this.hideAllQueryBarView()
 
-      //输入经纬度数字时
+      //When entering longitude and latitude numbers
       if (this.isLonLat(text)) {
         this.centerAtLonLat(text)
         return
       }
 
-      //查询外部widget
+      //Query external widget
       if (this.hasExWidget() && queryEx) {
         let qylist = this.queryExPOI(text)
         return
       }
-      //查询外部widget
+      //Query external widget
 
       this.thispage = 1
       this.queryText = text
 
       this.query_city = this.address?.city
       // this.query_location = this.map.getCenter()
-      // this.query_radius = this.map.camera.positionCartographic.height //单位：米
+      // this.query_radius = this.map.camera.positionCartographic.height //Unit: meters
 
       this.queryTextByServer()
     }
     queryTextByServer() {
-      //查询获取数据
+      //Query to get data
       this._queryPoi.queryText({
         text: this.queryText,
         count: this.pageSize,
@@ -303,9 +303,9 @@
       })
     }
 
-    //===================显示查询结果处理========================
+    //====================Display query result processing========================
     showPOIPage(data, counts) {
-      // count -- 显示搜索结果的数量；data -- 结果的属性，如地址电话等
+      // count -- displays the number of search results; data -- attributes of the results, such as address, phone number, etc.
 
       if (counts < data.length) {
         counts = data.length
@@ -314,7 +314,7 @@
 
       let inhtml = ""
       if (counts == 0) {
-        inhtml += '<div class="querybar-page"><div class="querybar-fl">没有找到"<strong>' + this.queryText + '</strong>"相关结果</div></div>'
+        inhtml += '<div class="querybar-page"><div class="querybar-fl">No results found for "<strong>' + this.queryText + '</strong>"</div></ div>'
       } else {
         this.objResultData = this.objResultData || {}
         for (let index = 0; index < data.length; index++) {
@@ -327,7 +327,7 @@
           inhtml += `<div class="querybar-site" onclick="queryGaodePOIWidget.showDetail('${_id}')">
             <div class="querybar-sitejj">
               <h3>${item.index}、${item.name}
-              <a id="btnShowDetail" href="https://www.amap.com/detail/${item.id}" target="_blank" class="querybar-more">更多&gt;</a> </h3>
+              <a id="btnShowDetail" href="https://www.amap.com/detail/${item.id}" target="_blank" class="querybar-more">More></a> < /h3>
               <p> ${item.address || ""}</p>
             </div>
           </div> `
@@ -335,7 +335,7 @@
           this.objResultData[_id] = item
         }
 
-        //分页信息
+        //Paging information
         let _fyhtml
         if (this.allpage > 1) {
           _fyhtml =
@@ -343,13 +343,13 @@
             this.thispage +
             "/" +
             this.allpage +
-            '页  <a href="javascript:queryGaodePOIWidget.showFirstPage()">首页</a> <a href="javascript:queryGaodePOIWidget.showPretPage()">&lt;</a>  <a href="javascript:queryGaodePOIWidget.showNextPage()">&gt;</a> </div>'
+            'Page <a href="javascript:queryGaodePOIWidget.showFirstPage()">Home</a> <a href="javascript:queryGaodePOIWidget.showPretPage()"><</a> <a href="javascript:queryGaodePOIWidget.showNextPage ()">></a> </div>'
         } else {
           _fyhtml = ""
         }
 
-        //底部信息
-        inhtml += '<div class="querybar-page"><div class="querybar-fl">找到<strong>' + counts + "</strong>条结果</div>" + _fyhtml + "</div>"
+        //bottom information
+        inhtml += '<div class="querybar-page"><div class="querybar-fl">Found<strong>' + counts + "</strong>results</div>" + _fyhtml + "</ div>"
       }
       $("#querybar_resultlist_view").html(inhtml)
       $("#querybar_resultlist_view").show()
@@ -367,7 +367,7 @@
       this.thispage = this.thispage + 1
       if (this.thispage > this.allpage) {
         this.thispage = this.allpage
-        toastr.warning("当前已是最后一页了")
+        toastr.warning("This is the last page")
         return
       }
       this.queryTextByServer()
@@ -377,12 +377,12 @@
       this.thispage = this.thispage - 1
       if (this.thispage < 1) {
         this.thispage = 1
-        toastr.warning("当前已是第一页了")
+        toastr.warning("This is already the first page")
         return
       }
       this.queryTextByServer()
     }
-    //点击单个结果,显示详细
+    //Click on a single result to display details
     showDetail(id) {
       let item = this.objResultData[id]
       this.flyTo(item)
@@ -404,7 +404,7 @@
         item.lng = jd
         item.lat = wd
 
-        //添加实体
+        //Add entity
         let graphic = new mars3d.graphic.PointEntity({
           position: Cesium.Cartesian3.fromDegrees(jd, wd),
           style: {
@@ -414,8 +414,8 @@
             outlineColor: "#ffffff",
             outlineWidth: 2,
             scaleByDistance: new Cesium.NearFarScalar(1000, 1, 1000000, 0.1),
-            clampToGround: true, //贴地
-            visibleDepth: false, //是否被遮挡
+            clampToGround: true, //close to the ground
+            visibleDepth: false, //whether it is blocked
             label: {
               text: item.name,
               font_size: 20,
@@ -425,10 +425,10 @@
               outlineColor: Cesium.Color.BLACK,
               horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
               verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-              pixelOffsetY: -10, //偏移量
+              pixelOffsetY: -10, //Offset
               distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0.0, 200000),
-              clampToGround: true, //贴地
-              visibleDepth: false //是否被遮挡
+              clampToGround: true, //close to the ground
+              visibleDepth: false //Whether it is blocked
             }
           },
           attr: item
@@ -445,7 +445,7 @@
     flyTo(item) {
       let graphic = item._graphic
       if (graphic == null) {
-        window.toastr.warning(item.name + " 无经纬度坐标信息！")
+        window.toastr.warning(item.name + "No latitude and longitude coordinate information!")
         return
       }
 
@@ -456,10 +456,10 @@
       }, 3000)
     }
 
-    //===================坐标定位处理========================
+    //====================Coordinate positioning processing========================
     isLonLat(text) {
-      let reg = /^-?((0|1?[0-7]?[0-9]?)(([.][0-9]*)?)|180(([.][0]*)?)),-?((0|[1-8]?[0-9]?)(([.][0-9]*)?)|90(([.][0]*)?))$/ /*定义验证表达式*/
-      return reg.test(text) /*进行验证*/
+      let reg = /^-?((0|1?[0-7]?[0-9]?)(([.][0-9]*)?)|180(([.][0] *)?)),-?((0|[1-8]?[0-9]?)(([.][0-9]*)?)|90(([.][0]* )?))$/ /*Define verification expression*/
+      return reg.test(text) /*Verify*/
     }
     centerAtLonLat(text) {
       let arr = text.split(",")
@@ -473,7 +473,7 @@
         return
       }
 
-      //添加实体
+      //Add entity
       let graphic = new mars3d.graphic.PointEntity({
         position: Cesium.Cartesian3.fromDegrees(jd, wd),
         style: {
@@ -483,30 +483,30 @@
           outlineColor: "#ffffff",
           outlineWidth: 2,
           scaleByDistance: new Cesium.NearFarScalar(1000, 1, 1000000, 0.1),
-          clampToGround: true, //贴地
-          visibleDepth: false //是否被遮挡
+          clampToGround: true, //close to the ground
+          visibleDepth: false //Whether it is blocked
         }
       })
       this.graphicLayer.addGraphic(graphic)
 
-      graphic.bindPopup(`<div class="mars-popup-titile">坐标定位</div>
+      graphic.bindPopup(`<div class="mars-popup-titile">Coordinate positioning</div>
               <div class="mars-popup-content" >
-                <div><label>经度</label> ${jd}</div>
-                <div><label>纬度</label>${wd}</div>
+                <div><label>Longitude</label> ${jd}</div>
+                <div><label>Latitude</label>${wd}</div>
               </div>`)
 
       graphic.openHighlight()
 
       graphic.flyTo({
-        radius: 1000, //点数据：radius控制视距距离
-        scale: 1.5, //线面数据：scale控制边界的放大比例
+        radius: 1000, //Point data: radius controls the sight distance
+        scale: 1.5, //Line and surface data: scale controls the amplification ratio of the boundary
         complete: () => {
           graphic.openPopup()
         }
       })
     }
 
-    //===================历史记录相关========================
+    //====================History related========================
     showHistoryList() {
       $("#querybar_histroy_view").hide()
 
@@ -539,14 +539,14 @@
       $("#querybar_histroy_view").hide()
     }
 
-    //记录历史值
+    //Record historical values
     addHistory(data) {
       this.arrHistory = []
       localforage.getItem(this.storageName).then((laststorage) => {
         if (laststorage != null) {
           this.arrHistory = eval(laststorage)
         }
-        //先删除之前相同记录
+        //Delete the same record first
         haoutil.array.remove(this.arrHistory, data)
 
         this.arrHistory.push(data)
@@ -558,8 +558,8 @@
       })
     }
 
-    //======================查询非百度poi，联合查询处理=================
-    //外部widget是否存在或启用
+    //====================== Query non-Baidu poi, joint query processing =================
+    //Whether the external widget exists or is enabled
     hasExWidget() {
       if (window["queryBarWidget"] == null) {
         return false
@@ -573,7 +573,7 @@
         this.autoTipList(text, false)
       })
     }
-    //调用外部widget进行查询
+    //Call external widget to query
     queryExPOI(text) {
       let layer = this.graphicLayer
 
@@ -583,8 +583,8 @@
     }
   }
 
-  //注册到widget管理器中。
+  //Register to the widget manager.
   window.queryGaodePOIWidget = es5widget.bindClass(MyWidget)
 
-  //每个widet之间都是直接引入到index.html中，会存在彼此命名冲突，所以闭包处理下。
+  //Each widet is directly introduced into index.html, and there will be naming conflicts with each other, so the closure is used.
 })(window, mars3d)

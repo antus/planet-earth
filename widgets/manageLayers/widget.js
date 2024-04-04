@@ -1,8 +1,8 @@
-"use script" //开发环境建议开启严格模式
+"use script" //It is recommended to turn on strict mode in the development environment
 ;(function (window, mars3d) {
-  //创建widget类，需要继承BaseWidget
+  //Create a widget class, which needs to inherit BaseWidget
   class MyWidget extends es5widget.BaseWidget {
-    //弹窗配置
+    //Pop-up window configuration
     get view() {
       return {
         type: "window",
@@ -16,9 +16,9 @@
       }
     }
 
-    //初始化[仅执行1次]
+    //Initialization [executed only once]
     create() {
-      //演示，监听事件
+      //Demo, listen for events
       // es5widget.on("checkLayer", (event) => {
       //   if (!this.isActivate || !this.viewWindow) {
       //     return;
@@ -27,17 +27,17 @@
       //   this.viewWindow.updateNode(layer);
       // });
     }
-    //每个窗口创建完成后调用
+    //Called after each window is created
     winCreateOK(opt, result) {
       this.viewWindow = result
     }
-    //打开激活
+    //Open activation
     activate() {
-      //监听事件，联动勾选状态
+      //Listen to events and link the check status
       this.map.on(mars3d.EventType.addLayer, this._onAddLayerHandler, this)
       this.map.on(mars3d.EventType.removeLayer, this._onRemoveLayerHandler, this)
     }
-    //关闭释放
+    //Close release
     disable() {
       this.viewWindow = null
 
@@ -48,7 +48,7 @@
       if (!this.isActivate || !this.viewWindow) {
         return
       }
-      console.log("添加了图层", e)
+      console.log("Layer added", e)
 
       this.viewWindow.updateNode(e.layer)
     }
@@ -56,28 +56,28 @@
       if (!this.isActivate || !this.viewWindow) {
         return
       }
-      console.log("移除了图层", e)
+      console.log("Layer removed", e)
 
       this.viewWindow.removeNode(e.layer)
     }
 
     getLayers() {
       return this.map.getLayers({
-        basemaps: true, //是否取config.json中的basempas  ，因为有底图控制了，具体项目中可以按需改为false
-        layers: true //是否取config.json中的layers
+        basemaps: true, //Whether to take the basempas in config.json, because it is controlled by the basemap, it can be changed to false as needed in specific projects
+        layers: true //Whether to take the layers in config.json
       })
     }
-    //对单击的图层做处理（单个）
+    //Process the clicked layer (single)
     checkClickLayer(layer, show) {
       if (show) {
         if (this.config.autoCenter && !layer.options.noCenter) {
-          //在对应config.json图层节点配置 noCenter:true 可以不定位
+          //Configure noCenter:true in the corresponding config.json layer node and you can not position it.
           layer.readyPromise.then(function (layer) {
             layer.flyTo()
           })
         }
 
-        //存在关联widget时
+        //When there is an associated widget
         let item = layer.options
         if (item.onWidget) {
           if (this._lastWidget) {
@@ -97,7 +97,7 @@
           this.map.cancelFlight()
         }
 
-        //存在关联widget时
+        //When there is an associated widget
         let item = layer.options
         if (item.onWidget) {
           es5widget.disable(item.onWidget)
@@ -108,7 +108,7 @@
       }
     }
 
-    //更新图层:显示隐藏状态（勾选后的图层及其子级图层，多个）
+    //Update layer: show hidden state (checked layer and its sub-layers, multiple)
     updateLayerShow(layer, show) {
       layer.show = show
 
@@ -126,8 +126,8 @@
     }
   }
 
-  //注册到widget管理器中。
+  //Register to the widget manager.
   es5widget.bindClass(MyWidget)
 
-  //每个widet之间都是直接引入到index.html中，会存在彼此命名冲突，所以闭包处理下。
+  //Each widet is directly introduced into index.html, and there will be naming conflicts with each other, so the closure is used.
 })(window, mars3d)
