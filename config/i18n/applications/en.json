@@ -2620,7 +2620,7 @@
 	"example.weather-stations.description": "Obtaining the latitude and longitude positions of weather stations around the world.",
 	"example.features": "Features",
 	"example.quick-start": "Quick start",
-	"example.quick-start.description": "Examples with 'demo' in their names are examples with known problems and are only used for demonstration. If you find bugs or have good suggestions during your visit, please feel free to give us feedback at any time. If the examples you want are missing, you can sort out your requirements and send an email to m.antonini@almaviva.it",
+	"example.quick-start.description": "Examples with 'demo' in their names are examples with known problems and are only used for demonstration. If you find bugs or have good suggestions during your visit, please feel free to give us feedback at any time. If the examples you want are missing, you can sort out your requirements and send an email to massimo.anto@gmail.com",
 	"example.create-a-3d-scene": "Create a 3D scene",
 	"example.create-a-3d-scene.description": "Demo new Some parameters supported by mars3d.Map() when constructing the scene",
 	"example.quickly-create-earth": "Quickly Create Earth",
