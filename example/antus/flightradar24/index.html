@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="M.antonini " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
+    <title>World AIS data</title>
+
+
+    <!--lib-->
+    <script
+      type="text/javascript"
+      src="/lib/include-lib.js"
+      libpath="/lib/"
+      include="jquery,layer,toastr,font-awesome,bootstrap,bootstrap-table,bootstrap-checkbox,bootstrap-slider,bootstrap-select,haoutil,flightradar24,moment,mars3d"
+    ></script>
+
+<style>
+  .marsBlackPanel {
+    background: rgba(0,0,0,0.7) !important;
+  }
+
+  .marsBlackPanel-text {
+    width:250px !important;
+  }
+
+  .mars3d-template-content div label {
+    width:70px;
+  }
+  .mars3d-popup-content {
+    margin:0 !important; 
+  }
+
+  .infoview {
+    overflow: auto;
+    max-height: calc(100vh - 43px);
+    padding:0 !important ;
+  }
+  .infoview > div {
+    margin-top: 0px !important;
+  }
+  .card-header {
+    border-bottom: 1px solid rgba(150, 150, 150, 0.5);
+  }
+</style>
+
+    <link href="/css/divGraphic.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+    <div class="infoview infoview-left" style="width: 200px;">
+        <div id="accordion" class="accordion">
+          <div class="card mb-0" style="background-color: rgba(0,0,0,0.7);">
+              <div class="card-header" data-toggle="collapse" href="#collapseOne">
+                  <a class="card-title"> Data Sources </a>
+              </div>
+              <div id="collapseOne" class="card-body collapse" data-parent="#accordion">
+                <div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch">
+                      <label class="custom-control-label" for="customSwitch1">FAA</label>
+                      <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch3" checked>
+                      <label class="custom-control-label" for="customSwitch3">ADS-B</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch">
+                      <label class="custom-control-label" for="customSwitch1">FLARM</label>
+                      <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch3" checked>
+                      <label class="custom-control-label" for="customSwitch3">MILAT</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch">
+                      <label class="custom-control-label" for="customSwitch1">SATELLITE</label>
+                      <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                  <a class="card-title"> Radar Options </a>
+              </div>
+              <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
+                <div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch">
+                      <label class="custom-control-label" for="customSwitch1">Gliders</label>
+                      <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch3" checked>
+                      <label class="custom-control-label" for="customSwitch3">On Air</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch">
+                      <label class="custom-control-label" for="customSwitch1">On Ground</label>
+                      <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch3" checked>
+                      <label class="custom-control-label" for="customSwitch3">Inactive</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch">
+                      <label class="custom-control-label" for="customSwitch1">Estimated positions</label>
+                      <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                  <a class="card-title"> Advanced Filters </a>
+              </div>
+              <div id="collapseThree" class="card-body collapse" data-parent="#accordion">
+                <div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch3" checked>
+                      <label class="custom-control-label" for="customSwitch3">Airlines</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-switch">
+                      <label class="custom-control-label" for="customSwitch1">Flight</label>
+                      <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+
+    <script src="/js/common.js"></script>
+    <script src="./flightradar24.js"></script>
+    <script src="./map.js"></script>
+  </body>
+</html>

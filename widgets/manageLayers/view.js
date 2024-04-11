@@ -430,6 +430,6 @@ function updateCheckd(name, checked) {
   if (nodes && nodes.length > 0) {
     treeObj.checkNode(nodes[0], checked, false)
   } else {
-    console.log("Layer "" + name + "" was not found in the layer tree and cannot be automatically checked for processing")
+    console.log("Layer " + name + " was not found in the layer tree and cannot be automatically checked for processing")
   }
 }

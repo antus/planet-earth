@@ -9,6 +9,10 @@ function init() {
   if (!mars3d.Util.webglreport()) {
     mars3d.Util.webglerror()
   }
+
+  Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMGQwMTlkZC05YTMxLTQ1NGEtOGYxNC04MjllYjRiYzI3MTAiLCJpZCI6NzgzNCwiaWF0IjoxNjk1NzQxOTYzfQ.QQmu2UkajQYQwuxRT8ZZaDCktUpPwYky29HVssDwklQ';
+	Cesium.GoogleMaps.defaultApiKey = 'AIzaSyAcNw0OOHz0vG1HXZCaoRIG_XsVeCg6Dlg'
+  
   //Read the config.json configuration file
   mars3d.Util.fetchJson({ url: "/config/config.json" })
     .then(function (json) {

@@ -1,0 +1,2384 @@
+{
+    "type": "FeatureCollection",
+    "name": "powerline-tower",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 1,
+                "roadName": "Mars3D route",
+                "longitude": 119.932965,
+                "latitude": 29.67896,
+                "towerId": "301",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11512-69",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "76.6",
+                "poleProperty": "Straight Line",
+                "height": 419,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.932965,
+                    29.67896
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 2,
+                "roadName": "Mars3D route",
+                "longitude": 119.931042,
+                "latitude": 29.677004,
+                "towerId": "302",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-76.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "84.1",
+                "poleProperty": "Straight Line",
+                "height": 373,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.931042,
+                    29.677004
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 3,
+                "roadName": "Mars3D route",
+                "longitude": 119.928953,
+                "latitude": 29.674878,
+                "towerId": "303",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-83",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "90.6",
+                "poleProperty": "Straight Line",
+                "height": 354,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.928953,
+                    29.674878
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 4,
+                "roadName": "Mars3D route",
+                "longitude": 119.925185,
+                "latitude": 29.671045,
+                "towerId": "304",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "B11512-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "83.8",
+                "height": 245,
+                "degree": 87
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.925185,
+                    29.671045
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 5,
+                "roadName": "Mars3D route",
+                "longitude": 119.922641,
+                "latitude": 29.66548,
+                "towerId": "305",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11516-89",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "96.6",
+                "poleProperty": "Straight Line",
+                "height": 227,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.922641,
+                    29.66548
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 6,
+                "roadName": "Mars3D route",
+                "longitude": 119.920177,
+                "latitude": 29.66009,
+                "towerId": "306",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11515-60",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "67.6",
+                "poleProperty": "Straight Line",
+                "height": 354,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.920177,
+                    29.66009
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 7,
+                "roadName": "Mars3D route",
+                "longitude": 119.91756,
+                "latitude": 29.654361,
+                "towerId": "307",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-49.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "57.1",
+                "poleProperty": "Straight Line",
+                "height": 345,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.91756,
+                    29.654361
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 8,
+                "roadName": "Mars3D route",
+                "longitude": 119.915794,
+                "latitude": 29.650501,
+                "towerId": "308",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "B11511-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "83.8",
+                "height": 320,
+                "degree": 94
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.915794,
+                    29.650501
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 9,
+                "roadName": "Mars3D route",
+                "longitude": 119.914108,
+                "latitude": 29.642595,
+                "towerId": "309",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11516-81",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "88.6",
+                "poleProperty": "Straight Line",
+                "height": 503,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.914108,
+                    29.642595
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 10,
+                "roadName": "Mars3D route",
+                "longitude": 119.913665,
+                "latitude": 29.640538,
+                "towerId": "310",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-84",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "91.6",
+                "poleProperty": "Straight Line",
+                "height": 476,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.913665,
+                    29.640538
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 11,
+                "roadName": "Mars3D route",
+                "longitude": 119.913102,
+                "latitude": 29.637887,
+                "towerId": "311",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11515-82.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "90.1",
+                "poleProperty": "Straight Line",
+                "height": 438,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.913102,
+                    29.637887
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 12,
+                "roadName": "Mars3D route",
+                "longitude": 119.911465,
+                "latitude": 29.63022,
+                "towerId": "312",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "B11511-54",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "80.8",
+                "height": 230,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.911465,
+                    29.63022
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 13,
+                "roadName": "Mars3D route",
+                "longitude": 119.91072,
+                "latitude": 29.626745,
+                "towerId": "313",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-73.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "81.1",
+                "poleProperty": "Straight Line",
+                "height": 262,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.91072,
+                    29.626745
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 14,
+                "roadName": "Mars3D route",
+                "longitude": 119.909512,
+                "latitude": 29.621075,
+                "towerId": "314",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11515-82.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "90.1",
+                "poleProperty": "Straight Line",
+                "height": 237,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.909512,
+                    29.621075
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 15,
+                "roadName": "Mars3D route",
+                "longitude": 119.909012,
+                "latitude": 29.61874,
+                "towerId": "315",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-64.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "72.1",
+                "poleProperty": "Straight Line",
+                "height": 268,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.909012,
+                    29.61874
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 16,
+                "roadName": "Mars3D route",
+                "longitude": 119.907155,
+                "latitude": 29.610041,
+                "towerId": "316",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11515-64.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "72.1",
+                "poleProperty": "Straight Line",
+                "height": 389,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.907155,
+                    29.610041
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 17,
+                "roadName": "Mars3D route",
+                "longitude": 119.906317,
+                "latitude": 29.606111,
+                "towerId": "317",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11514-46.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "73.3",
+                "height": 377,
+                "degree": 118
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.906317,
+                    29.606111
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 18,
+                "roadName": "Mars3D route",
+                "longitude": 119.903177,
+                "latitude": 29.605326,
+                "towerId": "318",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-81",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "88.6",
+                "poleProperty": "Straight Line",
+                "height": 359,
+                "degree": 160
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.903177,
+                    29.605326
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 19,
+                "roadName": "Mars3D route",
+                "longitude": 119.89673,
+                "latitude": 29.603685,
+                "towerId": "319",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11515-82.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "90.1",
+                "poleProperty": "Straight Line",
+                "height": 304,
+                "degree": 160
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.89673,
+                    29.603685
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 20,
+                "roadName": "Mars3D route",
+                "longitude": 119.890313,
+                "latitude": 29.602061,
+                "towerId": "320",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11515-79.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "87.1",
+                "poleProperty": "Straight Line",
+                "height": 246,
+                "degree": 160
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.890313,
+                    29.602061
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 21,
+                "roadName": "Mars3D route",
+                "longitude": 119.885245,
+                "latitude": 29.600778,
+                "towerId": "321",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11511-46.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "73.3",
+                "height": 281,
+                "degree": 150
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.885245,
+                    29.600778
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 22,
+                "roadName": "Mars3D route",
+                "longitude": 119.881606,
+                "latitude": 29.598546,
+                "towerId": "322",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "ZXC271511-55.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "86.8",
+                "poleProperty": "Straight Line",
+                "height": 305,
+                "degree": 150
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.881606,
+                    29.598546
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 23,
+                "roadName": "Mars3D route",
+                "longitude": 119.878751,
+                "latitude": 29.596796,
+                "towerId": "323",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "ZXC271511-55.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "86.8",
+                "poleProperty": "Straight Line",
+                "height": 337,
+                "degree": 150
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.878751,
+                    29.596796
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 24,
+                "roadName": "Mars3D route",
+                "longitude": 119.877339,
+                "latitude": 29.59592,
+                "towerId": "324",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "ZXC271511-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "88.3",
+                "poleProperty": "Straight Line",
+                "height": 352,
+                "degree": 150
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.877339,
+                    29.59592
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 25,
+                "roadName": "Mars3D route",
+                "longitude": 119.8745,
+                "latitude": 29.594189,
+                "towerId": "325",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11512-64.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "72.1",
+                "poleProperty": "Straight Line",
+                "height": 364,
+                "degree": 150
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.8745,
+                    29.594189
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 26,
+                "roadName": "Mars3D route",
+                "longitude": 119.870579,
+                "latitude": 29.591785,
+                "towerId": "326",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "ZBKC271511-90",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "97.6",
+                "poleProperty": "Straight Line",
+                "height": 357,
+                "degree": 150
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.870579,
+                    29.591785
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 27,
+                "roadName": "Mars3D route",
+                "longitude": 119.863285,
+                "latitude": 29.58731,
+                "towerId": "327",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11512-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "83.8",
+                "height": 327,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.863285,
+                    29.58731
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 28,
+                "roadName": "Mars3D route",
+                "longitude": 119.862314,
+                "latitude": 29.585823,
+                "towerId": "328",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11513-70.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "78.1",
+                "poleProperty": "Straight Line",
+                "height": 348,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.862314,
+                    29.585823
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 29,
+                "roadName": "Mars3D route",
+                "longitude": 119.860178,
+                "latitude": 29.582551,
+                "towerId": "329",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-84",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "91.6",
+                "poleProperty": "Straight Line",
+                "height": 390,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.860178,
+                    29.582551
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 30,
+                "roadName": "Mars3D route",
+                "longitude": 119.857764,
+                "latitude": 29.578853,
+                "towerId": "330",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11511-51",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "77.8",
+                "height": 341,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.857764,
+                    29.578853
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 31,
+                "roadName": "Mars3D route",
+                "longitude": 119.853175,
+                "latitude": 29.571824,
+                "towerId": "331",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11516-51",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "58.6",
+                "poleProperty": "Straight Line",
+                "height": 498,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.853175,
+                    29.571824
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 32,
+                "roadName": "Mars3D route",
+                "longitude": 119.852387,
+                "latitude": 29.570618,
+                "towerId": "332",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11515-84",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "91.6",
+                "poleProperty": "Straight Line",
+                "height": 467,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.852387,
+                    29.570618
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 33,
+                "roadName": "Mars3D route",
+                "longitude": 119.848477,
+                "latitude": 29.564626,
+                "towerId": "333",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11512-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "83.8",
+                "height": 262,
+                "degree": 84
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.848477,
+                    29.564626
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 34,
+                "roadName": "Mars3D route",
+                "longitude": 119.847713,
+                "latitude": 29.560063,
+                "towerId": "334",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-84",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "91.6",
+                "poleProperty": "Straight Line",
+                "height": 288,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.847713,
+                    29.560063
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 35,
+                "roadName": "Mars3D route",
+                "longitude": 119.847337,
+                "latitude": 29.557814,
+                "towerId": "335",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11511-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "83.8",
+                "height": 304,
+                "degree": 119
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.847337,
+                    29.557814
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 36,
+                "roadName": "Mars3D route",
+                "longitude": 119.846454,
+                "latitude": 29.55602,
+                "towerId": "336",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11512-60",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "67.6",
+                "poleProperty": "Straight Line",
+                "height": 336,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.846454,
+                    29.55602
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 37,
+                "roadName": "Mars3D route",
+                "longitude": 119.843531,
+                "latitude": 29.550087,
+                "towerId": "337",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11516-72",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "79.6",
+                "poleProperty": "Straight Line",
+                "height": 385,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.843531,
+                    29.550087
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 38,
+                "roadName": "Mars3D route",
+                "longitude": 119.840863,
+                "latitude": 29.544669,
+                "towerId": "338",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11511-45",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "71.8",
+                "height": 465,
+                "degree": 101
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.840863,
+                    29.544669
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 39,
+                "roadName": "Mars3D route",
+                "longitude": 119.83935,
+                "latitude": 29.5407,
+                "towerId": "339",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11512-60",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "67.6",
+                "poleProperty": "Straight Line",
+                "height": 467,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.83935,
+                    29.5407
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 40,
+                "roadName": "Mars3D route",
+                "longitude": 119.837896,
+                "latitude": 29.536888,
+                "towerId": "340",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "B11512-45",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "71.8",
+                "height": 439,
+                "degree": 125
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.837896,
+                    29.536888
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 41,
+                "roadName": "Mars3D route",
+                "longitude": 119.832618,
+                "latitude": 29.531226,
+                "towerId": "341",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-54",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "61.6",
+                "poleProperty": "Straight Line",
+                "height": 418,
+                "degree": 130
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.832618,
+                    29.531226
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 42,
+                "roadName": "Mars3D route",
+                "longitude": 119.829409,
+                "latitude": 29.527789,
+                "towerId": "342",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-75",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "82.6",
+                "poleProperty": "Straight Line",
+                "height": 406,
+                "degree": 130
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.829409,
+                    29.527789
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 43,
+                "roadName": "Mars3D route",
+                "longitude": 119.825661,
+                "latitude": 29.523769,
+                "towerId": "343",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11511-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "83.8",
+                "height": 347,
+                "degree": 120
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.825661,
+                    29.523769
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 44,
+                "roadName": "Mars3D route",
+                "longitude": 119.823136,
+                "latitude": 29.519192,
+                "towerId": "344",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-82.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "90.1",
+                "poleProperty": "Straight Line",
+                "height": 372,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.823136,
+                    29.519192
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 45,
+                "roadName": "Mars3D route",
+                "longitude": 119.82084,
+                "latitude": 29.515026,
+                "towerId": "345",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11511-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "83.8",
+                "height": 359,
+                "degree": 98
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.82084,
+                    29.515026
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 46,
+                "roadName": "Mars3D route",
+                "longitude": 119.817906,
+                "latitude": 29.507312,
+                "towerId": "346",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11515-72",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "79.6",
+                "poleProperty": "Straight Line",
+                "height": 432,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.817906,
+                    29.507312
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 47,
+                "roadName": "Mars3D route",
+                "longitude": 119.816363,
+                "latitude": 29.503252,
+                "towerId": "347",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11513-72",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "79.6",
+                "poleProperty": "Straight Line",
+                "height": 415,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.816363,
+                    29.503252
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 48,
+                "roadName": "Mars3D route",
+                "longitude": 119.814427,
+                "latitude": 29.49816,
+                "towerId": "348",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B120H32-52.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "79.8",
+                "height": 426,
+                "degree": 129
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.814427,
+                    29.49816
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 49,
+                "roadName": "Mars3D route",
+                "longitude": 119.810093,
+                "latitude": 29.496221,
+                "towerId": "349",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A120H23-67.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "75",
+                "poleProperty": "Straight Line",
+                "height": 494,
+                "degree": 150
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.810093,
+                    29.496221
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 50,
+                "roadName": "Mars3D route",
+                "longitude": 119.803702,
+                "latitude": 29.493361,
+                "towerId": "350",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B120H31-48",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "75.3",
+                "height": 587,
+                "degree": 150
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.803702,
+                    29.493361
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 51,
+                "roadName": "Mars3D route",
+                "longitude": 119.802165,
+                "latitude": 29.492102,
+                "towerId": "351",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A120H23-84",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "91.5",
+                "poleProperty": "Straight Line",
+                "height": 612,
+                "degree": 150
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.802165,
+                    29.492102
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 52,
+                "roadName": "Mars3D route",
+                "longitude": 119.796865,
+                "latitude": 29.487757,
+                "towerId": "352",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A120H24-84",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "91.5",
+                "poleProperty": "Straight Line",
+                "height": 602,
+                "degree": 140
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.796865,
+                    29.487757
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 53,
+                "roadName": "Mars3D route",
+                "longitude": 119.794316,
+                "latitude": 29.485668,
+                "towerId": "353",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B120H31-45",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "72.3",
+                "height": 471,
+                "degree": 140
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.794316,
+                    29.485668
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 54,
+                "roadName": "Mars3D route",
+                "longitude": 119.78867,
+                "latitude": 29.480741,
+                "towerId": "354",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B120H31-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "84.3",
+                "height": 387,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.78867,
+                    29.480741
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 55,
+                "roadName": "Mars3D route",
+                "longitude": 119.787193,
+                "latitude": 29.477116,
+                "towerId": "355",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A120H23-75",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "82.5",
+                "poleProperty": "Straight Line",
+                "height": 507,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.787193,
+                    29.477116
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 56,
+                "roadName": "Mars3D route",
+                "longitude": 119.786631,
+                "latitude": 29.475741,
+                "towerId": "356",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A120H24-75",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "82.5",
+                "poleProperty": "Straight Line",
+                "height": 510,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.786631,
+                    29.475741
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 57,
+                "roadName": "Mars3D route",
+                "longitude": 119.785668,
+                "latitude": 29.473381,
+                "towerId": "357",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B120H32-42",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "69.3",
+                "height": 393,
+                "degree": 106
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.785668,
+                    29.473381
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 58,
+                "roadName": "Mars3D route",
+                "longitude": 119.782316,
+                "latitude": 29.465815,
+                "towerId": "358",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11515-79.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "87.1",
+                "poleProperty": "Straight Line",
+                "height": 376,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.782316,
+                    29.465815
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 59,
+                "roadName": "Mars3D route",
+                "longitude": 119.780848,
+                "latitude": 29.462501,
+                "towerId": "359",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11513-72",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "79.6",
+                "poleProperty": "Straight Line",
+                "height": 338,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.780848,
+                    29.462501
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 60,
+                "roadName": "Mars3D route",
+                "longitude": 119.779291,
+                "latitude": 29.45898,
+                "towerId": "360",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11515-72",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "79.6",
+                "poleProperty": "Straight Line",
+                "height": 301,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.779291,
+                    29.45898
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 61,
+                "roadName": "Mars3D route",
+                "longitude": 119.776127,
+                "latitude": 29.451832,
+                "towerId": "361",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11511-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "83.8",
+                "height": 295,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.776127,
+                    29.451832
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 62,
+                "roadName": "Mars3D route",
+                "longitude": 119.77473,
+                "latitude": 29.448645,
+                "towerId": "362",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11512-63",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "70.6",
+                "poleProperty": "Straight Line",
+                "height": 386,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.77473,
+                    29.448645
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 63,
+                "roadName": "Mars3D route",
+                "longitude": 119.77414,
+                "latitude": 29.447301,
+                "towerId": "363",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11512-58.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "66.1",
+                "poleProperty": "Straight Line",
+                "height": 394,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.77414,
+                    29.447301
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 64,
+                "roadName": "Mars3D route",
+                "longitude": 119.773419,
+                "latitude": 29.445651,
+                "towerId": "364",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11511-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "83.8",
+                "height": 349,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.773419,
+                    29.445651
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 65,
+                "roadName": "Mars3D route",
+                "longitude": 119.771482,
+                "latitude": 29.441231,
+                "towerId": "365",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-73.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "81.1",
+                "poleProperty": "Straight Line",
+                "height": 303,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.771482,
+                    29.441231
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 66,
+                "roadName": "Mars3D route",
+                "longitude": 119.770405,
+                "latitude": 29.438771,
+                "towerId": "366",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11511-51",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "77.8",
+                "height": 242,
+                "degree": 123
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.770405,
+                    29.438771
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 67,
+                "roadName": "Mars3D route",
+                "longitude": 119.766607,
+                "latitude": 29.434774,
+                "towerId": "367",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-78",
+                "commissioningDate": "2020-1-5",
+                "poleProperty": "Straight Line",
+                "height": 264,
+                "degree": 130
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.766607,
+                    29.434774
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 68,
+                "roadName": "Mars3D route",
+                "longitude": 119.764676,
+                "latitude": 29.432758,
+                "towerId": "368",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-79.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "87.1",
+                "poleProperty": "Straight Line",
+                "height": 271,
+                "degree": 130
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.764676,
+                    29.432758
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 69,
+                "roadName": "Mars3D route",
+                "longitude": 119.762905,
+                "latitude": 29.430895,
+                "towerId": "369",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-79.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "87.1",
+                "poleProperty": "Straight Line",
+                "height": 256,
+                "degree": 130
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.762905,
+                    29.430895
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 70,
+                "roadName": "Mars3D route",
+                "longitude": 119.7595,
+                "latitude": 29.427316,
+                "towerId": "370",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11511-57",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "83.8",
+                "height": 260,
+                "degree": 120
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.7595,
+                    29.427316
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 71,
+                "roadName": "Mars3D route",
+                "longitude": 119.757107,
+                "latitude": 29.422368,
+                "towerId": "371",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11516-81",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "88.6",
+                "poleProperty": "Straight Line",
+                "height": 321,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.757107,
+                    29.422368
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 72,
+                "roadName": "Mars3D route",
+                "longitude": 119.756023,
+                "latitude": 29.420118,
+                "towerId": "372",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11512-64.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "72.1",
+                "poleProperty": "Straight Line",
+                "height": 405,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.756023,
+                    29.420118
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 73,
+                "roadName": "Mars3D route",
+                "longitude": 119.754781,
+                "latitude": 29.417549,
+                "towerId": "373",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11513-64.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "72.1",
+                "poleProperty": "Straight Line",
+                "height": 419,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.754781,
+                    29.417549
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 74,
+                "roadName": "Mars3D route",
+                "longitude": 119.752243,
+                "latitude": 29.412301,
+                "towerId": "374",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-79.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "87.1",
+                "poleProperty": "Straight Line",
+                "height": 359,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.752243,
+                    29.412301
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 75,
+                "roadName": "Mars3D route",
+                "longitude": 119.751322,
+                "latitude": 29.410378,
+                "towerId": "375",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11512-58.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "67.6",
+                "poleProperty": "Straight Line",
+                "height": 361,
+                "degree": 105
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.751322,
+                    29.410378
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 76,
+                "roadName": "Mars3D route",
+                "longitude": 119.749437,
+                "latitude": 29.406473,
+                "towerId": "376",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11512-45",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "71.8",
+                "height": 297,
+                "degree": 132
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.749437,
+                    29.406473
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 77,
+                "roadName": "Mars3D route",
+                "longitude": 119.743241,
+                "latitude": 29.401917,
+                "towerId": "377",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11511-48",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "74.8",
+                "height": 245,
+                "degree": 140
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.743241,
+                    29.401917
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 78,
+                "roadName": "Mars3D route",
+                "longitude": 119.741417,
+                "latitude": 29.400581,
+                "towerId": "378",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11512-67.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "75.1",
+                "poleProperty": "Straight Line",
+                "height": 292,
+                "degree": 140
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.741417,
+                    29.400581
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 79,
+                "roadName": "Mars3D route",
+                "longitude": 119.739075,
+                "latitude": 29.398853,
+                "towerId": "379",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11514-76.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "84.1",
+                "poleProperty": "Straight Line",
+                "height": 333,
+                "degree": 140
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.739075,
+                    29.398853
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 80,
+                "roadName": "Mars3D route",
+                "longitude": 119.735975,
+                "latitude": 29.396584,
+                "towerId": "380",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11517-52.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "60.1",
+                "poleProperty": "Straight Line",
+                "height": 456,
+                "degree": 140
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.735975,
+                    29.396584
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 81,
+                "roadName": "Mars3D route",
+                "longitude": 119.733892,
+                "latitude": 29.395056,
+                "towerId": "381",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "A11516-84",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "91.6",
+                "poleProperty": "Straight Line",
+                "height": 339,
+                "degree": 140
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.733892,
+                    29.395056
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 82,
+                "roadName": "Mars3D route",
+                "longitude": 119.729405,
+                "latitude": 29.391752,
+                "towerId": "382",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "B11515-45",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "71.8",
+                "height": 236,
+                "degree": 130
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.729405,
+                    29.391752
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 83,
+                "roadName": "Mars3D route",
+                "longitude": 119.726715,
+                "latitude": 29.389281,
+                "towerId": "383",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "SJC271012-42",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "95.5",
+                "height": 199,
+                "degree": 125
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.726715,
+                    29.389281
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 84,
+                "roadName": "Mars3D route",
+                "longitude": 119.725007,
+                "latitude": 29.387732,
+                "towerId": "384",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "SZC271011-60",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "98.5",
+                "poleProperty": "Straight Line",
+                "height": 181,
+                "degree": 125
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.725007,
+                    29.387732
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 85,
+                "roadName": "Mars3D route",
+                "longitude": 119.722805,
+                "latitude": 29.385737,
+                "towerId": "385",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "SJC271013-48",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "98",
+                "height": 176,
+                "degree": 154
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.722805,
+                    29.385737
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 86,
+                "roadName": "Mars3D route",
+                "longitude": 119.718871,
+                "latitude": 29.384729,
+                "towerId": "386",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "SZC271014-84",
+                "commissioningDate": "2020-1-5",
+                "poleProperty": "Straight Line",
+                "height": 163,
+                "degree": 154
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.718871,
+                    29.384729
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 87,
+                "roadName": "Mars3D route",
+                "longitude": 119.711515,
+                "latitude": 29.382844,
+                "towerId": "387",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Linear Tower",
+                "towerModel": "SZKC271011-96",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "137.5",
+                "poleProperty": "Straight Line",
+                "height": 119,
+                "degree": 154
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.711515,
+                    29.382844
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 88,
+                "roadName": "Mars3D route",
+                "longitude": 119.707743,
+                "latitude": 29.381878,
+                "towerId": "388",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "SJC271015-54",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "102.5",
+                "height": 141,
+                "degree": 140
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.707743,
+                    29.381878
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 89,
+                "roadName": "Mars3D route",
+                "longitude": 119.705129,
+                "latitude": 29.377303,
+                "towerId": "389",
+                "constructionUnit": "Mars Power Transmission and Transformation Construction Company",
+                "geographicalLocation": "",
+                "designUnit": "Mars Electric Power Design Institute",
+                "towerType": "Tension Tower",
+                "towerModel": "SDJ271011-49.5",
+                "commissioningDate": "2020-1-5",
+                "totalTowerHeight": "105.5",
+                "height": 100,
+                "degree": 110
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    119.705129,
+                    29.377303
+                ]
+            }
+        }
+    ]
+}

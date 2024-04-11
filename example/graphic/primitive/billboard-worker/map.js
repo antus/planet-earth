@@ -29,7 +29,7 @@ var mapOptions = {
 function onMounted(mapInstance) {
   map = mapInstance // record map
 
-  globalNotify("Known Problem Tips", `(1) AQI comes from a third-party service and is currently inaccessible`)
+  //globalNotify("Known Problem Tips", `(1) AQI comes from a third-party service and is currently inaccessible`)
 
   //Create vector data layer
   graphicLayer = new mars3d.layer.GraphicLayer()

@@ -44,13 +44,23 @@ p {
 }
 
 /*************************************************************
+Window dialog
+**************************************************************/
+.layer-mars-dialog .layui-layer-title {
+    background: rgba(30, 36, 50, 0.95);
+}
+
+.layer-mars-dialog .layui-layer-content {
+    background-color: rgba(30, 36, 50, 0.95);
+}
+/*************************************************************
 Logo
 **************************************************************/
 .logo {
     filter: invert(100%); opacity: .8;
 }
 .brand-image {
-    height: 25px !important;
+    height: 28px !important;
 }
 
 /************************************************************
@@ -77,16 +87,26 @@ Navbar
 .full-screen {
     padding-top: 3px !important;
 }
+.application-count {
+    margin: 0px 10px;
+    display: flex;
+    height: 28px;
+    
+}
+
 .application {
-    padding-left: 0px !important;
+    padding: 5px !important;
+    background-color: rgb(63, 103, 145);
 }
 .count {
-    margin: 0px 10px;
-    height: 26px;
-    padding: 7px 7px 0px 7px !important;
-    font-size: 11px;
+    margin: 0px;
+    padding: 5px !important;
+    font-weight: 600;
+    font-size: 12px;
     width: unset;
-    background-color: rgb(63, 103, 145);
+    background-color: gold;
+    color: black;
+    border-radius: 0px;
 }
 /************************************************************
 Searchbar 
@@ -101,8 +121,7 @@ Searchbar
 }
 
 .search-button {
-    border-bottom-right-radius: 3px;
-    border-top-right-radius: 3px;
+    border-radius: 0px !important;
 }
 
 .delete-search-button {
@@ -112,6 +131,41 @@ Searchbar
     cursor: pointer;
     display: none;
     z-index: 99999;
+}
+
+.categories-panel {
+    width: 100%;
+    background: rgba(63, 72, 84, 0.99);
+    overflow: auto;
+    max-height: 500px;
+    scrollbar-color: #555555 #343a40;
+    scrollbar-width: thin;
+    position: absolute;
+    top:28px;
+  }
+
+.category-filter {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.category-filter-all {
+    width: 100%;
+    border-bottom: 1px solid #56606a;
+}
+
+.custom-control {
+    margin: 10px;
+    width: 175px;
+}
+.custom-control-label {
+    float: left; 
+    height:20px; 
+    padding-top: 1px;
+}
+
+.red {
+    color: red;
 }
 
 /************************************************************
@@ -250,7 +304,7 @@ Cards
 
 .card__description {
     margin-top: 20px;
-    max-height: 150px;
+    max-height: 180px;
     width:100%;
     overflow: auto;
     scrollbar-color: #555555 #343a40;

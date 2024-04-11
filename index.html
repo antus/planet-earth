@@ -44,13 +44,15 @@
         <!-- Left Navbar link -->
         <ul class="navbar-nav">
           <li class="nav-item">
-              <img src="img/users/mp-logo.png" title="Planet Earth" class="brand-image img-circle logo" >
+            <a href="#" role="button" onClick="showDocumentation()">
+              <img src="img/users/mp-logo.png" data-i18n="[title]app.documentation" class="brand-image img-circle logo" >
+            </a>
           </li>
           <li class="nav-item">
-              <span id="total-showcase" class="badge badge-info count">0</span>
-          </li>
-          <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link application" data-i18n="app.applications"></a>
+            <span class="application-count">
+              <span id="total-showcase" class="count">4</span>
+              <b class="d-none d-sm-inline-block application" data-i18n="app.applications"></b>
+            </span>
           </li>
         </ul>
 
@@ -59,12 +61,44 @@
           <li class="nav-item searchbar-li">
             <div class="form-inline">
               <div class="input-group input-group-sm" style="width: 100%;">
+                <div class="input-group-prepend">
+                  <button id="categoriesButton" class="btn btn-navbar search-button" onclick="showHideCategoryFilterPanel()">
+                    <i id="category-filter-icon" class="fas fa-filter"></i>
+                  </button>
+                </div>
                 <input id="searchText" class="form-control form-control-navbar" type="search" data-i18n="[placeholder]app.search" autocomplete="off">
                 <div id="deleteSearchButton" class="delete-search-button"><i class="fa fa-remove"></i></div>
                 <div class="input-group-append">
                   <button id="searchButton" class="btn btn-navbar search-button">
                     <i class="fas fa-search fa-fw"></i>
                   </button>
+                </div>
+                <!--list of search results-->
+                <div id="category-filter-panel" class="categories-panel" style="display: none">
+                  <div class="category-filter-all">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" checked class="custom-control-input category-all" id="customSwitch1" onclick="setAllCategories(this)">
+                      <label class="custom-control-label" for="customSwitch1">Tutte le categorie</label>
+                    </div>
+                  </div>
+                  <div id="categories-filter" class="category-filter">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input category-selection" id="customSwitch2" onclick="setCategory('Agricoltura', this)">
+                      <label class="custom-control-label" for="customSwitch2" >Agricoltura</label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input category-selection" id="customSwitch3" onclick="setCategory('Ambiente', this)">
+                      <label class="custom-control-label" for="customSwitch3" >Ambiente</label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input category-selection" id="customSwitch4" onclick="setCategory('Difesa e sicurezza', this)">
+                      <label class="custom-control-label" for="customSwitch4" >Difesa e sicurezza</label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input category-selection" id="customSwitch5" onclick="setCategory('Spazio', this)">
+                      <label class="custom-control-label" for="customSwitch5" >Spazio</label>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

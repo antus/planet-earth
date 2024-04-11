@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+    <meta name="keywords" content="cesium,3D,GIS,marsgis" />
+    <meta
+      name="description"
+      content="leaflet leafletcesium cesium gis marsgis WebGIS"
+    />
+
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
+    <title>Vegetation encroachment</title>
+
+    <script
+      type="text/javascript"
+      src="/lib/include-lib.js"
+      libpath="/lib/"
+      include="jquery,layer,toastr,echarts,font-awesome,bootstrap,layer,haoutil,mars3d,mars3d-heatmap"
+    ></script>
+
+    <link href="/css/divGraphic.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+
+    <style>
+      .infoview {
+        position: absolute;
+        top: unset;
+        bottom: 35px;
+        right: 10px;
+        left: 10px;
+      }
+      .cesium-viewer-toolbar {
+        top: 90px;
+        bottom: unset;
+        left: 15px;
+        right: auto;
+      }
+    </style>
+  </head>
+
+  <body class="dark">
+
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+    <div style="position: absolute; top: 20px; right: 10px">
+      <img src="/img/legend/heatmap.png" height="200px">
+    </div>
+    <div class="infoview">
+      <div id="section" style="width: 100%; height: 200px"></div>
+    </div>
+
+    <script src="/js/common.js"></script>
+    <script src="./CustomLang.js"></script>
+    <script src="./map.js"></script>
+
+    <script type="text/javascript">
+      "use script" 
+
+      function initUI(options) {}
+
+      echartTarget.on("addEchart", function (data) {
+        drawHeightToDistanceEcharts(data.heightArry, data.heightTDArray, data.distanceArray)
+        console.log("addEchart", data)
+      })
+
+      function drawHeightToDistanceEcharts(heightArry, heightTDArray, distanceArray) {
+        let myChart = echarts.init(document.getElementById("section"), "dark")
+
+        let option = {
+          title: {
+            text: "Powerline section",
+            left: 25
+          },
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "cross"
+            }
+          },
+          toolbox: {
+            show: false,
+            feature: {
+              saveAsImage: {}
+            }
+          },
+          legend: {
+            data: ["Terrain elevation", "Wire elevation"]
+          },
+          grid: {
+            left: 50,
+            width: "100%",
+            top: 50,
+            bottom: 30
+          },
+          xAxis: {
+            type: "category",
+            boundaryGap: false,
+            data: distanceArray,
+            axisLabel: {
+              formatter: "{value} m"
+            }
+          },
+          yAxis: {
+            type: "value",
+            axisLabel: {
+              formatter: "{value} m"
+            },
+            axisPointer: {
+              snap: true
+            }
+          },
+          dataZoom: {
+            start: 80,
+            type: "inside"
+          },
+          series: [
+            {
+              name: "Terrain elevation",
+              type: "line",
+              smooth: true,
+              itemStyle: {
+                normal: {
+                  color: "rgb(255, 255, 0)"
+                }
+              },
+              data: heightTDArray
+            },
+            {
+              name: "Wire elevation",
+              type: "line",
+              smooth: true,
+              itemStyle: {
+                normal: {
+                  color: "rgb(255, 70, 131)"
+                }
+              },
+              data: heightArry,
+              markPoint: undefined
+            }
+          ]
+        }
+        myChart.setOption(option, true)
+      }
+    </script>
+  </body>
+</html>

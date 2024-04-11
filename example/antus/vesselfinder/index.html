@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="M.antonini " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
+    <title>World AIS data</title>
+
+
+    <!--lib-->
+    <script
+      type="text/javascript"
+      src="/lib/include-lib.js"
+      libpath="/lib/"
+      include="jquery,layer,toastr,font-awesome,bootstrap,layer,haoutil,olcesium,mars3d"
+    ></script>
+
+<style>
+  .marsBlackPanel {
+    background: rgba(0,0,0,0.7) !important;
+  }
+
+  .mars3d-template-content div label {
+    width:70px;
+  }
+  .mars3d-popup-content {
+    margin:0 !important; 
+  }
+</style>
+
+    <link href="/css/divGraphic.css" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+
+
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <script src="/js/common.js"></script>
+    <script src="./map.js"></script>
+  </body>
+</html>

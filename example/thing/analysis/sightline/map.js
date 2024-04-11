@@ -19,11 +19,13 @@ var mapOptions = {
 function onMounted(mapInstance) {
   map = mapInstance // record map
 
+  /*
   globalNotify(
     "Known Issue Tips",
     `(1) Relies on the underlying interface of cesium, which is not accurate enough in a few cases
-(2) The points to be analyzed can only be analyzed if they are within the field of view.
+(2) The points to be analyzed can only be analyzed if they are within the field of view.`
   )
+  */
 
   sightline = new mars3d.thing.Sightline({
     visibleColor: new Cesium.Color(0, 1, 0, 0.4),

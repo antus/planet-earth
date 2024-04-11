@@ -11,9 +11,10 @@ const editorUrl = "editor-es5.html"
 const readUrl = "read-es5.html"
 
 
-var applications=[];
+var c=[];
 var searchText = "";
-
+var selectAllCategories = true;
+var selectedCategories = [];
 // Is dev param present?
 const urlParams = new URLSearchParams(window.location.search);
 const dev = urlParams.get('dev')!=undefined  
@@ -77,6 +78,10 @@ function initI18next() {
                 });
             }
         });
+
+        // Show documentation
+        showDocumentation();    
+
         rerender();
       });
 }
@@ -142,6 +147,13 @@ function matched(element) {
             cardCategories += i18next.t(c) + " "; 
         });
     }
+
+    if (!selectAllCategories) {
+        const elementCategory = element.categories.split(SEPARATOR)[0];
+        if (selectedCategories.indexOf(elementCategory) ==-1)
+            return false;
+    }
+        
     textArray.forEach(text => {
         if (
             // name
@@ -172,8 +184,12 @@ function createContent(arr) {
                 openLink = editorUrl; //editor for local development
             }
             openLink += "?id=" + item.main;
-            quickOpenLink =  `style="cursor:pointer;" onclick='showDemo("` + name + `","` + openLink + `")' data-i18n="[title]app.start"`;
-            openLink = `<a style="cursor:pointer; float:right" onclick='showDemo("` + name + `","` + openLink + `")' class="card__button" data-i18n="app.open"></a>`;
+            quickOpenLink =  `style="cursor:pointer;" onclick='showInLocalWindow("` + name + `","` + openLink + `")' data-i18n="[title]app.start"`;
+            openLink = `<a style="cursor:pointer; float:right" onclick='showInLocalWindow("` + name + `","` + openLink + `")' class="card__button" data-i18n="app.open"></a>`;
+        }
+        if (item.external && item.external.length>0) {
+            quickOpenLink =  `style="cursor:pointer;" onclick='window.open("` + item.external + `")' data-i18n="[title]app.start"`;
+            openLink = `<a style="cursor:pointer; float:right" href="` + item.external + `" target="_blank" class="card__button" data-i18n="app.open"></a>`;
         }
         var link ="";
         if (item.link && item.link.length>0) {
@@ -191,7 +207,7 @@ function createContent(arr) {
                        `<a id="close_info_` + i + `" style="cursor:pointer; display:none" onclick="hideInfo('` + i + `'); "><i class="nav-icon fa fa-times-circle card-info"></i></a>`;
         const category = item.categories.split(SEPARATOR)[0] || "";
         var mainIcon = `<span class="card-main-icon"><i class="nav-icon fa fa-lock card-lock"></i></span>`;
-        if (item.main && item.main.length>0) 
+        if ((item.main && item.main.length>0) || (item.external && item.external.length>0)) 
             mainIcon = `<span class="card-main-icon" ` + quickOpenLink + `><i class="nav-icon fa fa-play card-play"></i></span>`;
         var categoryColor = item.color?"background-color:" + item.color + "DD": "";
 		inhtml += 
@@ -229,6 +245,19 @@ function hideInfo(i) {
 }
 
 function initSearchbar() {
+    // fill categories filter
+    const categories = getAllCategories();
+    console.log(categories);
+    var categoryFilterPanel = "";
+    categories.forEach(element => {
+        categoryFilterPanel += 
+            `<div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input category-selection" id="` + element + `" onclick="setCategory('` + element + `', this)">
+                <label class="custom-control-label" for="` + element + `" data-i18n="` + element + `">` + element + `</label>
+            </div>`;
+    });
+    $("#categories-filter").html(categoryFilterPanel);
+
     // Search text key down handler
     $("#searchText").bind("keydown", (event) => {
         if (event.keyCode == "13") {
@@ -251,7 +280,23 @@ function initSearchbar() {
         $("#searchText").val("");
 		searchAction();
     });
+
+    // Content click handler
+	$("#content").click(() => {
+        $("#category-filter-panel").hide();
+    });
 }  
+
+function getAllCategories() {
+    var c = {};
+    for (var i = 0; i < applications.length; i++) {
+		var item = applications[i];
+        const category = item.categories.split(SEPARATOR)[0];
+        c[category] = true;
+    }
+    return Object.keys(c);
+}
+
 
 function searchAction() {
 	searchText = $.trim($("#searchText").val()).toLowerCase();
@@ -294,9 +339,61 @@ function showAuthors() {
 		skin: "layer-mars-dialog animation-scale-up",
 		resize: false,
 		area: ["650px", "91%"],
-		content: "/contacts.html"
+		content: "/pages/contacts.html"
 	  })
 }
+
+// Show the documentation of the application
+function showDocumentation() {
+    var link = "/pages/presentation-en.html";
+    if (i18next.resolvedLanguage=="it")
+        link = "/pages/presentation-it.html";
+	window.layer.open({
+		type: 2,
+		title: i18next.t("app.documentation"),
+		skin: "layer-mars-dialog animation-scale-up",
+		resize: false,
+		area: ["900px", "600px"],
+		content: link
+	  })
+}
+
+function showHideCategoryFilterPanel() {
+    if ($("#category-filter-panel").is(":visible"))
+        $("#category-filter-panel").hide();
+    else 
+        $("#category-filter-panel").show    ();
+}
+
+function setAllCategories(cb) {
+    console.log("Clicked all categories = " + cb.checked);
+    selectAllCategories = cb.checked;
+    if (cb.checked) {
+        selectedCategories = [];
+        $("#category-filter-icon").removeClass("red");
+        for (var i=0; i<$(".category-selection").length; i++) {
+            $(".category-selection")[i].checked = false;
+        }
+    }
+    loadContent();
+    rerender();
+}
+
+function setCategory(name, cb) {
+    console.log("Clicked " + name + " = " + cb.checked);
+    if (cb.checked) {
+        selectedCategories.push(name);
+        selectAllCategories = false;
+        $(".category-all")[0].checked = false;
+        $("#category-filter-icon").addClass("red");
+    } else {
+        const index = selectedCategories.indexOf(name);
+        const x = selectedCategories.splice(index, 1);
+    }
+    loadContent();
+    rerender();
+}
+
 
 
 

@@ -122,7 +122,7 @@ function addCityGraphics() {
       closure: true,
       materialType: mars3d.MaterialType.RectSlide,
       materialOptions: {
-        image: "img/tietu/circular.png",
+        image: "/img/tietu/circular.png",
         speed: 2
       }
     }
@@ -183,7 +183,7 @@ function addCityGraphics() {
     position: center,
     style: {
       html: `<div class="marsBlackPanel">
-          <div class="marsBlackPanel-text">Mars3D International Building</div>
+          <div class="marsBlackPanel-text">International Building</div>
       </div>`,
       horizontalOrigin: Cesium.HorizontalOrigin.LEFT, // horizontal positioning
       verticalOrigin: Cesium.VerticalOrigin.CENTER // Vertical positioning

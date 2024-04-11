@@ -34,7 +34,8 @@ function onMounted(mapInstance) {
   })
 
   //Load model list
-  const configUrl = "//data.mars3d.cn/gltf/list.json"
+  //const configUrl = "//data.mars3d.cn/gltf/list.json"
+  const configUrl = "/example/layer-graphic/draw/draw-model-list/list.json"
   mars3d.Util.fetchJson({ url: configUrl })
     .then(function (data) {
       eventTarget.fire("loadModelList", { data })
