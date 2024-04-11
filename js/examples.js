@@ -338,7 +338,7 @@ function showAuthors() {
 		title: "GIS & RS team",
 		skin: "layer-mars-dialog animation-scale-up",
 		resize: false,
-		area: ["650px", "91%"],
+		area: ["950px", "83%"],
 		content: "/pages/contacts.html"
 	  })
 }
