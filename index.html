@@ -25,6 +25,8 @@
     <meta name="description" content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming geographic information system Cloud GIS 3D GIS GIS platform WebGIS" />
     <!-- title -->
     <title>Planet Earth</title>
+    <!-- keycloak script -->
+    <script src="http://keycloak.gda.it:8888/js/keycloak.js"></script>
     <!-- load scripts -->
     <script
       type="text/javascript"
@@ -107,6 +109,12 @@
 
         <!-- Right navbar links -->
         <ul class="navbar-nav switch-locale">
+          <!-- Autors -->
+          <li class="nav-item">
+            <a class="nav-link" href="#" role="button" onClick="showAuthors()" title="GIS & RS practice">
+              <i class="fas fa-sitemap full-screen"></i>
+            </a>
+          </li>
           <!-- Language Menu -->
           <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
@@ -121,11 +129,16 @@
               </a>
             </div>
           </li>
-          <!-- Autors -->
-          <li class="nav-item">
-            <a class="nav-link" href="#" role="button" onClick="showAuthors()" title="GIS & RS practice">
-              <i class="fas fa-users full-screen"></i>
+          <!-- User -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" style="border:1px solid #56606a">
+              <i class="fa fa-user" aria-hidden="true"></i><span id="username" style="padding-left: 10px;"></span>
             </a>
+            <div class="dropdown-menu dropdown-menu-right p-0">
+              <a href="#" class="dropdown-item" onClick="logout()">
+                <i class="fa fa-sign-out-alt" aria-hidden="true"></i><span data-i18n="app.logout" style="padding-left: 10px;"></span>
+              </a>
+            </div>
           </li>
           <!-- Full screen -->
           <li class="nav-item">

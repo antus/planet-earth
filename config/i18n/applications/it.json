@@ -16,6 +16,7 @@
 	"app.start": "Avvia applicazione",
 	"app.in-progress": "In valutazione",
 	"app.categories": "Categorie",
+	"app.logout": "Esci",
 	"快速创建地球": "Crea rapidamente la Terra",
 	"根据配置文件创建地球": "Crea la Terra in base al file di configurazione",
 	"原生Cesium来创建地球(可与第3方SDK结合使用)": "Uso di Cesium nativo per creare la Terra",

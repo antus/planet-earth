@@ -10,8 +10,10 @@ const defaultThumbnail = "default.gif";
 const editorUrl = "editor-es5.html"
 const readUrl = "read-es5.html"
 
+const KC_URL = 'http://keycloak.gda.it:8888';
+const REALM = 'master';
+const CLIENT_ID = 'keycloak-planet-earth';
 
-var c=[];
 var searchText = "";
 var selectAllCategories = true;
 var selectedCategories = [];
@@ -19,28 +21,79 @@ var selectedCategories = [];
 const urlParams = new URLSearchParams(window.location.search);
 const dev = urlParams.get('dev')!=undefined  
 
-// Synchronous loading examples and applications
-$.getJSON(EXAMPLE_FILE, '',function (examples) {
-    $.getJSON(APPLICATIONS_FILE, '',function (apps) {
-        var data = [];
-        apps.forEach(element => {
-            data.push(element);
-        });
-        if (dev) {
-            examples.forEach(element => {
+// authentication
+window.onload =  async function () {
+    // initialize keycloak
+    window.keycloak = new Keycloak({
+        url: KC_URL,
+        realm: REALM,
+        clientId: CLIENT_ID
+    });
+    window.keycloak._login = window.keycloak.login;
+    window.keycloak.login = function (options) {
+        if (options) {
+            options.scope = "openid";
+        }
+        return window.keycloak._login.apply(window.keycloak, [options]);
+    };
+    // check if the user is already authenticated
+    const authenticated = await keycloak.init({ 
+        onLoad: 'login-required', 
+        // onLoad: 'check-sso', 
+        checkLoginIframe: true, 
+        checkLoginIframeInterval: 1, 
+        pkceMethod: 'S256' 
+    })
+    if (authenticated) {
+        showUserInfo();
+        loadApplication();
+    } else {
+        showWelcome();
+    }
+    keycloak.onAuthLogout = showWelcome;
+}
+
+// show welcome message
+function showWelcome() {
+    alert("Authentication needed!");
+}
+
+// logout
+function logout() {
+    keycloak.logout();
+}
+
+// set user info
+function showUserInfo() {
+    keycloak.loadUserInfo().then(userinfo => {
+        $('#username').text(userinfo.preferred_username);
+    });
+}
+
+// loading examples and applications
+function loadApplication() {
+
+    $.getJSON(EXAMPLE_FILE, '',function (examples) {
+        $.getJSON(APPLICATIONS_FILE, '',function (apps) {
+            var data = [];
+            apps.forEach(element => {
                 data.push(element);
             });
-        }
-        applications = getApplicationList(data,[],[]);
-        // Set language
-        initI18next();
-        // Create content
-        loadContent();
-        // Init searchbar
-        initSearchbar();
+            if (dev) {
+                examples.forEach(element => {
+                    data.push(element);
+                });
+            }
+            applications = getApplicationList(data,[],[]);
+            // Set language
+            initI18next();
+            // Create content
+            loadContent();
+            // Init searchbar
+            initSearchbar();
+        });
     });
-});
-
+}
 // Init i18next
 function initI18next() {
     // use plugins and options as needed, for options, detail see
