@@ -10,7 +10,8 @@ const defaultThumbnail = "default.gif";
 const editorUrl = "editor-es5.html"
 const readUrl = "read-es5.html"
 
-const KC_URL = 'http://keycloak.gda.it:8888';
+
+const KC_URL = window.location.href.substring(0, window.location.href.indexOf(window.location.hostname) + window.location.hostname.length) + ':8888';
 const REALM = 'master';
 const CLIENT_ID = 'keycloak-planet-earth';
 
@@ -300,7 +301,7 @@ function hideInfo(i) {
 function initSearchbar() {
     // fill categories filter
     const categories = getAllCategories();
-    console.log(categories);
+    //console.log(categories);
     var categoryFilterPanel = "";
     categories.forEach(element => {
         categoryFilterPanel += 
