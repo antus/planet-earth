@@ -3,7 +3,7 @@
 <img src="//mars3d.cn/logo.png" width="300px" /> 
 </p> 
 
-<p align="center">Mars3D🌎 based on traditional JS technology stack Functional example</p> 
+<p align="center">Planet Earth 🌎 is based on traditional JS technology stack Functional example</p> 
 
 <p align="center"> 
   <a target="_black" href="https://www.npmjs.com/package/mars3d"> 
@@ -29,9 +29,8 @@ First of all, it is recommended that you study and browse the source code of our
 
 ## Project Introduction 
  
- This is a Mars3D function sample demonstration project developed based on `native JS`. 
+ This is a function sample demonstration project developed based on `native JS`. 
 
- > If you are not familiar with native JS, you can also read: [Functional Example Vue Version](http://mars3d.cn/dev/guide/project/example-vue.html), [Functional Example React Version](http:/ /mars3d.cn/dev/guide/project/example-react.html) 
 
 
 ## Project features 
@@ -47,19 +46,13 @@ It is recommended to watch the video explanation first and then practice it. You
 ## Download and run the project 
  
 ### Download code- 
-[Github](https://github.com/marsgis/mars3d-es5-example) 
+[Github](https://github.com/antus/planet-earth) 
 
 ``` 
-git clone git@github. com:marsgis/mars3d-es5-example.git 
+git clone git@github.com:antus/planet-earth.git 
 ``` 
 
-- [Gitee](https://gitee.com/marsgis/mars3d-es5-example): Domestic code cloud, faster download speed. 
-
-``` 
-git clone git@gitee.com:marsgis/mars3d-es5-example.git 
-``` 
-
-- If there is no git software locally, you can enter [https://github.com/marsgis/mars3d-es5-example] in the browser ](https://github.com/marsgis/mars3d-es5-example) address and download the zip package as shown below. 
+- If there is no git software locally, you can enter [https://github.com/antus/planet-earth] in the browser ](https://github.com/antus/planet-earth) address and download the zip package as shown below. 
 
  ![image](http://mars3d.cn/dev/img/guide/start-example-down.jpg) 
 
@@ -76,8 +69,29 @@ It is recommended to use the VScode tool to open the code directory (please refe
 If you only want to browse a single example, you can also refer to the figure below to access the page of the corresponding example through Live Server 
  ! [image](http://mars3d.cn/dev/img/guide/start-example-run.jpg) 
 
-  
-### Running mode 2: Run npm command 
+### Running method 2: use docker compose 
+ 
+It is recommended to use docker script in docker folder
+
+#### Set hest file 
+To make Keycloak work, you need to add the following line to your hosts file (/etc/hosts on Mac/Linux, c:\Windows\System32\Drivers\etc\hosts on Windows).
+``` 
+127.0.0.1	keycloak.gda.it
+``` 
+
+#### run docker compose
+``` 
+cd docker 
+docker-compose up -d
+```  
+
+#### stop/remove docker containers
+``` 
+cd docker 
+docker-compose down
+```  
+ 
+### Running mode 3: Run npm command 
 
 #### Install dependencies before running for the first time
 ``` 
