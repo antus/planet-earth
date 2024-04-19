@@ -61,6 +61,7 @@ function showWelcome() {
 
 // logout
 function logout() {
+    $(".wrapper").hide();
     keycloak.logout();
 }
 
@@ -92,6 +93,8 @@ function loadApplication() {
             loadContent();
             // Init searchbar
             initSearchbar();
+            // show wrapper
+            $(".wrapper").show();
         });
     });
 }
