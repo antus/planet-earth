@@ -1,5 +1,6 @@
 "use script"; 
-			
+
+const KEYCLOAK_FILE = "config/keycloak.json"; 
 const EXAMPLE_FILE = "config/example.json";
 const APPLICATIONS_FILE = "config/applications.json";
 const ALL_CATEGORIES = "all-categories";
@@ -10,11 +11,6 @@ const defaultThumbnail = "default.gif";
 const editorUrl = "editor-es5.html"
 const readUrl = "read-es5.html"
 
-
-const KC_URL = window.location.href.substring(0, window.location.href.indexOf(window.location.hostname) + window.location.hostname.length) + ':8888';
-const REALM = 'master';
-const CLIENT_ID = 'keycloak-planet-earth';
-
 var searchText = "";
 var selectAllCategories = true;
 var selectedCategories = [];
@@ -24,34 +20,37 @@ const dev = urlParams.get('dev')!=undefined
 
 // authentication
 window.onload =  async function () {
-    // initialize keycloak
-    window.keycloak = new Keycloak({
-        url: KC_URL,
-        realm: REALM,
-        clientId: CLIENT_ID
-    });
-    window.keycloak._login = window.keycloak.login;
-    window.keycloak.login = function (options) {
-        if (options) {
-            options.scope = "openid";
+    //load keycloak parameters
+    $.getJSON(KEYCLOAK_FILE, '',async function (kc) {
+        // initialize keycloak
+        window.keycloak = new Keycloak({
+            url: kc.url,
+            realm: kc.realm,
+            clientId: kc.clientId
+        });
+        window.keycloak._login = window.keycloak.login;
+        window.keycloak.login = function (options) {
+            if (options) {
+                options.scope = "openid";
+            }
+            return window.keycloak._login.apply(window.keycloak, [options]);
+        };
+        // check if the user is already authenticated
+        const authenticated = await keycloak.init({ 
+            onLoad: 'login-required', 
+            // onLoad: 'check-sso', 
+            checkLoginIframe: true, 
+            checkLoginIframeInterval: 1, 
+            pkceMethod: 'S256' 
+        })
+        if (authenticated) {
+            showUserInfo();
+            loadApplication();
+        } else {
+            showWelcome();
         }
-        return window.keycloak._login.apply(window.keycloak, [options]);
-    };
-    // check if the user is already authenticated
-    const authenticated = await keycloak.init({ 
-        onLoad: 'login-required', 
-        // onLoad: 'check-sso', 
-        checkLoginIframe: true, 
-        checkLoginIframeInterval: 1, 
-        pkceMethod: 'S256' 
-    })
-    if (authenticated) {
-        showUserInfo();
-        loadApplication();
-    } else {
-        showWelcome();
-    }
-    keycloak.onAuthLogout = showWelcome;
+        keycloak.onAuthLogout = showWelcome;
+    });
 }
 
 // show welcome message

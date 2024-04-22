@@ -58,9 +58,26 @@ git clone git@github.com:antus/planet-earth.git
 
   
 ### 
-Before running the operating environment, it is recommended to start from [http://mars3d.cn/download.html]( http://mars3d.cn/download.html) Download the latest mars3d class library and cover it to the `lib/` directory, and update mars3d to the latest version. 
+1. Before running the operating environment, it is recommended to start from [http://mars3d.cn/download.html]( http://mars3d.cn/download.html) Download the latest mars3d class library and cover it to the `lib/` directory, and update mars3d to the latest version. 
+2. Install docker 
+3. Run docker script for start up keyclok, postgis and nginx as described below
 
-### Running method 1: Use vscode and its plug-ins to 
+#### run docker compose
+``` 
+docker-compose up -d
+
+go to localhost:8180 and login as admin/admin
+
+if you want to change port mapping see docker-compose.yml and config/keyclock.jason files
+```  
+
+#### stop/remove docker containers
+``` 
+cd docker 
+docker-compose down
+```  
+
+### Development & Debug: Use vscode and its plug-ins to 
  
 directly run and browse `index under any development editor (such as vscode, etc.) or http server (such as node, nginx, tomcat, IIS, etc.).html` or corresponding example pages in the example directory. 
 
@@ -69,29 +86,7 @@ It is recommended to use the VScode tool to open the code directory (please refe
 If you only want to browse a single example, you can also refer to the figure below to access the page of the corresponding example through Live Server 
  ! [image](http://mars3d.cn/dev/img/guide/start-example-run.jpg) 
 
-### Running method 2: use docker compose 
- 
-It is recommended to use docker script in docker folder
-
-#### Set hest file 
-To make Keycloak work, you need to add the following line to your hosts file (/etc/hosts on Mac/Linux, c:\Windows\System32\Drivers\etc\hosts on Windows).
-``` 
-127.0.0.1	keycloak.gda.it
-``` 
-
-#### run docker compose
-``` 
-cd docker 
-docker-compose up -d
-```  
-
-#### stop/remove docker containers
-``` 
-cd docker 
-docker-compose down
-```  
- 
-### Running mode 3: Run npm command 
+### Run with npm command 
 
 #### Install dependencies before running for the first time
 ``` 
