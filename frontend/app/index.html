@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html lang="en">
+<html class="no-js css-menubar" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- Mobile device viewport -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+    <meta name="author" content="M.Antonini " />
+    <!-- 360 browser uses Webkit kernel by default -->
+    <meta name="renderer" content="webkit" />
+    <!-- Add desktop shortcut to Chrome browser (Android) -->
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Add Safari browser to home screen (IOS) -->
+    <link rel="icon" sizes="192x192" href="/img/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Mars Technology MarsGIS" />
+    <!-- Win8 title bar and ICON icon -->
+    <link rel="apple-touch-icon-precomposed" href="/img/favicon/apple-touch-icon.png" />
+    <meta name="msapplication-TileImage" content="/img/favicon/app-icon72x72@2x.png" />
+    <meta name="msapplication-TileColor" content="#62a8ea" />
+    <!-- Title and search keywords -->
+    <meta name="keywords" content="Mars Technology|Hefei Mars|Hefei Mars Technology|Hefei Mars Technology Co., Ltd.|leaflet|leaflet framework|leaflet development|cesium|cesium development|cesium framework|gis|marsgis|map offline|map development|map framework|map outsourcing" />
+    <meta name="description" content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming geographic information system Cloud GIS 3D GIS GIS platform WebGIS" />
+    <!-- title -->
+    <title>Planet Earth</title>
+    <!-- load scripts -->
+    <script
+      type="text/javascript"
+      src="./lib/include-lib.js?time=20220120"
+      include="jquery,i18next,bootstrap,flagIcons,font-awesome,font-awesome-free,adminlte31,layer,keycloak"
+      libpath="./lib/"
+    ></script>
+    <!-- main css-->
+    <link rel="stylesheet" href="css/examples.css?time=20220120" />
+  </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed control-sidebar-slide-open layout-footer-fixed text-sm dark-mode">
+    <!-- wrapper -->
+    <div class="wrapper" style="display: none">
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-dark" >
+        <!-- Left Navbar link -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="#" role="button" onClick="showDocumentation()">
+              <img src="img/users/mp-logo.png" data-i18n="[title]app.documentation" class="brand-image img-circle logo" >
+            </a>
+          </li>
+          <li class="nav-item">
+            <span class="application-count">
+              <span id="total-showcase" class="count">4</span>
+              <b class="d-none d-sm-inline-block application" data-i18n="app.applications"></b>
+            </span>
+          </li>
+        </ul>
+
+        <!-- searchbar -->
+        <ul class="navbar-nav searchbar">
+          <li class="nav-item searchbar-li">
+            <div class="form-inline">
+              <div class="input-group input-group-sm" style="width: 100%;">
+                <div class="input-group-prepend">
+                  <button id="categoriesButton" class="btn btn-navbar search-button" onclick="showHideCategoryFilterPanel()">
+                    <i id="category-filter-icon" class="fas fa-filter"></i>
+                  </button>
+                </div>
+                <input id="searchText" class="form-control form-control-navbar" type="search" data-i18n="[placeholder]app.search" autocomplete="off">
+                <div id="deleteSearchButton" class="delete-search-button"><i class="fa fa-remove"></i></div>
+                <div class="input-group-append">
+                  <button id="searchButton" class="btn btn-navbar search-button">
+                    <i class="fas fa-search fa-fw"></i>
+                  </button>
+                </div>
+                <!--list of search results-->
+                <div id="category-filter-panel" class="categories-panel" style="display: none">
+                  <div class="category-filter-all">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" checked class="custom-control-input category-all" id="customSwitch1" onclick="setAllCategories(this)">
+                      <label class="custom-control-label" for="customSwitch1">Tutte le categorie</label>
+                    </div>
+                  </div>
+                  <div id="categories-filter" class="category-filter">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input category-selection" id="customSwitch2" onclick="setCategory('Agricoltura', this)">
+                      <label class="custom-control-label" for="customSwitch2" >Agricoltura</label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input category-selection" id="customSwitch3" onclick="setCategory('Ambiente', this)">
+                      <label class="custom-control-label" for="customSwitch3" >Ambiente</label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input category-selection" id="customSwitch4" onclick="setCategory('Difesa e sicurezza', this)">
+                      <label class="custom-control-label" for="customSwitch4" >Difesa e sicurezza</label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input category-selection" id="customSwitch5" onclick="setCategory('Spazio', this)">
+                      <label class="custom-control-label" for="customSwitch5" >Spazio</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav switch-locale">
+          <!-- Autors -->
+          <li class="nav-item">
+            <a class="nav-link" href="#" role="button" onClick="showAuthors()" title="GIS & RS practice">
+              <i class="fas fa-sitemap full-screen"></i>
+            </a>
+          </li>
+          <!-- Language Menu -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="flag-icon flag-icon-selected " id="locale-flag" ></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right p-0">
+              <a href="#" data-locale="en" class="dropdown-item">
+                <i class="flag-icon flag-icon-gb mr-2"></i><span data-i18n="app.lang.english"></span>
+              </a>
+              <a href="#" data-locale="it" class="dropdown-item">
+                <i class="flag-icon flag-icon-it mr-2"></i><span data-i18n="app.lang.italian"></span>
+              </a>
+            </div>
+          </li>
+          <!-- User -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" style="border:1px solid #56606a">
+              <i class="fa fa-user" aria-hidden="true"></i><span id="username" style="padding-left: 10px;"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right p-0">
+              <a href="#" class="dropdown-item" onClick="logout()">
+                <i class="fa fa-sign-out-alt" aria-hidden="true"></i><span data-i18n="app.logout" style="padding-left: 10px;"></span>
+              </a>
+            </div>
+          </li>
+          <!-- Full screen -->
+          <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button" >
+              <i class="fas fa-expand-arrows-alt full-screen"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /Navbar -->
+
+      <!-- Content -->
+      <div id="content" class="content-wrapper os-viewport">
+      </div>
+      <!-- /Content -->
+
+    </div>
+
+    <!-- Planet Earth code-->
+  	<script src="js/examples.js"></script>
+    <script src="lib/admin-lte-31/js/adminlte.js"></script>
+  </body>
+</html>

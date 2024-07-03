@@ -52,5 +52,3 @@ package-lock.json
 
 # 本地测试
 *-test
-target
-node

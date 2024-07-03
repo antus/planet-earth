@@ -1,27 +1,9 @@
- 
-<p align="center"> 
-<img src="//mars3d.cn/logo.png" width="300px" /> 
-</p> 
-
-<p align="center">Planet Earth 🌎 is based on traditional JS technology stack Functional example</p> 
-
-<p align="center"> 
-  <a target="_black" href="https://www.npmjs.com/package/mars3d"> 
-    <img alt="Npm version" src=" https://img.shields.io/npm/v/mars3d.svg?style=flat&logo=npm&label=version number" /> 
-  </a> 
-  <a target="_black" href="https://www.npmjs .com/package/mars3d"> 
-    <img alt="Npm downloads" src="https://img.shields.io/npm/dt/mars3d?style=flat&logo=npm&label=Downloads" /> 
-  </a> 
-  <a target="_black" href="https://github.com/marsgis/mars3d"> 
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/marsgis/ mars3d?style=flat&logo=github" /> 
-  </a> 
-  <a target="_black" href="https://gitee.com/marsgis/mars3d"> 
-    <img src="https://gitee.com/ marsgis/mars3d/badge/star.svg?theme=dark" alt="star" /> 
-  </a> 
-</p> 
 
 
-Functional sample project is based on [Mars3D platform](http://mars3d.cn) A system that displays a single page for each individual function and supports the modification and editing of code for real-time operation. 
+# <p align="center">🌎 Planet Earth</p> 
+
+
+Functional sample project based on [Mars3D](http://mars3d.cn) and [Quarkus](https://quarkus.io/). A system that displays a single page for each individual function and supports the modification and editing of code for real-time operation. 
 It is mainly used for developers to learn and understand the use of each function of Mars3D, and for business personnel to understand and experience the function points of Mars3D. 
 
 First of all, it is recommended that you study and browse the source code of our functional examples (there will be a lot of comments in the source code). When reading the source code, you can combine it with the API documentation to understand the functions and parameter descriptions of classes and methods. 
@@ -29,7 +11,7 @@ First of all, it is recommended that you study and browse the source code of our
 
 ## Project Introduction 
  
- This is a function sample demonstration project developed based on `native JS`. 
+This is a function sample demonstration project developed based on `native JS`. 
 
 
 
@@ -38,100 +20,172 @@ First of all, it is recommended that you study and browse the source code of our
 - **Suitable for different technology stacks**: Native JS development, suitable for users of different technology stacks to understand 
 
 
-## 
-It is recommended to watch the video explanation first and then practice it. You can [view the high-definition video on the new page](https://www .bilibili.com/video/BV1Hg411o7Js/) 
-
-
-
 ## Download and run the project 
- 
-### Download code- 
-[Github](https://github.com/antus/planet-earth) 
+
+### 1. Requirements
+
+To compile and run this demo you will need:
+- Docker
+- Node
+- JDK 17+
+- GraalVM (for native image)
+
+Configuring GraalVM and JDK 17+ (for native image)
+ - Make sure that both the `GRAALVM_HOME` and `JAVA_HOME` environment variables have been set, and that a JDK 11+ `java` command is on the path.
+
+ - See the [Building a Native Executable guide](https://quarkus.io/guides/building-native-image-guide) for help setting up your environment.
+
+### 2. Download code
+Download source code from git repository 
 
 ``` 
 git clone git@github.com:antus/planet-earth.git 
 ``` 
 
-- If there is no git software locally, you can enter [https://github.com/antus/planet-earth] in the browser ](https://github.com/antus/planet-earth) address and download the zip package as shown below. 
+- If there is no git software locally, you can enter [https://github.com/antus/planet-earth](https://github.com/antus/planet-earth) address  in the browser and download the zip package as shown below. 
 
- ![image](http://mars3d.cn/dev/img/guide/start-example-down.jpg) 
-
-  
-### 
-1. Before running the operating environment, it is recommended to start from [http://mars3d.cn/download.html]( http://mars3d.cn/download.html) Download the latest mars3d class library and cover it to the `lib/` directory, and update mars3d to the latest version. 
-2. Install docker 
-3. Run docker script for start up keyclok, postgis and nginx as described below
-
-#### run docker compose
+### 3. Run docker compose
 ``` 
+cd scripts
 docker-compose up -d
 
-go to localhost:8180 and login as admin/admin
-
-if you want to change port mapping see docker-compose.yml and config/keyclock.jason files
-```  
-
-#### stop/remove docker containers
-``` 
-cd docker 
+To stop/remove docker containers
 docker-compose down
 ```  
 
-### Development & Debug: Use vscode and its plug-ins to 
- 
-directly run and browse `index under any development editor (such as vscode, etc.) or http server (such as node, nginx, tomcat, IIS, etc.).html` or corresponding example pages in the example directory. 
+go to localhost:8180 and login as admin/admin
 
-It is recommended to use the VScode tool to open the code directory (please refer to the [Development Environment Setup Tutorial] (/guide/start/env.html) to install the VScode and Live Server plug-ins) and run the index.html page. 
- 
-If you only want to browse a single example, you can also refer to the figure below to access the page of the corresponding example through Live Server 
- ! [image](http://mars3d.cn/dev/img/guide/start-example-run.jpg) 
+### 4. Development & Debug
 
-### Run with npm command 
-
-#### Install dependencies before running for the first time
+#### Start the backend
 ``` 
+cd backend
+``` 
+Start backend in the development mode with live reload
+``` 
+mvn quarkus:dev 
+``` 
+#### Start the frontend
+``` 
+cd frontend/app
+```
+For the first time, install dependencies
+```
 npm install 
+```
+Start frontend in the development mode with live reload 
+```
+npm run start
+```
+Navigate to:
 
-//or use proxy 
-npm i --registry=http://registry.taobao.org 
+<http://localhost:3000>
+
+Have fun, and join the team of contributors! 
+
+
+### 5. Testing
+You can all the tests via the command ```mvn clean verify``` (and you will notice that the two tests are ran at different times).
+
+It will generate three separate reports:
+* a consolidated report that will show the coverage of all your tests combined in  ```target/jacoco-report```
+
+### 6. Code quality
+
+Sonar is used to analyse code quality. You can start a local Sonar server (accessible on http://localhost:9001) with:
+
+```
+docker-compose -f src/main/docker/sonar.yml up -d
+```
+
+Note: we have turned off authentication in [src/main/docker/sonar.yml](src/main/docker/sonar.yml) for out of the box experience while trying out SonarQube, for real use cases turn it back on.
+
+You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the maven plugin.
+
+Then, run a Sonar analysis:
+
+```
+./mvnw clean verify sonar:sonar
+```
+
+If you need to re-run the Sonar phase, please be sure to specify at least the `initialize` phase since Sonar properties are loaded from the sonar-project.properties file.
+
+```
+./mvnw initialize sonar:sonar
+```
+
+For more information, refer to the [Code quality page][].
+
+
+### 7. Packaging
+When you're done iterating in developer mode, you can run the application as a
+conventional jar file.
+
+First compile it:
 ``` 
+mvn package
+```  
 
-#### Start the development environment 
+### 8. Run distribution version
+Run the application typing the following command
 ``` 
-npm run serve 
-``` 
+java -jar distribution/target/planet-earth-distribution-1.0.0-SNAPSHOT-runner.jar
+```   
 
-#### Compile and build 
-``` npm run build //After compilation, 
-it 
-is generated in the dist directory, copy it and publish it 
-npm run serve:dist //Test the dist running status 
+### 9. Run Quarkus as a native application
 
-// Or publish the dist folder on your own service data``` 
-## 
+You can also create a native executable from this application without making any
+source code changes. A native executable removes the dependency on the JVM:
+everything needed to run the application on the target platform is included in
+the executable, allowing the application to run with minimal resource overhead.
 
- # Running effect   
- [online experience](http://mars3d.cn/example.html?type=es5) 
+Compiling a native executable takes a bit longer, as GraalVM performs additional
+steps to remove unnecessary codepaths. Use the  `native` profile to compile a
+native executable:
 
- ![image](http://mars3d.cn/dev/img/guide/start-example-es5.jpg ) 
- 
+> ./mvnw package -Dnative
 
+After getting a cup of coffee, you'll be able to run this binary directly:
 
-## How to report a problem? 
-- Discover the problems you find in the project or areas that need optimization; 
-- If you have some newly written examples, you hope to open source them and share them with everyone. 
+> ./distribution/target/<application-name>-1.0.0-SNAPSHOT-runner
 
-Submission method: 
-- Welcome to [Submit PR] on github or gitee (https://www.baidu.com/s?wd= Submit PR on GitHub) 
-- If you are not familiar with git, you can also organize the sample code and send it to wh@marsgis.cn We will organize and integrate it. 
+    Please brace yourself: don't choke on that fresh cup of coffee you just got.
+    
+    Now observe the time it took to boot, and remember: that time was mostly spent to generate the tables in your database and import the initial data.
+    
+    Next, maybe you're ready to measure how much memory this service is consuming.
+
+N.B. This implies all dependencies have been compiled to native;
+that's a whole lot of stuff: from the bytecode enhancements that Panache
+applies to your entities, to the lower level essential components such as the PostgreSQL JDBC driver, the Undertow webserver.
+
+## See the demo in your browser
+
+Navigate to:
+
+<http://localhost:8080>
+
+Have fun, and join the team of contributors!
+
 
 
 ## Project structure 
 
-
 ### Main directory description 
+For the multi-module approach, we need to create a Maven project with three sub-modules. The basic structure of our project would look like this:
+<p> 
+    <img src="img/project_structure.png"/> 
+</p> 
+
+The three sub-modules have the following responsibilities:
+
+- frontend: The app/ directory of this module contains the frontend sources under src/, the npm build system to process these sources and the generated production build result in public/ (the name of this directory depends on the web framework). (It would also be possible to omit the app directory and put everything directly into the frontend/ directory. However, this way we have a clear separation between the Maven and npm build system).
+- backend: This module is like a classic Quarkus project. Here we find the Java sources for the backend and define all the needed Quarkus extensions.
+- distribution: Through this module, the frontend and backend get merged. The result is one JAR that contains both the backend classes and the distributable frontend files (and optionally all Quarkus dependencies as a so-called “uber JAR”).
+
+### Frontend
 ``` 
-mars3d-es5-example 
+frontend/app 
 │───config list configuration information and screenshots 
 │───example sample code, each example page can be run independently [Important] 
 │─── css Public CSS style file 
@@ -199,19 +253,5 @@ Copy `example\00_model.html` file and then rename it and modify the code.
 - Modify the config. In the `basemaps` array configuration in json, change the existing `"show": true` layer to `"show": false`, and add `"show to the single picture or offline map ": true`, and modify the relevant URL address. 
 - You can also refer to the tutorial [Publish 3D Data Service] (/guide/data/server.html) to deploy offline map services, which also contains some sample offline data. 
 
+``` 
 
-
-## What is Mars3D 
-> `Mars3D Platform` is a 3D client development platform based on WebGL technology developed by [Mars Technology](http://marsgis.cn/), based on [Cesium](https://cesium .com/cesiumjs/) optimization and B/S architecture design, a lightweight and high-performance GIS development platform that supports multi-industry expansion, can run efficiently in the browser without installation and plug-ins, and can be quickly accessed and used. A variety of GIS data and three-dimensional models present the visualization of three-dimensional space, completing the flexible application of the platform in different industries. 
-
- > The Mars3D platform can be used to build plug-in-free, cross-operating system, and cross-browser 3D GIS applications. The platform uses WebGL for hardware-accelerated graphics, cross-platform and cross-browser to achieve truly dynamic big data three-dimensional visualization. Mars3D products can quickly realize beautiful and smooth 3D map presentation and spatial analysis on browsers and mobile terminals. 
-
-### Related websites 
-- Mars3D official website: [http://mars3d.cn](http://mars3d.cn)   
-
-- Mars3D open source project list: [https://github.com/marsgis/mars3d](https:/ /github.com/marsgis/mars3d) 
-
-
-## Copyright statement 
-1. The Mars3D platform is independently developed by [Mars Technology] (http://marsgis.cn/) and owns all rights. 
-2. Any individual or organization can use it for free and without restriction, subject to complying with relevant requirements.
