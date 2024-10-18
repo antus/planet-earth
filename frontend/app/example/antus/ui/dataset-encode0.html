@@ -1,0 +1,97 @@
+<!--
+	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/en/editor.html?c=dataset-encode0&theme=dark&code=PYBwLglsB2AEC8sDeAoWsAmBDMWDOApmAFzJrqx7ACuATgMYGkDa5FszA5HvcLQZwA0sTlgC2NaGCEiQtYBmr1pAXUFsKzABwBOAHQBmYQFYtAJgCMZ4ZwCyOegAsssADI4wAtRvTNjAdj0LYX9zYwAWG1sIABsAa1gAFQIsTm92X39wvUjYcIsABgNrEQBhRwICQlhS4F5U9Iy_AqDhK39jYxtyyuqAIXkAd2gIL3UMjl09f2EzAotwrpF7MCcXWvq08aaANi1W2H8dBZ2bZIbt9mYLfVPYY61jEs4AeVosaABzAlgAKWoIIwtj4OIU9HdChZHs9XAQJHB_oCxiDmMVprN5lYbAB1LAxaDUMCwAbAYajNIaFTkAC-20-tAgGFISFgvCkWAg0HcACMCDFSGBaNQfrTyAAPACCYogeGZsGg4iYInEkmksFF6AAnlKZXKwJqQErOPQcARPnxNZx1dsAG4y6h4-wgZkaPijKSkTiON0ALxguBiQg0MQIADMSCJGFICLQg-wxJzSIVLrAxFgxUmCgUU54xRGuAAJCCfRywADKvH4Mk4rlJ5cryPYAHom7AnbAwBVKA3WcAYtQxHAwMBezE-BoMBAxARoHgoNBSNmNJyAEofb4uia8Me0FicADEO2MBWPFmr-4AYhfSgBRAzhc9Xgo7AoXinsak07aEBlVFgaVAJn1Q1PW5LBYxTdAZ14DAlUAiZYBbNssBADsuwAIhVagpHQ0cByHEcAA1YHTGU9BBdAM2VCRsOkSCKCQ9tOx-dC5AUJQwFw7d8I7EcAE0SOlPAKNgTVPTYxRlE4EFPw_cgqWpABuIA
+	⚠ Please be aware that this chart is not an official demo of Apache ECharts but is made by user-generated code.
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+  
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+  
+  <!-- Uncomment this line if you want to dataTool extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/extension/dataTool.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use gl extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-stat extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-graph-modularity extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-graph-modularity@2/dist/echarts-graph-modularity.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use map
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
+  -->
+  <!-- Uncomment these two lines if you want to use bmap extension
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/extension/bmap.min.js"></script>
+  -->
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, 'dark', {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    option = {
+	backgroundColor: '#222222',
+  dataset: {
+    source: [
+      ['score', 'amount', 'product'],
+      [89.3, 58212, 'Matcha Latte'],
+      [57.1, 78254, 'Milk Tea'],
+      [74.4, 41032, 'Cheese Cocoa'],
+      [50.1, 12755, 'Cheese Brownie'],
+      [89.7, 20145, 'Matcha Cocoa'],
+      [68.1, 79146, 'Tea'],
+      [19.6, 91852, 'Orange Juice'],
+      [10.6, 101852, 'Lemon Juice'],
+      [32.7, 20112, 'Walnut Brownie']
+    ]
+  },
+  grid: { containLabel: true },
+  xAxis: { name: 'amount' },
+  yAxis: { type: 'category' },
+  visualMap: {
+    orient: 'horizontal',
+    left: 'center',
+    min: 10,
+    max: 100,
+    text: ['High Score', 'Low Score'],
+    // Map the score column to color
+    dimension: 0,
+    inRange: {
+      color: ['#650501', '#FFCE34', '#FF060F']
+    }
+  },
+  series: [
+    {
+      type: 'bar',
+      encode: {
+        // Map the "amount" column to X axis.
+        x: 'amount',
+        // Map the "product" column to Y axis
+        y: 'product'
+      }
+    }
+  ]
+};
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>

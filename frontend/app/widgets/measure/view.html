@@ -1,0 +1,89 @@
+﻿<html class="no-js css-menubar" lang="en">
+   <head>
+      <title>Pop-up page</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+      <meta name="author" content="火星科技 http://mars3d.cn ">
+      <meta name="renderer" content="webkit">
+      <link rel="icon" type="image/png" href="../../img/favicon/favicon.png">
+      <meta name="mobile-web-app-capable" content="yes">
+      <link rel="icon" sizes="192x192" href="img/favicon/apple-touch-icon.png">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="apple-mobile-web-app-title" content="火星科技MarsGIS">
+      <link rel="apple-touch-icon-precomposed" href="../../img/favicon/apple-touch-icon.png">
+      <meta name="msapplication-TileImage" content="../../img/favicon/app-icon72x72@2x.png">
+      <meta name="msapplication-TileColor" content="#62a8ea">
+      <script src="../../lib/include-lib.js?time=20210803" libpath="../../lib/" include="jquery,font-awesome,bootstrap,bootstrap-checkbox,admui-frame"></script><script type="text/javascript" src="//mars3d.cn/lib/jquery/jquery-2.1.4.min.js"></script>
+      <link rel="stylesheet" href="//mars3d.cn/lib/fonts/font-awesome/css/font-awesome.min.css">
+      <link rel="stylesheet" href="//mars3d.cn/lib/bootstrap/bootstrap.css">
+      <script type="text/javascript" src="//mars3d.cn/lib/bootstrap/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="//mars3d.cn/lib/bootstrap/bootstrap-checkbox/awesome-bootstrap-checkbox.css">
+      <link rel="stylesheet" href="//mars3d.cn/lib/admui/css/site.css">
+      <script type="text/javascript" src="//mars3d.cn/lib/admui/js/app.js"></script>
+      <link href="../../css/widget-win.css" rel="stylesheet">
+      <style>.btn_none{background:0 0;color:#fff}.btn-group{display:flex;align-items:flex-start;flex-wrap:wrap;padding-left:20px}.tool-btn{cursor:pointer;user-select:none;min-width:62px;height:96px;box-sizing:border-box;margin:0 30px 10px 0;text-align:center;padding-top:12px}.tool-thum{transition:all .2s ease;width:50px;height:50px;margin:0 auto;border-radius:50%;margin-bottom:10px;background:#fd960f;cursor:pointer}.tool-thum img{width:24px;height:24px;margin:13px}</style>
+   </head>
+   <body style="padding:5px;text-align:center" title="Tip: Click the button to activate the corresponding function, click to start on the map, click to add points during drawing, and double click to end." class="dark">
+      <div class="btn-group">
+         <div id="btn_measure_length" class="tool-btn">
+            <div class="tool-thum" style="background:#dd751b"><img src="image/measure-length.svg" title="Spatial distance"></div>
+            <span class="btn_none">Distance</span>
+         </div>
+         <div id="btn_measure_length_td" class="tool-btn">
+            <div class="tool-thum" style="background:#c092fe"><img src="image/measure-length2.svg" title="Ground distance"></div>
+            <span class="btn_none">Ground D</span>
+         </div>
+         <div id="btn_measure_section" class="tool-btn">
+            <div class="tool-thum" style="background:#88b8ff"><img src="image/measure-section.svg" title="Terrain Profile"></div>
+            <span class="btn_none">Profile</span>
+         </div>
+         <div id="btn_measure_area" class="tool-btn">
+            <div class="tool-thum" style="background:#3de3f4"><img src="image/measure-area.svg" title="Area"></div>
+            <span class="btn_none">Area</span>
+         </div>
+         <div id="btn_measure_area_td" class="tool-btn">
+            <div class="tool-thum" style="background:#c092fe"><img src="image/measure-area.svg" title="Ground Area"></div>
+            <span class="btn_none">Ground A</span>
+         </div>
+         <div id="btn_measure_angle" class="tool-btn">
+            <div class="tool-thum" style="background:#95d333"><img src="image/measure-angle.svg" title="Angle"></div>
+            <span class="btn_none">Angle</span>
+         </div>
+         <div id="btn_measure_height" class="tool-btn">
+            <div class="tool-thum" style="background:#55d5a0"><img src="image/measure-height.svg" title="Height difference"></div>
+            <span class="btn_none">Height</span>
+         </div>
+         <div id="btn_measure_supHeight" class="tool-btn">
+            <div class="tool-thum" style="background:#37bc41"><img src="image/measure-height-sup.svg" title="Triangulation"></div>
+            <span class="btn_none">Triangul.</span>
+         </div>
+         <div id="btn_measure_point" class="tool-btn">
+            <div class="tool-thum" style="background:#babc31"><img src="image/measure-coor.svg" title="Coordinate measurement"></div>
+            <span class="btn_none">Coord</span>
+         </div>
+      </div>
+      <div class="checkbox checkbox-primary checkbox-inline"><input id="chk_onlyPickModelPosition" class="styled" type="checkbox"> <label for="chk_onlyPickModelPosition">Measure model only</label></div>
+      <div id="measure_danwei" style="margin-top:5px">
+         <span style="font-size:14px;padding-right:10px">unit</span> 
+         <select id="measure_length_danwei" class="form-control" style="width:190px!important">
+            <option value="auto">auto</option>
+            <option value="m">m</option>
+            <option value="km">km</option>
+            <option value="mile">mile</option>
+            <option value="zhang">zhang</option>
+         </select>
+         <select id="measure_area_danwei" class="form-control" style="width:190px!important;display:none">
+            <option value="auto">auto</option>
+            <option value="m">square meter</option>
+            <option value="km">square kilometers</option>
+            <option value="mu">mu</option>
+            <option value="ha">ha</option>
+         </select>
+      </div>
+      <div style="margin-top:5px"><span id="lbl_measure_result" style="font-size:16px"></span></div>
+      <div><button id="btn_measure_clear" type="button" class="btn" style="background:#07f;color:#fff;margin-top:15px;border-radius:15px;padding-left:30px;padding-right:30px">Clear measurement data</button></div>
+      <script src="view.js?time=20210803"></script>
+   </body>
+</html>

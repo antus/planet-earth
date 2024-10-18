@@ -1,0 +1,222 @@
+:root,
+:root.light {
+  --bg-color: #fff;
+  --text-color: #123;
+  --box-shadow: rgba(0, 0, 0, 0.18) 0px 0px 1px 0px, rgba(0, 0, 0, 0.1) 0px 3px 8px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px;
+  --left-arrow-bg-color: linear-gradient(90deg, #fff 70%, transparent);
+  --right-arrow-bg-color: linear-gradient(-90deg, #fff 70%, transparent);
+  --button-text-color: #123;
+  --font-family: 'Fredoka One', cursive;
+  --button-bg-color: #efedfb;
+}
+
+:root.dark {
+  --bg-color: #121212;
+  --text-color: white;
+  --box-shadow: rgba(255, 255, 255, 0.18) 0px 0px 1px 0px, rgba(255, 255, 255, 0.1) 0px 3px 8px 0px, rgba(255, 255, 255, 0.1) 0px 1px 3px 0px;
+  --left-arrow-bg-color: linear-gradient(90deg, #000000 70%, transparent);
+  --right-arrow-bg-color: linear-gradient(-90deg, #000000 70%, transparent);
+  --button-text-color: #123;
+  --font-family: 'Alfa Slab One', cursive;
+  --button-bg-color: #555;
+}
+
+
+*{
+  margin: 0;
+  padding:0;
+  color: var(--text-color);
+  font-family: var(--font-family);
+}
+
+body{
+  display: flex;
+  padding: 0;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: var(--bg-color);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2.5rem 0;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  font-weight: normal;
+}
+
+.toggle-container {
+  position: relative;
+}
+
+.theme-btn {
+  width: 6em;
+  height: 6em;
+  padding: 0.5em;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
+.theme-btn img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.theme-btn.light {
+  display: none;
+}
+
+.dark .theme-btn.dark {
+  display: none;
+}
+
+.dark .theme-btn.light {
+  display: block;
+}
+
+
+
+
+.wrapper{
+  display: flex;
+  padding: 4px;
+  overflow-x: hidden;
+  position: absolute;
+  bottom:25px;
+  max-width: calc( 100% - 50px);
+  background: var(--bg-color);
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  box-sizing: border-box;
+  z-index:10;
+}
+.wrapper .icon{
+  top: 0;
+  height: 100%;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+
+
+}
+.icon:first-child{
+  left: 5px;
+  display: none;
+  background: var(--left-arrow-bg-color);
+}
+.icon:last-child{
+  right: 5px;
+  justify-content: flex-end;
+  background: var(--right-arrow-bg-color);
+}
+.icon i{
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  color: #575757;
+  font-size: 14px;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 50%;
+}
+.icon i:hover{
+  background: #efedfa;
+  color: var(--text-color);
+}
+.icon:first-child i{
+  margin-left: 0px;
+}
+.icon:last-child i{
+  margin-right: 0px;
+}
+.wrapper .options{
+  gap: 4px;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  list-style: none;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+.options.dragging{
+  cursor: grab;
+  scroll-behavior: auto;
+}
+.options.dragging .option{
+  user-select: none;
+  pointer-events: none;
+}
+.options .option{
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  border-radius: 5px;
+  color: var(--text-color);
+  //border: 1px solid #D8D5F2;
+  //background: #F5F4FD;
+}
+.options .option:hover{
+  background: var(--button-bg-color);
+  color: var(--button-text-color);
+}
+.options .option.active{
+  color: #fff;
+  background: #5372F0;
+  border-color: transparent;
+}
+
+.tooltip {
+  position: fixed;
+	padding:30px;
+	top:50px;
+}
+
+.panel {
+  position: absolute;
+  width: 326px !important;
+  bottom: 0px;
+  height: -1px;
+  border-radius:5px;
+  //border: 1px solid #eee;
+  background-color: --bg-color;
+  transition: .4s;
+
+}
+
+.panel-show {
+    //animation: slide-up 500ms;
+    //animation-timing-function: linear;
+    height: 300px;
+    bottom: 50px;
+}
+
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0%);
+    }
+  }
+

@@ -208,7 +208,8 @@ window.configLibs = {
   'bootstrap-table': [
     "bootstrap/bootstrap-table/bootstrap-table.css",
     "bootstrap/bootstrap-table/bootstrap-table.min.js",
-    "bootstrap/bootstrap-table/locale/bootstrap-table-zh-CN.js"
+    "bootstrap/bootstrap-table/locale/bootstrap-table-zh-CN.js",
+    "bootstrap/bootstrap-table/locale/bootstrap-table-it-IT.js"
   ],
   'bootstrap-select': [
     "bootstrap/bootstrap-select/bootstrap-select.css",
@@ -267,6 +268,9 @@ window.configLibs = {
   'font-awesome-free': [
 	  "fonts/font-awesome-free/css/all.min.css"
   ],
+  'font-awesome-6.2.0': [
+    "fonts/font-awesome-6.2.0/all.min.css"
+  ],
   'font-marsgis': [
     "fonts/marsgis/iconfont.css",
   ],
@@ -281,6 +285,20 @@ window.configLibs = {
   'localforage': [
     "localforage/localforage.min.js"
   ],
+  "winbox": [
+    "winbox/winbox.min.js",
+    "winbox/winbox.min.css"
+  ],
+  "goldenlayout": [
+	  "goldenlayout-1.5.9/goldenlayout.min.js",
+    "goldenlayout-1.5.9/goldenlayout-base.css",
+	  "goldenlayout-1.5.9/goldenlayout-dark-theme.css"
+  ],
+  "jsgrid": [
+    "jsgrid/jsgrid.min.js",		
+    "jsgrid/jsgrid.min.css",
+    "jsgrid/jsgrid-theme.min.css" 
+  ]
 }
 
 //本地测试  localStorage.setItem("muyao-debugger",1)

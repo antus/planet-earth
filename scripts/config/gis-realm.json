@@ -62,6 +62,14 @@
         "attributes": {}
       },
       {
+        "id": "1c3de0ed-5afb-4b73-b2bb-7ab7e4285a72",
+        "name": "confidential",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "0395efe3-db9a-4daa-ab6a-d374f16216c7",
+        "attributes": {}
+      },
+      {
         "id": "ea359555-0e61-4f96-a8de-f1091e6d39ac",
         "name": "offline_access",
         "description": "${role_offline-access}",
@@ -72,7 +80,7 @@
       },
       {
         "id": "8dd738a8-fde2-4867-b0b3-24ccaa320b6d",
-        "name": "default-roles-quarkus",
+        "name": "default-roles-gis",
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
@@ -102,6 +110,26 @@
       }
     ],
     "client": {
+      "geoserver": [
+        {
+          "id": "b8f36734-34d0-4618-bd07-cc191719b33c",
+          "name": "AUTHENTICATED",
+          "description": "",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "5bc18234-dcce-4bfa-92e8-5ec2437cd651",
+          "attributes": {}
+        },
+        {
+          "id": "bd3bcb69-aa99-47b4-bd00-95f12256c003",
+          "name": "ADMIN",
+          "description": "",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "5bc18234-dcce-4bfa-92e8-5ec2437cd651",
+          "attributes": {}
+        }
+      ],
       "realm-management": [
         {
           "id": "f832cbf4-8028-4596-8282-89e8f8316473",
@@ -317,7 +345,16 @@
       "security-admin-console": [],
       "admin-cli": [],
       "account-console": [],
-      "backend-service": [],
+      "backend-service": [
+        {
+          "id": "793991b9-b249-4c1d-8a08-959f949c6f88",
+          "name": "uma_protection",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "a1931342-3ff8-4de2-b29b-60bb3523958b",
+          "attributes": {}
+        }
+      ],
       "broker": [
         {
           "id": "d0536a0c-3c9a-4cd9-8e16-cfa49c873224",
@@ -432,7 +469,7 @@
   "groups": [],
   "defaultRole": {
     "id": "8dd738a8-fde2-4867-b0b3-24ccaa320b6d",
-    "name": "default-roles-quarkus",
+    "name": "default-roles-gis",
     "description": "${role_default-roles}",
     "composite": true,
     "clientRole": false,
@@ -480,6 +517,24 @@
   "webAuthnPolicyPasswordlessAvoidSameAuthenticatorRegister": false,
   "webAuthnPolicyPasswordlessAcceptableAaguids": [],
   "webAuthnPolicyPasswordlessExtraOrigins": [],
+  "users": [
+    {
+      "id": "56304658-0b00-4da9-a6fd-65ede4811398",
+      "createdTimestamp": 1720170224680,
+      "username": "service-account-geoserver",
+      "enabled": true,
+      "totp": false,
+      "emailVerified": false,
+      "serviceAccountClientId": "geoserver",
+      "disableableCredentialTypes": [],
+      "requiredActions": [],
+      "realmRoles": [
+        "default-roles-gis"
+      ],
+      "notBefore": 0,
+      "groups": []
+    }
+  ],
   "scopeMappings": [
     {
       "clientScope": "offline_access",
@@ -505,13 +560,13 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/quarkus/account/",
+      "baseUrl": "/realms/gis/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/quarkus/account/*"
+        "/realms/gis/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -549,13 +604,13 @@
       "clientId": "account-console",
       "name": "${client_account-console}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/quarkus/account/",
+      "baseUrl": "/realms/gis/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/realms/quarkus/account/*"
+        "/realms/gis/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -794,6 +849,107 @@
       ]
     },
     {
+      "id": "5bc18234-dcce-4bfa-92e8-5ec2437cd651",
+      "clientId": "geoserver",
+      "name": "",
+      "description": "",
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "**********",
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "oidc.ciba.grant.enabled": "false",
+        "client.secret.creation.time": "1720170224",
+        "backchannel.logout.session.required": "true",
+        "display.on.consent.screen": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "protocolMappers": [
+        {
+          "id": "87aa49cf-ef51-4cb8-8858-68a2dc456a0d",
+          "name": "Client ID",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "client_id",
+            "introspection.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "client_id",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "6cbb2d9d-b07e-4bea-8084-76454f1fc583",
+          "name": "Client IP Address",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "clientAddress",
+            "introspection.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "clientAddress",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "id": "40f57b14-f039-4d14-8676-20815b85b1d1",
+          "name": "Client Host",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "clientHost",
+            "introspection.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "clientHost",
+            "jsonType.label": "String"
+          }
+        }
+      ],
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
       "id": "8b32e08f-2632-4f98-a895-ce13bcd25da3",
       "clientId": "realm-management",
       "name": "${client_realm-management}",
@@ -838,13 +994,13 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/quarkus/console/",
+      "baseUrl": "/admin/gis/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "redirectUris": [
-        "/admin/quarkus/console/*"
+        "/admin/gis/console/*"
       ],
       "webOrigins": [
         "+"
@@ -1467,13 +1623,13 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "oidc-usermodel-attribute-mapper",
-            "oidc-usermodel-property-mapper",
+            "saml-user-property-mapper",
             "oidc-full-name-mapper",
             "oidc-address-mapper",
-            "saml-user-property-mapper",
-            "oidc-sha256-pairwise-sub-mapper",
             "saml-user-attribute-mapper",
+            "oidc-usermodel-attribute-mapper",
+            "oidc-sha256-pairwise-sub-mapper",
+            "oidc-usermodel-property-mapper",
             "saml-role-list-mapper"
           ]
         }
@@ -1506,14 +1662,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "oidc-address-mapper",
+            "oidc-full-name-mapper",
+            "oidc-usermodel-attribute-mapper",
             "oidc-sha256-pairwise-sub-mapper",
             "saml-user-property-mapper",
-            "oidc-usermodel-attribute-mapper",
             "saml-role-list-mapper",
-            "oidc-full-name-mapper",
+            "saml-user-attribute-mapper",
             "oidc-usermodel-property-mapper",
-            "saml-user-attribute-mapper"
+            "oidc-address-mapper"
           ]
         }
       },
@@ -2237,7 +2393,7 @@
     "cibaInterval": "5",
     "realmReusableOtpCode": "false"
   },
-  "keycloakVersion": "23.0.7",
+  "keycloakVersion": "23.0.4",
   "userManagedAccessAllowed": false,
   "clientProfiles": {
     "profiles": []
@@ -2250,7 +2406,8 @@
     "username" : "admin",
     "enabled" : true,
     "totp" : false,
-    "emailVerified" : false,
+	"email": "admin@admin.com",
+    "emailVerified" : true,
     "credentials" : [ {
       "type" : "password",
       "hashedSaltedValue" : "NICTtwsvSxJ5hL8hLAuleDUv9jwZcuXgxviMXvR++cciyPtiIEStEaJUyfA9DOir59awjPrHOumsclPVjNBplA==",
@@ -2265,7 +2422,7 @@
     } ],
     "disableableCredentialTypes" : [ "password" ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "admin", "user" ],
+    "realmRoles" : [ "admin", "user", "default-roles-gis", "AUTHENTICATED" ],
     "notBefore" : 0,
     "groups" : [ ]
   }, {
@@ -2273,7 +2430,8 @@
     "username" : "alice",
     "enabled" : true,
     "totp" : false,
-    "emailVerified" : false,
+	"email": "alice@alice.com",
+    "emailVerified" : true,
     "credentials" : [ {
       "type" : "password",
       "hashedSaltedValue" : "A3okqV2T/ybXTVEgKfosoSjP8Yc9IZbFP/SY4cEd6hag7TABQrQ6nUSuwagGt96l8cw1DTijO75PqX6uiTXMzw==",
@@ -2288,7 +2446,7 @@
     } ],
     "disableableCredentialTypes" : [ "password" ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "user" ],
+    "realmRoles" : [ "user", "default-roles-gis", "AUTHENTICATED" ],
     "notBefore" : 0,
     "groups" : [ ]
   }, {

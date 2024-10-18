@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+  <head>
+    <title>弹窗子页面</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- 移动设备 viewport -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit" />
+    <!-- Chrome浏览器添加桌面快捷方式（安卓） -->
+    <link rel="icon" type="image/png" href="../../img/favicon/favicon.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Safari浏览器添加到主屏幕（IOS） -->
+    <link rel="icon" sizes="192x192" href="img/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="火星科技MarsGIS" />
+    <!-- Win8标题栏及ICON图标 -->
+    <link rel="apple-touch-icon-precomposed" href="../../img/favicon/apple-touch-icon.png" />
+    <meta name="msapplication-TileImage" content="../../img/favicon/app-icon72x72@2x.png" />
+    <meta name="msapplication-TileColor" content="#62a8ea" />
+
+    <!-- 第3方lib引入 -->
+    <script
+      type="text/javascript"
+      src="/lib/include-lib.js"
+      libpath="/lib/"
+      include="jquery,layer,toastr,font-awesome,bootstrap,bootstrap-table,layer,haoutil,mars3d"
+    ></script>
+
+
+    <link href="/css/widget-win.css" rel="stylesheet" />
+    <link href="view.css?time=20220120" rel="stylesheet" />
+
+
+    <link href="/css/style.css" rel="stylesheet" />
+    <style>
+      .infoview {
+        width: 400px;
+      }
+      
+      .messagetable {
+        position: absolute;
+        display: none;
+        top: 350px;
+        right: 10px;
+        padding: 10px 15px;
+        width: 400px;
+        overflow-y: hidden
+        border-radius: 4px;
+        border: 1px solid rgba(128, 128, 128, 0.5);
+        color: #ffffff;
+        background: rgba(0, 0, 0, 0.4);
+        box-shadow: 0 3px 14px rgba(128, 128, 128, 0.5);
+      }
+
+      .messagetable .path {
+        width: 100%;
+        height: 20px;
+        margin-bottom: 10px;
+        height: 30px;
+        line-height: 30px;
+      }
+
+      .messagetable #btnPlay {
+        position: absolute;
+        top: 2%;
+        right: 5%;
+        float: right;
+      }
+
+      .fixed-table-container tbody .selected td {
+        background-color: #3f4854a9;
+      }
+
+      /**以下为图上tooltip信息面板样式*/
+      .tipBox {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 240px;
+        height: 260px;
+      }
+
+      .tipHeader {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #372d83;
+      }
+
+      .tipBodyFirstPart {
+        width: 100%;
+        line-height: 10px;
+        text-align: left;
+        padding: 10px 15px 5px 15px;
+        background-color: #465996;
+      }
+
+      .tipBodySecondPart {
+        width: 100%;
+        min-height: 5px;
+        text-align: left;
+        padding: 5px 15px 10px 15px;
+        background-color: #465996;
+      }
+
+      .tipBodySecondPart table {
+        width: 100%;
+      }
+
+      .tipBodySecondPart table tr td:not(:first-child) {
+        text-align: center;
+        font-size: 13px;
+      }
+
+      .triangle-left {
+        position: absolute;
+        top: 10px;
+        left: -15px;
+        width: 0;
+        height: 0;
+        border-top: 5px solid transparent;
+        border-right: 15px solid #372d83;
+        border-bottom: 5px solid transparent;
+      }
+
+      .legendContent {
+        position: fixed;
+        bottom: 30px;
+        left: 50px;
+        color: #e9e9e9;
+        text-shadow: 2px 2px 2px #000;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      .legendContent ul {
+        margin: 0;
+        padding: 0;
+      }
+      .legendContent li {
+        margin: 3px 9px;
+        line-height: 22px;
+        float: left;
+      }
+      .legendContent span.round {
+        width: 8px;
+        height: 8px;
+        border-radius: 5px;
+        display: inline-block;
+        margin-right: 6px;
+      }
+    </style>
+
+  </head>
+  <body>
+    <!-- 台风列表 -->
+    <div class="infoview">
+      <table id="listTable"></table>
+    </div>
+
+    <div id="typhoonPath" class="messagetable">
+      <div class="path">
+        <p><span id="lblName"></span> path information</p>
+        <button id="btnPlay" type="button" class="btn btn-primary"><span class="fa fa-play" aria-hidden="true"></span> Forecast</button>
+      </div>
+
+      <table id="pathTable"></table>
+    </div>
+
+    <!--div class="legendContent">
+      <ul>
+        <li><span class="round" style="background-color: #eed139"></span>热带低压</li>
+        <li><span class="round" style="background-color: #0000ff"></span>热带风暴</li>
+        <li><span class="round" style="background-color: #0f8000"></span>强热带风暴</li>
+        <li><span class="round" style="background-color: #fe9c45"></span>台风</li>
+        <li><span class="round" style="background-color: #fe00fe"></span>强台风</li>
+        <li><span class="round" style="background-color: #fe0000"></span>超强台风</li>
+      </ul>
+    </div-->
+
+    <!--页面js-->
+    <script src="Typhoon.js"></script>
+    <script src="view.js?time=20220120"></script>
+  </body>
+</html>

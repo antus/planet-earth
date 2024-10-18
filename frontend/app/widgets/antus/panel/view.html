@@ -1,0 +1,83 @@
+<!-- 2017-7-30 20:28:25 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<div class="panel">
+  <div class="panel-header" >
+    <div class="panel-title">
+      <span>
+        <svg class="panel-logo" width="22px" height="15px" viewBox="0 0 22 10"><g transform="translate(11, -3) rotate(45.000000)"><rect fill="#535C6C" x="0" y="5" width="10" height="10"></rect><rect fill="#1FBAD6" x="5" y="0" width="10" height="10"></rect></g></svg>
+      </span>
+      <span class="panel-name">Layer manager</span>
+      <span class="panel-icons">
+        <i id="panel-close-button" class="panel-close-button fa fa-times-circle-o" aria-hidden="true"></i>
+      </span>
+    </div>
+  </div>
+  <div class="panel-body" >
+    <!-- Layers list-->
+    <div class="sortable-list-wrapper">
+      <!-- buttons -->
+      <div id="toolbar" class="btn-group btn-group-sm" role="group" aria-label="..."style="margin-bottom:2px">
+        <button type="button" class="btn btn-panel" onclick="addNewFolder();"><i class="fas fa-folder-plus"></i><span class="btn-panel-text">Add Folder</span></button>
+        <button type="button" class="btn btn-panel" onclick="addNewLayer();"><i class="fas fa-plus-circle"></i><span class="btn-panel-text">Add Layer</span></button>
+        <button type="button" class="btn btn-panel" id="removeLayerBtn" disabled onclick="removeElement();"><i class="fas fa-minus-circle"></i><span class="btn-panel-text">Remove</span></button>
+      </div>
+      <!-- layers -->
+      <div id="nestedDemo" class="list-group col nested-sortable" >
+      </div>
+      <!-- layer detail -->
+      <div id="layerDetailPanel" class="layer-detail-panel" style ="display:none">
+        <div class="layer-detail-panel-header">
+          <span id="close-layer-detail" class="p-right-10" onclick="panelCloseButton()"><i class="fas fa-caret-left"></i></span>
+          <span class="p-right-10"><i class="fas fa-layer-group"></i></span>
+          <span id="layerDetailPanelName"></span>
+        </div>
+        <!-- buttons -->
+        <div class="layer-detail-toolbar">
+          <div id="layer-data" class="btn-group btn-group-sm" role="group" aria-label="..."style="margin-bottom:2px">
+            <button type="button" class="btn btn-panel" onclick="showLayerData();"><i class="fas fa-table"></i><span class="btn-panel-text">Data</span></button>
+          </div>
+        </div>
+        <!-- Dimensions -->
+        <div id="layer-dimensions" class="service-selection" style="display:none">
+        </div> 
+        <!-- Style -->
+        <div id="layer-style" class="service-selection" style="display:none">
+          <span>Style</span>
+          <select id="layer-style-sel" class="catalog-picker form-control" onchange="selectLayerStyle(this);">
+          </select>
+        </div> 
+        <!-- Legend -->
+        <div id="layer-legend" class="service-selection" style="display:none">
+          <span>Legend</span>
+          <span id="legend-img"></span>
+        </div> 
+      </div>
+      <!-- catalog -->
+      <div id="catalogPanel" class="layer-detail-panel" style ="display:none">
+        <div class="layer-detail-panel-header">
+          <span id="close-layer-detail" class="p-right-10" onclick="panelCloseButton()"><i class="fas fa-caret-left"></i></span>
+          <span class="p-right-10"><i class="fas fa-folder"></i></span>
+          <span>Data catalog</span>
+        </div>
+        <div class="service-selection">
+          <span>Select caltalog</span>
+          <select id="catatalog-sel" class="catalog-picker form-control" onchange="connect(this);">
+          </select>
+        </div>
+        <div class="catalog-layers-container">
+          <div id="test" class="layers-list-container">
+            <span>Catalog layers</span>
+            <table id="layers_table" data-filter-control="true">
+              <thead>
+                <tr>
+                  <th data-field="name" data-filter-control="input"></th>
+                </tr>
+              </thead>
+            </table>  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

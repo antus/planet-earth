@@ -1,0 +1,176 @@
+<!--
+	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/en/editor.html?c=pie-roseType-simple&theme=dark
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+  <style>
+    html {
+      scrollbar-base-color: #f4f7fc;
+      scrollbar-track-color: #f4f7fc;
+      scrollbar-face-color: #797979;
+      scrollbar-arrow-color: #f4f7fc;
+      scrollbar-shadow-color: #f4f7fc;
+      scrollbar-3dlight-color: #f4f7fc;
+      scrollbar-highlight-color: #f4f7fc;
+      scrollbar-darkshadow-color: #f4f7fc;
+    }
+
+    ::-webkit-scrollbar-button {
+      height: 0;
+      width: 0;
+      display: none;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-thumb {
+      border: 0;
+    }
+
+    ::-webkit-scrollbar {
+      height: 10px;
+      width: 10px;
+      background: transparent;
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      padding-top: 100px;
+      -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.1), inset -1px -1px 0 rgba(0, 0, 0, 0.07);
+      background-color: #797979;
+      min-height: 28px;
+      border-radius: 4px;
+      background-clip: padding-box;
+    }
+
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-thumb {
+      border: 0;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      -webkit-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    ::-webkit-scrollbar-thumb:active {
+      -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.35);
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body style="height: 100%; margin: 0">
+ 
+  <div id="comune"></div>
+  <div id="provincia"></div>
+  <div id="regione" ></div>
+  <div id="container" style="height: 100%; width: calc(100% - 20px)"></div>
+ 
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, 'dark', {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    
+    var app = {};
+    
+    var option;
+
+    option = {
+      backgroundColor: '#222222',
+      tooltip: {
+      trigger: 'item'
+      },
+      visualMap: {
+        show: false,
+        min: 80,
+        max: 600,
+        inRange: {
+          colorLightness: [0, 1]
+        }
+      },
+      series: [
+        {
+          name: 'Access From',
+          type: 'pie',
+          radius: '55%',
+          center: ['50%', '50%'],
+          data: [
+            { value: 335, name: 'Direct' },
+            { value: 310, name: 'Email' },
+            { value: 274, name: 'Audio' },
+            { value: 235, name: 'Video' },
+            { value: 400, name: 'Engine' }
+          ].sort(function (a, b) {
+            return a.value - b.value;
+          }),
+          roseType: 'radius',
+          label: {
+            color: 'rgba(255, 255, 255, 0.3)'
+          },
+          labelLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, 0.3)'
+            },
+            smooth: 0.2,
+            length: 10,
+            length2: 20
+          },
+          itemStyle: {
+            color: '#c23531',
+            shadowBlur: 200,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          },
+          animationType: 'scale',
+          animationEasing: 'elasticOut',
+          animationDelay: function (idx) {
+            return Math.random() * 200;
+          }
+        }
+      ]
+    };
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+
+
+    window.addEventListener("message", getData);
+    console.log("Window initialization!");
+    function getData(e){
+        let data = e.data;
+        $("#comune").text(data.comune);
+        $("#provincia").text(data.provincia);
+        $("#regione").text(data.regione);
+        console.log("Window getData: " + stringify(data));
+    }
+
+    function stringify(obj) {
+        let cache = [];
+        let str = JSON.stringify(obj, function(key, value) {
+            if (typeof value === "object" && value !== null) {
+            if (cache.indexOf(value) !== -1) {
+                // Circular reference found, discard key
+                return;
+            }
+            // Store value in our collection
+            cache.push(value);
+            }
+            return value;
+        });
+        cache = null; // reset the cache
+        return str;
+    }
+  </script>
+</body>
+</html>

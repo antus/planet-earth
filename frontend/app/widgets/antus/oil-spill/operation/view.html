@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+      content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="Mars Technology http://mars3d.cn " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <!-- Title and search keywords -->
+    <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
+    <meta name="description"
+      content="Mars Technology Hefei Mars Hefei Mars Technology Hefei Mars Technology Co., Ltd. leaflet leaflet framework leaflet development cesium cesium development cesium framework three-dimensional earth model gis marsgis map offline map development map framework map outsourcing framework development outsourcing map offline two-dimensional map three-dimensional map panoramic roaming Geographic Information System Cloud GIS 3D GIS GIS Platform WebGIS" />
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
+    <title>Animation script demonstration | Mars3D | 3D map | Mars Technology | Hefei Mars Technology Co., Ltd.</title>
+  
+    <!--Third-party lib-->
+    <script type="text/javascript" src="/lib/include-lib.js" libpath="/lib/"
+      include="jquery,layer,toastr,bootstrap,bootstrap-checkbox,font-awesome,web-icons,jstree,layer,haoutil,nprogress,toastr,admui,mars3d,mars3d-heatmap"></script>
+  
+    <link href="/css/style.css" rel="stylesheet" />
+    <link href="/css/widget-win.css" rel="stylesheet" />
+    <link href="view.css" rel="stylesheet" />
+
+    <style>
+      .viewResult {
+        top: 329px;
+        left: 10px;
+        bottom: 10px;
+        right: 10px;
+        max-width: 420px;
+        overflow: auto;
+        font-size: 28px;
+      }
+  
+      .contentUl {
+        padding: 0;
+        text-align: left;
+        font-size: 20px;
+        margin-left: 10px;
+      }
+  
+      .btn i {
+        margin-right: 5px;
+      }
+  
+      .btn-right5 {
+        margin-right: 5px;
+      }
+      </style>
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="viewReset" >
+        <div class="btn-group">
+          <button id="btn_start" type="button" class="btn btn-primary"><i class="fa fa-play-circle-o"></i>Start</button>
+          <button id="btn_pause" type="button" class="btn btn-primary btn-right5" style="display: none"><i
+              class="fa fa-pause-circle-o"></i>Pause</button>
+          <button id="btn_proceed" type="button" class="btn btn-primary btn-right5" style="display: none"><i
+              class="fa fa-play-circle-o"></i>Continue</button>
+          <button id="btn_stop" type="button" class="btn btn-primary" style="display: none"><i
+              class="fa fa-stopFun-circle-o"></i>Stop</button>
+        </div>
+    
+        <ul id="treeOverlays" style="padding: 0"></ul>
+        <br />
+        Total duration: <span id="alltimes">0s</span>
+        <br />
+        Current: <span id="thisStep">None</span>
+        <span id="thistimes"></span>
+        <br />
+        <div id="viewResult" class="infoview viewResult" >
+        </div>
+      </div>
+    </div>
+      
+    <script src="view.js?time=20220120"></script>
+    <script src="./m35_dhjb.js"></script>
+  </body>
+</html>
+  

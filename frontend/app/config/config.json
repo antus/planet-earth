@@ -56,8 +56,8 @@
       "contextmenu": { "hasDefault": true },
       "mouseDownView": true,
       "zoom": { "insertBefore": "sceneModePicker", "zoomOutIcon": "/img/svg/sub.svg", "zoomInIcon": "/img/svg/plus.svg"},
-      "compass": { "bottom": "toolbar", "left": "5px" },
-      "distanceLegend": { "left": "100px", "bottom": "2px" },
+      "compass": { "bottom": "toolbar", "left": "5px", "top": "60px"},
+      "distanceLegend": { "left": "0px", "bottom": "0px" },
       "locationBar": {
         "crs": "CGCS2000_GK_Zone_3",
         "crsDecimal": 0,
@@ -81,6 +81,7 @@
         "icon": "/img/basemaps/bingAerial.png",
         "type": "bing",
         "layer": "Aerial",
+		"key": "AnOrlR_sEnU2y_7dCloRifCvcKMzqKVTXfNJqU1W-tpJ4ub6faQv2YxX2EIHYjnN",
         "show": true
       },
       {
@@ -114,7 +115,8 @@
         "subdomains": "abc",
         "id": 19,
         "opacity": 1,
-        "zIndex": 2
+        "zIndex": 2,
+        "show":false
       },
       {
         "pid": 10,
@@ -149,7 +151,7 @@
     ],
     "layers": [
       { "id": 50, "name": "auxiliary layer", "type": "group" },
-      { "pid": 50, "type": "graticule", "name": "Jingweiwang" },
+      { "pid": 50, "type": "graticule", "name": "graticule" },
       {
         "pid": 50,
         "name": "Administrative district boundary line",
@@ -1086,8 +1088,7 @@
         "skipLevelOfDetail": true,
         "preferLeaves": true,
         "center": { "lat": 33.589536, "lng": 119.032216, "alt": 145.08, "heading": 3.1, "pitch": -22.9 }
-      },
-      { "id": 99, "name": "data layer", "type": "group" }
+      }
     ]
   }
 }

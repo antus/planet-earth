@@ -1,0 +1,71 @@
+<div class="dlm">
+  <div class="panel">
+    <div class="panel-body" >
+      <!-- Layers list-->
+      <div class="sortable-list-wrapper">
+        <!-- buttons -->
+        <div id="dlm-toolbar" class="btn-group btn-group-sm" role="group" aria-label="..."style="margin-bottom:2px">
+          <button id="dlm-addFolder" type="button" class="btn btn-panel"><i class="fas fa-folder-plus"></i><span class="btn-panel-text">Add Folder</span></button>
+          <button id="dlm-addLayer" type="button" class="btn btn-panel"><i class="fas fa-plus-circle"></i><span class="btn-panel-text">Add Layer</span></button>
+          <button id="dlm-removeLayer" type="button" class="btn btn-panel" disabled><i class="fas fa-minus-circle"></i><span class="btn-panel-text">Remove</span></button>
+        </div>
+        <!-- layers -->
+        <div id="dlm-nestedDemo" class="list-group col nested-sortable" >
+        </div>
+        <!-- layer detail -->
+        <div id="dlm-layerDetailPanel" class="layer-detail-panel" style ="display:none">
+          <div class="layer-detail-panel-header">
+            <span id="dlm-closeLayerDetail" class="p-right-10"><i class="fas fa-caret-left"></i></span>
+            <span class="p-right-10"><i class="fas fa-layer-group"></i></span>
+            <span id="dlm-layerDetailPanelName"></span>
+          </div>
+          <!-- buttons -->
+          <div class="layer-detail-toolbar">
+            <div id="dlm-layerData" class="btn-group btn-group-sm" role="group" aria-label="..."style="margin-bottom:2px">
+              <button id="dlm-showLayerDetail" type="button" class="btn btn-panel"><i class="fas fa-table"></i><span class="btn-panel-text">Data</span></button>
+            </div>
+          </div>
+          <!-- Dimensions -->
+          <div id="dlm-layerDimensions" class="service-selection" style="display:none">
+          </div> 
+          <!-- Style -->
+          <div id="dlm-layerStyle" class="service-selection" style="display:none">
+            <span>Style</span>
+            <select id="dlm-layerStyleSel" class="catalog-picker form-control">
+            </select>
+          </div> 
+          <!-- Legend -->
+          <div id="dlm-layerLegend" class="service-selection" style="display:none">
+            <span>Legend</span>
+            <span id="dlm-legendImg" class="legend"></span>
+          </div> 
+        </div>
+        <!-- catalog -->
+        <div id="dlm-catalogPanel" class="layer-detail-panel" style ="display:none">
+          <div class="layer-detail-panel-header">
+            <span id="dlm-closeLayerDetail" class="p-right-10"><i class="fas fa-caret-left"></i></span>
+            <span class="p-right-10"><i class="fas fa-folder"></i></span>
+            <span>Data catalog</span>
+          </div>
+          <div class="service-selection">
+            <span>Select caltalog</span>
+            <select id="dlm-catatalogSel" class="catalog-picker form-control">
+            </select>
+          </div>
+          <div class="catalog-layers-container">
+            <div class="layers-list-container">
+              <span>Catalog layers</span>
+              <table id="dlm-catalogLayersTable" data-filter-control="true">
+                <thead>
+                  <tr>
+                    <th data-field="name" data-filter-control="input"></th>
+                  </tr>
+                </thead>
+              </table>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

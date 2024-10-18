@@ -300,12 +300,19 @@ html {
 }
 
 
+.mars3d-locationbar {
+  background-color: rgba(39, 44, 54, 1);
+}
+
+.mars3d-distance-legend {
+  z-index: 1000;
+}
 
 /**cesium 工具按钮栏*/
 
 .cesium-viewer-toolbar {
   top: auto;
-  bottom: 35px;
+  bottom: 55px;
   left: 12px;
   right: auto;
 }
@@ -569,4 +576,23 @@ html {
 
 input {
   margin: 0;
+}
+
+
+.modal-header .close {
+  padding: 0px;
+  margin: 0px;
+}
+
+.modal-content {
+  background-color: #24272f;
+}
+
+.modal-header {
+  background-color: #24272f;
+}
+
+.map-widget {
+  //border:1px solid red;
+  height:100%
 }

@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+  <head>
+    <title>弹窗子页面</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- 移动设备 viewport -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit" />
+    <!-- Chrome浏览器添加桌面快捷方式（安卓） -->
+    <link rel="icon" type="image/png" href="../../img/favicon/favicon.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Safari浏览器添加到主屏幕（IOS） -->
+    <link rel="icon" sizes="192x192" href="img/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="火星科技MarsGIS" />
+    <!-- Win8标题栏及ICON图标 -->
+    <link rel="apple-touch-icon-precomposed" href="../../img/favicon/apple-touch-icon.png" />
+    <meta name="msapplication-TileImage" content="../../img/favicon/app-icon72x72@2x.png" />
+    <meta name="msapplication-TileColor" content="#62a8ea" />
+
+    <!-- 第3方lib引入 -->
+    <script
+      type="text/javascript"
+      src="/lib/include-lib.js?time=20220120"
+      libpath="/lib/"
+      include="jquery,bootstrap,echarts,admui-frame"
+    ></script>
+    <link href="/css/widget-win.css" rel="stylesheet" />
+    <link href="view.css?time=20220120" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
+
+  <body class="dark">
+    <div id="section" style="width: 100%; height: 100%;"></div>
+
+    <script>
+      //对应widget.js中MyWidget实例化后的对象
+      let thisWidget
+
+      //当前页面业务
+      function initWidgetView(_thisWidget) {
+        thisWidget = _thisWidget
+        
+        var chartDom = document.getElementById('section');
+        var myChart = echarts.init(chartDom, "dark");
+        var option = {
+          title: {
+            text: '',
+            subtext: '',
+            top: 10,
+            left: 10
+          },
+          tooltip: {
+            trigger: 'item'
+          },
+          legend: {
+            type: 'scroll',
+            bottom: 0,
+            data: (function () {
+              var list = [];
+              for (var i = 1; i <= 28; i++) {
+                list.push(i + 2000 + '');
+              }
+              return list;
+            })()
+          },
+          visualMap: {
+            top: 'middle',
+            right: 10,
+            color: ['red', 'yellow'],
+            calculable: true
+          },
+          radar: {
+            indicator: [
+              { text: 'Extension', max: 400 },
+              { text: 'Pollution', max: 400 },
+              { text: 'Human impact', max: 400 },
+              { text: 'Remediation', max: 400 },
+              { text: 'Sea-life impact', max: 400 }
+            ]
+          },
+          series: (function () {
+            var series = [];
+            for (var i = 1; i <= 28; i++) {
+              series.push({
+                type: 'radar',
+                symbol: 'none',
+                lineStyle: {
+                  width: 1
+                },
+                emphasis: {
+                  areaStyle: {
+                    color: 'rgba(0,250,0,0.3)'
+                  }
+                },
+                data: [
+                  {
+                    value: [
+                      (40 - i) * 10,
+                      (38 - i) * 4 + 60,
+                      i * 5 + 10,
+                      i * 9,
+                      (i * i) / 2
+                    ],
+                    //name: i + 2000 + ''
+                  }
+                ]
+              });
+            }
+            return series;
+          })()
+        };
+
+        option && myChart.setOption(option);
+        
+
+      }
+
+      
+    </script>
+  </body>
+</html>

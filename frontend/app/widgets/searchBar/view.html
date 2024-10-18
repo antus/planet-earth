@@ -1,0 +1,33 @@
+<div id="map-querybar" class="querybar-ssk animation-slide-top no-print-view">
+  <input id="txt_querypoi" type="search" class="querybar-ssk1" placeholder="search" autocomplete="off" />
+  <div id="querybar_progress" class="querybar-progress" >
+    <img src="img/loader.gif" />
+  </div>
+  <div id="querybar_delete" class="querybar-delete">
+    <i class="fa fa-remove"></i>
+  </div>
+  <button id="btn_querypoi" type="button" value="" class="querybar-ssk2">
+    <i class="fa fa-search"></i>
+  </button>
+  <div class="querybar-clear"></div>
+
+  <!--History-->
+  <div id="querybar_histroy_view" class="querybar-sbox" style="display: none">
+    <div class="querybar-ssls">
+      <ul id="querybar_ul_history"></ul>
+    </div>
+    <div>
+      <a href="javascript:queryGaodePOIWidget.clearHistory();" class="querybar-more">Elimina la cronologia</a>
+    </div>
+  </div>
+
+  <!--Search Smart Tips-->
+  <div id="querybar_autotip_view" class="querybar-znbox" style="display: none">
+    <div class="querybar-znts">
+      <ul id="querybar_ul_autotip"></ul>
+    </div>
+  </div>
+
+  <!--list of search results-->
+  <div id="querybar_resultlist_view" class="querybar-sbox" style="display: none"></div>
+</div>

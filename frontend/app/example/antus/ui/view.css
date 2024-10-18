@@ -1,0 +1,94 @@
+#wrapper{
+  height: 100%;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+#navbarContainer{
+  height: 50px;
+  position:absolute;
+  top: 0px;
+  left: 0px;
+  right:0px;
+  background: #222222;
+}
+
+#menuContainer li{
+  cursor: pointer;
+  padding: 10px 10px;
+  color: #BBB;
+  font-size: 18px;
+}
+
+#menuContainer li:hover{
+  background: #111;
+  color: #CCC;
+}
+
+#layoutContainer{
+  width: 100%;
+  position:absolute;
+  top: 54px;
+  bottom:4px;
+  left: 0px;
+  box-shadow: -3px 0px 9px 0px rgba( 0, 0, 0, 0.4 );
+}
+
+.iframe-class {
+    height: 100%;
+    width: 100%;
+    border: 0;
+    padding: 5px;
+}
+
+.navbar-brand {
+  height: 30px;
+}
+
+.navbar-icon-top .navbar-nav .nav-link > .fa {
+  position: relative;
+  width: 36px;
+  font-size: 18px;
+}
+
+.navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
+  font-size: 0.75rem;
+  position: absolute;
+  right: 0;
+  font-family: sans-serif;
+}
+
+.navbar-icon-top .navbar-nav .nav-link > .fa {
+  top: 0px;
+  line-height: 10px;
+}
+
+.navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
+    top: -15px;
+    padding:3px
+}
+
+.app-navbar {
+    height:50px;
+}
+
+.giotto {
+    color: #2c2ccd;
+    font-weight:600	;
+}
+
+.planet {
+    color:#00ca00;
+}
+
+.xl-icon {
+    font-size:40px !important; padding-right:10px;
+}
+
+.user-xl-icon {
+    cursor: pointer;
+    padding: 10px 10px;
+    color: #BBB;
+    font-size: 18px;
+}

@@ -1,0 +1,45 @@
+<!-- 2017-7-30 20:28:25 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） -->
+<div id="underground_element" style="display:none">
+    <table class="mars-table">
+      <tr class="undergroundAttr">
+        <td>Underground mode:</td>
+        <td>
+          <div class="checkbox checkbox-primary checkbox-inline">
+            <input id="chkUnderground" class="styled" type="checkbox" />
+            <label for="chkUnderground"> Open/Close </label>
+          </div>
+        </td>
+        <td>Surface transparency：</td>
+        <td colspan="2">
+          <input id="alpha" />
+        </td>
+      </tr>
+
+      <tr class="undergroundAttr">
+        <td>Underground excavation：</td>
+        <td>
+          <div class="checkbox checkbox-primary checkbox-inline">
+            <input id="chkClippingPlanes" class="styled" type="checkbox" checked />
+            <label for="chkClippingPlanes"> Dig the ground </label>
+          </div>
+        </td>
+        <td>Excavation depth：</td>
+        <td><span style="display:flex"><input id="txtHeight" type="number" value="30" min="-500" step="1" max="999" class="form-control" style="width: 100px" /><span style="padding-top: 6px;">（m）</span></span></td>
+        <td>
+          <input type="button" class="btn btn-primary" value="rectangle" id="btnDrawExtent" />
+          <input type="button" class="btn btn-primary" value="polygon" id="btnDraw" />
+          <input type="button" class="btn btn-primary" value="clear" id="clearWJ" />
+        </td>
+      </tr>
+
+      <tr>
+        <td>Perspective demonstration：</td>
+        <td colspan="4">
+          <input type="button" class="btn btn-primary" value="Bird's eye view" onclick="underground_widget.centerAtDX1()" />
+          <input type="button" class="btn btn-primary" value="Underground perspective" onclick="underground_widget.centerAtDX2()" />
+        </td>
+      </tr>
+    </table>
+
+</div>
+

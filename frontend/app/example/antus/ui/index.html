@@ -7,7 +7,7 @@
         content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
     <meta name="author" content="Mars Technology http://mars3d.cn " />
     <meta name="apple-touch-fullscreen" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="x5-fullscreen" content="true" />
@@ -18,15 +18,17 @@
 
     <link rel="shortcut icon" type="image/x-icon"
         href="/img/favicon/favicon.ico" />
-    <title>Planet Erth UI</title>
+    <title>Planet Earth UI</title>
 
     <script
         type="text/javascript"
         src="/lib/include-lib.js?time=20220120"
         libpath="/lib/"
-        include="jquery,bootstrap,bootstrap-checkbox,bootstrap-slider,font-awesome,web-icons,layer,haoutil,localforage,nprogress,toastr,admui,turf,mars3d,mars3d-space,es5-widget"
+        include="jquery,bootstrap,bootstrap-table,bootstrap-checkbox,bootstrap-slider,font-awesome-free,font-awesome,font-a,web-icons,layer,haoutil,localforage,nprogress,toastr,admui,turf,mars3d,mars3d-space,es5-widget,,mars3d-echarts,winbox,goldenlayout,jsgrid"
       ></script>
+    
     <link href="/css/style.css" rel="stylesheet" />
+    <link href="view.css" rel="stylesheet" />
 
     <style>
         .fixed-table-container tbody .selected td {
@@ -36,10 +38,42 @@
 </head>
 
 <body class="dark">
-    <div id="mars3dContainer" class="mars3d-container"></div>
 
-    <script src="/js/common.js"></script>
+    <div id="wrapper">
+        <div id="navbarContainer">
+            <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark app-navbar">
+              <a class="navbar-brand" style="display: flex; flex-direction: row; align-items: center;" href="#">
+                  <i class="fas fa-globe-europe xl-icon"></i>
+                  <span>Planet Earth</span>
+              </a>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto"></ul>
+                <ul class="navbar-nav ">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <i class="fa fa-bell">
+                        <span class="badge badge-info">11</span>
+                      </i>
+                    </a>
+                  </li>
+                </ul>
+                <ul id="menuContainer" class="navbar-nav "></ul>
+                <a id="counter" style="display: flex; flex-direction: row; align-items: center;" href="#">
+                    <i class="fas fa-stopwatch-20 user-xl-icon"></i>
+                </a>
+                <a id="user" style="display: flex; flex-direction: row; align-items: center;" href="#">
+                    <i class="fas fa-user-shield user-xl-icon"></i>
+                </a>
+              </div>
+            </nav>
+        </div>
+        <div id="layoutContainer"></div>
+    </div>
+
+    <script src="./layout.js"></script>
+    <script src="/js/common_layout.js"></script>
     <script src="./map.js"></script>
+
 </body>
 
 </html>

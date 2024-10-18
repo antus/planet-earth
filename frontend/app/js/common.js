@@ -77,9 +77,11 @@ function globalInitMap(options) {
       window.mapOptions = options = mars3d.Util.merge(options, window.mapOptions)
     }
   }
-
-  //Create a 3D earth scene
-  return new mars3d.Map("mars3dContainer", options)
+  if ($("#mars3dContainer")[0])
+    //Create a 3D earth scene
+    return new mars3d.Map("mars3dContainer", options)
+  else 
+    toastr.error("mars3dContainer element not present in html document!")
 }
 
 //Initialize widget related

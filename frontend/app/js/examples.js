@@ -20,6 +20,8 @@ const dev = urlParams.get('dev')!=undefined
 
 // authentication
 window.onload =  async function () {
+	loadApplication();
+	/*
     //load keycloak parameters
     $.getJSON(KEYCLOAK_FILE, '',async function (kc) {
         // initialize keycloak
@@ -51,6 +53,7 @@ window.onload =  async function () {
         }
         keycloak.onAuthLogout = showWelcome;
     });
+	*/
 }
 
 // show welcome message

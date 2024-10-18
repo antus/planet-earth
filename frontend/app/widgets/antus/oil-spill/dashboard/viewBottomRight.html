@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+  <head>
+    <title>弹窗子页面</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- 移动设备 viewport -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+    <meta name="author" content="火星科技 http://mars3d.cn " />
+    <!-- 360浏览器默认使用Webkit内核 -->
+    <meta name="renderer" content="webkit" />
+    <!-- Chrome浏览器添加桌面快捷方式（安卓） -->
+    <link rel="icon" type="image/png" href="../../img/favicon/favicon.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Safari浏览器添加到主屏幕（IOS） -->
+    <link rel="icon" sizes="192x192" href="img/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="火星科技MarsGIS" />
+    <!-- Win8标题栏及ICON图标 -->
+    <link rel="apple-touch-icon-precomposed" href="../../img/favicon/apple-touch-icon.png" />
+    <meta name="msapplication-TileImage" content="../../img/favicon/app-icon72x72@2x.png" />
+    <meta name="msapplication-TileColor" content="#62a8ea" />
+
+    <!-- 第3方lib引入 -->
+    <script
+      type="text/javascript"
+      src="/lib/include-lib.js?time=20220120"
+      libpath="/lib/"
+      include="jquery,bootstrap,echarts,admui-frame"
+    ></script>
+    <link href="/css/widget-win.css" rel="stylesheet" />
+    <link href="view.css?time=20220120" rel="stylesheet" />
+    <link href="/css/style.css" rel="stylesheet" />
+
+    <style>
+      #chart-container {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+    </style>
+  </head>
+
+  <body class="dark">
+    <div id="chart-container" style="width: 100%; height: 100%"></div>
+    
+    
+    <script>
+      //对应widget.js中MyWidget实例化后的对象
+      let thisWidget
+
+      //当前页面业务
+      function initWidgetView(_thisWidget) {
+        thisWidget = _thisWidget
+
+        
+        var dom = document.getElementById('chart-container');
+        var myChart = echarts.init(dom, null, {
+          renderer: 'canvas',
+          useDirtyRect: false
+        });
+        var app = {};
+
+        var option;
+
+        let base = +new Date(2024, 9, 3);
+        let oneDay = 24 * 3600 * 1000;
+        let valueBase = Math.random() * 300;
+        let valueBase2 = Math.random() * 50;
+        let data = [];
+        let data2 = [];
+        for (var i = 1; i < 10; i++) {
+          var now = new Date((base += oneDay));
+          var dayStr = [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('-');
+          valueBase = Math.round((Math.random() - 0.5) * 20 + valueBase);
+          valueBase <= 0 && (valueBase = Math.random() * 300);
+          data.push([dayStr, valueBase]);
+          valueBase2 = Math.round((Math.random() - 0.5) * 20 + valueBase2);
+          valueBase2 <= 0 && (valueBase2 = Math.random() * 50);
+          data2.push([dayStr, valueBase2]);
+        }
+        option = {
+          title: {
+            left: 'center',
+            text: ''
+          },
+          legend: {
+            top: 'bottom',
+            data: ['Intention']
+          },
+          tooltip: {
+            triggerOn: 'none',
+            position: function (pt) {
+              return [pt[0], 130];
+            }
+          },
+          toolbox: {
+            left: 'center',
+            itemSize: 25,
+            top: 55,
+            feature: {
+              dataZoom: {
+                yAxisIndex: 'none'
+              },
+              restore: {}
+            }
+          },
+          xAxis: {
+            type: 'time',
+            axisPointer: {
+              value: '2024-10-7',
+              snap: true,
+              lineStyle: {
+                color: '#7581BD',
+                width: 2
+              },
+              label: {
+                show: true,
+                formatter: function (params) {
+                  return echarts.format.formatTime('yyyy-MM-dd', params.value);
+                },
+                backgroundColor: '#7581BD'
+              },
+              handle: {
+                show: true,
+                color: '#7581BD'
+              }
+            },
+            splitLine: {
+              show: false
+            }
+          },
+          yAxis: {
+            type: 'value',
+            axisTick: {
+              inside: true
+            },
+            splitLine: {
+              show: false
+            },
+            axisLabel: {
+              inside: true,
+              formatter: '{value}\n'
+            },
+            z: 10
+          },
+          grid: {
+            top: 110,
+            left: 15,
+            right: 15,
+            height: 160
+          },
+          dataZoom: [
+            {
+              type: 'inside',
+              throttle: 50
+            }
+          ],
+          series: [
+            {
+              name: 'Fake Data',
+              type: 'line',
+              smooth: true,
+              symbol: 'circle',
+              symbolSize: 5,
+              sampling: 'average',
+              itemStyle: {
+                color: '#0770FF'
+              },
+              stack: 'a',
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: 'rgba(58,77,233,0.8)'
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgba(58,77,233,0.3)'
+                  }
+                ])
+              },
+              data: data
+            },
+            {
+              name: 'Fake Data',
+              type: 'line',
+              smooth: true,
+              stack: 'a',
+              symbol: 'circle',
+              symbolSize: 5,
+              sampling: 'average',
+              itemStyle: {
+                color: '#F2597F'
+              },
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: 'rgba(213,72,120,0.8)'
+                  },
+                  {
+                    offset: 1,
+                    color: 'rgba(213,72,120,0.3)'
+                  }
+                ])
+              },
+              data: data2
+            }
+          ]
+        };
+
+        if (option && typeof option === 'object') {
+          myChart.setOption(option);
+        }
+
+        window.addEventListener('resize', myChart.resize);
+
+
+      }
+
+
+
+      
+    </script>
+  </body>
+</html>

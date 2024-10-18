@@ -1,0 +1,208 @@
+<!-- 2021-9-4 14:34:24 | 版权所有 火星科技 http://marsgis.cn -->
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="en">
+   <head>
+      <title>Pop-up window</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+      <meta name="author" content="&#x706B;&#x661F;&#x79D1;&#x6280; http://mars3d.cn ">
+      <meta name="renderer" content="webkit">
+      <link rel="icon" type="img/png" href="../../img/favicon/favicon.png">
+      <meta name="mobile-web-app-capable" content="yes">
+      <link rel="icon" sizes="192x192" href="img/favicon/apple-touch-icon.png">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <meta name="apple-mobile-web-app-title" content="&#x706B;&#x661F;&#x79D1;&#x6280;MarsGIS">
+      <link rel="apple-touch-icon-precomposed" href="../../img/favicon/apple-touch-icon.png">
+      <meta name="msapplication-TileImage" content="../../img/favicon/app-icon72x72@2x.png">
+      <meta name="msapplication-TileColor" content="#62a8ea">
+      <script src="../../lib/include-lib.js?time=20210803" libpath="../../lib/" include="jquery,jquery.range,jedate,font-awesome,bootstrap,bootstrap-checkbox,bootstrap-slider,haoutil,admui-frame"></script>
+      <link href="../../css/widget-win.css" rel="stylesheet">
+      <link href="view.css" rel="stylesheet">
+   </head>
+   <body style="padding:5px;text-align:center;">
+      <div class="basicbox" >
+         <div class="btn-group">
+            <div id="btn_goto_rzfx" class="tool-btn">
+               <div class="tool-thum" style="background:#dd751b"><img src="img/rzfx.svg" alt="&#x65E5;&#x7167;&#x5206;&#x6790;"></div>
+               <span class="btn_none">Sunshine</span>
+            </div>
+            <div id="btn_goto_ksy" class="tool-btn">
+               <div class="tool-thum" style="background:#c092fe"><img src="img/ksy.svg" alt="&#x53EF;&#x89C6;&#x57DF;"></div>
+               <span class="btn_none">Visual field</span>
+            </div>
+            <div id="btn_goto_flfx" class="tool-btn">
+               <div class="tool-thum" style="background:#88b8ff"><img src="img/flfx.svg" alt="&#x65B9;&#x91CF;&#x5206;&#x6790;"></div>
+               <span class="btn_none">Square quantity</span>
+            </div>
+            <div id="btn_goto_dxkw" class="tool-btn">
+               <div class="tool-thum" style="background:#55d5a0"><img src="img/dxkw.svg" alt="&#x5730;&#x5F62;&#x5F00;&#x6316;"></div>
+               <span class="btn_none">Excavation</span>
+            </div>
+            <div id="btn_goto_dbtm" class="tool-btn">
+               <div class="tool-thum" style="background:#b85555"><img src="img/dbtm.svg" alt="&#x5730;&#x8868;&#x900F;&#x660E;"></div>
+               <span class="btn_none">Transparent</span>
+            </div>
+            <div id="btn_goto_pdpx" class="tool-btn">
+               <div class="tool-thum" style="background:#3de3f4"><img src="img/pdpx.svg" alt="&#x5761;&#x5EA6;&#x5761;&#x5411;"></div>
+               <span class="btn_none">Slope aspect</span>
+            </div>
+            <div id="btn_goto_mxpq" class="tool-btn">
+               <div class="tool-thum" style="background:#37bc41"><img src="img/mxpq.svg" alt="&#x6A21;&#x578B;&#x5256;&#x5207;"></div>
+               <span class="btn_none">Flattening</span>
+            </div>
+            <div id="btn_goto_mxyp" class="tool-btn">
+               <div class="tool-thum" style="background:#95d333"><img src="img/mxyp.svg" alt="&#x6A21;&#x578B;&#x538B;&#x5E73;"></div>
+               <span class="btn_none">Model Cutting</span>
+            </div>
+            <div id="btn_goto_xgfx" class="tool-btn">
+               <div class="tool-thum" style="background:#babc31"><img src="img/mxcj.svg" alt="&#x9650;&#x9AD8;&#x5206;&#x6790;"></div>
+               <span class="btn_none">Height limit</span>
+            </div>
+         </div>
+      </div>
+      <div id="sunAnal" class="mainbox">
+         <div class="headbox">
+            <div class="headtitle"><i id="btn_rzfx_destory" class="fa fa-chevron-left backmenu"></i> <span>Sunshine</span></div>
+         </div>
+         <div class="mainInfo">
+            <div class="rowview clearfix tip">Tips: Simulate the sunlight effect within the set time range.</div>
+            <div class="rowview clearfix"><span>Date selection::</span> <input type="text" class="form-control" id="txt_rzfx_Date" placeholder="YYYY-MM-DD" readonly></div>
+            <div class="rowview clearfix"><span>Time selection::</span> <input id="range_ksy_currTime" title="time" type="range" min="0" max="1440" step="1" value="420"></div>
+            <div class="rowview clearfix"><span>Current time:</span><span id="lbl_rzfx_nowTime"></span></div>
+            <div class="rowview clearfix center"><input id="btn_rzfx_btn_rzfx_pause" type="button" class="btn btn-primary" value="Play"></div>
+         </div>
+      </div>
+      <div id="ksyAnal" class="mainbox">
+         <div class="headbox">
+            <div class="headtitle"><i id="btn_ksy_destory" class="fa fa-chevron-left backmenu"></i> <span>Visual field</span></div>
+            <div id="btn_ksy_clear" class="del"><i class="fa fa-trash-o"></i> <span>Clear</span></div>
+         </div>
+         <div class="mainInfo">
+            <div class="rowview clearfix tip">Tip: After clicking the button, draw on the graph. Red means invisible and green means visible.</div>
+            <div class="rowview clearfix"><span>Horiz. angle:</span> <input id="range_ksy_horizontalAngle" title="&#x89D2;&#x5EA6;&#xFF08;&#x5EA6;&#xFF09;"> <input id="txt_ksy_horizontalAngle" min="1" max="120" value="120" type="number" class="form-control"></div>
+            <div class="rowview clearfix"><span>Vert.  angle:</span> <input id="range_ksy_verticalAngle" title="&#x89D2;&#x5EA6;&#xFF08;&#x5EA6;&#xFF09;"> <input id="txt_ksy_verticalAngle" min="1" max="90" value="90" type="number" class="form-control"></div>
+            <div class="rowview clearfix"><span>Visual dist.:</span> <input id="range_ksy_distance" title="&#x8DDD;&#x79BB;&#xFF08;&#x7C73;&#xFF09;"> <input id="txt_ksy_distance" min="1" max="5000" value="100" step="0.1" type="number" class="form-control"></div>
+            <div class="rowview clearfix">
+               <span>Visual cone frame line:</span>
+               <div class="checkbox checkbox-info checkbox-inline"><input type="checkbox" id="chk_ksy_DebugFrustum" value="this" name="jiaodu" checked> <label for="chk_ksy_DebugFrustum">Show border</label></div>
+            </div>
+            <div class="rowview clearfix center"><input id="btn_ksy_add" type="button" class="btn btn-primary" value="Add visual area"></div>
+         </div>
+      </div>
+      <div id="flAnal" class="mainbox">
+         <div class="headbox">
+            <div class="headtitle"><i id="btn_flfx_destory" class="fa fa-chevron-left backmenu"></i> <span>&#x65B9;&#x91CF;&#x5206;&#x6790;</span></div>
+            <div id="btn_flfx_clear" class="del"><i class="fa fa-trash-o"></i> <span>Clear</span></div>
+         </div>
+         <div class="mainInfo" title="&#x63D0;&#x793A;&#xFF1A;&#x5BF9;&#x7ED8;&#x5236;&#x9762;(&#x5899;)&#x5185;&#x7684;&#x8FDB;&#x884C;&#x4EE5;&#x4E0B;&#x8BA1;&#x7B97;&#x3002;
+            1. &#x6316;&#x65B9;&#x91CF;: &#x8BA1;&#x7B97;&#x201C;&#x57FA;&#x51C6;&#x9762;&#x201D;&#x5230;&#x5730;&#x8868;&#x4E4B;&#x95F4;&#x7684;&#x51F8;&#x51FA;&#x90E8;&#x5206;&#x8FDB;&#x884C;&#x6316;&#x6389;&#x7684;&#x4F53;&#x79EF;&#x3002;
+            2. &#x586B;&#x65B9;&#x91CF;&#xFF1A;&#x8BA1;&#x7B97;&#x201C;&#x57FA;&#x51C6;&#x9762;&#x201D;&#x4E0E;&#x201C;&#x5899;&#x5E95;&#x90E8;&#x201D;&#x4E4B;&#x95F4;&#x7684;&#x7F3A;&#x5C11;&#x90E8;&#x5206;&#x8FDB;&#x884C;&#x586B;&#x5E73;&#x7684;&#x4F53;&#x79EF;&#x3002;">
+            <div class="rowview clearfix tip">&#x63D0;&#x793A;:&#x8BF7;&#x9996;&#x5148;&#x5355;&#x51FB; &#x201C;&#x7ED8;&#x5236;&#x533A;&#x57DF;&#x201D; &#x6309;&#x94AE;&#xFF0C;&#x518D;&#x5728;&#x56FE;&#x4E0A;&#x7ED8;&#x5236;&#x5206;&#x6790;&#x533A;&#x57DF;&#x3002;</div>
+            <div class="rowview clearfix center"><button id="btn_flfx_draw" type="button" class="btn btn-primary"><i class="fa fa-edit"></i> &#x7ED8;&#x5236;&#x5206;&#x6790;&#x533A;&#x57DF;</button></div>
+            <div class="rowview clearfix"><span>&#x57FA;&#x51C6;&#x9762;&#x9AD8;:</span> <input id="txt_flfx_Height" type="number" value="0" step="0.1" class="form-control" style="width:100px" title="&#x8BA1;&#x91CF;&#x5355;&#x4F4D;:&#x7C73;"> <input id="btn_flfx_selHeight" type="button" class="btn btn-primary" value="&#x70B9;&#x9009;&#x9AD8;&#x5EA6;"></div>
+            <div class="rowview clearfix"><span>&#x56F4;&#x5899;&#x5E95;&#x9AD8;:</span> <input id="txt_flfx_MinHeight" type="number" value="0" step="0.1" class="form-control" style="width:100px" title="&#x8BA1;&#x91CF;&#x5355;&#x4F4D;:&#x7C73;"> &#xFF08;&#x53EF;&#x9009;&#xFF09;</div>
+            <div class="rowview clearfix" title="&#x56F4;&#x5899;&#x9876;&#x9AD8;&#x53EA;&#x662F;&#x5C55;&#x793A;&#x6548;&#x679C;&#xFF0C;&#x4E0E;&#x8BA1;&#x7B97;&#x7ED3;&#x679C;&#x65E0;&#x5173;&#x3002;"><span>&#x56F4;&#x5899;&#x9876;&#x9AD8;:</span> <input id="txt_flfx_MaxHeight" type="number" value="0" step="0.1" class="form-control" style="width:100px" title="&#x8BA1;&#x91CF;&#x5355;&#x4F4D;:&#x7C73;"> &#xFF08;&#x53EF;&#x9009;&#xFF09;</div>
+         </div>
+      </div>
+      <div id="dxAnal" class="mainbox">
+         <div class="headbox">
+            <div class="headtitle"><i id="btn_dxkw_destory" class="fa fa-chevron-left backmenu"></i> <span>&#x5730;&#x5F62;&#x5F00;&#x6316;</span></div>
+            <div id="btn_dxkw_clear" class="del"><i class="fa fa-trash-o"></i> <span>Clear</span></div>
+         </div>
+         <div class="mainInfo">
+            <div class="rowview clearfix tip">&#x63D0;&#x793A;:&#x8BF7;&#x9996;&#x5148;&#x5355;&#x51FB; &#x201C;&#x7ED8;&#x5236;&#x533A;&#x57DF;&#x201D; &#x6309;&#x94AE;&#xFF0C;&#x518D;&#x5728;&#x56FE;&#x4E0A;&#x7ED8;&#x5236;&#x5F00;&#x6316;&#x533A;&#x57DF;&#x3002;</div>
+            <div class="rowview clearfix"><span>&#x5F00;&#x6316;&#x6DF1;&#x5EA6;:</span> <input id="txt_dxkw_clipHeight" type="number" value="30" min="0" step="1" max="999" class="form-control" style="width:100px">&#xFF08;&#x7C73;&#xFF09;</div>
+            <div class="rowview clearfix center"><button id="bt_dxkw_draw_extent" type="button" class="btn btn-primary"><i class="fa fa-edit"></i> &#x6DFB;&#x52A0;&#x77E9;&#x5F62;</button> <button id="bt_dxkw_draw" type="button" class="btn btn-primary"><i class="fa fa-edit"></i> &#x6DFB;&#x52A0;&#x591A;&#x8FB9;&#x5F62;</button></div>
+         </div>
+      </div>
+      <div id="dbAnal" class="mainbox">
+         <div class="headbox">
+            <div class="headtitle"><i id="btn_dbtm_destory" class="fa fa-chevron-left backmenu"></i> <span>&#x5730;&#x8868;&#x900F;&#x660E;</span></div>
+            <div id="btn_dbtm_clear" class="del"><i class="fa fa-trash-o"></i> <span>Clear</span></div>
+         </div>
+         <div class="mainInfo">
+            <div class="rowview clearfix tip">&#x63D0;&#x793A;:&#x53EF;&#x4EE5;&#x900F;&#x660E;&#x5730;&#x8868;&#xFF0C;&#x8FDB;&#x5165;&#x5730;&#x4E0B;&#x6A21;&#x5F0F;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5730;&#x4E0B;&#x7BA1;&#x7F51;&#x7B49;&#x6570;&#x636E;&#x3002;</div>
+            <div class="rowview clearfix">
+               <span>&#x5F00;&#x542F;&#x72B6;&#x6001;:</span>
+               <div class="checkbox checkbox-primary checkbox-inline"><input id="chk_dbtm_Underground" class="styled" type="checkbox" checked> <label for="chk_dbtm_Underground">&#x5F00;&#x542F;&#x5730;&#x8868;&#x900F;&#x660E;</label></div>
+            </div>
+            <div class="rowview clearfix"><span>&#x5730;&#x8868;&#x900F;&#x660E;&#x5EA6;:</span> <input id="txt_dbtm_alpha"></div>
+         </div>
+      </div>
+      <div id="tsAnal" class="mainbox">
+         <div class="headbox">
+            <div class="headtitle"><i id="btn_pdpx_destory" class="fa fa-chevron-left backmenu"></i> <span>&#x5761;&#x5EA6;&#x5761;&#x5411;</span></div>
+            <div id="btn_pdpx_clear" class="del"><i class="fa fa-trash-o"></i> <span>Clear</span></div>
+         </div>
+         <div class="mainInfo">
+            <div class="rowview clearfix tip">&#x63D0;&#x793A;:&#x5355;&#x51FB;&#x6309;&#x94AE;&#x540E;&#x5728;&#x56FE;&#x4E0A;&#x7ED8;&#x5236;&#x533A;&#x57DF;&#x3002;</div>
+            <div class="rowview clearfix">&#x63D2;&#x503C;&#x6570;: <input id="txt_pdpx_SplitNum" type="number" value="10" step="1" min="1" max="9999" class="form-control" style="width:100px"></div>
+            <div class="rowview clearfix">
+               &#x5730;&#x8868;&#x6E32;&#x67D3;&#xFF1A;
+               <div class="radio radio-info radio-inline"><input type="radio" id="shadingMaterials1" name="shadingMaterials" value="none" checked> <label for="shadingMaterials1">&#x65E0;</label></div>
+               <div class="radio radio-info radio-inline"><input type="radio" id="shadingMaterials3" name="shadingMaterials" value="slope"> <label for="shadingMaterials3">&#x5761;&#x5EA6;</label></div>
+               <div class="radio radio-info radio-inline"><input type="radio" id="shadingMaterials4" name="shadingMaterials" value="aspect"> <label for="shadingMaterials4">&#x5761;&#x5411;</label></div>
+            </div>
+            <div class="rowview clearfix center"><input id="btn_pdpx_drawExtent" type="button" class="btn btn-primary" value="&#x7ED8;&#x5236;&#x77E9;&#x5F62;"> <input id="btn_pdpx_drawPoly" type="button" class="btn btn-primary" value="&#x7ED8;&#x5236;&#x533A;&#x57DF;"></div>
+         </div>
+      </div>
+      <div id="mxpqAnal" class="mainbox">
+         <div class="headbox">
+            <div class="headtitle"><i id="btn_mxpq_destory" class="fa fa-chevron-left backmenu"></i> <span>&#x6A21;&#x578B;&#x5256;&#x5207;</span></div>
+            <div id="btn_mxpq_clear" class="del"><i class="fa fa-trash-o"></i> <span>Clear</span></div>
+         </div>
+         <div class="mainInfo">
+            <div class="rowview clearfix tip">&#x63D0;&#x793A;:&#x8BF7;&#x5148;&#x56FE;&#x4E0A;&#x70B9;&#x9009;&#x6A21;&#x578B;&#x540E;&#xFF0C;&#x8BBE;&#x7F6E;&#x5256;&#x5207;&#x65B9;&#x5411;&#x53CA;&#x8DDD;&#x79BB;&#x3002;</div>
+            <div class="rowview clearfix"><span>&#x6309;&#x7EBF;&#x5256;&#x5207;:</span> <input type="button" class="btn btn-primary" value="&#x7ED8;&#x5236;&#x7EBF;" id="btn_mxpq_DrawLine"></div>
+            <div class="rowview clearfix">
+               <span>&#x6309;&#x9762;&#x88C1;&#x526A;:</span>
+               <div class="radio radio-info radio-inline"><input type="radio" id="radioMxcjType1" name="radioMxcjType" value="0" checked> <label for="radioMxcjType1">&#x5185;&#x88C1;</label></div>
+               <div class="radio radio-info radio-inline"><input type="radio" id="radioMxcjType2" name="radioMxcjType" value="1"> <label for="radioMxcjType2">&#x5916;&#x88C1;</label></div>
+               <input type="button" class="btn btn-primary" value="&#x7ED8;&#x5236;&#x9762;" id="bt_mxpq_draw">
+            </div>
+            <div class="rowview clearfix"><span>&#x9009;&#x62E9;&#x6A21;&#x578B;:</span> <button type="button" id="btn_mxpq_selectd" class="btn btn-primary">&#x56FE;&#x4E0A;&#x70B9;&#x9009;</button> <span id="lbl_mxpq_mxmc">&#x672A;&#x9009;&#x62E9;</span></div>
+            <div class="rowview clearfix">
+               <span>&#x5256;&#x5207;&#x65B9;&#x5411;:</span>
+               <div class="btn-group" role="group"><button type="button" id="btn_mxpq_Clipping2" class="btn btn-primary btn-clipping">&#x9876;</button> <button type="button" id="btn_mxpq_Clipping1" class="btn btn-primary btn-clipping">&#x5E95;</button> <button type="button" id="btn_mxpq_Clipping3" class="btn btn-primary btn-clipping">&#x4E1C;</button> <button type="button" id="btn_mxpq_Clipping4" class="btn btn-primary btn-clipping">&#x897F;</button> <button type="button" id="btn_mxpq_Clipping5" class="btn btn-primary btn-clipping">&#x5357;</button> <button type="button" id="btn_mxpq_Clipping6" class="btn btn-primary btn-clipping">&#x5317;</button></div>
+            </div>
+            <div class="rowview clearfix"><span>&#x5256;&#x5207;&#x8DDD;&#x79BB;:</span> <input id="range_mxpq_Distance" title="&#x8DDD;&#x79BB;&#xFF08;&#x7C73;&#xFF09;"> <input id="txt_mxpq_Distance" value="0" type="number" class="form-control"></div>
+         </div>
+      </div>
+      <div id="mxypAnal" class="mainbox">
+         <div class="headbox">
+            <div class="headtitle"><i id="btn_mxyp_destory" class="fa fa-chevron-left backmenu"></i> <span>&#x6A21;&#x578B;&#x538B;&#x5E73;</span></div>
+            <div id="btn_mxyp_clear" class="del"><i class="fa fa-trash-o"></i> <span>Clear</span></div>
+         </div>
+         <div class="mainInfo">
+            <div class="rowview clearfix tip">&#x63D0;&#x793A;: &#x6A21;&#x578B;&#x538B;&#x5E73;&#x53EA;&#x652F;&#x6301;&#x90E8;&#x5206;&#x65E0;&#x7740;&#x8272;&#x5668;&#x7684;3dtiles&#x6570;&#x636E;&#x3002;</div>
+            <div class="rowview clearfix"><span>&#x9009;&#x62E9;&#x6A21;&#x578B;:</span> <button type="button" id="txt_mxyp_selectd" class="btn btn-primary">&#x56FE;&#x4E0A;&#x70B9;&#x9009;</button> <span id="txt_mxyp_mxmc">&#x672A;&#x9009;&#x62E9;</span></div>
+            <div class="rowview clearfix"><span>&#x538B;&#x5E73;&#x9AD8;&#x5EA6;:</span> <input id="txt_mxyp_flatHeight" type="number" value="0" class="form-control" style="width:100px">&#xFF08;&#x7C73;&#xFF09;</div>
+            <div class="rowview clearfix center"><button id="bt_mxyp_draw_extent" type="button" class="btn btn-primary"><i class="fa fa-edit"></i> &#x6DFB;&#x52A0;&#x77E9;&#x5F62;</button> <button id="bt_mxyp_draw" type="button" class="btn btn-primary"><i class="fa fa-edit"></i> &#x6DFB;&#x52A0;&#x591A;&#x8FB9;&#x5F62;</button></div>
+         </div>
+      </div>
+      <div id="xgfxAnal" class="mainbox">
+         <div class="headbox">
+            <div class="headtitle"><i id="btn_xgfx_destory" class="fa fa-chevron-left backmenu"></i> <span>&#x9650;&#x9AD8;&#x5206;&#x6790;</span></div>
+            <div id="btn_xgfx_clear" class="del"><i class="fa fa-trash-o"></i> <span>Clear</span></div>
+         </div>
+         <div class="mainInfo">
+            <div class="rowview clearfix">
+               <span>&#x5206;&#x6790;&#x533A;&#x57DF;:</span>
+               <div><input type="button" id="btn_DrawExtent" class="btn btn-primary" value="&#x7ED8;&#x5236;&#x77E9;&#x5F62;"> <input type="button" id="btn_Draw" class="btn btn-primary" value="&#x7ED8;&#x5236;&#x9762;"></div>
+            </div>
+            <div class="rowview clearfix">
+               <span>&#x5730;&#x8868;&#x6D77;&#x62D4;:</span>
+               <div><span id="bottomHeight" style="margin-left:10px">0&#x7C73;</span> <input type="button" id="btn_selectPoint" class="btn btn-primary" value="&#x56FE;&#x4E0A;&#x9009;&#x70B9;"></div>
+            </div>
+            <div class="rowview clearfix">
+               <span>&#x9650;&#x5236;&#x9AD8;&#x5EA6;:</span>
+               <div><input id="range_currHeight" title="&#x9AD8;&#x5EA6;" style="width:180px;margin-top:10px"></div>
+            </div>
+            <div class="rowview clearfix"><span>&#x5F53;&#x524D;&#x9AD8;&#x5EA6;:</span> <span id="lbl_nowHeight">80 &#x7C73;</span></div>
+         </div>
+      </div>
+      <script src="view.js?time=20210803"></script>
+   </body>
+</html>

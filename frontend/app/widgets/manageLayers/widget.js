@@ -63,7 +63,7 @@
 
     getLayers() {
       return this.map.getLayers({
-        basemaps: true, //Whether to take the basempas in config.json, because it is controlled by the basemap, it can be changed to false as needed in specific projects
+        basemaps: false, //Whether to take the basempas in config.json, because it is controlled by the basemap, it can be changed to false as needed in specific projects
         layers: true //Whether to take the layers in config.json
       })
     }

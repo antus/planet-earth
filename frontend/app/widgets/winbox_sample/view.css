@@ -1,0 +1,24 @@
+/* 2017-7-30 20:28:41 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） */
+
+.wb-close:before {
+    content: none;
+}
+
+.wb-header {
+	border-bottom: 1px solid #20a0ff4d;	
+}
+
+.wb-title {
+	display: block;
+}
+
+.wb-body {
+	background: #1e243299;
+}
+
+.winbox {
+	border: 1px solid rgba(32,160,255,0.6);
+}
+
+
+

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar" lang="zh-cn">
+  <head>
+    <title>Pop-up subpage</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- Mobile device viewport -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" />
+    <meta name="author" content="Mars Technology http://mars3d.cn " />
+    <!-- 360 browser uses Webkit kernel by default -->
+    <meta name="renderer" content="webkit" />
+    <!-- Add desktop shortcut to Chrome browser (Android) -->
+    <link rel="icon" type="image/png" href="../../../img/favicon/favicon.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Add Safari browser to home screen (IOS) -->
+    <link rel="icon" sizes="192x192" href="img/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Mars Technology MarsGIS" />
+    <!-- Win8 title bar and ICON icon -->
+    <link rel="apple-touch-icon-precomposed" href="../../../img/favicon/apple-touch-icon.png" />
+    <meta name="msapplication-TileImage" content="../../../img/favicon/app-icon72x72@2x.png" />
+    <meta name="msapplication-TileColor" content="#62a8ea" />
+
+    <!-- Introduction of third-party lib -->
+    <script
+      type="text/javascript"
+      src="../../../lib/include-lib.js?time=20220120"
+      libpath="../../../lib/"
+      include="jquery,ztree,font-awesome,bootstrap,bootstrap-slider,admui-frame"
+    ></script>
+
+    <link href="../../../css/widget-win.css" rel="stylesheet" />
+    <link href="view.css?time=20220120" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div id="view" style="width: 100%; height: calc(100% - 40px); overflow: auto">
+      <ul id="treeOverlays" class="ztree"></ul>
+    </div>
+    <div style="position: absolute; bottom: 0; padding: 5px; color: #a59d9d">Tip: Double-click to position the viewport to its location</div>
+
+    <div id="content_layer_manager_rMenu" class="layersctl_rMenu">
+      <ul>
+        <li data-type="top">Set layer to top</li>
+        <li data-type="up">Move the layer up one level</li>
+        <li data-type="down">Move the layer down one level</li>
+        <li data-type="bottom">Set layer to bottom</li>
+      </ul>
+    </div>
+
+    <!--Page js-->
+    <script src="view.js?time=20220120"></script>
+  </body>
+</html>

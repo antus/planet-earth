@@ -1,0 +1,367 @@
+<!-- 2021-9-4 14:34:24 | 版权所有 火星科技 http://marsgis.cn -->
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="en">
+  <head>
+    <title>Pop-up window</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+    <meta name="author" content="&#x706B;&#x661F;&#x79D1;&#x6280; http://mars3d.cn ">
+    <meta name="renderer" content="webkit">
+    <link rel="icon" type="img/png" href="../../img/favicon/favicon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="img/favicon/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="&#x706B;&#x661F;&#x79D1;&#x6280;MarsGIS">
+    <link rel="apple-touch-icon-precomposed" href="../../img/favicon/apple-touch-icon.png">
+    <meta name="msapplication-TileImage" content="../../img/favicon/app-icon72x72@2x.png">
+    <meta name="msapplication-TileColor" content="#62a8ea">
+    <script src="../../lib/include-lib.js?time=20210803" libpath="../../lib/" include="jquery,jquery.range,jedate,font-awesome,bootstrap,bootstrap-table,bootstrap-checkbox,bootstrap-slider,haoutil,echarts,admin-lte,moment"></script>
+    <link href="../../css/widget-win.css" rel="stylesheet">
+    <link href="view.css" rel="stylesheet">
+    <link href="search.css" rel="stylesheet">
+  </head>
+
+  <body style="background: transparent !important" class="dark-mode">
+
+       
+    <!-- GeoProcessing list -->
+    <div id="illegal_building">
+      <div class="headbox">
+        <div id="btn_illegal_building_add" onclick="openGeoProcessingTools()" class="save" ><i class="fa fa-plus-circle"></i> <span>Add</span></div>
+      </div>
+      <!-- Search -->
+      <div class="row" style="margin: 5px;">
+        <input id="illegal_building_search" type="text" class="form-control" placeholder="Search" style="width: 100%; z-index: 10;" />
+      </div>
+      <div class="dropdown-divider"></div>
+
+      <!-- Results -->
+      <div>
+        <a href="#" class="dropdown-item">
+        <!-- Message Start -->
+        <div class="media">
+          <img src="/img/landslides.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+          <div class="media-body">
+          <h3 class="dropdown-item-title">
+            Valdagno
+            <span class="float-right badge bg-info">12</span>
+          </h3>
+          <p class="text-sm text-muted">Landslides</p>
+          <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+          </div>
+        </div>
+        <!-- Message End -->
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+        <!-- Message Start -->
+        <div class="media">
+          <img src="/img/illegal-building.png" alt="User Avatar" class="img-size-50 img-circle mr-3">
+          <div class="media-body">
+          <h3 class="dropdown-item-title">
+            Abano terme
+            <!--span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span-->
+            <span class="float-right badge bg-danger">531</span>
+          </h3>
+          <p class="text-sm text-muted">Illegal Buildings</p>
+          <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 1 Hours Ago</p>
+          </div>
+        </div>
+        <!-- Message End -->
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+        <!-- Message Start -->
+        <div class="media">
+          <img src="/img/flooding.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+          <div class="media-body">
+          <h3 class="dropdown-item-title">
+            Faenza
+            <!-- span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span-->
+            <span class="float-right badge bg-warning">3</span>
+          </h3>
+          <p class="text-sm text-muted">Flooding</p>
+          <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 24 Hours Ago</p>
+          </div>
+        </div>
+        <!-- Message End -->
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+          <!-- Message Start -->
+          <div class="media">
+            <img src="/img/costal-erosion.jpeg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+            <div class="media-body">
+            <h3 class="dropdown-item-title">
+              Genova
+              <span class="float-right badge bg-info">12</span>
+            </h3>
+            <p class="text-sm text-muted">Costal erosion</p>
+            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+            </div>
+          </div>
+          <!-- Message End -->
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+          <!-- Message Start -->
+          <div class="media">
+            <img src="/img/landslides.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+            <div class="media-body">
+            <h3 class="dropdown-item-title">
+              Messina
+              <span class="float-right badge bg-info">12</span>
+            </h3>
+            <p class="text-sm text-muted">Landslides</p>
+            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+            </div>
+          </div>
+          <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+          <!-- Message Start -->
+          <div class="media">
+            <img src="/img/drought.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+            <div class="media-body">
+            <h3 class="dropdown-item-title">
+              Salerno
+              <!--span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span-->
+              <span class="float-right badge bg-danger">531</span>
+            </h3>
+            <p class="text-sm text-muted">Drought</p>
+            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 1 Hours Ago</p>
+            </div>
+          </div>
+          <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+          <!-- Message Start -->
+          <div class="media">
+            <img src="/img/crop.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+            <div class="media-body">
+            <h3 class="dropdown-item-title">
+              Treviso
+              <!-- span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span-->
+              <span class="float-right badge bg-warning">3</span>
+            </h3>
+            <p class="text-sm text-muted">Crop</p>
+            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 24 Hours Ago</p>
+            </div>
+          </div>
+          <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="/img/landslides.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <div class="media-body">
+              <h3 class="dropdown-item-title">
+                Valdagno
+                <span class="float-right badge bg-info">12</span>
+              </h3>
+              <p class="text-sm text-muted">Landslides</p>
+              <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+            </a>
+            <div class="dropdown-divider"></div>
+
+            <a href="#" class="dropdown-item">
+              <!-- Message Start -->
+              <div class="media">
+                <img src="/img/landslides.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Valdagno
+                  <span class="float-right badge bg-info">12</span>
+                </h3>
+                <p class="text-sm text-muted">Landslides</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                </div>
+              </div>
+              <!-- Message End -->
+              </a>
+              <div class="dropdown-divider"></div>
+
+              <a href="#" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                  <img src="/img/landslides.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                  <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                    Valdagno
+                    <span class="float-right badge bg-info">12</span>
+                  </h3>
+                  <p class="text-sm text-muted">Landslides</p>
+                  <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                  </div>
+                </div>
+                <!-- Message End -->
+                </a>
+                <div class="dropdown-divider"></div>
+      </div>
+        
+      <!-- table-->
+      <!-- div class="row" style="margin: 0px -5px !important; padding:0px; overflow: auto; position:absolute; top: 50px; bottom:40px; width:100%">
+        <table id="illegal_building_table" style="padding: 10px !important; overflow: auto;"></table>
+      </div-->
+      <!-- table footer -->
+      <div class="row" style="margin: 0px -4px; padding:5px; position: fixed; bottom: 0px; right: 5px; left: 5px; border-top: 1px solid #6c757d;;">
+        <div class="text-sm text-muted querybar-fl" style="width: 100%;">
+          Total: <span id="lbl-allCount">0</span>
+          <span class="querybar-ye querybar-fr">
+            Page: <span id="lbl-pageIndex">1</span>/<span id="lbl-allPage">1</span>&nbsp;&nbsp;
+            <span style="float: right;">
+              <a href="javascript:showFirstPage()">&lt;&lt;</a>
+              <a href="javascript:showPretPage()">&lt;</a>
+              <a href="javascript:showNextPage()">&gt;</a>
+              <a href="javascript:showLastPage()">&gt;&gt;</a>
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- GeoProcessing tools -->
+    <div id="geo-processessing-tools" style="display: none;">
+      <div class="headbox">
+        <div class="back" onclick="closeGeoProcessingTools()"><i class="fa fa-chevron-left backmenu"></i> <span>Back</span></div>
+      </div>
+      <!-- Application buttons -->
+      <div class="card" style="background: transparent !important;">
+        <div class="card-body" style="border:none">
+          <a class="btn btn-app" id="landslides-button">
+            <img src="/img/landslides.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle" style="margin-left:10px">
+            <div>Landslides</div>
+          </a>
+          <a class="btn btn-app">
+            <img src="/img/flooding.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3" style="margin-left:10px">
+            <div>Flooding</div>
+          </a>
+          <a class="btn btn-app">
+            <img src="/img/illegal-building.png" alt="User Avatar" class="img-size-50 img-circle mr-3" style="margin-left:10px">
+            <div>Illegal Building</div>
+          </a>
+          <a class="btn btn-app">
+            <img src="/img/costal-erosion.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3" style="margin-left:10px">
+            <div>Costal erosion</div>
+          </a>
+          <a class="btn btn-app">
+            <img src="/img/drought.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3" style="margin-left:10px">
+            <div>Drought</div>
+          </a>
+          <a class="btn btn-app">
+            <img src="/img/crop.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3" style="margin-left:10px">
+            <div>Crop</div>
+          </a>
+          <a class="btn btn-app">
+            <img src="/img/fire.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3" style="margin-left:10px">
+            <div>Fire</div>
+          </a>
+          <a class="btn btn-app">
+            <img src="/img/air-pollution.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3" style="margin-left:10px">
+            <div>Air pollution</div>
+          </a>
+          <a class="btn btn-app">
+            <img src="/img/water-quality.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3" style="margin-left:10px">
+            <div>Water quality</div>
+          </a>
+          <a class="btn btn-app">
+            <img src="/img/deforestation.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3" style="margin-left:10px">
+            <div>Deforestation</div>
+          </a>
+          <a class="btn btn-app">
+            <img src="/img/mining.jpeg" alt="User Avatar" class="img-size-50 img-circle mr-3" style="margin-left:10px">
+            <div>Mining</div>
+          </a>
+          <a class="btn btn-app">
+            <img src="/img/heatmap.png" alt="User Avatar" class="img-size-50 img-circle mr-3" style="margin-left:10px">
+            <div>Heatmap</div>
+          </a>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+
+
+    <!-- GeoProcessing detail-->
+    <div id="illegal_building_detail" class="mainbox" style="display: none">
+      <div class="headbox">
+          <div class="headtitle" onclick="closeDetail()"><i class="fa fa-chevron-left backmenu"></i> <span>Back</span></div>
+          <div class="save" onclick="save()" id="save_button" style="display: none;"><i class="fa fa-save"></i> <span>Save</span></div>
+        </div>
+      <div class="mainInfo">
+        <div style="padding:5px 0px;margin: 0px; overflow: auto;">
+          <div class="form-group">
+            <label style="padding:5px 0px 0px 0px;">1. Choose the city of interest</label>
+            <div id="map-querybar" class="querybar-ssk animation-slide-top no-print-view">
+              <input id="txt_querypoi" type="search" class="querybar-ssk1" placeholder="Select city" autocomplete="off" />
+              <div id="querybar_progress" class="querybar-progress" >
+                <img src="img/loader.gif" />
+              </div>
+              <div id="querybar_delete" class="querybar-delete">
+                <i class="fa fa-remove"></i>
+              </div>
+              <button id="btn_querypoi" type="button" value="" class="querybar-ssk2">
+                <i class="fa fa-search"></i>
+              </button>
+              <div class="querybar-clear"></div>
+            
+              <!--History-->
+              <div id="querybar_histroy_view" class="querybar-sbox" style="display: none">
+                <div class="querybar-ssls">
+                  <ul id="querybar_ul_history"></ul>
+                </div>
+                <div>
+                  <a href="javascript:queryGaodePOIWidget.clearHistory();" class="querybar-more">Elimina la cronologia</a>
+                </div>
+              </div>
+            
+              <!--Search Smart Tips-->
+              <div id="querybar_autotip_view" class="querybar-znbox" style="display: none">
+                <div class="querybar-znts">
+                  <ul id="querybar_ul_autotip"></ul>
+                </div>
+              </div>
+            
+              <!--list of search results-->
+              <div id="querybar_resultlist_view" class="querybar-sbox" style="display: none"></div>
+            </div>
+            
+            <label style="padding:5px 0px 0px 0px;">2. Choose the time interval</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <i class="far fa-calendar-alt"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control float-right" id="reservation">
+            </div>
+
+            <label style="padding:5px 0px 0px 0px;">3. Choose data for impact analysis</label>
+            <select class="select2 select2-hidden-accessible" multiple="" data-placeholder="Select Data" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true">
+              <option data-select2-id="35">Water network</option>
+              <option data-select2-id="36">Powerlines</option>
+              <option data-select2-id="37">Roads</option>
+              <option data-select2-id="38">Railway</option>
+              <option data-select2-id="39">Buildings</option>
+              <option data-select2-id="40">Monuments</option>
+             </select>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <!-- view.js -->
+    <script src="view.js?time=20210803"></script>
+  </body>
+
+</html>

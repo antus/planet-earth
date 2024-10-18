@@ -1,0 +1,190 @@
+/* 2017-12-5 14:44:06 | 修改 木遥（微信:  http://marsgis.cn/weixin.html ） */
+
+.toolBar {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left:0;
+  height: 30px;
+  background: rgba(43, 44, 47, 1);
+  border-radius: 3px;
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, .15);
+}
+
+.toolBarRight i {
+  
+  padding: 0px 0px 0px 2px;
+  margin-top: 3px;
+}
+
+.toolBarRight-btn {
+  list-style-type: none;
+  cursor: pointer;
+  border-right: solid 1px #2b2c2f;
+  color: #edffff;
+}
+
+.toolBarRight-btn .btn-link a {
+  text-decoration: none;
+}
+
+.toolBarRight-btn:hover {
+  color: #fff;
+}
+
+.layui-layer-title i {
+  margin-right: 10px;
+}
+
+.toolBarRight-dropdown-menu {
+  background: rgba(43, 44, 47, 0.8);
+  border: 1px solid #2b2c2f;
+  min-width: 110px;
+}
+
+.toolBarRight-dropdown-menu>li>a {
+  color: #edffff;
+}
+
+.toolBarRight-dropdown-menu>li>a:hover, .toolBarRight-dropdown-menu>li>a:focus {
+  color: #fff;
+  background-color: #444d59;
+}
+
+.toolBarRight-dropdown-menu>.active>a, .toolBarRight-dropdown-menu>.active>a:hover, .toolBarRight-dropdown-menu>.active>a:focus {
+  color: #fff;
+  background-color: #444d59;
+}
+
+
+
+/*************************************************************
+Logo
+**************************************************************/
+.logo {
+  filter: invert(100%); opacity: .8;
+}
+.brand-image {
+  height: 28px !important;
+}
+
+/************************************************************
+Navbar
+*************************************************************/
+.badge {
+  padding:5px
+}
+
+.main-header {
+  margin-left:0 !important;
+}
+.sidebar-button {
+  padding-top: 8px !important;
+}
+.nav-link {
+  padding-left: 9px !important;
+  padding-right: 8px !important;
+}
+.flag-icon-selected {
+  padding-top: 6px !important;
+}
+
+.full-screen {
+  padding-top: 3px !important;
+}
+.application-count {
+  margin: 0px 10px;
+  display: flex;
+  height: 28px;
+  
+}
+
+.application {
+  padding: 5px !important;
+  background-color: rgb(63, 103, 145);
+}
+.count {
+  margin: 0px;
+  padding: 5px !important;
+  font-weight: 600;
+  font-size: 12px;
+  width: unset;
+  background-color: gold;
+  color: black;
+  border-radius: 0px;
+}
+/************************************************************
+Searchbar 
+*************************************************************/
+.searchbar {
+  width: 100%;
+  max-width: 600px;
+  margin:auto;
+}
+.searchbar-li {
+  width: 100%;
+}
+
+#searchText {
+  border: 1px solid rgb(86, 96, 106) !important;
+}
+
+.search-button {
+  border-radius: 0px !important;
+}
+
+.delete-search-button {
+  position:absolute; 
+  top:8px; 
+  right:44px;
+  cursor: pointer;
+  display: none;
+  z-index: 99999;
+}
+
+.categories-panel {
+  width: 100%;
+  background: rgba(63, 72, 84, 0.99);
+  overflow: auto;
+  max-height: 500px;
+  scrollbar-color: #555555 #343a40;
+  scrollbar-width: thin;
+  position: absolute;
+  top:28px;
+}
+
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.category-filter-all {
+  width: 100%;
+  border-bottom: 1px solid #56606a;
+}
+
+.custom-control {
+  margin: 10px;
+  width: 175px;
+}
+.custom-control-label {
+  float: left; 
+  height:20px; 
+  padding-top: 1px;
+}
+
+.red {
+  color: red;
+}
+
+/************************************************************
+Content
+*************************************************************/
+.content-wrapper {
+  overflow: auto;
+  background-color:#343a40!important;
+  scrollbar-color: #555555 #343a40;
+  scrollbar-width: thin;
+  padding: 0px !important;
+  margin-left:0 !important;
+}

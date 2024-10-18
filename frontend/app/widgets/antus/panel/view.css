@@ -1,0 +1,377 @@
+:root,
+:root.dark {
+  --bg-color: #24272fde;
+  --element-bg-color: #24272fde;
+  --bg-color-selected: #6a7484de;
+  --text-color: rgb(255, 255, 255);
+  --type-color: rgb(165, 165, 45);
+  //--text-color: rgb(160, 167, 180);
+
+  --box-shadow: rgba(255, 255, 255, 0.18) 0px 0px 1px 0px, rgba(255, 255, 255, 0.1) 0px 3px 8px 0px, rgba(255, 255, 255, 0.1) 0px 1px 3px 0px;
+  --left-arrow-bg-color: linear-gradient(90deg, #000000 70%, transparent);
+  --right-arrow-bg-color: linear-gradient(-90deg, #000000 70%, transparent);
+  --button-text-color: #123;
+  --button-bg-color: #555;
+  --border-color: 1px solid rgba(255, 255, 255, .125);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(31, 186, 214);
+}
+.panel {
+  position: absolute;
+  left: -300px;
+  width:300px;
+  top: 10px;
+  bottom:-15px;
+  border-radius:0px;
+  transition: .5s;
+  border:1px solid var(--bg-color-selected);
+
+}
+
+
+.panel-show {
+    left: 10px;
+}
+
+.panel-header {
+  padding: 10px;
+  background-color: var(--bg-color);
+}
+.panel-title {
+  display:flex;
+  padding: 0px;
+}
+.panel-logo {
+  padding-right: 5px;;
+}
+.panel-name {
+  color: rgb(31, 186, 214);
+  text-wrap: nowrap;
+
+}
+
+.panel-icons {
+  color: #6a7485;
+  width: 100%;
+  padding-top: 3px;
+  font-size: 20px;
+}
+
+
+.panel-close-button {
+  background-color: #29323b;
+  float:right;
+  cursor: pointer;
+}
+
+
+
+.panel-body {
+  padding: 5px;
+  overflow: auto;
+  position: absolute;
+  top: 45px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-color);
+  //border: 1px solid red;
+}
+
+#nestedDemo {
+  position: absolute;
+  top: 45px;
+  bottom:0;
+  overflow: auto;
+  right:0;
+}
+
+.sortable-list-wrapper {
+  padding: 4px;
+  overflow: auto;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right:0px;
+  max-width: 100%;
+  width:300px;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.selected {
+  background-color: var(--bg-color-selected) !important;
+}
+
+.layer-detail-panel {
+  display: flex;
+	align-items: center;
+  flex-direction: column;
+	width:100%;
+  overflow: hidden;
+}
+
+.layer-detail-panel-header {
+	border: var(--border-color);
+  padding: 5px 10px;
+  width: calc(100% + 15px);
+  margin: 2px 0px;
+	background-color: var(--element-bg-color);
+}
+
+.layer-detail-toolbar {
+  display: flex;
+  flex-direction: row;
+	width:100%;
+  overflow: hidden;
+}
+
+.btn-panel {
+  color: var(--text-color);
+	border: var(--border-color);
+	background-color: var(--element-bg-color);
+	display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-panel-text {
+	font-size:12px;
+}
+
+.element-control-buttons {
+	display: flex; 
+	align-items: center; 
+	justify-content: left; 
+	height: 100%; 
+}
+.element-info {
+    margin: 0;
+    padding-left: 5px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    height: 100%;
+    flex-direction: column;
+    color: var(--text-color);
+    max-width: calc(100% - 35px);
+}
+
+.element-text {
+	font-size:12px;
+  width: 100%;
+}
+
+.element-type {
+	font-size:11px;
+	color: var(--type-color);
+	font-style:italic;
+}
+
+.panel-element {
+	border: var(--border-color);
+  width: calc(100% + 15px);
+  margin: 5px 0px 0px -15px;
+	background-color: transparent;
+	font-size:14px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.flex-container-1 { 
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    max-width: 220px;
+} 
+
+.flex-container-2 { 
+	display: flex;
+	//box-sizing: border-box;
+  //padding-right: 5px;
+} 
+
+.element-check {
+	padding:5px;
+}
+
+.slider.slider-horizontal {
+  width: 150px;
+  height: 10px;
+}
+
+.slider.slider-horizontal .slider-track {
+  height: 2px;
+  width: 100%;
+  margin-top: -1px;
+  top: 50%;
+  left: 0;
+}
+.slider-handle {
+  top:0px;
+  width: 10px;
+  height: 10px;
+}
+
+.element-range {
+  height: 2px;
+  width: 160px;
+  margin:10px 0px;
+}
+.btn-default {
+    background-color: var(--bg-color);
+}
+
+.p-right-icon {
+	padding: 5px;
+  float: right;
+}
+
+.p-right-10 {
+  padding-right:10px;;
+}
+
+
+.list-group {
+	padding: 0px;
+}
+.list-group-item {
+  cursor: pointer;
+  padding: 0px 0px 0px 16px;
+	background-color: transparent;
+	border: none;
+	border-radius: 0px !important;
+}
+
+.nested-sortable {
+    padding-left: 0px;
+}
+
+.fa-grip-vertical {
+  cursor: move;
+  cursor: -webkit-grabbing;
+  padding-right: 10px;
+}
+
+.p-right-5 {
+	padding-right: 5px;
+}
+
+
+
+/* Catalog table */
+.catalog-layers-container {
+  bottom: 3px;
+  left: 4px;
+  right: 4px;
+  position: absolute;
+  top: 107px;
+
+}
+
+#layers_table {
+	padding: 5px !important; 
+	width: 100% !important;
+}
+
+#layers_table td {
+	padding: 0px !important; 
+}
+
+.form-control {
+	color: #fff;
+	background-color: #6c757d;
+	border-color: #6c757d;
+}
+
+.processId {
+	font-size: 14px;
+    color: #dcdcdc;
+    font-weight: bold;
+  }
+
+
+.fixed-table-header {
+	margin-bottom: 5px;
+}
+
+.dataTable {
+	width: 100% !important;
+}
+
+.dataTable tr {
+	height: 55px;
+	padding: 0px !important;
+}
+.dataTable td {
+	padding: 5px !important;
+    font-size: 14px;
+    color: #999;
+	border:none;
+}
+
+.dataTable td div {
+	display: flex;
+    flex-direction: column;
+	margin: 0px !important;
+	padding: 5px !important;
+}
+
+.bootstrap-table .table {
+	width: 100% !important;
+}
+
+.table > thead > tr > th {
+    border: none !important ;
+}
+
+.bootstrap-table .fixed-table-container.fixed-height:not(.has-footer) {
+    border-bottom: none !important;
+}
+
+.bootstrap-table .fixed-table-container .fixed-table-body {
+  max-height: none;
+  overflow-x: hidden;
+}
+
+.bootstrap-table .fixed-table-container.fixed-height .fixed-table-border {
+  border:none;
+}
+
+.service-selection {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 5px;
+}
+
+
+.layers-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 5px;
+  height: 100%;
+}
+
+.catalog-picker {
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: rgb(31, 186, 214);
+}
+
+
+#legend-img {
+  background-color: #dcdcdc;
+}

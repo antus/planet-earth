@@ -1,0 +1,152 @@
+<!--
+	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/en/editor.html?c=pictorialBar-dotted
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+  
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+  
+  <!-- Uncomment this line if you want to dataTool extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/extension/dataTool.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use gl extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-stat extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-graph-modularity extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts-graph-modularity@2/dist/echarts-graph-modularity.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use map
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
+  -->
+  <!-- Uncomment these two lines if you want to use bmap extension
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.5.1/dist/extension/bmap.min.js"></script>
+  -->
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    
+    var option;
+
+    // Generate data
+let category = [];
+let dottedBase = +new Date();
+let lineData = [];
+let barData = [];
+for (let i = 0; i < 20; i++) {
+  let date = new Date((dottedBase += 3600 * 24 * 1000));
+  category.push(
+    [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-')
+  );
+  let b = Math.random() * 200;
+  let d = Math.random() * 200;
+  barData.push(b);
+  lineData.push(d + b);
+}
+// option
+option = {
+  backgroundColor: '#222222',
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
+  legend: {
+    data: ['line', 'bar'],
+    textStyle: {
+      color: '#ccc'
+    }
+  },
+  xAxis: {
+    data: category,
+    axisLine: {
+      lineStyle: {
+        color: '#ccc'
+      }
+    }
+  },
+  yAxis: {
+    splitLine: { show: false },
+    axisLine: {
+      lineStyle: {
+        color: '#ccc'
+      }
+    }
+  },
+  series: [
+    {
+      name: 'line',
+      type: 'line',
+      smooth: true,
+      showAllSymbol: true,
+      symbol: 'emptyCircle',
+      symbolSize: 15,
+      data: lineData
+    },
+    {
+      name: 'bar',
+      type: 'bar',
+      barWidth: 10,
+      itemStyle: {
+        borderRadius: 5,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: '#c43631' },
+          { offset: 1, color: '#ffc532' }
+        ])
+      },
+      data: barData
+    },
+    {
+      name: 'line',
+      type: 'bar',
+      barGap: '-100%',
+      barWidth: 10,
+      itemStyle: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: 'rgba(20,200,212,0.5)' },
+          { offset: 0.2, color: 'rgba(20,200,212,0.2)' },
+          { offset: 1, color: 'rgba(20,200,212,0)' }
+        ])
+      },
+      z: -12,
+      data: lineData
+    },
+    {
+      name: 'dotted',
+      type: 'pictorialBar',
+      symbol: 'rect',
+      itemStyle: {
+        color: '#0f375f'
+      },
+      symbolRepeat: true,
+      symbolSize: [12, 4],
+      symbolMargin: 1,
+      z: -10,
+      data: lineData
+    }
+  ]
+};
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>

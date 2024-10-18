@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="author" content="M.antonini " />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon/favicon.ico" />
+    <title>Oil Spill</title>
+
+
+    <script
+        type="text/javascript"
+        src="/lib/include-lib.js?time=20220120"
+        libpath="/lib/"
+        include="jquery,bootstrap,bootstrap-slider,flagIcons,font-awesome-free,font-awesome,font-a,web-icons,adminlte31,layer,haoutil,localforage,nprogress,toastr,admui,turf,mars3d,mars3d-space,es5-widget"
+      ></script>
+
+    <style>
+      .marsBlackPanel {
+      background: rgba(0,0,0,0.7) !important;
+      }
+  
+      .mars3d-template-content div label {
+      width:70px;
+      }
+      .mars3d-popup-content {
+      margin:0 !important; 
+      }
+
+      .mars3d-locationbar-content {
+        height: 40px;
+      }
+      .mars3d-locationbar-content {
+         padding-top: 10px !important;
+      }
+      .mars3d-distance-legend {
+        bottom:10px !important;
+        left:200px !important;
+      }
+      .alamaviva-logo {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        z-index: 10000;
+      }
+    </style>
+  
+      <link href="/css/divGraphic.css" rel="stylesheet" />
+      <link href="/css/style.css" rel="stylesheet" />
+    
+    <link href="./style.css" rel="stylesheet" />
+</head>
+
+<body class="dark">
+  
+    <div id="mars3dContainer" class="mars3d-container"></div>
+
+    <img src="img/AlmavivA.png" class="alamaviva-logo brand-image" >
+  
+
+    <script src="/js/common.js"></script>
+    <script src="./map.js"></script>
+</body>
+
+</html>

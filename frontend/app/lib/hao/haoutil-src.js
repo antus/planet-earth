@@ -589,14 +589,14 @@ haoutil.str = (function () {
         strtime = Number(strtime)||0;
 
         if (strtime < 60)
-            return strtime.toFixed(0) + "秒";
+            return strtime.toFixed(0) + " second";
         else if (strtime >= 60 && strtime < 3600) {
             var miao = Math.floor(strtime % 60);
-            return Math.floor(strtime / 60) + "分钟" + (miao != 0 ? (miao + "秒") : "");
+            return Math.floor(strtime / 60) + " minute" + (miao != 0 ? (miao + "  second") : "");
         }
         else {
             strtime = Math.floor(strtime / 60); //秒转分钟
-            return Math.floor(strtime / 60) + "小时" + Math.floor(strtime % 60) + "分钟";
+            return Math.floor(strtime / 60) + " hours" + Math.floor(strtime % 60) + "minute";
         }
     }
 
