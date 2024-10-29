@@ -1,6 +1,6 @@
-"use script"; 
+"use script";
 
-const KEYCLOAK_FILE = "config/keycloak.json"; 
+const KEYCLOAK_FILE = "config/keycloak.json";
 const EXAMPLE_FILE = "config/example.json";
 const APPLICATIONS_FILE = "config/applications.json";
 const ALL_CATEGORIES = "all-categories";
@@ -11,49 +11,47 @@ const defaultThumbnail = "default.gif";
 const editorUrl = "editor-es5.html"
 const readUrl = "read-es5.html"
 
+const KC_URL = 'http://10.100.208.140:8888';
+const REALM = 'master';
+const CLIENT_ID = 'keycloak-planet-earth';
+
 var searchText = "";
 var selectAllCategories = true;
 var selectedCategories = [];
 // Is dev param present?
 const urlParams = new URLSearchParams(window.location.search);
-const dev = urlParams.get('dev')!=undefined  
+const dev = urlParams.get('dev')!=undefined
 
 // authentication
 window.onload =  async function () {
-	loadApplication();
-	/*
-    //load keycloak parameters
-    $.getJSON(KEYCLOAK_FILE, '',async function (kc) {
-        // initialize keycloak
-        window.keycloak = new Keycloak({
-            url: kc.url,
-            realm: kc.realm,
-            clientId: kc.clientId
-        });
-        window.keycloak._login = window.keycloak.login;
-        window.keycloak.login = function (options) {
-            if (options) {
-                options.scope = "openid";
-            }
-            return window.keycloak._login.apply(window.keycloak, [options]);
-        };
-        // check if the user is already authenticated
-        const authenticated = await keycloak.init({ 
-            onLoad: 'login-required', 
-            // onLoad: 'check-sso', 
-            checkLoginIframe: true, 
-            checkLoginIframeInterval: 1, 
-            pkceMethod: 'S256' 
-        })
-        if (authenticated) {
-            showUserInfo();
-            loadApplication();
-        } else {
-            showWelcome();
-        }
-        keycloak.onAuthLogout = showWelcome;
+    // initialize keycloak
+    window.keycloak = new Keycloak({
+        url: KC_URL,
+        realm: REALM,
+        clientId: CLIENT_ID
     });
-	*/
+    window.keycloak._login = window.keycloak.login;
+    window.keycloak.login = function (options) {
+        if (options) {
+            options.scope = "openid";
+        }
+        return window.keycloak._login.apply(window.keycloak, [options]);
+    };
+    // check if the user is already authenticated
+    const authenticated = await keycloak.init({
+        onLoad: 'login-required',
+        // onLoad: 'check-sso',
+        checkLoginIframe: true,
+        checkLoginIframeInterval: 1,
+        pkceMethod: 'S256'
+    })
+    if (authenticated) {
+        showUserInfo();
+        loadApplication();
+    } else {
+        showWelcome();
+    }
+    keycloak.onAuthLogout = showWelcome;
 }
 
 // show welcome message
@@ -63,7 +61,6 @@ function showWelcome() {
 
 // logout
 function logout() {
-    $(".wrapper").hide();
     keycloak.logout();
 }
 
@@ -95,8 +92,6 @@ function loadApplication() {
             loadContent();
             // Init searchbar
             initSearchbar();
-            // show wrapper
-            $(".wrapper").show();
         });
     });
 }
@@ -124,10 +119,10 @@ function initI18next() {
         }
       }, (err, t) => {
         if (err) return console.error(err);
-  
+
         // for options see https://github.com/i18next/jquery-i18next#initialize-the-plugin
         jqueryI18next.init(i18next, $, { useOptionsAttr: true });
-  
+
 		// switch locale handler
 		$('.switch-locale').on('click', 'a', function(e) {
             e.preventDefault();
@@ -139,7 +134,7 @@ function initI18next() {
         });
 
         // Show documentation
-        showDocumentation();    
+        showDocumentation();
 
         rerender();
       });
@@ -170,9 +165,9 @@ function getApplicationList(arr, currentCategory, currentCategoryColor) {
             currentCategory.pop();
             currentCategoryColor.pop();
 		} else {
-            item.categories = currentCategory.join(SEPARATOR); 
+            item.categories = currentCategory.join(SEPARATOR);
             if (currentCategoryColor.slice(-1)!="")
-                item.color = currentCategoryColor.slice(-1);    
+                item.color = currentCategoryColor.slice(-1);
             elements.push(item);
 		}
 	}
@@ -191,7 +186,7 @@ function loadContent() {
 // Filter applications by search text
 function filterApplications() {
     return applications.filter((element) => {
-        return  matched(element); 
+        return  matched(element);
     });
 }
 
@@ -203,7 +198,7 @@ function matched(element) {
     if (element.categories) {
         const categoryArray = element.categories.split(SEPARATOR);
         categoryArray.forEach(c => {
-            cardCategories += i18next.t(c) + " "; 
+            cardCategories += i18next.t(c) + " ";
         });
     }
 
@@ -212,7 +207,7 @@ function matched(element) {
         if (selectedCategories.indexOf(elementCategory) ==-1)
             return false;
     }
-        
+
     textArray.forEach(text => {
         if (
             // name
@@ -262,18 +257,18 @@ function createContent(arr) {
         }
         var infoLink = "";
         if (details !="" || link!="" || pdf !="" )
-            infoLink = `<a id="show_info_` + i + `" style="cursor:pointer" onclick="showInfo('` + i + `'); "><i class="nav-icon fa fa-info-circle card-info"></i></a>` + 
+            infoLink = `<a id="show_info_` + i + `" style="cursor:pointer" onclick="showInfo('` + i + `'); "><i class="nav-icon fa fa-info-circle card-info"></i></a>` +
                        `<a id="close_info_` + i + `" style="cursor:pointer; display:none" onclick="hideInfo('` + i + `'); "><i class="nav-icon fa fa-times-circle card-info"></i></a>`;
         const category = item.categories.split(SEPARATOR)[0] || "";
         var mainIcon = `<span class="card-main-icon"><i class="nav-icon fa fa-lock card-lock"></i></span>`;
-        if ((item.main && item.main.length>0) || (item.external && item.external.length>0)) 
+        if ((item.main && item.main.length>0) || (item.external && item.external.length>0))
             mainIcon = `<span class="card-main-icon" ` + quickOpenLink + `><i class="nav-icon fa fa-play card-play"></i></span>`;
         var categoryColor = item.color?"background-color:" + item.color + "DD": "";
-		inhtml += 
+		inhtml +=
             `<div class="card-envelope">
                 <article id="application_` + i + `" class="card">
-                    <span class="badge card-category" style="` + categoryColor + `" data-i18n="` + category + `"></span>` + 
-                    mainIcon + 
+                    <span class="badge card-category" style="` + categoryColor + `" data-i18n="` + category + `"></span>` +
+                    mainIcon +
                     `<img src="config/thumbnail/` + thumbnail + `" alt="" class="card__background" />
                     <div class="card__content | flow" style="` + categoryColor + `">
                         <div class="card__content--container | flow">
@@ -306,10 +301,10 @@ function hideInfo(i) {
 function initSearchbar() {
     // fill categories filter
     const categories = getAllCategories();
-    //console.log(categories);
+    console.log(categories);
     var categoryFilterPanel = "";
     categories.forEach(element => {
-        categoryFilterPanel += 
+        categoryFilterPanel +=
             `<div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input category-selection" id="` + element + `" onclick="setCategory('` + element + `', this)">
                 <label class="custom-control-label" for="` + element + `" data-i18n="` + element + `">` + element + `</label>
@@ -344,7 +339,7 @@ function initSearchbar() {
 	$("#content").click(() => {
         $("#category-filter-panel").hide();
     });
-}  
+}
 
 function getAllCategories() {
     var c = {};
@@ -366,7 +361,7 @@ function searchAction() {
     loadContent();
     rerender();
 }
-  
+
 // Show a url in local window
 function showInLocalWindow(application, descriptionLink) {
     //descriptionLink += "&lang=" + i18next.resolvedLanguage
@@ -420,7 +415,7 @@ function showDocumentation() {
 function showHideCategoryFilterPanel() {
     if ($("#category-filter-panel").is(":visible"))
         $("#category-filter-panel").hide();
-    else 
+    else
         $("#category-filter-panel").show    ();
 }
 
