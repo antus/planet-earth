@@ -934,6 +934,15 @@
 		"open": false,
 		"color": "#e9710d",			
 		"children": [
+				{
+				"name": "Smart City Index",
+				"id" : 9100423042,
+				"thumbnail": "2024-WCC-SCI.gif",	
+				"details": "Smart city index",			
+				"hasPannel": true,
+				"external": "http://10.100.208.140:8180/example/layer-other/smartcity",
+				"libs": ["mars3d", "mars3d-heatmap"]
+			  },
 			  {
 				"name": "动态热力图",
 				"thumbnail": "layero-heatmap-heatLayer-dynamic.gif",

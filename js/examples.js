@@ -10,7 +10,7 @@ const defaultThumbnail = "default.gif";
 const editorUrl = "editor-es5.html"
 const readUrl = "read-es5.html"
 
-const KC_URL = 'http://keycloak.gda.it:8888';
+const KC_URL = 'http://10.100.208.140:8888';
 const REALM = 'master';
 const CLIENT_ID = 'keycloak-planet-earth';
 

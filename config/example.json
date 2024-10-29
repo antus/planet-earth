@@ -2907,6 +2907,14 @@
       {
         "name": "普通可视化",
         "children": [
+				 {
+            "name": "Smart City Index",
+            "id" : 9100423042,
+            "thumbnail": "2024-WCC-SCI.gif",
+            "main": "layer-other/smartcity",
+            "hasPannel": true,
+            "libs": ["mars3d", "mars3d-heatmap"]
+            },
           {
             "name": "贴地热力图",
             "thumbnail": "layero-heatmap-heatLayer.jpg",
