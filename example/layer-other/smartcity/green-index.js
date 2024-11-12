@@ -14,16 +14,15 @@ var stato_count_url = geoserverUrl + "/geoserver/wfs?request=GetFeature&version=
 var stato_null_count_url = geoserverUrl + "/geoserver/wfs?request=GetFeature&version=2.0.0&typeName=mesmart-kpi:count_stato_veg_null&outputFormat=csv&CQL_FILTER=";
 
 var faseanno_url = geoserverUrl + "/geoserver/wfs?request=GetFeature&version=2.0.0&typeName=giotto-planet:v_fasefisiologica_anno&outputFormat=csv&CQL_FILTER=annomese LIKE '";
-var where_clause_1 = "geometry_id LIKE '";
-var where_clause_2 = "' and annomese LIKE '";
+
 
 function truncateFixed(valore) {
   return (Math.round(valore * 100) / 100).toFixed(2);
 }
 
-function prepareOld() {
+function prepareInfo(where_clause_1, where_clause_2, where_clause_3) {
 
-
+  console.log(genere_count_url + where_clause_1 + where_clause_2)
   //rows.push({  nome: elt[1], valore: elt[2] });
   $.ajax({
     type: "get",
@@ -75,7 +74,26 @@ function prepareOld() {
           });
         }
       }
-      var $tileInfotable = $("#tileInfo-fase");
+      var $tileInfotable = $("#tileInfo-fase").bootstrapTable({
+        singleSelect: true, //Single selection
+        iconsPrefix: "fa",
+        pagination: false,
+        columns: [
+          {
+            title: "", //serial number
+            field: "nome",
+            sortable: false,
+            align: "center",
+            width: 50,
+
+          },
+          {
+            field: "valore",
+            title: "",
+            sortable: false,
+            width: 100
+          }]
+      });
       $tileInfotable.bootstrapTable("load", rows);
       var classes = [];
       classes.push("table-sm");
@@ -108,7 +126,26 @@ function prepareOld() {
           });
         }
       }
-      var $tileInfotable = $("#tileInfo-sito");
+      var $tileInfotable = $("#tileInfo-sito").bootstrapTable({
+        singleSelect: true, //Single selection
+        iconsPrefix: "fa",
+        pagination: false,
+        columns: [
+          {
+            title: "", //serial number
+            field: "nome",
+            sortable: false,
+            align: "center",
+            width: 50,
+
+          },
+          {
+            field: "valore",
+            title: "",
+            sortable: false,
+            width: 100
+          }]
+      });
       $tileInfotable.bootstrapTable("load", rows);
       var classes = [];
       classes.push("table-sm");
@@ -179,7 +216,26 @@ function prepareOld() {
                 }
               }
 
-              var $tileInfotable = $("#tileInfo-stato");
+              var $tileInfotable = $("#tileInfo-stato").bootstrapTable({
+                singleSelect: true, //Single selection
+                iconsPrefix: "fa",
+                pagination: false,
+                columns: [
+                  {
+                    title: "", //serial number
+                    field: "nome",
+                    sortable: false,
+                    align: "center",
+                    width: 50,
+        
+                  },
+                  {
+                    field: "valore",
+                    title: "",
+                    sortable: false,
+                    width: 100
+                  }]
+              });
               $tileInfotable.bootstrapTable("load", rows);
               var classes = [];
               classes.push("table-sm");
@@ -202,7 +258,7 @@ function prepareOld() {
     }
   });
 
- 
+
 
 
 }
@@ -216,12 +272,12 @@ function restoreSG() {
   var area = parseFloat(area_terre_emerse);
   var area_round = (Math.round(area * 100) / 100).toFixed(2);
   $("#area").val(area_round);
-
+  graphicLayer.clear();
 }
 
 function initGreenIndexPanel() {
 
-  if (sgi == "") {
+  if (sgi == null) {
     $("#sgi-old").text("ND");
     document.getElementById("predict").disabled = true;
   }
@@ -229,17 +285,18 @@ function initGreenIndexPanel() {
     $("#sgi-old").text(sgi);
     document.getElementById("predict").disabled = false;
   }
-
+  var where_clause_1 = "geometry_id LIKE '";
+  var where_clause_2 = "' and annomese LIKE '";
   where_clause_1 = where_clause_1 + geometry_id
   where_clause_2 = where_clause_2 + annomese + "'";
 
   var where_clause_3 = annomese + "'";
-
+  prepareInfo(where_clause_1, where_clause_2, where_clause_3);
   const form = document.querySelector("#dss-form")
   form.addEventListener("submit", predict_smart_green)
   form.addEventListener("reset", restoreSG)
 
-   var tbody = $("#table").children("tbody");
+  var tbody = $("#table").children("tbody");
 
   //Then if no tbody just select your table 
   var table = tbody.length ? tbody : $("#table");
@@ -251,11 +308,11 @@ function initGreenIndexPanel() {
     var faseId = "fase" + rowCount;
     var sitoId = "sito" + rowCount;
     var statoId = "stato" + rowCount;
-    table.append('<tr><td> <select id="' + genereId + '" ></select></td> <td>   <select id="' + faseId + '"> </td>        <td>   <select id="' + sitoId + '"><option value="si">si</option> <option value="no">no</option> </select> </td>  <td><select id="' + statoId + '"></select></td> <td><input type="number" class="form-control" name="alberi" min=1 step=1 required></td> <td>    <select id="operazione" >     <option value="add">aggiungi</option>     <option value="rem">rimuovi</option>   </select> </td><td><button   class="btn btn-primary"   id="delrow"  ><i class="fa fa-trash"></i></button>  </td>  </tr>   ');
+    table.append('<tr><td> <select id="' + genereId + '" ></select></td> <td>   <select id="' + faseId + '"> </td>        <td>   <select id="' + sitoId + '"><option value="sì">sì</option> <option value="no">no</option> </select> </td>  <td><select id="' + statoId + '"></select></td> <td><input type="number" class="form-control" name="alberi" min=1 step=1 required></td> <td>    <select id="operazione" >     <option value="add">aggiungi</option>     <option value="rem">rimuovi</option>   </select> </td><td><button   class="btn btn-primary"   id="delrow"  ><i class="fa fa-trash"></i></button>  </td>  </tr>   ');
     var elements = ["Ottimo", "Leggermente alterato", "Alterato", "Deperiente", "Morto"];
-    var select = document.querySelector("#"+statoId);
+    var select = document.querySelector("#" + statoId);
     populateSelectWithOptions(select, elements);
-   
+
     $.ajax({
       type: "get",
       url: GENERE_url,
@@ -271,12 +328,12 @@ function initGreenIndexPanel() {
             option.value = txt.trim();
             select.appendChild(option);
           }
-  
+
         }
       },
-  
+
       error: function (request, textStatus) {
-        console.log(textStatus);  
+        console.log(textStatus);
       }
     });
 
@@ -285,10 +342,10 @@ function initGreenIndexPanel() {
       url: faseanno_url + where_clause_3,
       timeout: 5000,
       success: function (data) {
-     
+
         elements = csvToArray(data);
-  
-        let select = document.querySelector("#"+faseId);
+
+        let select = document.querySelector("#" + faseId);
         for (let elt of elements) {
           if (elt.length > 1) {
             if (elt[1].length > 1) {
@@ -298,14 +355,14 @@ function initGreenIndexPanel() {
               select.appendChild(option);
             }
           }
-  
+
         }
-  
+
       }
     });
 
 
-  
+
 
   })
 
@@ -388,8 +445,8 @@ function predict_smart_green(event) {
     gen[i - 1] = $("#genere" + count).find(":selected").val()
     fase_fisiologica[i - 1] = $("#fase" + count).find(":selected").val()
     sito_crescita[i - 1] = $("#sito" + count).find(":selected").val()
-    numero[i - 1] = row.cells[4].getElementsByTagName("input")[0].value;
-    stato_vegetativo[i - 1] = $("#sito" + count).find(":selected").val()
+    numero[i - 1] = parseInt(row.cells[4].getElementsByTagName("input")[0].value);
+    stato_vegetativo[i - 1] = $("#stato" + count).find(":selected").val()
     ops[i - 1] = row.cells[5].getElementsByTagName("select")[0].value
 
   }
@@ -420,11 +477,38 @@ function predict_smart_green(event) {
       var variazione = parseFloat(data["delta_green_index"] * 100);
       var var_round = (Math.round(variazione * 100) / 100).toFixed(2);
       $("#variazione").attr("value", var_round + "%");
+      var fillColor = "#fee08b"
+      if (scci >= 10 & scci < 20) {
+        fillColor = "#a6d96a";
+      }
+      if (scci >= 20 & scci < 30) {
+        fillColor = "#66bd63";
+      }
+      if (scci >= 30 & scci < 60) {
+        fillColor = "#1a9850";
+      }
+      if (scci >= 60 & scci < 100) {
+        fillColor = "#006837";
+      }
+
+      var graphic = new mars3d.graphic.PolygonEntity({
+        positions: geom_sgi.coordinates,
+        style: {
+          color: fillColor,
+          fill: true,
+          opacity: 1.0,
+          outline: true,
+          outlineWidth: 3,
+          outlineColor: fillColor
+        }
+      });
+      graphicLayer.clear();
+      graphicLayer.addGraphic(graphic);
 
     },
     error: function (request, textStatus) {
 			let resp = request.responseJSON;
-			if(!resp) {
+			if(resp) {
 				toastr.warning(resp['error']);
 			}
 			else {

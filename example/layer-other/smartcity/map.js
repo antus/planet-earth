@@ -22,6 +22,7 @@ var crimini
 var pali
 var degrado
 var indice
+var geom_ssi;
 //variabili green index
 var sgi;
 var verde_oriz;
@@ -31,11 +32,12 @@ var area_terre_emerse;
 var geometry_id;
 var annomese;
 var sentiment_gi;
-
+var geom_sgi;
+var graphicLayer;
 var mapOptions = {
   scene: {
 
-    center: { lat: 42.32079612459104, lng: -71.1273615786857, alt: 8000, heading: 0, pitch: -90 }
+    center: { lat: 42.32079612459104, lng: -71.1273615786857, alt: 30000, heading: 0, pitch: -90 }
   },
   terrain: {
     name: "ION",
@@ -52,23 +54,9 @@ var mapOptions = {
         "<div>Long:{lng}</div> <div>Lat:{lat}</div> <div>Alt: {alt} meters</div> <div class='hide700'>Level: {level}</div><div>Heading: {heading}°</div> <div>Pitch: {pitch }°</div>"
     }
   },
-  layers: [
-    {
-      "pid": 4020,
-      "name": "Location travel barometer",
-      "type": "wms",
-      "url": "/forestame/geoserver/wms",
-      "layers": "boston:travel_barometer",
-      "parameters": { "transparent": "true", "format": "image/png" },
-      "getFeatureInfoParameters": {
-        feature_count: 10
-      },
-      "popup": "<b>valore:</b>  {index_value}<br>"	,
-      "show": true,
-      "flyTo": true
-    }
-  ]
-  
+
+  layers: []
+
 }
 
 var mapWidgets = {
@@ -81,8 +69,9 @@ var mapWidgets = {
         top: 50,
         right: 100
       },
-      maxmin: false,
-      resize: true
+      maxmin: true,
+      resize: false,
+      close: false
     },
     autoReset: false,
     autoDisable: false,
@@ -119,9 +108,17 @@ var mapWidgets = {
  */
 function onMounted(mapInstance) {
   map = mapInstance
-
+ 
   addSSIicLayer();
   addSGIicLayer();
+  addSTIicLayer();
+  addPoiLayer();
+  graphicLayer = new mars3d.layer.GraphicLayer({
+    "name": "Predictions",
+    "pid": 0,
+    "show": true
+  });
+  map.addLayer(graphicLayer);
   map.openFlyAnimation({
     duration1: 5,
     easingFunction1: Cesium.EasingFunction.QUINTIC_IN_OUT,
@@ -130,86 +127,348 @@ function onMounted(mapInstance) {
     }
   })
 
+  function initTravelIndexChart(container, data) {
+    var myChart = echarts.init(container.querySelector("#ul_ZJLY"));
+    var option;
 
-  function addSSIicLayer() {
-    /*var wmsLayer = new mars3d.layer.WmsLayer({
-      url: "http://localhost:3000/proxy/geoserver/wms",
-      layers: "boston:smart_security_index",
-      crs: "EPSG:4326",
-      parameters: {
-        transparent: "true",
-        format: "image/png",
-      },
-      getFeatureInfoParameters: {
-        feature_count: 10,
-      },
-      popup: "all",
-    });
-    map.addLayer(wmsLayer);*/
-    smartSecurityLayer = new mars3d.layer.WmsLayer({
-      "name": "Smart security index",      
-			"type": "wms",
-      "url": "/forestame/geoserver/wms",
-      "layers": "boston:smart_security_index",
-			"parameters": { "transparent": "true", "format": "image/png" },
-			"opacity":0.6
-		}
-    );
-    smartSecurityLayer.flyTo();
-    map.addLayer(smartSecurityLayer);
+    option = {
+      series: [
+        {
+          type: 'gauge',
+          startAngle: 180,
+          endAngle: 0,
+          center: ['50%', '75%'],
+          radius: '90%',
+          min: 0,
+          max: 1,
+          splitNumber: 8,
+          axisLine: {
+            lineStyle: {
+              width: 6,
+              color: [
+                [0.2, '#ff0000'],
+                [0.4, '#ff9900'],
+                [0.6, '#ffff00'],
+                [0.8, '#addd8e'],
+                [1, '#31a354']
+              ]
+            }
+          },
+          pointer: {
+            icon: 'path://M12.8,0.7l12,40.1H0.7L12.8,0.7z',
+            length: '12%',
+            width: 20,
+            offsetCenter: [0, '-60%'],
+            itemStyle: {
+              color: 'auto'
+            }
+          },
+          axisTick: {
+            length: 12,
+            lineStyle: {
+              color: 'auto',
+              width: 2
+            }
+          },
+          splitLine: {
+            length: 20,
+            lineStyle: {
+              color: 'auto',
+              width: 5
+            }
+          },
+          axisLabel: {
+            color: '#f0f0f0',
+            fontSize: 14,
+            rotate: 'tangential',
+            formatter: function (value) {
+              return value * 100;
+            }
+          },
+          title: {
+            offsetCenter: [0, '-10%'],
+            fontSize: 18,
+            color: "#f0f0f0"
+          },
+          detail: {
+            fontSize: 18,
+            offsetCenter: [0, '-35%'],
+            valueAnimation: true,
+            formatter: function (value) {
+              return value * 100 + '';
+            },
+            color: 'inherit'
+          },
+          data: [
+            {
+              value: data,
+              name: 'Smart Tourism Index'
+            }
+          ]
+        }
+      ]
+    };
 
-    bindSSILayerPopup(smartSecurityLayer);
+    option && myChart.setOption(option);
+    return myChart;
   }
 
+  function addSSIicLayer() {
+    smartSecurityLayer = new mars3d.layer.WmsLayer({
+      "name": "Smart Security Index",      
+			"type": "wms",
+      "url": "/forestame/geoserver/wms",
+      "layers": "boston:smart_security_index_2",
+			"parameters": { "transparent": "true", "format": "image/png" },
+			"opacity":0.6,
+      "show":false
+    });
+    bindToLegend(smartSecurityLayer, buildLegend);
+    bindSSILayerPopup(smartSecurityLayer);
+    map.addLayer(smartSecurityLayer);
+  /*  smartSecurityLayer = new mars3d.layer.GeoJsonLayer({
+      "name": "Smart security index",
+      "type": "geojson",
+      "url": "/config/geojson/smartsecurity.json"
+    }
+    );*/
+    smartSecurityLayer.flyTo();
+    //   map.addLayer(smartSecurityLayer);
 
+
+  }
+
+  function addPoiLayer() {
+    var poi = new mars3d.layer.WmsLayer({
+      "name": "Smart Tourism PoI",      
+			"type": "wms",
+      "url": "/forestame/geoserver/wms",
+      "layers": "boston:poi",
+			"parameters": { "transparent": "true", "format": "image/png" },
+			"opacity":1,
+      "show": false,
+      "popup": "<b>{category}</b> <br> <u>{typ}</u><br> <b>{name}</b>"
+    });
+    bindToLegend(poi, buildLegend);
+    map.addLayer(poi);
+  }
+
+  function addSTIicLayer() {
+    var travel_barometer = new mars3d.layer.WmsLayer({
+      "name": "Smart Tourism Index",      
+			"type": "wms",
+      "url": "/forestame/geoserver/wms",
+      "layers": "boston:smart_tourism_index",
+			"parameters": { "transparent": "true", "format": "image/png" },
+			"opacity":0.6,
+      "show": false
+    });
+    bindToLegend(travel_barometer, buildLegend);
+    travel_barometer.bindPopup(
+      function (event) {
+        let attr = event.features[0]?.properties;
+        var index = parseFloat(attr.index_value)
+				if( !isNaN(index)) {
+					index = index.toFixed(2);
+				}
+				else {
+					index = "ND"
+				}
+					
+        //return "  <div class='chartTwo' id='chartTwo' style='width:450px; height:450px;'>  " +
+        //  "<div id='ul_ZJLY' class='chartTwo_ulzjly' style='width:100%; height:100%;'></div></div>" +
+        return "	<table class='mars-table'>"+
+"		<tr>"+
+"			<td >"+
+"				<label title='' style='font-size:18px' class='form-label'>Smart Tourism Index</label>"+
+"			</td><td>	<label style='font-size:18px'>"+index+"</label></tr>"+
+"<tr><td colspan='2'><em>Misura lo stato del comparto turistico della destinazione.<br> L’indice è composto da tre sotto-indicatori che combinati tra loro restituiscono<br> un valore compreso tra 0 (molto negativo) e 100 (ideale):<br>sentiment espresso sui social; Digital Reviews, ossia le recensioni espresse in rete; <br>Digital Presence, ossia i POI attivi (per recensioni) su territorio .<br> La metodologia si basa sull’analisi di alcune industrie prese a riferimento <br>e appartenente tutte al settore travel:<br> Hospitality, Food & beverage, Attractions, Entertainment, Short term rentals, Transportation.</em></td></tr>"+
+"			</td></tr></table>"+
+          "<hr><p> Punti di interesse:</p><table id='poitable' data-toggle='poitable' class='mars-table'/>";
+      },
+      {
+        template: `<div class="marsBlackPanel">
+                      <div class="marsBlackPanel-text">{content}</div>
+                    </div>`,
+        horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
+        verticalOrigin: Cesium.VerticalOrigin.CENTER,
+      }
+    )
+
+
+    let gdpCharts = null;
+    travel_barometer.on(mars3d.EventType.popupOpen, function (event) {
+      let container = event.container; //popup
+      let attr = event.features[0]?.properties;
+      $poitable = $("#poitable").bootstrapTable({
+       
+        singleSelect: true, //Single selection
+        iconsPrefix: "fa",
+        pagination: false,
+
+        columns: [
+          {
+            title: "Categoria", //serial number
+            field: "categoria",
+            sortable: false,
+            align: "left",
+            width: 100,
+
+          },
+          {
+            field: "count",
+            title: "TOT",
+            sortable: false,
+            align: "left",
+            width: 100
+          }]
+      });
+      data = attr.index_value / 100;
+      geojson = event.features[0]?.data.geometry;
+      geom = toWKT(event.features[0].data);
+      let extent = event.features[0]?.data.bbox
+      //gdpCharts = initTravelIndexChart(container, data);
+      /*var poiQuery = "/geoserver/wfs?request=GetFeature&version=2.0.0&typeName=boston:poi&outputFormat=csv&CQL_FILTER=within(geom, SRID=4326;" + geom + ")";
+      $.ajax({
+        type: "get",
+        url: poiQuery,
+        timeout: 5000,
+        success: function (result) {
+
+          haoutil.msg("共查询到 " + result.count + " 条记录！");
+
+          // geoJsonLayer.load({ data: result.geojson });
+        },
+        error: (error, msg) => {
+          console.log("服务访问错误", error);
+          haoutil.alert(msg, "服务访问错误");
+        },
+      });*/
+      var payloadTemplate;
+      fetch("payload.xml")
+        .then((response) => response.text())
+        .then((xmlString) => {
+          // Set payload template
+          payloadTemplate = xmlString;
+          /* var dom = $("#dchart-" + this.properties.id)[0];
+           this.chart = echarts.init(dom, 'dark', {
+             renderer: 'canvas',
+             useDirtyRect: false
+           });*/
+
+          const bbox = extent[0] + " " + extent[1] + " " +
+            extent[0] + " " + extent[3] + " " +
+            extent[2] + " " + extent[3] + " " +
+            extent[2] + " " + extent[1] + " " +
+            extent[0] + " " + extent[1];
+
+          xmlString = xmlString.replace("$layer", "boston:poi");
+          xmlString = xmlString.replace("$yAttribute", "osm_id");
+          xmlString = xmlString.replace("$xAttribute", "category");
+          xmlString = xmlString.replace("$function", "Count");
+          xmlString = xmlString.replace("$bbox", bbox);
+          //console.log(xmlString);
+          var url = "/forestame/geoserver/wps?service=WPS&version=1.0.0&REQUEST=Execute"
+          const ref = this;
+          // Send the data using post
+          $.ajax({
+            url: url,
+            data: xmlString,
+            type: 'POST',
+            contentType: "application/xml",
+            dataType: "text",
+            success: function (result) {
+              const res = JSON.parse(result);
+
+
+
+              var rows = [];
+
+              for (let elt of res.AggregationResults) {
+                if (elt.length > 1) {
+                  rows.push({
+
+                    categoria: elt[0],
+                    count: elt[1]
+                  });
+                }
+              }
+
+              $poitable.bootstrapTable("load", rows);
+              var classes = [];
+              classes.push("table-sm");
+              classes.push("table-borderless");
+
+              $poitable.bootstrapTable("refreshOptions", {
+                classes: classes.join(" ")
+              });
+              //   ref.buildChart(res, ref.properties.type);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+              console.log(xhr.status);
+              console.log(thrownError);
+            }
+          });
+
+        });
+    });
+    travel_barometer.on(mars3d.EventType.popupClose, function (event) {
+      let container = event.container; //popup
+      console.log("close popup", container);
+      if (gdpCharts) {
+        gdpCharts.dispose();
+        gdpCharts = null;
+      }
+
+
+    });
+    map.addLayer(travel_barometer);
+
+  }
+
+  function toWKT(geojsonObject) {
+    if (geojsonObject == null) {
+      return null;
+    }
+    geojsonObject = haoutil.system.clone(geojsonObject);
+
+
+
+    var wkt = Terraformer.WKT.convert(geojsonObject.geometry);
+
+
+    return wkt;
+  }
 
   function addSGIicLayer() {
-    /*var wmsLayer = new mars3d.layer.WmsLayer({
-      url: "http://localhost:3000/proxy/geoserver/wms",
-      layers: "boston:smart_security_index",
-      crs: "EPSG:4326",
-      parameters: {
-        transparent: "true",
-        format: "image/png",
-      },
-      getFeatureInfoParameters: {
-        feature_count: 10,
-      },
-      popup: "all",
-    });
-    map.addLayer(wmsLayer);*/
     smartGreenLayer = new mars3d.layer.WmsLayer({
-      "name": "Smart green index",
+      "name": "Smart Green Index",
+      "pid": 0,
       "type": "wms",
       "url": "/forestame/geoserver/wms",
-      "layers": "boston:smart_green_index",
-			"parameters": { "transparent": "true", "format": "image/png" },
-			"opacity":0.6
-			}
+      "layers": "boston:smart_green_index_2",
+      "opacity": 0.6,
+      "parameters": { "transparent": "true", "format": "image/png" },
+      "getFeatureInfoParameters": {
+        feature_count: 10
+      },
+      "show":false
+    }
     );
-    smartGreenLayer.flyTo();
+    bindToLegend(smartGreenLayer, buildLegend);
+
     map.addLayer(smartGreenLayer);
 
     bindSGILayerPopup(smartGreenLayer);
-  }
 
-  function showSSI(val) {
-    if (smartSecurityLayer == null) {
-      addSSIicLayer();
-    }
-    smartSecurityLayer.show = val;
-  }
-  function showSGI(val) {
-    smartGreenLayer.show = val;
-  }
-  function showSTI(val) {
-    // smartTravelLayer.show = val;
+
   }
 
   function bindSSILayerPopup(lodGraphicLayer) {
-    lodGraphicLayer.bindPopup(function (event) {
-			let attr = event.features[0].properties;
-      //let attr = event.graphic?.attr;
+      lodGraphicLayer.bindPopup(function (event) {
+      let attr = event.features[0]?.properties;;
+      geom_ssi = event.features[0]?.data.geometry;
+
       prec = attr.prov_precedenza
       prov_velocita = attr.prov_velocita
       prov_posizione = attr.prov_posizione
@@ -225,17 +484,25 @@ function onMounted(mapInstance) {
       pali = attr.n_pali_luce
       degrado = attr.degrado
       indice = attr.smart_security_city_index
+			ssi_text = parseFloat(attr.smart_security_city_index ).toFixed(2);
+			if (isNaN(ssi_text)) {
+				ssi_text = "ND"
+			}
+				
       return "<div class='modal-header-sci'> " +
-        "          <h2>Decison Support System</h2>" +
-        "            <em>Predice il valore dell’Indice sulla Sicurezza <br/>modificando le seguenti variabili:</em>" +
+      "<hr><label title='L’Indice misura il grado di sicurezza urbana' style='font-size:18px'>Smart Security Index:&nbsp; </label>" +   
+      "<label id='ssci-old' style='font-size:18px' >" + ssi_text + "</label>" +
+
+        " <hr>         <h4>Decision Support System</h4>" +
+        "            <em>Predice il valore dell’Indice sulla Sicurezza modificando le seguenti variabili:</em>" +
         "        </div>" +
         "        <form role='form' id='dss-form'>" +
         "           <div>" +
-        "                <table class='mars-table'>" +
+        "                <table class='mars-table'>" +   
         "                    <tr>" +
-        "                      <td class='nametd'> " +
+        "                      <td > " +
         "                        <label for='sentiment' data-toggle='tooltip' title='indice basato sul giudizio estratto e calcolato sui contenuti online (reviews) sui Social Media'>sentiment</label>" +
-        "                          </td> <td> <input class='form-control' id='sentiment'  name='sentiment' type=number step=0.01  min=0 max=100  required data-toggle='tooltip' title='inserire un valore tra 0 e 100' value='" + parseFloat( attr.sentiment).toFixed(2) + "'>" +
+        "                          </td> <td> <input class='form-control' id='sentiment'  name='sentiment' type=number step=0.01  min=0 max=100  required data-toggle='tooltip' title='inserire un valore tra 0 e 100' value='" + attr.sentiment + "'>" +
         "                      </td>  <td> " +
         "                          <label  for='footfall' data-toggle='tooltip' title='traffico pedonale/popolarità del POI che tiene conto del numero di recensioni geolocalizzate, numero di contenuti sui social media, dati originati da dispositivi mobili'>footfall</label>" +
         "                            </td> <td>" +
@@ -244,7 +511,7 @@ function onMounted(mapInstance) {
         "                      </td>" +
         "                    </tr>" +
         "                  <tr>" +
-        "                        <td >" +
+        "                     <td >" +
         "                              <label title='numero di telecamere data-toggle='tooltip'>telecamere</label>" +
         "                               </td> <td>  " +
         "                                <input class='form-control' id='telecamere' type=number min=0 step=1 required value='" + attr.n_telecamere + "'>" +
@@ -275,9 +542,41 @@ function onMounted(mapInstance) {
         "</td> <td>                           <input class='form-control' id='crimini' type=number min=0 step=1 required value='" + attr.crimini + "'>" +
         "                        </td>" +
         "                  </tr>" +
-        " <tr><td title='L’Indice misura il grado di sicurezza urbana'>Smart Security Index:</td><td><input  readonly id='ssci-old' class='form-control' value='" + attr.smart_security_city_index + "'></td></tr>" +
-        "                </table>" +
-
+            "                </table>" +           
+"<hr>"+
+"	<em>Variabili considerate nel calcolo dell'indice e non editabili</em>"+
+"	<table class='mars-table'>"+
+"		<tr>"+
+"			<td >"+
+"				<label title='somma degli incidenti con violazioni degli articoli 154, 149, 143, 148 e 144 del codice della strada' class='form-label'>violazione di posizione</label>"+
+"			</td><td>	<input class='form-control' value="+prov_posizione+" id='prov_pos' type=number disabled/>"+
+"			</td>"+
+"			<td >"+
+"				<label class='form-label' title='somma degli incidenti con violazioni dell' articolo 141 del codice della strada'>violazione di velocità</label>"+
+"			</td><td><input class='form-control' value="+prov_velocita+" type=number disabled/>"+
+"		</td>"+
+"	</tr>"+
+"	<tr>"+
+"		<td >"+
+"			<label class='form-label' title='somma degli incidenti con violazioni degli articoli 145 e 150 del codice della strada'>violazione di precedenza</label>"+
+"		</td><td>	<input class='form-control' value="+prec+" type=number disabled/>"+
+"		</td>"+
+"		<td >"+
+"			<label title='somma degli incidenti con violazioni degli articoli 158 e 157 del codice della strada' class='form-label'>violazione di sosta</label>"+
+"		</td><td>	<input class='form-control' value="+prov_posizione+" type=number disabled/>"+
+"		</td>"+
+"	</tr>"+
+"	<tr>"+
+"		<td >"+
+"			<label class='form-label'  title='somma degli incidenti con violazioni degli articoli 40, 41 e 146 del codice della strada'>violazione di segnaletica</label>"+
+"		</td><td>	<input class='form-control' value="+prov_segnaletica +" type=number disabled/>"+
+"		</td>"+
+"		<td >"+
+"			<label class='form-label' title='somma degli incidenti con violazioni degli articoli 80, 193, 116, 180, 126, 94 e 93 del codice della strada'>violazione di documenti</label>"+
+"		</td><td>	<input class='form-control' value="+prov_documenti+" type=number disabled/>"+
+"		</td>"+
+"	</tr>"+
+"</table>"+
 
         "            </div>" +
         "        <hr>  " +
@@ -285,11 +584,13 @@ function onMounted(mapInstance) {
         "                 <tr> <td  width='100'>   <input class='btn btn-primary' type='submit' value='Predizione dello SSCI'/></td>" +
         "          <td> <input class='btn btn-primary' type='button' onclick='restoreSI()' type='reset' id='restore' value='ripristina valori originali' /></td>" +
         "              </tr>" +
-        "                <tr > <td style='text-align:right !important' >" +
+        "                <tr >"+
+        "<td style='text-align:right !important' >" +
         "                    <label title='nuovo valore dello Smart Security City Index' style='text-align:right' >predizione</label>" +
         "                  </td> <td> <input class='form-control' id='ssci' disabled>" +
         "                </tr>" +
-        "                <tr> <td style='text-align:right !important' >" +
+        "                <tr>" +
+        " <td style='text-align:right !important' >" +
         "                  <label title='variazione rispetto al valore iniziale'>variazione (%)</label>" +
         "                    </td> <td>" +
         "                    <input class='form-control' id='variazione' type=text disabled>" +
@@ -318,46 +619,141 @@ function onMounted(mapInstance) {
 
       form.addEventListener("submit", saveSI);
       form.addEventListener("reset", restoreSI);
-    
+
     });
   }
 
 
   function bindSGILayerPopup(lodGraphicLayer) {
     lodGraphicLayer.bindPopup(function (event) {
-     // let attr = event.graphic?.attr;
-		 let attr = event.features[0].properties;
+      let attr = event.features[0]?.properties;;
+      geom_sgi = event.features[0]?.data.geometry;
       sgi = attr.sgi;
       sentiment_gi = attr.urban_green_index;
       verde_oriz = attr.somma_area_verde_oriz;
-      peso_chioma_perc = attr.per_peso_chioma;
+      peso_chioma_perc = attr.perc_peso_chioma;
       somma_area_chioma = attr.somma_area_chioma;
       area_terre_emerse = attr.area_terre_emerse;
       annomese = attr.annomese;
       geometry_id = attr.geometry_id;
-      return "<div>    <table id='dati-alberi' class='table'></table>  </div> " +
-        "<div class='modal-header-sci'>" +
-        "    <h2>Decison Support System</h2>" +
+
+      return `<ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <button class="nav-link"  id="home-tab" role="presentation" data-bs-toggle="tab" data-bs-target="#home" data-bs-toggle="tab" data-bs-target="#home" aria-selected="false">Info</a>
+                </li>
+                <li class="nav-item"  id="profile-tab"  role="presentation" data-bs-toggle="tab" data-bs-target="#dss" type="button" role="tab" aria-controls="profile"  aria-selected="true">
+                 <button class="nav-link active">Decision Support System</button>
+                </li>
+              </ul>
+  <div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+ <table class='mars-table' style='border-right: 1px solid'>
+  <tr>
+    <td>
+      <b>Variabili considerate nel calcolo dell'indice e non editabili:</b>
+      <table >
+        <thead>
+          <tr>
+            <th  data-field="nome"></th>
+            <th  data-field="valore"></th>
+          </tr>
+        </thead>
+        <tr>
+          <td>
+            <label  title="area in m² delle chiome degli alberi presenti nella tile (misurazione verde verticale)" for="area_chioma">Area chiome </label>
+            
+          </td>
+          <td>`+
+            "  <label>" +  parseFloat(somma_area_chioma).toFixed(2) + " m²</label>" +
+            ` </td> </tr>
+        <tr>      <td>
+            <label title="coefficiente che caratterizza la qualità della chioma dell’albero in base al suo stato vegetativo, combinazione lineare degli alberi presenti nella tile, rapportato rispetto all’area totale delle chiome della tile.">Percentuale peso chioma</label>
+          </td>
+          <td>` +
+            "  <label >" +  parseFloat(peso_chioma_perc).toFixed(2) + "</label>" +
+            `</td>    </tr>
+        <tr>
+          <td>
+            <label title="area in m² delle terre emerse">Area terre emerse </label>
+            
+          </td>
+          <td>`+
+            "  <label >" +  parseFloat(area_terre_emerse).toFixed(2) + " m²</label>" +
+            `   </td>
+        </tr>
+      </table>
+
+        <b id="fase-alberi">Fase fisiologica degli alberi:</b>
+      <table id="tileInfo-fase" data-toggle="table">
+        <thead>
+          <tr>
+            <th  data-field="nome"></th>
+            <th  data-field="valore"></th>
+          </tr>
+        </thead>
+      </table>
+
+      <b id="stato-alberi">Stato di vegetazione degli alberi:</b>
+      <table id="tileInfo-stato" class="table-borderless" data-toggle="table"   >
+        <thead>
+          <tr>
+            <th data-field="nome"></th>
+            <th  data-field="valore"></th>
+            <th data-field="um"></th>
+          </tr>
+        </thead>
+      </table>
+    </td>
+    <td>
+      <b id="tipo-alberi"  title="Top 10 tipologia alberi presenti nella tile">Tipologia alberi:</b>
+
+      <table id="tileInfo-genere" class="table-borderless" data-toggle="table">
+      <thead>
+        <tr>
+          <th  data-field="nome"></th>
+          <th data-field="valore"></th>
+        </tr>
+      </thead>
+      </table>
+      <b id="sito-alberi">Sito di crescita degli alberi:</b>
+      <table id="tileInfo-sito" class="table-borderless" data-toggle="table">
+      <thead>
+        <tr>
+          <th  data-field="nome"></th>
+          <th data-field="valore"></th>
+        </tr>
+      </thead>
+      </table>
+    </td>
+  </tr>
+</table>
+</div><div class="tab-pane fade show active" id="dss" role="tabpanel" aria-labelledby="profile-tab"> `+     
+"<div><label title='L’Indice misura misura il grado di benessere del verde,in relazione alla copertura arborea, allo stato manutentivo e alla percezione dei cittadini registrata online. L’Indice correla dati provenienti da fonti eterogenee, tra cui dataset provenienti dal censimento arboreo, dati satellitari (Copernicus) e dati OSINT (web e social media).' style='font-size:18px'>Smart Green Index: </label>" +
+
+        "<label style='font-size:18px' id='sgi-old' value='" + attr.sgi + "'/></div>"+  
+"<em>Misura il benessere dello stato vegetativo comunale sia in termini di copertura e stato vegetativo che in termini di percezione. <br>Utilizza i seguenti dataset e indicatori per fornire un valore sintetico misurabile da 0 (situazione peggiore) a 100 (situazione ideale): <br>censimento sul patrimonio arboreo del Comune; stato vegetativo misurato dagli operatori comunali attraverso rilevazioni sul campo; <br>dati satellitari sulla copertura del verde (agenzia Copernicus); <br>percezione del verde pubblico rilevata sulle fonti digitali</>"+        
+        "<div class='modal-header-sci'>" +          
+        "  <hr> <h4>Decision Support System</h4>" +
         "    <em>Predice il valore dello  Smart Green Index per questo tile</em>" +
         "  </div>  " +
         "<div>" +
         "    <form role='form' id='dss-form' action='#'>" +
-        "      <em>Variabili considerate nel calcolo dell'indice e oggetto di simulazione</em>" +
+        "      <em>modificando le seguenti variabili:</em>" +
         "      <table class='mars-table'>" +
         "        <tr>" +
         "          <td>" +
         "            <label for='area' title='area in m² delle aree verdi incluse nel tile' >verde orizzontale (m²)</label>" +
         "           </td>" +
-        "          <td><input class='form-control' id='area' name='area' min=0 type=number step=0.01 required value='" + parseFloat( attr.somma_area_verde_oriz).toFixed(2) + "'/></td>" +
+        "          <td><input class='form-control' id='area' name='area' min=0 type=number step=0.01 required value='" + parseFloat(attr.somma_area_verde_oriz).toFixed(2) + "'/></td>" +
         "        </tr>" +
         "        <tr> <td>" +
         "            <label class='form-label' for='sentiment' title='indice del POI che tiene conto del numero di recensioni geolocalizzate, numero di contenuti sui social media, dati originati da dispositivi mobili'>percezione del verde</label>" +
         "                    </td>" +
         "          <td> <input class='form-control' id='sentiment' min=0 type=number step=0.01  required value='" + parseFloat(attr.urban_green_index).toFixed(2) + "'></td>" +
-        "        </tr>               "+
-        " <tr><td title='L’Indice misura misura il grado di benessere del verde,in relazione alla copertura arborea, allo stato manutentivo e alla percezione dei cittadini registrata online. L’Indice correla dati provenienti da fonti eterogenee, tra cui dataset provenienti dal censimento arboreo, dati satellitari (Copernicus) e dati OSINT (web e social media).'>Smart Green Index:</td><td><input type='number' readonly id='sgi-old' class='form-control' value='" + attr.sgi + "'></td></tr>" +
-     "</table>" +
-        " <div   id='table-scroll'>   <table id='table'  class='mars-table'>" +
+        "        </tr>               " +
+        " <tr>" +
+        "</table>" +
+        " <hr> <div   id='table-scroll'>   <table id='table'  class='mars-table'>" +
         ` <thead>
       <tr>
         <th>Genere</th>
@@ -375,21 +771,21 @@ function onMounted(mapInstance) {
     </tbody> `+
         "</table> </div>" +
         "      <table class='mars-table'>" +
-        "        <tr>" +
-        "          <td align='right' width='100'> <input class='btn btn-primary' type='submit' id='predict' value='clicca per predire il valore dello SGI' /></td>" +
+        "        <tr>" +      
+        "          <td align='right' width='100' colspan='2'>  <input class='btn btn-primary' type='submit' id='predict' value='clicca per predire il valore dello SGI' /></td>" +
         "          <td> <input class='btn btn-primary' type='reset' id='restore2' value='ripristina valori originali' />" +
         "          </td>" +
         "        </tr>" +
         "        <tr >" +
         "          <td style='text-align:right !important' ><label title='nuovo valore dello Smart Green Index' class='form-label' for='scci'>predizione</label>" +
         "          </td>" +
-        "          <td><input class='form-control' id='ssci' style='text-align:right' disabled></td>" +
+        "          <td><input class='form-control' id='sgi' style='text-align:right' disabled></td>" +
         "        </tr>        <tr >" +
+
         "          <td style='text-align:right !important' ><label title='variazione rispetto al valore iniziale' class='form-label' for='variazione'>variazione</label>" +
         "                  </td>" +
         "          <td> <input class='form-control' id='variazione' type=text style='text-align:right' disabled></td>" +
-        "        </tr>      </table>    </form>    </div>    </div>"
-
+        "        </tr>      </table>    </form>    </div>      </div>"
 
     },
       {
@@ -409,9 +805,79 @@ function onMounted(mapInstance) {
       });
     lodGraphicLayer.on(mars3d.EventType.popupOpen, function (event) {
       initGreenIndexPanel();
-
+      const container = event.container;
+      var tab1 = container.querySelector("#profile-tab");
+      tab1.addEventListener("click", (e) => {
+        openTab(e, "dss")
+      })
+      var tab2 = container.querySelector("#home-tab");
+      tab2.addEventListener("click", (e) => {
+        openTab(e, "home")
+      })
     });
   }
 
-  
+  function buildLegend(layer, show){
+    var htmllegend ='';
+    var el = document.getElementById("legend_"+layer.id)
+
+    if(show) {
+      if(el  == undefined) {
+          var url="http://10.100.208.140:8090/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER="+ layer.options.layers
+        
+          htmllegend +=' <div id="legend_'+layer.id+'" class="layui-layer-content" style="padding:8px">'
+          const image = document.createElement('img')
+          image.src = url + "&LEGEND_OPTIONS=forceLabels:on";
+          image.style="margin-right:5px";
+          
+          htmllegend+='<span class="processId" style="font-size:12px;color:white">'+image.outerHTML+layer.name  +'</span></div>';
+          $('#chart-legend').append(htmllegend);
+      }
+      else  {
+        el.style.display = 'block'
+
+      }
+    }
+    else if(!show && el != undefined) {
+      el.style.display = 'none'
+
+    }
+    
+  }
+
+  function openTab(evt, tabId) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tab-pane");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+      tabcontent[i].className += " show";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("nav-link");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabId).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+
+
+
 }
+function bindToLegend(layer, buildLegend) {
+  layer.on("show", (e) => {
+    buildLegend(layer, true)
+  })
+  layer.on("hide", (e) => {
+    buildLegend(layer, false)
+  })
+  buildLegend(layer, false)
+}
+

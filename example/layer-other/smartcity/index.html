@@ -10,7 +10,7 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="x5-fullscreen" content="true" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
-
+    
     <!-- Title and search keywords -->
     <meta name="keywords" content="Mars Technology, cesium, 3D, GIS, marsgis, three-dimensional, earth, map, development, framework, system, example, information, model, offline, outsourcing, Hefei, Anhui, China" / >
     <meta
@@ -26,7 +26,7 @@
       type="text/javascript"
       src="/lib/include-lib.js"
       libpath="/lib/"
-      include="jquery,layer,toastr,font-awesome,bootstrap,bootstrap-slider,bootstrap-slider,font-awesome-free,font-awesome,font-a,web-icons,layer,haoutil,localforage,nprogress,toastr,admui,turf,mars3d,mars3d-space,es5-widget,mars3d-echarts,bootstrap-checkbox,bootstrap-table,layer,haoutil,mars3d,mars3d-heatmap,es5-widget"
+      include="jquery,layer,toastr,font-awesome,bootstrap,bootstrap-slider,bootstrap-table,font-awesome-free,font-awesome,font-a,web-icons,layer,haoutil,localforage,nprogress,toastr,admui,turf,mars3d,mars3d-space,es5-widget,mars3d-echarts,bootstrap-checkbox,layer,haoutil,mars3d,mars3d-heatmap,es5-widget,terraformer,turf"
     ></script>
 
     <link href="/css/style.css" rel="stylesheet" />
@@ -34,7 +34,8 @@
     <style>
       .form-control {
         font-size: 12px;
-				width:100px;
+        width: 100px;
+        height: 30px;
       }
       .marsBlackPanel-text {
         font-size: 12px;
@@ -47,12 +48,23 @@
         overflow:auto;  
         margin-top:20px;
       }
+      .tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+.panel {
+    margin-bottom: 350px;
+}
     </style>
   </head>
 
   <body class="dark">
-    <div id="mars3dContainer" class="mars3d-container"></div>
-   
+    <div id="mars3dContainer" class="mars3d-container">
+     
+    </div>
+    <div id="chart-legend"  class="layui-layer-page layer-mars-dialog" style="position: absolute; bottom: 30px; right: 10px">
+    </div>
     <!-- Legend panel -->
    
 
