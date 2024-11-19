@@ -11,10 +11,10 @@ var fase_count_url = geoserverUrl + "/geoserver/wfs?request=GetFeature&version=2
 var crescita_count_url = geoserverUrl + "/geoserver/wfs?request=GetFeature&version=2.0.0&typeName=mesmart-kpi:count_crescita_alberi&outputFormat=csv&CQL_FILTER=";
 var tot_alberi_url = geoserverUrl + "/geoserver/wfs?request=GetFeature&version=2.0.0&typeName=mesmart-kpi:tot_alberi_by_tile&outputFormat=csv&CQL_FILTER=";
 var stato_count_url = geoserverUrl + "/geoserver/wfs?request=GetFeature&version=2.0.0&typeName=mesmart-kpi:count_stato_vegetazione&outputFormat=csv&CQL_FILTER=";
+
+var stato_all_url = geoserverUrl + "/geoserver/wfs?request=GetFeature&version=2.0.0&typeName=mesmart-kpi:count_stato_veg_all&outputFormat=csv&CQL_FILTER=";
 var stato_null_count_url = geoserverUrl + "/geoserver/wfs?request=GetFeature&version=2.0.0&typeName=mesmart-kpi:count_stato_veg_null&outputFormat=csv&CQL_FILTER=";
-
 var faseanno_url = geoserverUrl + "/geoserver/wfs?request=GetFeature&version=2.0.0&typeName=giotto-planet:v_fasefisiologica_anno&outputFormat=csv&CQL_FILTER=annomese LIKE '";
-
 
 function truncateFixed(valore) {
   return (Math.round(valore * 100) / 100).toFixed(2);
@@ -22,9 +22,7 @@ function truncateFixed(valore) {
 
 function prepareInfo(where_clause_1, where_clause_2, where_clause_3) {
 
-  console.log(genere_count_url + where_clause_1 + where_clause_2)
-  //rows.push({  nome: elt[1], valore: elt[2] });
-  $.ajax({
+   $.ajax({
     type: "get",
     url: genere_count_url + where_clause_1 + where_clause_2,
     timeout: 5000,
@@ -39,7 +37,28 @@ function prepareInfo(where_clause_1, where_clause_2, where_clause_3) {
           });
         }
       }
-      var $tileInfotable = $("#tileInfo-genere");
+      var $tileInfotable = $("#tileInfo-genere").bootstrapTable({
+        singleSelect: true, //Single selection
+        iconsPrefix: "fa",
+        pagination: false,
+        columns: [
+          {
+            title: "", //serial number
+            field: "nome",
+            sortable: false,
+            align: "center",
+            width: 50,
+
+          },
+          {
+            field: "valore",
+            title: "",
+            sortable: false,
+            width: 100
+          }]
+      });
+
+
       $tileInfotable.bootstrapTable("load", rows);
       var classes = [];
       classes.push("table-sm");
@@ -73,8 +92,7 @@ function prepareInfo(where_clause_1, where_clause_2, where_clause_3) {
             valore: elt[2]
           });
         }
-      }
-      var $tileInfotable = $("#tileInfo-fase").bootstrapTable({
+      }      var $tileInfotable = $("#tileInfo-fase").bootstrapTable({
         singleSelect: true, //Single selection
         iconsPrefix: "fa",
         pagination: false,
@@ -103,8 +121,7 @@ function prepareInfo(where_clause_1, where_clause_2, where_clause_3) {
         classes: classes.join(" ")
       });
       if (rows.length < 1) {
-        var infotext = $("#fase-alberi");
-        infotext.hide();
+        
         $tileInfotable.hide();
       }
     }
@@ -227,7 +244,7 @@ function prepareInfo(where_clause_1, where_clause_2, where_clause_3) {
                     sortable: false,
                     align: "center",
                     width: 50,
-        
+
                   },
                   {
                     field: "valore",
@@ -291,7 +308,7 @@ function initGreenIndexPanel() {
   where_clause_2 = where_clause_2 + annomese + "'";
 
   var where_clause_3 = annomese + "'";
-  prepareInfo(where_clause_1, where_clause_2, where_clause_3);
+  //prepareInfo(where_clause_1, where_clause_2, where_clause_3);
   const form = document.querySelector("#dss-form")
   form.addEventListener("submit", predict_smart_green)
   form.addEventListener("reset", restoreSG)
@@ -300,6 +317,24 @@ function initGreenIndexPanel() {
 
   //Then if no tbody just select your table 
   var table = tbody.length ? tbody : $("#table");
+  $.ajax({
+    type: "get",
+    url: tot_alberi_url + where_clause_1 + where_clause_2,
+    timeout: 5000,
+    success: function (data) {
+      var tot_alberi_by_tile = 0;
+      elements = csvToArray(data);
+
+      for (let elt of elements) {
+        if (elt.length > 1) {
+          tot_alberi_by_tile = parseInt(elt[1]);
+        }
+
+      }
+      $("#tot_alb_tile").text(tot_alberi_by_tile)
+
+    }
+  });
 
   $("#addrow").click(function () {
     //Add row
@@ -308,7 +343,7 @@ function initGreenIndexPanel() {
     var faseId = "fase" + rowCount;
     var sitoId = "sito" + rowCount;
     var statoId = "stato" + rowCount;
-    table.append('<tr><td> <select id="' + genereId + '" ></select></td> <td>   <select id="' + faseId + '"> </td>        <td>   <select id="' + sitoId + '"><option value="sì">sì</option> <option value="no">no</option> </select> </td>  <td><select id="' + statoId + '"></select></td> <td><input type="number" class="form-control" name="alberi" min=1 step=1 required></td> <td>    <select id="operazione" >     <option value="add">aggiungi</option>     <option value="rem">rimuovi</option>   </select> </td><td><button   class="btn btn-primary"   id="delrow"  ><i class="fa fa-trash"></i></button>  </td>  </tr>   ');
+    table.append('<tr><td> <select id="' + genereId + '" required></select></td> <td>   <select id="' + faseId + '"> </td>        <td>   <select id="' + sitoId + '"><option value="sì">sì</option> <option value="no">no</option> </select> </td>  <td><select id="' + statoId + '"></select></td> <td><input type="number" class="form-control" name="alberi" min=1 step=1 required></td> <td>    <select id="operazione" >     <option value="add">aggiungi</option>     <option value="rem">rimuovi</option>   </select> </td><td><button   class="btn btn-primary"   id="delrow"  ><i class="fa fa-trash"></i></button>  </td>  </tr>   ');
     var elements = ["Ottimo", "Leggermente alterato", "Alterato", "Deperiente", "Morto"];
     var select = document.querySelector("#" + statoId);
     populateSelectWithOptions(select, elements);
@@ -337,6 +372,7 @@ function initGreenIndexPanel() {
       }
     });
 
+
     $.ajax({
       type: "get",
       url: faseanno_url + where_clause_3,
@@ -355,14 +391,9 @@ function initGreenIndexPanel() {
               select.appendChild(option);
             }
           }
-
         }
-
       }
     });
-
-
-
 
   })
 
@@ -431,6 +462,235 @@ function csvToArray(str, delimiter = ",") {
 
   return array;
 }
+
+function initChartFaseAlberi(container) {
+
+
+  var where_clause_1 = "geometry_id LIKE '";
+  var where_clause_2 = "' and annomese LIKE '";
+  where_clause_1 = where_clause_1 + geometry_id
+  where_clause_2 = where_clause_2 + annomese + "'";
+
+  $.ajax({
+    type: "get",
+    url: fase_count_url + where_clause_1 + where_clause_2,
+    timeout: 5000,
+    success: function (data) {
+      var rows = [];
+      elements = csvToArray(data);
+      for (let elt of elements) {
+        if (elt.length > 1) {
+          rows.push({
+
+            name: elt[1],
+            value: elt[2]
+          });
+        }
+      }
+      if(rows.length<= 0) {
+        $("#ul_ZJLY").hide();
+        var infotext = $("#fase-alberi")
+        infotext.hide();
+      } 
+      var myChart = echarts.init(container.querySelector("#ul_ZJLY"));
+      var option = {
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b}: {c} ({d}%)'
+        },
+        series: [
+          {
+            name: 'Fase Alberi',
+            type: 'pie',
+
+            labelLine: {
+              show: false
+            },
+            data: rows,
+            label: {
+              show: true,
+              position: 'inside'
+            },
+          }
+        ]
+      };
+      option && myChart.setOption(option);
+
+    }
+  });
+
+  $.ajax({
+    type: "get",
+    url: genere_count_url + where_clause_1 + where_clause_2,
+    timeout: 5000,
+    success: function (data) {
+      var rows = [];
+      elements = csvToArray(data);
+      for (let elt of elements) {
+        if (elt.length > 1) {
+          rows.push({
+            name: elt[1],
+            value: elt[2]
+          });
+        }
+      }
+      if(rows.length<= 0) {
+       $("#ul_ZJLY2").hide();   
+       var infotext = $("#tipo-alberi");
+       infotext.hide();
+      } 
+      var myChart = echarts.init(container.querySelector("#ul_ZJLY2"));
+      var option = {
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b}: {c} ({d}%)'
+        },
+        series: [
+          {
+            name: 'Top 10 Generi Alberi',
+            type: 'pie',
+
+            labelLine: {
+              show: false
+            },
+            data: rows,
+            label: {
+              show: true,
+              position: 'inside'
+            },
+          }
+        ]
+      };
+      option && myChart.setOption(option);
+    }
+  });
+
+  $.ajax({
+    type: "get",
+    url: crescita_count_url + where_clause_1 + where_clause_2,
+    timeout: 5000,
+    success: function (data) {
+      var rows = [];
+      elements = csvToArray(data);
+      var categories = []
+      var tot = 0;
+      for (let elt of elements) {
+        if (elt.length > 1) {
+          categories.push(elt[1]);          
+          rows.push( elt[2]
+          );
+          tot += parseInt(elt[2])
+        }
+      }
+      if(rows.length<= 0) {
+        $("#ul_ZJLY3").hide();
+        var infotext = $("#sito-alberi");
+        infotext.hide();
+      } 
+      var myChart = echarts.init(container.querySelector("#ul_ZJLY3"));
+      var option = {
+        tooltip: {
+          trigger: 'item'
+        },       
+        xAxis: {
+          type: 'category' ,
+          data: categories,
+          axisLabel: {
+            show: true,
+            fontSize: 8
+          }          
+        },
+        yAxis: {
+          type: 'value',
+          axisLabel: {
+            show: true,
+            fontSize: 8,
+            interval:0
+          }
+        },
+        series: [
+          {
+            name: 'Sito di crescita',
+            type: 'bar',           
+            data: rows,
+            label: {
+              show: true
+            }
+          
+          }
+        ]
+      };
+      option && myChart.setOption(option);
+    }
+  });
+
+  $.ajax({
+    type: "get",
+    url: stato_all_url + where_clause_1 + where_clause_2,
+    timeout: 5000,
+    success: function (data) {
+      var rows = [];
+      var categoria = [];
+      elements = csvToArray(data);
+      for (let elt of elements) {
+        if (elt.length > 1) {
+          categoria.push(elt[1])
+          rows.push( elt[2]);
+        }
+      }
+      if(rows.length<= 0) {
+        $("#ul_ZJLY4").hide();
+        var infotext = container.querySelector("#stato-alberi");
+        infotext.style.display = 'none'
+      } 
+      var myChart = echarts.init(container.querySelector("#ul_ZJLY4"));
+      var option = {
+        tooltip: {
+          trigger: 'item'
+        },
+        yAxis: {
+          type: 'value',
+          axisLabel: {
+            show: true,
+            fontSize: 8
+          }        
+        },
+        xAxis: {
+          type: 'category',
+          data: categoria,
+          
+          axisLabel: {
+            show: true,
+            fontSize: 8,
+            interval: 1
+          }
+        },
+        series: [
+          {
+            name: 'Stato di vegetazione',
+            type: 'bar',
+            itemStyle: {
+              color: '#91cc75'
+            },
+            labelLine: {
+              show: false
+            },
+            data: rows,
+            label: {
+              show: true,
+              position: 'inside'
+              
+
+            },
+          }
+        ]
+      };
+      option && myChart.setOption(option);
+    }
+  });
+
+}
+
 
 function predict_smart_green(event) {
   event.preventDefault();
@@ -507,13 +767,8 @@ function predict_smart_green(event) {
 
     },
     error: function (request, textStatus) {
-			let resp = request.responseJSON;
-			if(resp) {
-				toastr.warning(resp['error']);
-			}
-			else {
-				toastr.warning(textStatus);
-			}		
+
+      toastr.warning(request.responseJSON)
 
     },
   });

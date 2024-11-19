@@ -96,7 +96,12 @@ var mapWidgets = {
       ]
     }
   ],
-  widgets: []
+  widgets: [
+    {
+      "name": "Layer attributes",
+      "uri": "widgets/antus/layer-table/widget.js"
+    }
+  ]
 }
 
 /**
@@ -280,7 +285,7 @@ function onMounted(mapInstance) {
         return "	<table class='mars-table'>"+
 "		<tr>"+
 "			<td >"+
-"				<label title='' style='font-size:18px' class='form-label'>Smart Tourism Index</label>"+
+"				<label title='' style='font-size:18px' class='form-label'>Smart Tourism Index: &nbsp;</label>"+
 "			</td><td>	<label style='font-size:18px'>"+index+"</label></tr>"+
 "<tr><td colspan='2'><em>Misura lo stato del comparto turistico della destinazione.<br> L’indice è composto da tre sotto-indicatori che combinati tra loro restituiscono<br> un valore compreso tra 0 (molto negativo) e 100 (ideale):<br>sentiment espresso sui social; Digital Reviews, ossia le recensioni espresse in rete; <br>Digital Presence, ossia i POI attivi (per recensioni) su territorio .<br> La metodologia si basa sull’analisi di alcune industrie prese a riferimento <br>e appartenente tutte al settore travel:<br> Hospitality, Food & beverage, Attractions, Entertainment, Short term rentals, Transportation.</em></td></tr>"+
 "			</td></tr></table>"+
@@ -453,7 +458,7 @@ function onMounted(mapInstance) {
         feature_count: 10
       },
       "show":false
-    }
+      }
     );
     bindToLegend(smartGreenLayer, buildLegend);
 
@@ -636,7 +641,9 @@ function onMounted(mapInstance) {
       area_terre_emerse = attr.area_terre_emerse;
       annomese = attr.annomese;
       geometry_id = attr.geometry_id;
-
+      form_area_chioma = !(somma_area_chioma)? 'ND' : parseFloat(somma_area_chioma).toFixed(2);
+      form_peso_chioma_perc = !(peso_chioma_perc)? 'ND' : parseFloat(peso_chioma_perc).toFixed(2);
+      form_area_terre_emerse = !(area_terre_emerse)? 'ND' : parseFloat(area_terre_emerse).toFixed(2);
       return `<ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
                   <button class="nav-link"  id="home-tab" role="presentation" data-bs-toggle="tab" data-bs-target="#home" data-bs-toggle="tab" data-bs-target="#home" aria-selected="false">Info</a>
@@ -647,91 +654,59 @@ function onMounted(mapInstance) {
               </ul>
   <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+ 
  <table class='mars-table' style='border-right: 1px solid'>
   <tr>
     <td>
       <b>Variabili considerate nel calcolo dell'indice e non editabili:</b>
       <table >
-        <thead>
-          <tr>
-            <th  data-field="nome"></th>
-            <th  data-field="valore"></th>
-          </tr>
-        </thead>
+        
         <tr>
           <td>
             <label  title="area in m² delle chiome degli alberi presenti nella tile (misurazione verde verticale)" for="area_chioma">Area chiome </label>
             
           </td>
           <td>`+
-            "  <label>" +  parseFloat(somma_area_chioma).toFixed(2) + " m²</label>" +
-            ` </td> </tr>
-        <tr>      <td>
+            "  <label>" + form_area_chioma + " m²</label>" +
+            ` </td> 
+               <td>
             <label title="coefficiente che caratterizza la qualità della chioma dell’albero in base al suo stato vegetativo, combinazione lineare degli alberi presenti nella tile, rapportato rispetto all’area totale delle chiome della tile.">Percentuale peso chioma</label>
           </td>
           <td>` +
-            "  <label >" +  parseFloat(peso_chioma_perc).toFixed(2) + "</label>" +
+            "  <label >" +  form_peso_chioma_perc + "</label>" +
             `</td>    </tr>
         <tr>
           <td>
-            <label title="area in m² delle terre emerse">Area terre emerse </label>
-            
+            <label title="area in m² delle terre emerse">Area terre emerse </label>            
           </td>
           <td>`+
-            "  <label >" +  parseFloat(area_terre_emerse).toFixed(2) + " m²</label>" +
-            `   </td>
-        </tr>
-      </table>
+           "  <label >" +  form_area_terre_emerse+ " m²</label>" +
+         "</td>   <td>"+
+           `<label title="Numero totale di alberi">Numero di alberi </label>            
+          </td>
+          <td>`+
+           "  <label id='tot_alb_tile'>" +  10 + " </label>" +
+         "</td>   </tr>"         +
+        `  <tr><td colspan='2' id="fase-alberi"> <b >Fase fisiologica degli alberi:</b>`+
+      "<div class='chartTwo' id='chartTwo' >" +
+      "<div id='ul_ZJLY' class='chartTwo_ulzjly'></div>" + 
+    "</div></td>" +
+    "<td colspan='2'><b id='tipo-alberi'  title='Top 10 tipologia alberi presenti nella tile'>Tipologia alberi:</b><div class='chartTwo' id='chartTwo' >" +
+    "<div id='ul_ZJLY2' class='chartTwo_ulzjly'></div>" + 
+  "</div></td></tr>" +
 
-        <b id="fase-alberi">Fase fisiologica degli alberi:</b>
-      <table id="tileInfo-fase" data-toggle="table">
-        <thead>
-          <tr>
-            <th  data-field="nome"></th>
-            <th  data-field="valore"></th>
-          </tr>
-        </thead>
-      </table>
-
-      <b id="stato-alberi">Stato di vegetazione degli alberi:</b>
-      <table id="tileInfo-stato" class="table-borderless" data-toggle="table"   >
-        <thead>
-          <tr>
-            <th data-field="nome"></th>
-            <th  data-field="valore"></th>
-            <th data-field="um"></th>
-          </tr>
-        </thead>
-      </table>
-    </td>
-    <td>
-      <b id="tipo-alberi"  title="Top 10 tipologia alberi presenti nella tile">Tipologia alberi:</b>
-
-      <table id="tileInfo-genere" class="table-borderless" data-toggle="table">
-      <thead>
-        <tr>
-          <th  data-field="nome"></th>
-          <th data-field="valore"></th>
-        </tr>
-      </thead>
-      </table>
-      <b id="sito-alberi">Sito di crescita degli alberi:</b>
-      <table id="tileInfo-sito" class="table-borderless" data-toggle="table">
-      <thead>
-        <tr>
-          <th  data-field="nome"></th>
-          <th data-field="valore"></th>
-        </tr>
-      </thead>
-      </table>
-    </td>
-  </tr>
+     "<tr><td colspan='2' id='sito-alberi'><b >Sito di crescita degli alberi:</b><div class='chartTwo' id='chartTwo' >" +
+    "<div id='ul_ZJLY3' class='chartTwo_ulzjly'></div></td>" + 
+    "<td colspan='2' id='stato-alberi'> <b >Stato di vegetazione degli alberi:</b><div class='chartTwo' id='chartTwo' >" +
+    "<div id='ul_ZJLY4' class='chartTwo_ulzjly'></div>" + 
+       `   </td></tr></table>
+  </tr> 
 </table>
 </div><div class="tab-pane fade show active" id="dss" role="tabpanel" aria-labelledby="profile-tab"> `+     
-"<div><label title='L’Indice misura misura il grado di benessere del verde,in relazione alla copertura arborea, allo stato manutentivo e alla percezione dei cittadini registrata online. L’Indice correla dati provenienti da fonti eterogenee, tra cui dataset provenienti dal censimento arboreo, dati satellitari (Copernicus) e dati OSINT (web e social media).' style='font-size:18px'>Smart Green Index: </label>" +
+"<div><label title='L’Indice misura misura il grado di benessere del verde,in relazione alla copertura arborea, allo stato manutentivo e alla percezione dei cittadini registrata online. L’Indice correla dati provenienti da fonti eterogenee, tra cui dataset provenienti dal censimento arboreo, dati satellitari (Copernicus) e dati OSINT (web e social media).' style='font-size:18px'>Smart Green Index:&nbsp;</label>" +
 
         "<label style='font-size:18px' id='sgi-old' value='" + attr.sgi + "'/></div>"+  
-"<em>Misura il benessere dello stato vegetativo comunale sia in termini di copertura e stato vegetativo che in termini di percezione. <br>Utilizza i seguenti dataset e indicatori per fornire un valore sintetico misurabile da 0 (situazione peggiore) a 100 (situazione ideale): <br>censimento sul patrimonio arboreo del Comune; stato vegetativo misurato dagli operatori comunali attraverso rilevazioni sul campo; <br>dati satellitari sulla copertura del verde (agenzia Copernicus); <br>percezione del verde pubblico rilevata sulle fonti digitali</>"+        
+"<em>Misura il benessere dello stato vegetativo comunale sia in termini di copertura e stato vegetativo che in termini di percezione. <br>Utilizza i seguenti dataset e indicatori per fornire un valore sintetico misurabile da 0 (situazione peggiore) a 100 (situazione ideale): <br>censimento sul patrimonio arboreo del Comune; stato vegetativo misurato dagli operatori comunali attraverso rilevazioni sul campo; <br>dati satellitari sulla copertura del verde (agenzia Copernicus); percezione del verde pubblico rilevata sulle fonti digitali</>"+        
         "<div class='modal-header-sci'>" +          
         "  <hr> <h4>Decision Support System</h4>" +
         "    <em>Predice il valore dello  Smart Green Index per questo tile</em>" +
@@ -745,9 +720,7 @@ function onMounted(mapInstance) {
         "            <label for='area' title='area in m² delle aree verdi incluse nel tile' >verde orizzontale (m²)</label>" +
         "           </td>" +
         "          <td><input class='form-control' id='area' name='area' min=0 type=number step=0.01 required value='" + parseFloat(attr.somma_area_verde_oriz).toFixed(2) + "'/></td>" +
-        "        </tr>" +
-        "        <tr> <td>" +
-        "            <label class='form-label' for='sentiment' title='indice del POI che tiene conto del numero di recensioni geolocalizzate, numero di contenuti sui social media, dati originati da dispositivi mobili'>percezione del verde</label>" +
+        "           <td> <label class='form-label' for='sentiment' title='indice del POI che tiene conto del numero di recensioni geolocalizzate, numero di contenuti sui social media, dati originati da dispositivi mobili'>percezione del verde</label>" +
         "                    </td>" +
         "          <td> <input class='form-control' id='sentiment' min=0 type=number step=0.01  required value='" + parseFloat(attr.urban_green_index).toFixed(2) + "'></td>" +
         "        </tr>               " +
@@ -792,20 +765,32 @@ function onMounted(mapInstance) {
         template: `<div class="marsBlackPanel">
         <div class="marsBlackPanel-text">{content}</div>
       </div>`,
-        horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
-        verticalOrigin: Cesium.VerticalOrigin.CENTER,
-        symbol: {
-          type: "polygonCombine", //大数据面类型，效率高
-          styleOptions: {
-            color: "#0d3685",
-            opacity: 1.0,
-            outline: false,
-          }
-        }
+      offsetY:0, 
+      offsetX:0,
+        horizontalOrigin: Cesium.HorizontalOrigin.RIGHT,
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+        autoCenter: true
+        
       });
     lodGraphicLayer.on(mars3d.EventType.popupOpen, function (event) {
+      var point = event.cartesian;
+      const extent = map.getExtent({scale:0.5});
+      const bbox = [extent.xmin, extent.ymin, extent.xmax, extent.ymax]
+      const result = mars3d.PolyUtil.getGridPoints(bbox, 20, 30)
+      const pt1 = mars3d.LngLatPoint.fromCartesian(point)
+      const pt2 = mars3d.PointUtil.getPositionByDirectionAndLen(pt1, 270, result.radius)
+      const mpt = mars3d.LngLatPoint.fromCartesian(pt2)
+    //  const ptNew = proj4Trans([mpt.lng, mpt.lat], "EPSG:4326", CRS.CGCS2000_GK_Zone_3)
+
+     
+    /*   ${map.getLangText("_Longitude")}:${mpt.lng}, ${map.getLangText("_latitude")}:${mpt.lat}, ${map.getLangText("_elevation" )}:${mpt.alt},
+       ${map.getLangText("_abscissa")}:${ptNew[0].toFixed(1)}, ${map.getLangText("_ordinate")}:${ptNew[1].toFixed( 1)} (CGCS2000)
+      `*/
+      map.setCameraView({ y: mpt.lat, x: mpt.lng, alt: 30000, })
+
       initGreenIndexPanel();
       const container = event.container;
+      initChartFaseAlberi(container);
       var tab1 = container.querySelector("#profile-tab");
       tab1.addEventListener("click", (e) => {
         openTab(e, "dss")
